@@ -1,0 +1,74 @@
+
+
+"Student Login"
+
+POST /api/users/studentLogin
+{"username":"John Doe", "password":"somepassword"}
+
+reponses:
+
+STATUS 200 OK
+
+{
+  "message": "Login successful",
+  "student": {
+    "id": "12345",
+    "name": "John Doe",
+    "email": "john@example.com"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."  // JWT or session token
+}
+
+401 Unauthorized – Invalid credentials
+{
+  "error": "Invalid email or password"
+}
+
+
+"Teacher Login"
+
+POST /api/users/TeacherLogin
+{"username":"John Doe", "password":"somepassword"}
+
+reponses:
+
+STATUS 200 OK
+
+{
+  "message": "Login successful",
+  "Teacher": {
+    "Admin" 
+    "id": "12345",
+    "name": "John Doe",
+    "email": "john@example.com"
+    "admin": True/False
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."  // JWT or session token
+}
+
+401 Unauthorized – Invalid credentials
+{
+  "error": "Invalid email or password"
+}
+
+
+
+"Favoriting Students"
+
+POST /api/users/Favoriting
+
+{"StudentId":"999999"}
+
+response:
+200 OK
+{"message":"Favoriting successful", 
+ "Student ID": "999999"
+}
+
+
+"See which tests a student has done"
+GET /api/users/studentInfo
+
+
+
+
