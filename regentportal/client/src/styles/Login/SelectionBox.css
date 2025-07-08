@@ -1,0 +1,15 @@
+.select-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect: smooth "lift" */
+.select-btn:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}

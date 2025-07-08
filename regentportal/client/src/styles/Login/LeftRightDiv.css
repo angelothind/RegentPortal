@@ -1,0 +1,82 @@
+.page-container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-side {
+  flex: 1;
+  background-color: #25245D;
+  padding: 10px;
+
+  display: flex;                 /* Add Flexbox to center contents */
+  flex-direction: column;       /* Stack content vertically */
+  justify-content: center;      /* Vertical centering */
+  align-items: center;          /* Horizontal centering */
+  color: white;
+}
+
+.right-side {
+  flex: 1;
+  background-color: #E8973E;
+  display: flex;
+  justify-content: center; /* center horizontally */
+  align-items: center;     /* center vertically */
+  flex-direction: column;  /* stack children vertically */
+
+  min-height: 100vh;         /* ensure full height */
+  padding: 0px;                /* avoid excess padding */
+  box-sizing: border-box;
+}
+
+.regent-logo{
+  display: flex;
+  justify-content: center; /* centers horizontally */
+  align-items: center;  
+  width: 500px;
+  height: auto;
+
+}
+
+.welcome-text {
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Reset Bootstrap's default padding/margin */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+.right-side {
+  flex: 1;
+  background-color: #E8973E;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /* remove min-height */
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.selection-boxes {
+  background-color: white;
+  border-radius: 20px;
+  padding: 40px 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  max-width: 400px;
+  width: 100%;
+}
+
+.welcome-text{
+  font-size: larger;
+  color: #000;
+}
