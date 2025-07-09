@@ -14,16 +14,18 @@ router.post('/login', async (req, res) => {
     let user;
     if (userType === 'Teacher') {
       // Check Admins first
-      console.log('Teacher has been found');
+      console.log('Teacher type has been looked into');
       user = await Admin.findOne({ username });
       if (user) {
+        console.log('Admin found checking');
         const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
+          console.log('Admin password checking');
           const token = generateToken(user._id, userType);
           console.log('The login was succesful');
           return res.status(200).json({
             message: 'Login successful',
-            user: { username, userType },
+            user: { username, userType: 'Admin'},
             token});
             
         } else {

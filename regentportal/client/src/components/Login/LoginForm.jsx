@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/Login/LoginForm.css';
 
 const LoginForm = ({ onBack, userType }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault(); // prevent page reload
@@ -18,6 +20,13 @@ const LoginForm = ({ onBack, userType }) => {
       const data = await response.json();
       if (response.ok) {
         console.log('✅ Login successful', data);
+        if (data.user.userType === 'Admin') {
+          navigate('/admin');
+        } else if (data.user.userType === 'Teacher') {
+          navigate('/teacher');
+        } else if (data.user.userType === 'Student') {
+          navigate('/student');
+      }
         // TODO: Redirect or update app state here
       } else {
         console.error('❌ Login failed:', data.error);
