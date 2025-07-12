@@ -8,6 +8,26 @@
   position: fixed;
   top: 0;
   left: 0;
+  font-family: 'Roboto', sans-serif;
+  
+}
+
+
+.sidebar-link {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  padding: 12px 0;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  display: block;
+}
+
+.sidebar-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
 .sidebar-title {
@@ -17,8 +37,9 @@
 }
 
 .sidebar-nav {
-  list-style: none;
+  list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 .sidebar-nav li {
@@ -36,6 +57,82 @@
 }
 
 .sidebar-nav a:hover {
+  background-color: #3e3d78;
+}
+
+.sidebar-nav .logout {
+  color: #E8973E;
+}
+
+.admin-dashboard {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar-container {
+  width: 240px;
+  background-color: #1e1e2f;
+  color: white;
+  padding: 20px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.sidebar-nav {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  margin-bottom: 10px;
+}
+
+.sidebar-button {
+  all: unset; /* 🔥 This is the key: removes all default styles */
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  color: white;
+  font-size: 16px;
+  text-align: left;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.logout {
+  color: #ff9900;
+  background: none;
+  border: none;
+  font-size: 16px;
+  padding: 10px 16px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.sidebar-nav button {
+  all: unset; /* resets browser button styles */
+  color: white;
+  font-size: 1rem;
+  display: block;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebar-nav button:hover {
   background-color: #3e3d78;
 }
 

@@ -21,11 +21,11 @@ const LoginForm = ({ onBack, userType }) => {
       if (response.ok) {
         console.log('✅ Login successful', data);
         if (data.user.userType === 'Admin') {
-          navigate('/admin');
+          navigate('/admin', { state: { user: data.user  } });
         } else if (data.user.userType === 'Teacher') {
-          navigate('/teacher');
+          navigate('/teacher', { state: { user: data.user  } });
         } else if (data.user.userType === 'Student') {
-          navigate('/student');
+          navigate('/student', { state: { user: data.user  } });
       }
         // TODO: Redirect or update app state here
       } else {
