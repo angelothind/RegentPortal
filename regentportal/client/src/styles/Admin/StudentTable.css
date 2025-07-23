@@ -38,3 +38,44 @@
 .create-button:hover {
   background-color: #218838;
 }
+
+
+.table-row {
+  position: relative;
+}
+
+.name-cell,
+.username-cell {
+  position: relative;
+}
+
+.name-text,
+.username-text {
+  transition: color 0.2s, text-decoration 0.2s;
+}
+
+.table-row:hover .name-text,
+.table-row:hover .username-text {
+  text-decoration: line-through;
+  color: #c0392b;
+}
+
+.delete-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.table-row:hover .delete-button {
+  display: inline-block;
+}

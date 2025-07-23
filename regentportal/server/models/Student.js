@@ -5,12 +5,18 @@ const studentSchema = new mongoose.Schema({
   name: { type: String, required: true },
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  completedTests: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Test'
+  givenAnswers: [
+  {
+    testName: {
+      type: String,
+      required: true
+    },
+    answers: {
+      type: [String], // or [Mixed] if answers are more complex
+      required: true
     }
-  ]
+  }
+]
 });
 
 studentSchema.pre('save', async function (next) {
@@ -26,3 +32,4 @@ studentSchema.pre('save', async function (next) {
 });
 
 module.exports = mongoose.model('Student', studentSchema);
+

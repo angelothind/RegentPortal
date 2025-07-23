@@ -1,3 +1,24 @@
+.teacher-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.teacher-table th,
+.teacher-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.teacher-table th {
+  background-color: #f4f4f4;
+}
+
+.teacher-table-container {
+  padding: 20px;
+}
+
 .teacher-header {
   display: flex;
   justify-content: space-between;
@@ -17,4 +38,39 @@
 
 .create-button:hover {
   background-color: #0056b3;
+}
+
+
+.table-row {
+  position: relative;
+}
+
+.table-row:hover .username-text,
+.table-row:hover .name-text {
+  text-decoration: line-through;
+  color: #c0392b;
+}
+
+.username-cell,
+.name-cell {
+  position: relative;
+}
+
+.delete-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.table-row:hover .delete-button {
+  display: inline-block;
 }

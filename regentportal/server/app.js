@@ -16,6 +16,12 @@ console.log('✅ Routes loaded');
 
 app.use('/api/user', require('./routes/loginRoutes'));
 
+app.use('/api/lookup', require('./routes/lookupRoutes'));
+
+app.use('/api/create', require('./routes/createRoutes'));
+
+app.use('/api/delete', require('./routes/deleteRoutes'));
+
 app.get('/', (req, res) => {
   res.send('Root route works!');
 });
