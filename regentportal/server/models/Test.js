@@ -14,11 +14,7 @@ const testSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  type: {
-    type: String,
-    enum: ['listening', 'reading'],
-    required: true
-  },
+  
   sources: [
     {
       name: String,       // e.g., "Paragraph A", "Audio 1"

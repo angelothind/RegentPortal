@@ -22,6 +22,8 @@ app.use('/api/create', require('./routes/createRoutes'));
 
 app.use('/api/delete', require('./routes/deleteRoutes'));
 
+app.use('/api/books', require('./routes/lookupBooks'))
+
 app.get('/', (req, res) => {
   res.send('Root route works!');
 });
