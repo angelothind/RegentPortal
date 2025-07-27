@@ -1,5 +1,7 @@
 {
   "title": "The Industrial Revolution In Britain",
+  "hasSubtitle": false,
+  "subtitle": null,
   "isLabeled": false,
   "paragraphs": [
     {
@@ -13,9 +15,6 @@
     },
     {
       "text": "Britain had produced textiles like wool, linen and cotton, for hundreds of years, but prior to the Industrial Revolution, the British textile business was a true 'cottage industry', with the work performed in small workshops or even homes by individual spinners, weavers and dyers. Starting in the mid-1700s, innovations like the spinning jenny and the power loom made weaving cloth and spinning yarn and thread much easier. With these machines, relatively little labour was required to produce cloth, and the new, mechanised textile factories that opened around the country were quickly able to meet customer demand for cloth both at home and abroad."
-    },
-    {
-      "text": "* agrarian: relating to the land, especially the use of land for farming"
     },
     {
       "text": "The British iron industry also underwent major change as it adopted new innovations. Chief among the new techniques was the smelting of iron ore with coke (a material made by heating coal) instead of the traditional charcoal. This method was cheaper and produced metals that were of a higher quality, enabling Britain's iron and steel production to expand in response to demand created by the Napoleonic Wars (1803-15) and the expansion of the railways from the 1830s."

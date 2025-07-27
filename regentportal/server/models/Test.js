@@ -17,7 +17,8 @@ const testSchema = new mongoose.Schema({
   
   sources: [
     {
-      name: String,       // e.g., "Paragraph A", "Audio 1"
+      name: String,
+      sourceType: String,       // e.g., "Paragraph A", "Audio 1"
       contentPath: String     // text of paragraph or audio file path
     }
   ],
