@@ -21,22 +21,22 @@ const seedTests = async () => {
           {
             name: 'passage1',
             sourceType: 'Reading',
-            contentPath: 'assets/Books/Book19/Test1/passages/passage1.json'
+            contentPath: 'Books/Book19/Test1/passages/passage1.json'
           },
           {
             name: 'passage2',
             sourceType: 'Reading',
-            contentPath: 'assets/Books/Book19/Test1/passages/passage2.json'
+            contentPath: 'Books/Book19/Test1/passages/passage2.json'
           },
           {
             name: 'passage3',
             sourceType: 'Reading',
-            contentPath: 'assets/Books/Book19/Test1/passages/passage3.json'
+            contentPath: 'Books/Book19/Test1/passages/passage3.json'
           },
           {
             name: 'audio1',
             sourceType: 'Listening',
-            contentPath: 'assets/Books/Book19/Test1/audios/fullaudio.mp3'
+            contentPath: 'Books/Book19/Test1/audios/fullaudio.mp3'
           }
         ],
         answers: []
@@ -47,22 +47,22 @@ const seedTests = async () => {
           {
             name: 'passage1',
             sourceType: 'Reading',
-            contentPath: 'assets/Books/Book19/Test2/passages/passage1.json'
+            contentPath: 'Books/Book19/Test2/passages/passage1.json'
           },
           {
             name: 'passage2',
             sourceType: 'Reading',
-            contentPath: 'assets/Books/Book19/Test2/passages/passage2.json'
+            contentPath: 'Books/Book19/Test2/passages/passage2.json'
           },
           {
             name: 'passage3',
             sourceType: 'Reading',
-            contentPath: 'assets/Books/Book19/Test2/passages/passage3.json'
+            contentPath: 'Books/Book19/Test2/passages/passage3.json'
           },
           {
             name: 'audio1',
             sourceType: 'Listening',
-            contentPath: 'assets/Books/Book19/Test2/audios/fullaudio.mp3'
+            contentPath: 'Books/Book19/Test2/audios/fullaudio.mp3'
           }
         ],
         answers: []

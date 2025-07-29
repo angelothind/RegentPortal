@@ -16,6 +16,7 @@ const ReadingTest = ({ testId, testData }) => {
 
       try {
         setLoading(true);
+        
         // Get the first reading passage (JSON file)
         const readingSources = testData.sources.filter(source => 
           source.contentPath && source.contentPath.endsWith('.json')
@@ -49,9 +50,7 @@ const ReadingTest = ({ testId, testData }) => {
   if (loading) {
     return (
       <div className="reading-test-container">
-        <div className="passage-section">
-          <div className="loading">Loading passage...</div>
-        </div>
+        <div className="loading">Loading passage...</div>
       </div>
     );
   }
@@ -59,9 +58,7 @@ const ReadingTest = ({ testId, testData }) => {
   if (!passageContent) {
     return (
       <div className="reading-test-container">
-        <div className="passage-section">
-          <div className="error">No passage content available</div>
-        </div>
+        <div className="error">No passage content available</div>
       </div>
     );
   }

@@ -1,0 +1,76 @@
+/* Listening Test Container - Independent layout */
+.listening-test-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-color: #f9f9f9;
+}
+
+/* Audio Section: Top 25% of the screen (increased from 20%) */
+.audio-section {
+  height: 25%;
+  min-height: 250px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 20px;
+}
+
+/* Questions Section: Bottom 75% of the screen (decreased from 80%) */
+.questions-section {
+  flex: 1;
+  height: 75%;
+  width: 100%;
+  background-color: #fff;
+  overflow-y: auto;
+}
+
+.questions-content {
+  padding: 30px;
+}
+
+.questions-content h3 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.questions-content p {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.no-audio {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Error State */
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 1.2rem;
+  color: #d32f2f;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .audio-section {
+    min-height: 200px;
+    padding: 15px;
+  }
+  
+  .questions-content {
+    padding: 20px;
+  }
+} 

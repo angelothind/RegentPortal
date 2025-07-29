@@ -1,23 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import AudioPlayer from './AudioPlayer';
+import '../../styles/UserLayout/ListeningTest.css';
 
-const ListeningTest = ({ audioSrc, questions }) => {
+const ListeningTest = ({ testId, testData }) => {
+  const [audioSources, setAudioSources] = useState([]);
+  const [currentAudio, setCurrentAudio] = useState(0);
+
+  useEffect(() => {
+    if (!testData || !testData.sources) return;
+
+    // Get audio sources from test data
+    const audioSources = testData.sources.filter(source => 
+      source.contentPath && source.contentPath.endsWith('.mp3')
+    );
+    setAudioSources(audioSources);
+  }, [testData]);
+
+  if (!testData) {
+    return (
+      <div className="listening-test-container">
+        <div className="error">No test data available</div>
+      </div>
+    );
+  }
+
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Listening Test</h2>
-      <audio controls style={{ width: '100%' }}>
-        <source src={audioSrc} type="audio/mpeg" />
-        Your browser does not support the audio element.
-      </audio>
-      <div style={{ marginTop: '20px' }}>
-        {questions && questions.length > 0 ? (
-          questions.map((q, index) => (
-            <div key={index} style={{ marginBottom: '15px' }}>
-              <strong>Question {q.questionNumber}:</strong> {q.question || 'Placeholder question'}
-            </div>
-          ))
+    <div className="listening-test-container">
+      {/* Audio Section - Top 20% */}
+      <div className="audio-section">
+        {audioSources.length > 0 ? (
+          <AudioPlayer 
+            audioSrc={`/assets/${audioSources[0].contentPath}`}
+            title="Listening Test Audio"
+          />
         ) : (
-          <p>No questions available.</p>
+          <div className="no-audio">
+            <p>No audio sources available for this test.</p>
+          </div>
         )}
+      </div>
+      
+      {/* Questions Section - Bottom 80% */}
+      <div className="questions-section">
+        <div className="questions-content">
+          <h3>Questions</h3>
+          <p>Questions will appear here in the future.</p>
+        </div>
       </div>
     </div>
   );

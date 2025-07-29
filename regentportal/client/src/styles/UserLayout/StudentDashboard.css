@@ -20,16 +20,16 @@
 .reading-test-container {
   display: flex;
   height: 100vh;
-  width: 50%;
+  width: 55%; /* Changed from 60% to 55% */
   overflow: hidden;
 }
 
+/* Passage Section Styles */
 .passage-section {
   flex: 1;
   display: flex;
   flex-direction: column;
   background-color: #f9f9f9;
-  border-right: 2px solid #ddd;
   overflow: hidden;
 }
 
@@ -135,12 +135,6 @@
   
   .reading-test-container {
     width: 100%;
-    flex-direction: column;
-  }
-  
-  .passage-section {
-    border-right: none;
-    border-bottom: 2px solid #ddd;
   }
   
   .passage-header {

@@ -11,7 +11,9 @@ router.get('/:id', async (req, res) => {
     if (!test) return res.status(404).json({ error: 'Test not found' });
 
     const loadedSources = test.sources.map(source => {
-      const absolutePath = path.join(__dirname, '..', source.contentPath);
+      // Add 'assets/' prefix since database stores paths without it
+      const filePath = `assets/${source.contentPath}`;
+      const absolutePath = path.join(__dirname, '..', filePath);
       const rawContent = fs.readFileSync(absolutePath, 'utf-8');
       return {
         name: source.name,
@@ -37,7 +39,9 @@ router.get('/:id/reading', async (req, res) => {
     );
 
     const loadedSources = readingSources.map(source => {
-      const absolutePath = path.join(__dirname, '..', source.contentPath);
+      // Add 'assets/' prefix since database stores paths without it
+      const filePath = `assets/${source.contentPath}`;
+      const absolutePath = path.join(__dirname, '..', filePath);
       const rawContent = fs.readFileSync(absolutePath, 'utf-8');
       return {
         name: source.name,
