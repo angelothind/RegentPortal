@@ -3,13 +3,11 @@ require('dotenv').config({ path: __dirname + '/../.env' });
 const mongoose = require('mongoose');
 const Test = require('../models/Test');
 const connectDB = require('../config/db');
-console.log('✅ MONGO_URI:', process.env.MONGO_URI);
-
 
 const seedTests = async () => {
   try {
     await connectDB();
-    console.log('✅ MONGO_URI:', process.env.MONGO_URI);
+    console.log('✅ Connected to MongoDB');
     // Optional: Clear existing tests
     await Test.deleteMany({});
     console.log('🧹 Existing tests cleared');
