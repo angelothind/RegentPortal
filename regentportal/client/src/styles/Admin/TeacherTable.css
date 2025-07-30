@@ -2,6 +2,8 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 16px;
+  position: relative;
+  z-index: 1;
 }
 
 .teacher-table th,
@@ -9,6 +11,7 @@
   border: 1px solid #ccc;
   padding: 10px;
   text-align: left;
+  position: relative;
 }
 
 .teacher-table th {
@@ -17,6 +20,8 @@
 
 .teacher-table-container {
   padding: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .teacher-header {
@@ -34,15 +39,21 @@
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
+  position: relative;
+  z-index: 10;
 }
 
 .create-button:hover {
   background-color: #0056b3;
 }
 
-
 .table-row {
   position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.table-row:hover {
+  background-color: #f8f9fa;
 }
 
 .table-row:hover .username-text,
@@ -54,6 +65,7 @@
 .username-cell,
 .name-cell {
   position: relative;
+  padding-right: 80px; /* Make room for delete button */
 }
 
 .delete-button {
@@ -61,7 +73,6 @@
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  display: none;
   background-color: #e74c3c;
   color: white;
   border: none;
@@ -69,8 +80,27 @@
   font-size: 0.75rem;
   border-radius: 4px;
   cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 100;
 }
 
 .table-row:hover .delete-button {
-  display: inline-block;
+  opacity: 1;
+}
+
+/* Ensure delete button is clickable */
+.delete-button:hover {
+  background-color: #c0392b;
+  opacity: 1 !important;
+}
+
+/* Make sure table cells don't interfere with button clicks */
+.username-cell,
+.name-cell {
+  pointer-events: auto;
+}
+
+.delete-button {
+  pointer-events: auto;
 }

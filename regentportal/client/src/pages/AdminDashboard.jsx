@@ -4,6 +4,7 @@ import SideBar from '../components/Admin/SideBar';
 import StudentTable from '../components/Admin/StudentTable';
 import TeacherTable from '../components/Admin/TeacherTable';
 import AdminInfo from '../components/Admin/AdminTable';
+import '../styles/Admin/AdminDashboard.css';
 
 const AdminDashboard = () => {
   const location = useLocation();

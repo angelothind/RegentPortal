@@ -1,0 +1,53 @@
+{
+  "questionType": "2letters",
+  "questionNumbers": "x-y",
+  "introInstruction": "Complete the notes below",
+  "questionInstruction": "Choose x words only from the passage for each answer",
+  "formattingInstruction": "Write your answers in boxes 8-13",
+  "template": {
+    "questionBlock": [
+      {
+        "statements": [
+          {
+            "label": "{{label1}}",
+            "statement": "{{statement1}}"
+          },
+          {
+            "label": "{{label2}}",
+            "statement": "{{statement2}}"
+          },
+          {
+            "label": "{{label3}}",
+            "statement": "{{statement3}}"
+          }
+        ],
+        "answerKey": {
+          "{{questionNumber}}": "{{correctAnswer}}"
+        }
+      }
+    ]
+  },
+  "example": {
+    "questionBlock": [
+      {
+        "statements": [
+          {
+            "label": "A",
+            "statement": "The main character lives in New York"
+          },
+          {
+            "label": "B",
+            "statement": "The character works as a teacher"
+          },
+          {
+            "label": "C",
+            "statement": "The story takes place in winter"
+          }
+        ],
+        "answerKey": {
+          "8": "A"
+        }
+      }
+    ]
+  }
+} 

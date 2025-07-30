@@ -1,0 +1,42 @@
+{
+  "questionType": "choose-x-word",
+  "introInstruction": "Complete the notes below",
+  "questionInstruction": "Choose x words only from the passage for each answer",
+  "formattingInstruction": "Write your answers in boxes 8-13",
+  "template": {
+    "questionBlock": [
+      {
+        "question": {
+          "questionNumber": "{{questionNumber}}",
+          "questionText": "{{questionText}} where // shows where the blank box should be",
+          "answer": "{{correctAnswer}}"
+        },
+        "fillText": "{{fillText1}}",
+        "fillText2": "{{fillText2}}",
+        "question2": {
+          "questionNumber": "{{questionNumber2}}",
+          "questionText": "{{questionText2}} where // shows where the blank box should be",
+          "answer": "{{correctAnswer2}}"
+        }
+      }
+    ]
+  },
+  "example": {
+    "questionBlock": [
+      {
+        "question": {
+          "questionNumber": "8",
+          "questionText": "The main character's name is //",
+          "answer": "John Smith"
+        },
+        "fillText": "This information is found in the first paragraph",
+        "fillText2": "Additional context about the character",
+        "question2": {
+          "questionNumber": "9",
+          "questionText": "He lives in //",
+          "answer": "New York"
+        }
+      }
+    ]
+  }
+} 

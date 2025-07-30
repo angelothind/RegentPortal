@@ -1,0 +1,53 @@
+{
+  "questionType": "letterboxes",
+  "questionNumbers": "x-y",
+  "introInstruction": "Complete the notes below",
+  "questionInstruction": "Choose x words only from the passage for each answer",
+  "formattingInstruction": "Write your answers in boxes 8-13",
+  "template": {
+    "questionBlock": [
+      {
+        "questionText": "{{questionText}} where // shows where the possible answers may be filled in",
+        "questionNumbers": ["{{questionNumber1}}", "{{questionNumber2}}", "{{questionNumber3}}"],
+        "possibleAnswers": [
+          {
+            "label": "{{label1}}",
+            "answer": "{{answer1}}"
+          },
+          {
+            "label": "{{label2}}",
+            "answer": "{{answer2}}"
+          },
+          {
+            "label": "{{label3}}",
+            "answer": "{{answer3}}"
+          }
+        ],
+        "answers": ["{{correctAnswer1}}", "{{correctAnswer2}}", "{{correctAnswer3}}"]
+      }
+    ]
+  },
+  "example": {
+    "questionBlock": [
+      {
+        "questionText": "The main character // lives in // and works as a //",
+        "questionNumbers": ["8", "9", "10"],
+        "possibleAnswers": [
+          {
+            "label": "A",
+            "answer": "John"
+          },
+          {
+            "label": "B",
+            "answer": "New York"
+          },
+          {
+            "label": "C",
+            "answer": "teacher"
+          }
+        ],
+        "answers": ["A", "B", "C"]
+      }
+    ]
+  }
+} 

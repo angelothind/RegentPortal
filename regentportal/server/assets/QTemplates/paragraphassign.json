@@ -1,0 +1,29 @@
+{
+  "questionType": "paragraphAssign",
+  "questionNumbers": "x-y",
+  "introInstruction": "Complete the notes below",
+  "questionInstruction": "Choose x words only from the passage for each answer",
+  "formattingInstruction": "Write your answers in boxes 8-13",
+  "template": {
+    "questionBlock": [
+      {
+        "question": {
+          "questionNumber": "{{questionNumber}}",
+          "questionText": "{{questionText}}",
+          "answer": "{{correctAnswer}}"
+        }
+      }
+    ]
+  },
+  "example": {
+    "questionBlock": [
+      {
+        "question": {
+          "questionNumber": "8",
+          "questionText": "The main character lives in New York",
+          "answer": "True"
+        }
+      }
+    ]
+  }
+} 

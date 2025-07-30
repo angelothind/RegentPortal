@@ -24,7 +24,10 @@ const testSchema = new mongoose.Schema({
   ],
   answers: {
     type: Map,
-    of: [String]  // Array of possible answers for each question
+    of: {
+      type: Map,
+      of: [String]  // Array of possible answers for each question
+    }
   }
 }, options);
 

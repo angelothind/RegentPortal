@@ -1,0 +1,79 @@
+/* Admin Dashboard Layout */
+.admin-dashboard {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  border: none;
+  outline: none;
+}
+
+.sidebar-container {
+  width: 234px; /* Match the sidebar width exactly */
+  min-width: 234px;
+  background-color: #25245D; /* Match sidebar background */
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 1000;
+  overflow-y: auto;
+  border: none; /* Remove any potential borders */
+  outline: none;
+  box-shadow: none;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 234px; /* Match sidebar width exactly */
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  overflow-y: auto;
+  border: none; /* Remove any potential borders */
+  outline: none;
+  box-shadow: none;
+}
+
+/* Override any Bootstrap or global styles that might cause borders */
+.admin-dashboard * {
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+.sidebar-container * {
+  border: none !important;
+  outline: none !important;
+}
+
+.main-content * {
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar-container {
+    width: 200px;
+    min-width: 200px;
+  }
+  
+  .main-content {
+    margin-left: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-container {
+    width: 180px;
+    min-width: 180px;
+  }
+  
+  .main-content {
+    margin-left: 180px;
+  }
+} 
