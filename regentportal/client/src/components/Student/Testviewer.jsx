@@ -15,10 +15,26 @@ const TestViewer = ({ selectedTest }) => {
 
       setLoading(true);
       try {
-        const res = await fetch(`/api/test/${selectedTest.testId._id}`);
+        // 🔒 SECURE: Use specific endpoints based on test type
+        let endpoint;
+        if (selectedTest.type === 'Reading') {
+          endpoint = `/api/tests/${selectedTest.testId._id}/reading`;
+        } else if (selectedTest.type === 'Listening') {
+          endpoint = `/api/tests/${selectedTest.testId._id}/listening`;
+        } else {
+          // Fallback to generic endpoint with test type parameter
+          endpoint = `/api/tests/${selectedTest.testId._id}?testType=${selectedTest.type}`;
+        }
+
+        const res = await fetch(endpoint);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        
         const data = await res.json();
-        const filteredSources = data.sources.filter(src => src.sourceType === selectedTest.type);
-        setTestData({ ...data, sources: filteredSources });
+        
+        // Backend now sends only the appropriate sources, no need to filter on frontend
+        setTestData(data);
       } catch (error) {
         console.error('❌ Failed to fetch test data:', error);
         setTestData(null);

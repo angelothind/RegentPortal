@@ -9,11 +9,9 @@ const ListeningTest = ({ testId, testData }) => {
   useEffect(() => {
     if (!testData || !testData.sources) return;
 
-    // Get audio sources from test data
-    const audioSources = testData.sources.filter(source => 
-      source.contentPath && source.contentPath.endsWith('.mp3')
-    );
-    setAudioSources(audioSources);
+    // 🔒 SECURE: Backend already filtered for MP3 sources only
+    // No need to filter again on frontend
+    setAudioSources(testData.sources);
   }, [testData]);
 
   if (!testData) {
@@ -26,7 +24,7 @@ const ListeningTest = ({ testId, testData }) => {
 
   return (
     <div className="listening-test-container">
-      {/* Audio Section - Top 20% */}
+      {/* Audio Section - Top 25% */}
       <div className="audio-section">
         {audioSources.length > 0 ? (
           <AudioPlayer 
@@ -40,7 +38,7 @@ const ListeningTest = ({ testId, testData }) => {
         )}
       </div>
       
-      {/* Questions Section - Bottom 80% */}
+      {/* Questions Section - Bottom 75% */}
       <div className="questions-section">
         <div className="questions-content">
           <h3>Questions</h3>

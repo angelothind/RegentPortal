@@ -17,25 +17,26 @@ const ReadingTest = ({ testId, testData }) => {
       try {
         setLoading(true);
         
-        // Get the first reading passage (JSON file)
-        const readingSources = testData.sources.filter(source => 
-          source.contentPath && source.contentPath.endsWith('.json')
-        );
-
-        if (readingSources.length > 0) {
-          const firstPassage = readingSources[currentPassage];
+        // 🔒 SECURE: Backend already filtered for JSON sources only
+        // No need to filter again on frontend
+        if (testData.sources.length > 0) {
+          const currentSource = testData.sources[currentPassage];
           
-          // Add /assets/ prefix to the contentPath from database
-          const fetchUrl = `/assets/${firstPassage.contentPath}`;
-          
-          const response = await fetch(fetchUrl);
-          
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+          // Backend already sent the parsed JSON content
+          if (currentSource && currentSource.content) {
+            setPassageContent(currentSource.content);
+          } else {
+            // Fallback: fetch JSON content if not provided by backend
+            const fetchUrl = `/assets/${currentSource.contentPath}`;
+            const response = await fetch(fetchUrl);
+            
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            setPassageContent(data);
           }
-          
-          const data = await response.json();
-          setPassageContent(data);
         }
       } catch (err) {
         console.error('❌ Failed to load passage content:', err);
@@ -74,17 +75,15 @@ const ReadingTest = ({ testId, testData }) => {
             )}
           </div>
           <div className="passage-controls">
-            {testData.sources
-              .filter(source => source.contentPath && source.contentPath.endsWith('.json'))
-              .map((_, index) => (
-                <button 
-                  key={index}
-                  onClick={() => setCurrentPassage(index)}
-                  className={currentPassage === index ? 'active' : ''}
-                >
-                  Passage {index + 1}
-                </button>
-              ))}
+            {testData.sources.map((_, index) => (
+              <button 
+                key={index}
+                onClick={() => setCurrentPassage(index)}
+                className={currentPassage === index ? 'active' : ''}
+              >
+                Passage {index + 1}
+              </button>
+            ))}
           </div>
         </div>
         
