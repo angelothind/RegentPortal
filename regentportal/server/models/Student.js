@@ -6,17 +6,18 @@ const studentSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   givenAnswers: [
-  {
-    testName: {
-      type: String,
-      required: true
-    },
-    answers: {
-      type: [String], // or [Mixed] if answers are more complex
-      required: true
+    {
+      testId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Test',
+        required: true
+      },
+      answers: {
+        type: [String], // array of answer strings
+        required: true
+      }
     }
-  }
-]
+  ]
 });
 
 studentSchema.pre('save', async function (next) {

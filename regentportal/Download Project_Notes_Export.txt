@@ -1,0 +1,8 @@
+
+Things that may be needed:
+
+- Will likely need to change the structure of the students Schema. Change the answers to maybe mixed, but strings are still flexible. Test name will have to be changed to the testID.
+
+- May need to make the answers array of tuples different. Change the answer part of the tuple into an array of strings to accommodate for possibility of multiple answers.
+
+- May need to create a different file structure to accommodate for the new test questions assets.

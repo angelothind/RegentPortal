@@ -22,12 +22,10 @@ const testSchema = new mongoose.Schema({
       contentPath: String     // text of paragraph or audio file path
     }
   ],
-  answers: [
-    {
-      questionNumber: Number,
-      answer: String
-    }
-  ]
+  answers: {
+    type: Map,
+    of: [String]  // Array of possible answers for each question
+  }
 }, options);
 
 module.exports = mongoose.model('Test', testSchema);
