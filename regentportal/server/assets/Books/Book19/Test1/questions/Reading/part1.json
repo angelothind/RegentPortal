@@ -1,35 +1,84 @@
 {
-  "partNumber": 1,
+  "passageNumber": 1,
   "templates": [
+    {
+      "questionType": "TFNG",
+      "introInstruction": "Do the following statements agree with the information given in Reading Passage 1?",
+      "formattingInstruction": "In boxes 1-7 on your answer sheet, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this",
+      "questionBlock": [
+        {
+          "questionNumber": "1",
+          "question": "People had expected Andy Murray to become the world's top tennis player for at least five years before 2016."
+        },
+        {
+          "questionNumber": "2",
+          "question": "The change that Andy Murray made to his rackets attracted a lot of attention."
+        },
+        {
+          "questionNumber": "3",
+          "question": "Most of the world's top players take a professional racket stringer on tour with them."
+        },
+        {
+          "questionNumber": "4",
+          "question": "Mike and Bob Bryan use rackets that are light in comparison to the majority of rackets."
+        },
+        {
+          "questionNumber": "5",
+          "question": "Werner Fischer played with a spaghetti-strung racket that he designed himself."
+        },
+        {
+          "questionNumber": "6",
+          "question": "The weather can affect how professional players adjust the strings on their rackets."
+        },
+        {
+          "questionNumber": "7",
+          "question": "It was believed that the change Pete Sampras made to his rackets contributed to his strong serve."
+        }
+      ],
+      "correctAnswers": {
+        "1": "FALSE",
+        "2": "TRUE",
+        "3": "TRUE",
+        "4": "NOT GIVEN",
+        "5": "TRUE",
+        "6": "TRUE",
+        "7": "TRUE"
+      }
+    },
     {
       "questionType": "choose-x-word",
       "introInstruction": "Complete the summary using the list of words, A-G, below.",
-      "formattingInstruction": "Write the correct letter, A-G, in boxes 1-5 on your answer sheet.",
+      "formattingInstruction": "Write the correct letter, A-G, in boxes 8-13 on your answer sheet.",
       "questionBlock": [
         {
-          "questionNumber": 1,
-          "question": "The discovery of **1** ________ in the human body led to new medical treatments.",
+          "questionNumber": "8",
+          "question": "The discovery of **8** ________ in the human body led to new medical treatments.",
           "answer": "enzymes"
         },
         {
-          "questionNumber": 2,
-          "question": "Scientists found that **2** ________ could be used to fight infections.",
+          "questionNumber": "9",
+          "question": "Scientists found that **9** ________ could be used to fight infections.",
           "answer": "antibiotics"
         },
         {
-          "questionNumber": 3,
-          "question": "The research showed that **3** ________ played a crucial role in cell division.",
+          "questionNumber": "10",
+          "question": "The research showed that **10** ________ played a crucial role in cell division.",
           "answer": "proteins"
         },
         {
-          "questionNumber": 4,
-          "question": "Medical professionals now use **4** ________ to diagnose diseases more accurately.",
+          "questionNumber": "11",
+          "question": "Medical professionals now use **11** ________ to diagnose diseases more accurately.",
           "answer": "scanners"
         },
         {
-          "questionNumber": 5,
-          "question": "The study revealed that **5** ________ could prevent certain types of cancer.",
+          "questionNumber": "12",
+          "question": "The study revealed that **12** ________ could prevent certain types of cancer.",
           "answer": "vitamins"
+        },
+        {
+          "questionNumber": "13",
+          "question": "The research team discovered that **13** ________ were essential for brain function.",
+          "answer": "nutrients"
         }
       ]
     }

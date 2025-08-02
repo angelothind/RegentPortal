@@ -1,29 +1,48 @@
 {
   "questionType": "TFNG",
-  "questionNumbers": "x-y",
-  "introInstruction": "Complete the notes below",
-  "questionInstruction": "Choose x words only from the passage for each answer",
-  "formattingInstruction": "Write your answers in boxes 8-13",
+  "questionNumbers": "1-7",
+  "introInstruction": "Do the following statements agree with the information given in Reading Passage 1?",
+  "questionInstruction": "In boxes 1-7 on your answer sheet, write",
+  "formattingInstruction": "TRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this",
   "template": {
     "questionBlock": [
       {
-        "question": {
-          "questionNumber": "{{questionNumber}}",
-          "questionText": "{{questionText}}",
-          "answer": "{{correctAnswer}}"
-        }
+        "questionNumber": "1",
+        "question": "People had expected Andy Murray to become the world's top tennis player for at least five years before 2016."
+      },
+      {
+        "questionNumber": "2",
+        "question": "The change that Andy Murray made to his rackets attracted a lot of attention."
+      },
+      {
+        "questionNumber": "3",
+        "question": "Most of the world's top players take a professional racket stringer on tour with them."
+      },
+      {
+        "questionNumber": "4",
+        "question": "Mike and Bob Bryan use rackets that are light in comparison to the majority of rackets."
+      },
+      {
+        "questionNumber": "5",
+        "question": "Werner Fischer played with a spaghetti-strung racket that he designed himself."
+      },
+      {
+        "questionNumber": "6",
+        "question": "The weather can affect how professional players adjust the strings on their rackets."
+      },
+      {
+        "questionNumber": "7",
+        "question": "It was believed that the change Pete Sampras made to his rackets contributed to his strong serve."
       }
     ]
   },
-  "example": {
-    "questionBlock": [
-      {
-        "question": {
-          "questionNumber": "8",
-          "questionText": "The main character lives in New York",
-          "answer": "True"
-        }
-      }
-    ]
+  "correctAnswers": {
+    "1": "FALSE",
+    "2": "TRUE",
+    "3": "TRUE",
+    "4": "NOT GIVEN",
+    "5": "TRUE",
+    "6": "TRUE",
+    "7": "TRUE"
   }
 } 

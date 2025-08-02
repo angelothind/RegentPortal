@@ -6,6 +6,12 @@ const ReadingTest = ({ testId, testData }) => {
   const [currentPassage, setCurrentPassage] = useState(0);
   const [passageContent, setPassageContent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [testStarted, setTestStarted] = useState(false);
+
+  const handleStartTest = () => {
+    setTestStarted(true);
+    console.log('🚀 Reading test started');
+  };
 
   useEffect(() => {
     const loadPassageContent = async () => {
@@ -96,6 +102,19 @@ const ReadingTest = ({ testId, testData }) => {
           ))}
         </div>
       </div>
+      
+      {/* Start Test Overlay */}
+      {!testStarted && (
+        <div className="test-overlay">
+          <div className="overlay-content">
+            <h2>Ready to Start?</h2>
+            <p>You're about to begin the Reading Test. Make sure you're in a comfortable environment and ready to focus.</p>
+            <button className="start-test-button" onClick={handleStartTest}>
+              Start Test Now
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

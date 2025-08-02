@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ChooseXWords from '../Questions/ChooseXWords';
+import TFNG from '../Questions/TFNG';
+import Matching from '../Questions/Matching';
+import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
+import SummaryCompletion from '../Questions/SummaryCompletion';
 
 const QuestionView = ({ selectedTest }) => {
   console.log('🚀 QuestionView component mounted with selectedTest:', selectedTest);
@@ -7,6 +11,54 @@ const QuestionView = ({ selectedTest }) => {
   const [questionData, setQuestionData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [answers, setAnswers] = useState({});
+  const [currentPassage, setCurrentPassage] = useState(1);
+
+  // Load saved answers from localStorage on component mount
+  useEffect(() => {
+    if (selectedTest && selectedTest.testId) {
+      const savedAnswers = localStorage.getItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`);
+      if (savedAnswers) {
+        try {
+          const parsedAnswers = JSON.parse(savedAnswers);
+          
+          // Check if data is older than 4 hours
+          const savedTimestamp = parsedAnswers._timestamp;
+          const currentTime = Date.now();
+          const fourHours = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
+          
+          if (savedTimestamp && (currentTime - savedTimestamp) > fourHours) {
+            // Data is older than 4 hours, clear it
+            localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`);
+            console.log('📝 Cleared expired saved answers (older than 4 hours)');
+            return;
+          }
+          
+          setAnswers(parsedAnswers);
+          console.log('📝 Loaded saved answers from localStorage:', parsedAnswers);
+        } catch (error) {
+          console.error('❌ Error parsing saved answers:', error);
+        }
+      }
+    }
+  }, [selectedTest]);
+
+  // Add refresh confirmation warning
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (Object.keys(answers).length > 0) {
+        e.preventDefault();
+        e.returnValue = '⚠️ WARNING: You have unsaved test answers! Your progress will be lost if you leave this page. Are you sure you want to continue?';
+        return '⚠️ WARNING: You have unsaved test answers! Your progress will be lost if you leave this page. Are you sure you want to continue?';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [answers]);
 
   useEffect(() => {
     const fetchQuestionData = async () => {
@@ -16,13 +68,13 @@ const QuestionView = ({ selectedTest }) => {
         return;
       }
 
-      console.log('🔍 QuestionView: Fetching questions for:', selectedTest);
+      console.log('🔍 QuestionView: Fetching questions for passage:', currentPassage);
       setLoading(true);
       setError(null);
 
       try {
-        // Fetch question data for part1 (initial part) with test type
-        const endpoint = `/api/tests/${selectedTest.testId._id}/questions/part1?testType=${selectedTest.type}`;
+        // Fetch question data for current passage with test type
+        const endpoint = `/api/tests/${selectedTest.testId._id}/questions/part${currentPassage}?testType=${selectedTest.type}`;
         console.log('📡 Fetching from endpoint:', endpoint);
         
         const response = await fetch(endpoint);
@@ -44,11 +96,28 @@ const QuestionView = ({ selectedTest }) => {
     };
 
     fetchQuestionData();
-  }, [selectedTest]);
+  }, [selectedTest, currentPassage]);
 
-  const handleAnswerChange = (answers) => {
-    console.log('📝 Answers updated:', answers);
-    // TODO: Save answers to backend or local state
+  const handleAnswerChange = (questionNumber, value) => {
+    const newAnswers = { ...answers, [questionNumber]: value };
+    setAnswers(newAnswers);
+    
+    // Save answers to localStorage with timestamp
+    if (selectedTest && selectedTest.testId) {
+      const answersWithTimestamp = {
+        ...newAnswers,
+        _timestamp: Date.now()
+      };
+      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
+      console.log('📝 Answers saved to localStorage with timestamp:', answersWithTimestamp);
+    }
+    
+    console.log('📝 Answers updated:', newAnswers);
+  };
+
+  const handlePassageChange = (passageNumber) => {
+    setCurrentPassage(passageNumber);
+    setQuestionData(null); // Clear current data when switching passages
   };
 
   console.log('🔍 QuestionView render state:', {
@@ -99,13 +168,42 @@ const QuestionView = ({ selectedTest }) => {
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
+              testType={selectedTest.type}
+            />
+          );
+        case 'TFNG':
+          return (
+            <TFNG
+              key={index}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+            />
+          );
+        case 'matching':
+          return (
+            <Matching
+              key={index}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+            />
+          );
+        case 'multiple-choice-two':
+          return (
+            <MultipleChoiceTwo
+              key={index}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+            />
+          );
+        case 'summary-completion':
+          return (
+            <SummaryCompletion
+              key={index}
+              template={template}
+              onAnswerChange={handleAnswerChange}
             />
           );
         // TODO: Add other question types here
-        // case 'TFNG':
-        //   return <TFNG key={index} template={template} onAnswerChange={handleAnswerChange} />;
-        // case 'matching':
-        //   return <Matching key={index} template={template} onAnswerChange={handleAnswerChange} />;
         default:
           return (
             <div key={index} className="unsupported-question-type">
@@ -119,10 +217,32 @@ const QuestionView = ({ selectedTest }) => {
   return (
     <div className="question-view-container">
       <div className="question-header">
-        <h3>Questions - Part 1</h3>
-        <p className="test-info">
-          {questionData.title} - {selectedTest.type}
-        </p>
+        <div className="header-left">
+          <h3>Questions for Passage {currentPassage}</h3>
+          <p className="test-info">
+            {questionData.title} - {selectedTest.type}
+          </p>
+        </div>
+        <div className="passage-toggle">
+          <button 
+            className={`passage-button ${currentPassage === 1 ? 'active' : ''}`}
+            onClick={() => handlePassageChange(1)}
+          >
+            Passage 1
+          </button>
+          <button 
+            className={`passage-button ${currentPassage === 2 ? 'active' : ''}`}
+            onClick={() => handlePassageChange(2)}
+          >
+            Passage 2
+          </button>
+          <button 
+            className={`passage-button ${currentPassage === 3 ? 'active' : ''}`}
+            onClick={() => handlePassageChange(3)}
+          >
+            Passage 3
+          </button>
+        </div>
       </div>
       
       <div className="question-content">

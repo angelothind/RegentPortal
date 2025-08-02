@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/ChooseXWords.css';
 
-const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'choose-x-words' }) => {
+const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, testType, componentId = 'choose-x-words' }) => {
   const [answers, setAnswers] = useState({});
 
   console.log('🎯 ChooseXWords rendered with template:', template);
@@ -47,7 +47,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, co
   console.log('🎯 ChooseXWords: Rendering', template.questionBlock.length, 'questions');
 
   return (
-    <div className="choose-x-words-container">
+    <div className={`choose-x-words-container ${testType === 'Reading' ? 'reading-test' : ''}`}>
       <div className="instructions">
         <h3>{template.introInstruction}</h3>
         <p className="formatting-instruction">{template.formattingInstruction}</p>

@@ -17,6 +17,52 @@ const ListeningQuestionView = ({ selectedTest, user }) => {
   const [testSubmitted, setTestSubmitted] = useState(false);
   const [testResults, setTestResults] = useState(null);
 
+  // Load saved answers from localStorage on component mount
+  useEffect(() => {
+    if (selectedTest && selectedTest.testId) {
+      const savedAnswers = localStorage.getItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`);
+      if (savedAnswers) {
+        try {
+          const parsedAnswers = JSON.parse(savedAnswers);
+          
+          // Check if data is older than 4 hours
+          const savedTimestamp = parsedAnswers._timestamp;
+          const currentTime = Date.now();
+          const fourHours = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
+          
+          if (savedTimestamp && (currentTime - savedTimestamp) > fourHours) {
+            // Data is older than 4 hours, clear it
+            localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`);
+            console.log('📝 Cleared expired saved answers (older than 4 hours)');
+            return;
+          }
+          
+          setAnswers(parsedAnswers);
+          console.log('📝 Loaded saved answers from localStorage:', parsedAnswers);
+        } catch (error) {
+          console.error('❌ Error parsing saved answers:', error);
+        }
+      }
+    }
+  }, [selectedTest]);
+
+  // Add refresh confirmation warning
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (testStarted && !testSubmitted && Object.keys(answers).length > 0) {
+        e.preventDefault();
+        e.returnValue = '⚠️ WARNING: You have unsaved test answers! Your progress will be lost if you leave this page. Are you sure you want to continue?';
+        return '⚠️ WARNING: You have unsaved test answers! Your progress will be lost if you leave this page. Are you sure you want to continue?';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [testStarted, testSubmitted, answers]);
+
   // Function to strip ** markers from text and convert to bold parentheses format
   const stripMarkdownBold = (text) => {
     return text.replace(/\*\*(\d+)\*\*/g, '<strong>($1)</strong>');
@@ -25,6 +71,17 @@ const ListeningQuestionView = ({ selectedTest, user }) => {
   const handleAnswerChange = (questionNumber, value) => {
     const newAnswers = { ...answers, [questionNumber]: value };
     setAnswers(newAnswers);
+    
+    // Save answers to localStorage with timestamp
+    if (selectedTest && selectedTest.testId) {
+      const answersWithTimestamp = {
+        ...newAnswers,
+        _timestamp: Date.now()
+      };
+      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
+      console.log('📝 Answers saved to localStorage with timestamp:', answersWithTimestamp);
+    }
+    
     console.log('📝 Answers updated:', newAnswers);
   };
 
@@ -87,6 +144,12 @@ const ListeningQuestionView = ({ selectedTest, user }) => {
   const handleSubmit = async () => {
     const confirmed = window.confirm('Are you sure you want to submit the test? You cannot change your answers after submission.');
     if (!confirmed) return;
+    
+    // Clear saved answers from localStorage after submission
+    if (selectedTest && selectedTest.testId) {
+      localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`);
+      console.log('📝 Cleared saved answers from localStorage after submission');
+    }
     
     console.log('📝 Submitting test with answers:', answers);
     console.log('📝 User data:', user);
@@ -403,102 +466,102 @@ const ListeningQuestionView = ({ selectedTest, user }) => {
     
     return (
       <div className="listening-question-view-container">
-        <div className={`question-content ${!testStarted ? 'test-not-started' : ''}`}>
-        <div className="question-header">
-          <div className="header-left">
-            <h3>Part {currentPart}</h3>
-            <p className="test-instruction">
-              {questionData?.questionData?.templates?.[0]?.introInstruction}
-            </p>
-            <p className="formatting-instruction">
-              {questionData?.questionData?.templates?.[0]?.formattingInstruction}
-            </p>
+        <div className="question-content">
+          <div className="question-header">
+            <div className="header-left">
+              <h3>Part {currentPart}</h3>
+              <p className="test-instruction">
+                {questionData?.questionData?.templates?.[0]?.introInstruction}
+              </p>
+              <p className="formatting-instruction">
+                {questionData?.questionData?.templates?.[0]?.formattingInstruction}
+              </p>
+            </div>
+            <div className="part-toggle">
+              <button 
+                className={`part-button ${currentPart === 1 ? 'active' : ''}`}
+                onClick={() => handlePartChange(1)}
+                disabled={!testStarted}
+              >
+                Part 1
+              </button>
+              <button 
+                className={`part-button ${currentPart === 2 ? 'active' : ''}`}
+                onClick={() => handlePartChange(2)}
+                disabled={!testStarted}
+              >
+                Part 2
+              </button>
+              <button 
+                className={`part-button ${currentPart === 3 ? 'active' : ''}`}
+                onClick={() => handlePartChange(3)}
+                disabled={!testStarted}
+              >
+                Part 3
+              </button>
+              <button 
+                className={`part-button ${currentPart === 4 ? 'active' : ''}`}
+                onClick={() => handlePartChange(4)}
+                disabled={!testStarted}
+              >
+                Part 4
+              </button>
+            </div>
           </div>
-          <div className="part-toggle">
-            <button 
-              className={`part-button ${currentPart === 1 ? 'active' : ''}`}
-              onClick={() => handlePartChange(1)}
-              disabled={!testStarted}
-            >
-              Part 1
-            </button>
-            <button 
-              className={`part-button ${currentPart === 2 ? 'active' : ''}`}
-              onClick={() => handlePartChange(2)}
-              disabled={!testStarted}
-            >
-              Part 2
-            </button>
-            <button 
-              className={`part-button ${currentPart === 3 ? 'active' : ''}`}
-              onClick={() => handlePartChange(3)}
-              disabled={!testStarted}
-            >
-              Part 3
-            </button>
-            <button 
-              className={`part-button ${currentPart === 4 ? 'active' : ''}`}
-              onClick={() => handlePartChange(4)}
-              disabled={!testStarted}
-            >
-              Part 4
-            </button>
-          </div>
-        </div>
-        
-        {renderQuestionComponent()}
-        
-        {currentPart === 4 && testStarted && (
-          <div className="submit-section">
-            <button 
-              className={testSubmitted ? "reset-button" : "submit-button"}
-              onClick={testSubmitted ? handleResetTest : handleSubmit}
-            >
-              {testSubmitted ? "Reset Test" : "Submit Test"}
-            </button>
-          </div>
-        )}
-        
-        {/* Score Display - Only show on Part 4 after submission */}
-        {currentPart === 4 && testSubmitted && testResults && (
-          <div className="score-display">
-            <div className="score-card">
-              <h3>Test Results</h3>
-              <div className="score-details">
-                <div className="score-item">
-                  <span className="score-label">Score:</span>
-                  <span className="score-value">{testResults.score}%</span>
-                </div>
-                <div className="score-item">
-                  <span className="score-label">Correct Answers:</span>
-                  <span className="score-value">{testResults.correctCount} / {testResults.totalQuestions}</span>
-                </div>
-                <div className="score-item">
-                  <span className="score-label">Submitted:</span>
-                  <span className="score-value">
-                    {new Date(testResults.submittedAt).toLocaleString()}
-                  </span>
+          
+          {renderQuestionComponent()}
+          
+          {currentPart === 4 && testStarted && (
+            <div className="submit-section">
+              <button 
+                className={testSubmitted ? "reset-button" : "submit-button"}
+                onClick={testSubmitted ? handleResetTest : handleSubmit}
+              >
+                {testSubmitted ? "Reset Test" : "Submit Test"}
+              </button>
+            </div>
+          )}
+          
+          {/* Score Display - Only show on Part 4 after submission */}
+          {currentPart === 4 && testSubmitted && testResults && (
+            <div className="score-display">
+              <div className="score-card">
+                <h3>Test Results</h3>
+                <div className="score-details">
+                  <div className="score-item">
+                    <span className="score-label">Score:</span>
+                    <span className="score-value">{testResults.score}%</span>
+                  </div>
+                  <div className="score-item">
+                    <span className="score-label">Correct Answers:</span>
+                    <span className="score-value">{testResults.correctCount} / {testResults.totalQuestions}</span>
+                  </div>
+                  <div className="score-item">
+                    <span className="score-label">Submitted:</span>
+                    <span className="score-value">
+                      {new Date(testResults.submittedAt).toLocaleString()}
+                    </span>
+                  </div>
                 </div>
               </div>
+            </div>
+          )}
+        </div>
+        
+        {/* Start Test Overlay - Moved back to main container level */}
+        {!testStarted && (
+          <div className="test-overlay">
+            <div className="overlay-content">
+              <h2>Ready to Start?</h2>
+              <p>You're about to begin the Listening Test. Make sure you're in a quiet environment and have your audio ready.</p>
+              <button className="start-test-button" onClick={handleStartTest}>
+                Start Test Now
+              </button>
             </div>
           </div>
         )}
       </div>
-      
-      {/* Start Test Overlay */}
-      {!testStarted && (
-        <div className="test-overlay">
-          <div className="overlay-content">
-            <h2>Ready to Start?</h2>
-            <p>You're about to begin the Listening Test. Make sure you're in a quiet environment and have your audio ready.</p>
-            <button className="start-test-button" onClick={handleStartTest}>
-              Start Test Now
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+    );
 
 };
 

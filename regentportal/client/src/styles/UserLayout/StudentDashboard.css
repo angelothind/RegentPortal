@@ -19,11 +19,11 @@
 
 /* Ensure reading tests have proper proportions */
 .test-viewer-container .test-content-area {
-  width: 70%;
+  width: 60%;
 }
 
 .test-viewer-container .question-area {
-  width: 30%;
+  width: 40%;
 }
 
 .test-content-area {
@@ -214,12 +214,13 @@
 
 /* Question Area Styles */
 .question-area {
-  width: 30%;
+  width: 40%;
   background-color: #fff;
   border-left: 1px solid #ddd;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .question-view-container {
@@ -227,12 +228,20 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
 }
 
 .question-header {
   padding: 20px;
   background-color: #f8f9fa;
   border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.header-left {
+  flex: 1;
 }
 
 .question-header h3 {
@@ -248,10 +257,101 @@
   font-size: 0.9rem;
 }
 
+.test-instruction {
+  margin: 8px 0 0 0;
+  color: #666;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.formatting-instruction {
+  margin: 4px 0 0 0;
+  color: #888;
+  font-size: 0.85rem;
+}
+
+/* Listening-specific instruction alignment */
+.listening-question-view-container .test-instruction {
+  text-align: left;
+}
+
+.listening-question-view-container .formatting-instruction {
+  text-align: left;
+}
+
+/* Passage toggle styling */
+.passage-toggle {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.passage-button {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  color: #666;
+}
+
+.passage-button:hover {
+  background-color: #f0f0f0;
+}
+
+.passage-button.active {
+  background-color: #25245D;
+  color: white;
+  border-color: #25245D;
+}
+
+.part-toggle {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.part-button {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  color: #666;
+}
+
+.part-button:hover {
+  background-color: #f0f0f0;
+}
+
+.part-button.active {
+  background-color: #25245D;
+  color: white;
+  border-color: #25245D;
+}
+
+.part-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .question-content {
   flex: 1;
   overflow-y: auto;
-  padding: 0;
+  padding: 20px;
+}
+
+/* Question component spacing */
+.question-content > div {
+  margin-bottom: 30px;
+}
+
+.question-content > div:last-child {
+  margin-bottom: 0;
 }
 
 .question-area-placeholder {
@@ -302,6 +402,10 @@
   
   .test-viewer-container {
     flex-direction: column;
+  }
+  
+  .test-viewer-container .test-content-area {
+    width: 100%;
   }
   
   .reading-test-container {

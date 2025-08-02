@@ -1,0 +1,136 @@
+{
+  "passageNumber": 2,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Reading Passage 2 has seven paragraphs, A-G.",
+      "formattingInstruction": "Which paragraph contains the following information?\nWrite the correct letter, A-G, in boxes 14-19 on your answer sheet.\nNB You may use any letter more than once.",
+      "questionBlock": [
+        {
+          "questionNumber": "14",
+          "question": "a reference to a denial of involvement in piracy"
+        },
+        {
+          "questionNumber": "15",
+          "question": "details of how a campaign to eradicate piracy was carried out"
+        },
+        {
+          "questionNumber": "16",
+          "question": "a mention of the circumstances in which states in the ancient world would make use of pirates"
+        },
+        {
+          "questionNumber": "17",
+          "question": "a reference to how people today commonly view pirates"
+        },
+        {
+          "questionNumber": "18",
+          "question": "an explanation of how some people were encouraged not to return to piracy"
+        },
+        {
+          "questionNumber": "19",
+          "question": "a mention of the need for many sailing vessels to stay relatively close to land"
+        }
+      ],
+      "correctAnswers": {
+        "14": "A",
+        "15": "B",
+        "16": "C",
+        "17": "D",
+        "18": "E",
+        "19": "F"
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Choose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 20 and 21 on your answer sheet.",
+      "mainQuestion": "Which TWO of the following statements does the writer make about inhabitants of the Mediterranean region in the ancient world?",
+      "questionBlock": [
+        {
+          "questionNumber": "20",
+          "options": [
+            { "letter": "A", "text": "They often used stolen vessels to carry out pirate attacks." },
+            { "letter": "B", "text": "They managed to escape capture by the authorities because they knew the area so well." },
+            { "letter": "C", "text": "They paid for information about the routes merchant ships would take." },
+            { "letter": "D", "text": "They depended more on the sea for their livelihood than on farming." },
+            { "letter": "E", "text": "They stored many of the goods taken in pirate attacks in coves along the coastline." }
+          ]
+        },
+        {
+          "questionNumber": "21",
+          "options": [
+            { "letter": "A", "text": "They often used stolen vessels to carry out pirate attacks." },
+            { "letter": "B", "text": "They managed to escape capture by the authorities because they knew the area so well." },
+            { "letter": "C", "text": "They paid for information about the routes merchant ships would take." },
+            { "letter": "D", "text": "They depended more on the sea for their livelihood than on farming." },
+            { "letter": "E", "text": "They stored many of the goods taken in pirate attacks in coves along the coastline." }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "20": ["C", "D"],
+        "21": ["C", "D"]
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Choose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 22 and 23 on your answer sheet.",
+      "mainQuestion": "Which TWO of the following statements does the writer make about piracy and ancient Greece?",
+      "questionBlock": [
+        {
+          "questionNumber": "22",
+          "options": [
+            { "letter": "A", "text": "The state estimated that very few people were involved in piracy." },
+            { "letter": "B", "text": "Attitudes towards piracy changed shortly after the *Iliad* and the *Odyssey* were written." },
+            { "letter": "C", "text": "Important officials were known to occasionally take part in piracy." },
+            { "letter": "D", "text": "Every citizen regarded pirate attacks on cities as unacceptable." },
+            { "letter": "E", "text": "A favourable view of piracy is evident in certain ancient Greek texts." }
+          ]
+        },
+        {
+          "questionNumber": "23",
+          "options": [
+            { "letter": "A", "text": "The state estimated that very few people were involved in piracy." },
+            { "letter": "B", "text": "Attitudes towards piracy changed shortly after the *Iliad* and the *Odyssey* were written." },
+            { "letter": "C", "text": "Important officials were known to occasionally take part in piracy." },
+            { "letter": "D", "text": "Every citizen regarded pirate attacks on cities as unacceptable." },
+            { "letter": "E", "text": "A favourable view of piracy is evident in certain ancient Greek texts." }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "22": ["C", "E"],
+        "23": ["C", "E"]
+      }
+    },
+    {
+      "questionType": "summary-completion",
+      "introInstruction": "Complete the summary below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 24-26 on your answer sheet.",
+      "summaryText": "Piracy was an issue ancient Rome had to deal with, but it also brought some benefits for Rome. For example, pirates supplied slaves that were important for Rome's industries. However, attacks on vessels transporting **24** ________ to Rome **25** ________ for the pirates responsible. Nevertheless, piracy continued, with some pirates demanding a **26** ________ of the Roman officials they captured.",
+      "questionBlock": [
+        {
+          "questionNumber": "24",
+          "question": "attacks on vessels transporting ________ to Rome",
+          "answer": "grain"
+        },
+        {
+          "questionNumber": "25",
+          "question": "for the pirates responsible",
+          "answer": "punishment"
+        },
+        {
+          "questionNumber": "26",
+          "question": "some pirates demanding a ________ of the Roman officials they captured",
+          "answer": "ransom"
+        }
+      ],
+      "correctAnswers": {
+        "24": "grain",
+        "25": "punishment", 
+        "26": "ransom"
+      }
+    }
+  ]
+} 

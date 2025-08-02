@@ -1,15 +1,15 @@
 .choose-x-words-container {
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 20px;
+  padding: 0;
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
 }
 
 .instructions {
-  margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid #f0f0f0;
+  margin-bottom: 20px;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .instructions h3 {
@@ -74,6 +74,8 @@
 .question-item {
   padding: 0;
   margin: 0;
+  border: none;
+  background: transparent;
 }
 
 .question-text {
@@ -96,6 +98,13 @@
   -moz-appearance: none;
   appearance: none;
   autocomplete: off;
+}
+
+/* Smaller input boxes specifically for reading tests */
+.choose-x-words-container.reading-test .answer-input {
+  min-width: 80px;
+  padding: 6px 8px;
+  font-size: 0.85rem;
 }
 
 .answer-input:focus {
@@ -141,7 +150,7 @@
 .questions-section {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
 .question-item {
@@ -388,14 +397,14 @@
 .test-overlay {
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  left: 234px; /* Account for sidebar width */
+  width: calc(100% - 234px); /* Subtract sidebar width */
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999;
 }
 
 .overlay-content {
