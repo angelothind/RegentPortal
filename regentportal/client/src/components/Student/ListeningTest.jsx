@@ -24,7 +24,7 @@ const ListeningTest = ({ testId, testData }) => {
 
   return (
     <div className="listening-test-container">
-      {/* Audio Section - Top 25% */}
+      {/* Audio Section - Full height since questions are in separate panel */}
       <div className="audio-section">
         {audioSources.length > 0 ? (
           <AudioPlayer 
@@ -36,14 +36,6 @@ const ListeningTest = ({ testId, testData }) => {
             <p>No audio sources available for this test.</p>
           </div>
         )}
-      </div>
-      
-      {/* Questions Section - Bottom 75% */}
-      <div className="questions-section">
-        <div className="questions-content">
-          <h3>Questions</h3>
-          <p>Questions will appear here in the future.</p>
-        </div>
       </div>
     </div>
   );

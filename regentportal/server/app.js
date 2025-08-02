@@ -40,6 +40,8 @@ app.use('/api/books', require('./routes/lookupBooks'))
 app.use('/api/tests', require('./routes/getTestContent'));
 
 app.use('/api/test', require('./routes/getTestById'));
+
+app.use('/api/submit', require('./routes/submitTest'));
 app.get('/', (req, res) => {
   res.send('Root route works!');
 });

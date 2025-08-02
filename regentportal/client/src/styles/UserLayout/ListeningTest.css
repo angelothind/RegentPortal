@@ -7,23 +7,24 @@
   background-color: #f9f9f9;
 }
 
-/* Audio Section: Top 25% of the screen (increased from 20%) */
+/* Audio Section: Top 15% of the screen (reduced from 25%) */
 .audio-section {
-  height: 25%;
-  min-height: 250px;
+  height: 15%;
+  min-height: 150px;
+  max-height: 200px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #fff;
   border-bottom: 1px solid #e0e0e0;
-  padding: 20px;
+  padding: 15px;
 }
 
-/* Questions Section: Bottom 75% of the screen (decreased from 80%) */
+/* Questions Section: Bottom 85% of the screen (increased from 75%) */
 .questions-section {
   flex: 1;
-  height: 75%;
+  height: 85%;
   width: 100%;
   background-color: #fff;
   overflow-y: auto;
@@ -63,14 +64,94 @@
   color: #d32f2f;
 }
 
+/* Score Display Styling */
+.score-display {
+  background-color: #fff;
+  border-bottom: 2px solid #e0e0e0;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.score-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 25px;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.score-card h3 {
+  margin: 0 0 20px 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+}
+
+.score-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.score-item:last-child {
+  border-bottom: none;
+}
+
+.score-label {
+  font-weight: 500;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.score-value {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: white;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .audio-section {
-    min-height: 200px;
-    padding: 15px;
+    min-height: 120px;
+    max-height: 180px;
+    padding: 10px;
   }
   
   .questions-content {
     padding: 20px;
+  }
+  
+  .score-display {
+    padding: 15px;
+  }
+  
+  .score-card {
+    padding: 20px;
+  }
+  
+  .score-card h3 {
+    font-size: 1.3rem;
+  }
+  
+  .score-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .score-label,
+  .score-value {
+    font-size: 0.9rem;
   }
 } 

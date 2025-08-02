@@ -23,7 +23,7 @@ router.post('/login', async (req, res) => {
           console.log('The login was succesful');
           return res.status(200).json({
             message: 'Login successful',
-            user: { username, userType: 'Admin'},
+            user: { _id: user._id, username, userType: 'Admin'},
             token});
             
         } else {
@@ -40,7 +40,7 @@ router.post('/login', async (req, res) => {
             const token = generateToken(user._id, userType);
             return res.status(200).json({
               message: 'Login successful',
-              user: { username, userType },
+              user: { _id: user._id, username, userType },
               token});
         } else {
           return res.status(401).json({ error: 'Invalid password' });
@@ -58,8 +58,8 @@ router.post('/login', async (req, res) => {
           const token = generateToken(user._id, userType);
           return res.status(200).json({
               message: 'Login successful',
-              user: { username, userType },
-              token});;
+              user: { _id: user._id, username, userType },
+              token});
         } else {
           return res.status(401).json({ error: 'Invalid password' });
         }

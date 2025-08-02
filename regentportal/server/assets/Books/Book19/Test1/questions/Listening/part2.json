@@ -1,0 +1,142 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 11-15",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "sectionTitle": "Stanthorpe Twinning Association",
+      "questionBlock": [
+        {
+          "questionNumber": 11,
+          "question": "During the visit to Malatte, in France, members especially enjoyed",
+          "options": [
+            {
+              "letter": "A",
+              "text": "going to a theme park."
+            },
+            {
+              "letter": "B", 
+              "text": "experiencing a river trip."
+            },
+            {
+              "letter": "C",
+              "text": "visiting a cheese factory."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 12,
+          "question": "What will happen in Stanthorpe to mark the 25th anniversary of the Twinning Association?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "A tree will be planted."
+            },
+            {
+              "letter": "B",
+              "text": "A garden seat will be bought."
+            },
+            {
+              "letter": "C",
+              "text": "A footbridge will be built."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 13,
+          "question": "Which event raised most funds this year?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "the film show"
+            },
+            {
+              "letter": "B",
+              "text": "the pancake evening"
+            },
+            {
+              "letter": "C",
+              "text": "the cookery demonstration"
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 14,
+          "question": "For the first evening with the French visitors host families are advised to",
+          "options": [
+            {
+              "letter": "A",
+              "text": "take them for a walk round the town."
+            },
+            {
+              "letter": "B",
+              "text": "go to a local restaurant."
+            },
+            {
+              "letter": "C",
+              "text": "have a meal at home."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 15,
+          "question": "On Saturday evening there will be the chance to",
+          "options": [
+            {
+              "letter": "A",
+              "text": "listen to a concert."
+            },
+            {
+              "letter": "B",
+              "text": "watch a match."
+            },
+            {
+              "letter": "C",
+              "text": "take part in a competition."
+            }
+          ],
+          "answer": "A"
+        }
+      ]
+    },
+    {
+      "questionType": "map-labeling",
+      "introInstruction": "Questions 16-20",
+      "formattingInstruction": "Label the map below. Write the correct letter, A-H, next to Questions 16-20.",
+      "mapTitle": "Farley House",
+      "mapImage": "FarelyHouseMap.png",
+      "questionBlock": [
+        {
+          "questionNumber": 16,
+          "question": "Farm shop",
+          "answer": "D"
+        },
+        {
+          "questionNumber": 17,
+          "question": "Disabled entry",
+          "answer": "E"
+        },
+        {
+          "questionNumber": 18,
+          "question": "Adventure playground",
+          "answer": "F"
+        },
+        {
+          "questionNumber": 19,
+          "question": "Kitchen gardens",
+          "answer": "G"
+        },
+        {
+          "questionNumber": 20,
+          "question": "The Temple of the Four Winds",
+          "answer": "A"
+        }
+      ]
+    }
+  ]
+} 

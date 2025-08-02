@@ -1,0 +1,81 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Complete the notes below.",
+      "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
+      "notesTitle": "Hinchingbrooke Country Park",
+      "questionBlock": [
+        {
+          "questionNumber": 1,
+          "question": "Area: **1** ________ hectares",
+          "answer": "90"
+        },
+        {
+          "descriptiveText": "Habitats: wetland, grassland and woodland"
+        },
+        {
+          "questionNumber": 2,
+          "question": "Wetland: lakes, ponds and a **2** ________",
+          "answer": "stream"
+        },
+        {
+          "descriptiveText": "Wildlife includes birds, insects and animals"
+        },
+        {
+          "sectionHeading": "Subjects studied in educational visits include"
+        },
+        {
+          "questionNumber": 3,
+          "question": "Science: Children look at **3** ________ about plants, etc.",
+          "answer": "facts"
+        },
+        {
+          "questionNumber": 4,
+          "question": "Geography: includes learning to use a **4** ________ and compass",
+          "answer": "map"
+        },
+        {
+          "descriptiveText": "History: changes in land use"
+        },
+        {
+          "questionNumber": 5,
+          "question": "Leisure and tourism: mostly concentrates on the park's **5** ________",
+          "answer": "attractions"
+        },
+        {
+          "questionNumber": 6,
+          "question": "Music: Children make **6** ________ with natural materials, and experiment with rhythm and speed.",
+          "answer": "instruments"
+        },
+        {
+          "sectionHeading": "Benefits of outdoor educational visits"
+        },
+        {
+          "questionNumber": 7,
+          "question": "They give children a feeling of **7** ________ that they may not have elsewhere.",
+          "answer": "freedom"
+        },
+        {
+          "questionNumber": 8,
+          "question": "Children learn new **8** ________ and gain self-confidence.",
+          "answer": "skills"
+        },
+        {
+          "sectionHeading": "Practical issues"
+        },
+        {
+          "questionNumber": 9,
+          "question": "Cost per child: **9** £ ________",
+          "answer": "5"
+        },
+        {
+          "questionNumber": 10,
+          "question": "Adults, such as **10** ________, free",
+          "answer": "teachers"
+        }
+      ]
+    }
+  ]
+} 

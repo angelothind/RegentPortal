@@ -17,16 +17,21 @@ const LoginForm = ({ onBack, userType }) => {
         body: JSON.stringify({ username, password, userType })
       });
 
-      const data = await response.json();
+            const data = await response.json();
       if (response.ok) {
         console.log('✅ Login successful', data);
+        console.log('🔍 User data from server:', data.user);
+        console.log('🔍 User _id field:', data.user._id);
         if (data.user.userType === 'Admin') {
           navigate('/admin', { state: { user: data.user  } });
         } else if (data.user.userType === 'Teacher') {
           navigate('/teacher', { state: { user: data.user  } });
         } else if (data.user.userType === 'Student') {
+          console.log('🔍 Navigating to student dashboard with user:', data.user);
+          // Store user data in localStorage as backup
+          localStorage.setItem('user', JSON.stringify(data.user));
           navigate('/student', { state: { user: data.user  } });
-      }
+    }
         // TODO: Redirect or update app state here
       } else {
         console.error('❌ Login failed:', data.error);

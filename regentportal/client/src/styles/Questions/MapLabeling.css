@@ -1,0 +1,188 @@
+.map-labeling-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+}
+
+.map-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.map-title h4 {
+  margin: 0;
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.map-section {
+  margin-bottom: 30px;
+}
+
+.map-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.map-image {
+  max-width: 80%;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.questions-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.question-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border-left: 4px solid #25245D;
+}
+
+.question-text {
+  flex: 1;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+  font-weight: 500;
+}
+
+.answer-input-container {
+  flex-shrink: 0;
+}
+
+.map-answer-input {
+  width: 60px;
+  height: 40px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  background-color: white;
+  color: #333;
+  transition: border-color 0.2s ease;
+  text-transform: uppercase;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  autocomplete: off;
+}
+
+.map-answer-input:focus {
+  outline: none;
+  border-color: #25245D;
+  box-shadow: 0 0 0 2px rgba(37, 36, 93, 0.1);
+}
+
+.map-answer-input::placeholder {
+  color: #999;
+  font-style: italic;
+  text-transform: none;
+}
+
+/* Remove autocomplete dropdown arrow */
+.map-answer-input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.map-answer-input::-webkit-inner-spin-button,
+.map-answer-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide password manager icons */
+.map-answer-input::-webkit-credentials-auto-fill-button {
+  display: none !important;
+}
+
+.map-answer-input::-webkit-contacts-auto-fill-button {
+  display: none !important;
+}
+
+/* Hide LastPass, 1Password, and other password manager icons */
+.map-answer-input[data-lpignore="true"] {
+  background-image: none !important;
+}
+
+.map-answer-input[data-1p-ignore="true"] {
+  background-image: none !important;
+}
+
+/* Review mode styling for correct/incorrect answers */
+.answer-correct {
+  background-color: #d4edda !important;
+  border-color: #c3e6cb !important;
+  color: #155724 !important;
+}
+
+.answer-incorrect {
+  background-color: #f8d7da !important;
+  border-color: #f5c6cb !important;
+  color: #721c24 !important;
+}
+
+/* Disabled input styling */
+.map-answer-input:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+/* Answer feedback styling */
+.answer-feedback {
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.correct-answer {
+  color: #155724;
+  font-weight: 600;
+  background-color: #d4edda;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border-left: 3px solid #28a745;
+}
+
+.no-answer-given {
+  color: #721c24;
+  font-weight: 600;
+  background-color: #f8d7da;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border-left: 3px solid #dc3545;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .map-labeling-container {
+    margin: 10px;
+    padding: 15px;
+  }
+  
+  .question-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .map-answer-input {
+    width: 80px;
+    height: 45px;
+  }
+} 

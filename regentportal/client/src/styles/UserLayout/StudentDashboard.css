@@ -17,10 +17,99 @@
   width: 100%;
 }
 
+/* Ensure reading tests have proper proportions */
+.test-viewer-container .test-content-area {
+  width: 70%;
+}
+
+.test-viewer-container .question-area {
+  width: 30%;
+}
+
+.test-content-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Listening Layout - Audio on top, questions below */
+.listening-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+.listening-layout .audio-section {
+  height: 30%;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  padding: 20px;
+}
+
+.listening-layout .questions-section {
+  height: 70%;
+  background-color: #fff;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* Override the existing listening-test-container for the new layout */
+.listening-layout .listening-test-container {
+  height: 100%;
+  width: 100%;
+}
+
+.listening-layout .audio-section {
+  height: 100%;
+}
+
+/* Ensure the main content area can handle both layouts */
+.main-content-area {
+  flex: 1;
+  margin-left: 234px; /* Account for sidebar width */
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Listening Question View Styles */
+.listening-question-view-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.listening-question-view-container .question-header {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+}
+
+.listening-question-view-container .question-header h3 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.listening-question-view-container .test-info {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.listening-question-view-container .question-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
 .reading-test-container {
   display: flex;
   height: 100vh;
-  width: 55%; /* Changed from 60% to 55% */
+  width: 100%;
   overflow: hidden;
 }
 
@@ -54,11 +143,11 @@
 }
 
 .passage-subtitle {
-  margin: 0;
-  color: #666;
-  font-size: 1rem;
-  font-style: italic;
-  line-height: 1.4;
+  margin: 0 0 8px 0;
+  color: #888;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.3;
 }
 
 .passage-controls {
@@ -123,6 +212,88 @@
   color: #d32f2f;
 }
 
+/* Question Area Styles */
+.question-area {
+  width: 30%;
+  background-color: #fff;
+  border-left: 1px solid #ddd;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.question-view-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.question-header {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+}
+
+.question-header h3 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.test-info {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.question-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.question-area-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #666;
+  font-size: 1rem;
+  text-align: center;
+  padding: 20px;
+}
+
+.question-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #666;
+  font-size: 1rem;
+}
+
+.question-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #d32f2f;
+  font-size: 1rem;
+  text-align: center;
+  padding: 20px;
+}
+
+.unsupported-question-type {
+  padding: 20px;
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 4px;
+  color: #856404;
+  margin: 20px;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .main-content-area {
@@ -135,6 +306,12 @@
   
   .reading-test-container {
     width: 100%;
+  }
+  
+  .question-area {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid #ddd;
   }
   
   .passage-header {

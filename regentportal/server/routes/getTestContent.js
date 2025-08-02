@@ -88,6 +88,55 @@ router.get('/:id/listening', async (req, res) => {
   }
 });
 
+// 🔒 SECURE: Get question templates for a specific test and part
+router.get('/:id/questions/:part', async (req, res) => {
+  try {
+    const { id, part } = req.params;
+    const { testType } = req.query; // Get test type from query parameter
+    const test = await Test.findById(id);
+    
+    if (!test) {
+      return res.status(404).json({ error: 'Test not found' });
+    }
+
+    if (!testType) {
+      return res.status(400).json({ error: 'Test type is required' });
+    }
+
+    // Construct the path to the question file based on user's selection
+    const testPath = test.title.toLowerCase().replace(/\s+/g, ''); // "Test 1" -> "test1"
+    const questionFilePath = `assets/Books/Book19/${testPath}/Questions/${testType}/${part}.json`;
+    const absolutePath = path.join(__dirname, '..', questionFilePath);
+    
+    console.log(`🔍 Looking for question file: ${absolutePath}`);
+    console.log(`📋 User selected test type: ${testType}`);
+    
+    // Check if file exists
+    if (!fs.existsSync(absolutePath)) {
+      console.error(`❌ Question file not found: ${absolutePath}`);
+      return res.status(404).json({ error: 'Question file not found' });
+    }
+    
+    // Read and parse the JSON file
+    const rawContent = fs.readFileSync(absolutePath, 'utf-8');
+    const questionData = JSON.parse(rawContent);
+    
+    console.log(`✅ Question file loaded: ${part}.json`);
+    
+    res.json({
+      testId: test._id,
+      title: test.title,
+      part: part,
+      testType: testType,
+      questionData: questionData
+    });
+    
+  } catch (err) {
+    console.error('❌ Failed to load question file:', err.message);
+    res.status(500).json({ error: 'Failed to load question file' });
+  }
+});
+
 // 🔒 SECURE: Generic route that respects test type parameter
 router.get('/:id', async (req, res) => {
   try {
@@ -99,33 +148,28 @@ router.get('/:id', async (req, res) => {
     let filteredSources;
     
     if (testType === 'Reading') {
-      // Filter for JSON sources only
       filteredSources = test.sources.filter(source =>
         source.contentPath.endsWith('.json')
       );
     } else if (testType === 'Listening') {
-      // Filter for MP3 sources only
       filteredSources = test.sources.filter(source =>
         source.contentPath.endsWith('.mp3')
       );
     } else {
-      // If no test type specified, return all sources (less secure, but backward compatible)
+      // If no specific type requested, return all sources
       filteredSources = test.sources;
     }
 
     const loadedSources = filteredSources.map(source => {
-      // Add 'assets/' prefix since database stores paths without it
       const filePath = `assets/${source.contentPath}`;
       const absolutePath = path.join(__dirname, '..', filePath);
       
-      // Validate file exists
       if (!fs.existsSync(absolutePath)) {
         console.error(`❌ File not found: ${absolutePath}`);
         return null;
       }
       
       if (source.contentPath.endsWith('.json')) {
-        // Load JSON content for reading sources
         const rawContent = fs.readFileSync(absolutePath, 'utf-8');
         return {
           name: source.name,
@@ -134,18 +178,18 @@ router.get('/:id', async (req, res) => {
           content: JSON.parse(rawContent)
         };
       } else {
-        // Just return path for audio sources
         return {
           name: source.name,
           sourceType: source.sourceType,
           contentPath: source.contentPath
         };
       }
-    }).filter(source => source !== null); // Remove null entries
+    }).filter(source => source !== null);
 
     res.json({
-      ...test.toObject(),
-      testType: testType || 'All',
+      testId: test._id,
+      title: test.title,
+      testType: testType || 'Mixed',
       sources: loadedSources
     });
   } catch (err) {

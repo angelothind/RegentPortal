@@ -1,0 +1,37 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Complete the summary using the list of words, A-G, below.",
+      "formattingInstruction": "Write the correct letter, A-G, in boxes 1-5 on your answer sheet.",
+      "questionBlock": [
+        {
+          "questionNumber": 1,
+          "question": "The discovery of **1** ________ in the human body led to new medical treatments.",
+          "answer": "enzymes"
+        },
+        {
+          "questionNumber": 2,
+          "question": "Scientists found that **2** ________ could be used to fight infections.",
+          "answer": "antibiotics"
+        },
+        {
+          "questionNumber": 3,
+          "question": "The research showed that **3** ________ played a crucial role in cell division.",
+          "answer": "proteins"
+        },
+        {
+          "questionNumber": 4,
+          "question": "Medical professionals now use **4** ________ to diagnose diseases more accurately.",
+          "answer": "scanners"
+        },
+        {
+          "questionNumber": 5,
+          "question": "The study revealed that **5** ________ could prevent certain types of cancer.",
+          "answer": "vitamins"
+        }
+      ]
+    }
+  ]
+} 
