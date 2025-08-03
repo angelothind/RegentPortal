@@ -105,17 +105,11 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
               </div>
               {testSubmitted && testResults && (
                 <div className="answer-feedback">
-                  {testResults.answers?.[question.questionNumber]?.length > 0 ? (
-                                      <span className="correct-answer">
+                  <span className="correct-answer">
                     Correct: {Array.isArray(testResults.correctAnswers?.[question.questionNumber]) 
                       ? testResults.correctAnswers[question.questionNumber].join(', ') 
                       : String(testResults.correctAnswers?.[question.questionNumber] || '')}
                   </span>
-                  ) : (
-                    <span className="no-answer-given">
-                      No answer given
-                    </span>
-                  )}
                 </div>
               )}
             </div>

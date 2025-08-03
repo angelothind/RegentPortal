@@ -3,10 +3,13 @@ import ReadingTest from './ReadingTest';
 import ListeningTest from './ListeningTest';
 import QuestionView from './QuestionView';
 import ListeningQuestionView from './ListeningQuestionView';
+import DraggableDivider from './DraggableDivider';
 
 const TestViewer = ({ selectedTest, user }) => {
   const [testData, setTestData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [passageWidth, setPassageWidth] = useState(56);
+  const [questionWidth, setQuestionWidth] = useState(44);
 
   useEffect(() => {
     const fetchTestData = async () => {
@@ -58,14 +61,26 @@ const TestViewer = ({ selectedTest, user }) => {
   console.log('🎯 TestViewer render - selectedTest:', selectedTest);
   console.log('🎯 TestViewer render - selectedTest.type:', selectedTest?.type);
   
+  const handleResize = (newPassageWidth, newQuestionWidth) => {
+    setPassageWidth(newPassageWidth);
+    setQuestionWidth(newQuestionWidth);
+  };
+
   return (
     <>
       {selectedTest.type === 'Reading' && (
         <div className="test-viewer-container">
-          <div className="test-content-area">
+          <div 
+            className="test-content-area"
+            style={{ width: `${passageWidth}%` }}
+          >
             <ReadingTest testId={selectedTest.testId} testData={testData} />
           </div>
-          <div className="question-area">
+          <DraggableDivider onResize={handleResize} />
+          <div 
+            className="question-area"
+            style={{ width: `${questionWidth}%` }}
+          >
             <QuestionView selectedTest={selectedTest} user={user} />
           </div>
         </div>

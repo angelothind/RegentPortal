@@ -25,11 +25,45 @@
 
 /* Ensure reading tests have proper proportions */
 .test-viewer-container .test-content-area {
-  width: 60%;
+  width: 56%;
+  min-width: 30%;
+  max-width: 70%;
 }
 
 .test-viewer-container .question-area {
-  width: 40%;
+  width: 44%;
+  min-width: 30%;
+  max-width: 70%;
+}
+
+/* Draggable divider */
+.draggable-divider {
+  width: 6px;
+  background-color: #e0e0e0;
+  cursor: col-resize;
+  position: relative;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.draggable-divider:hover {
+  background-color: #2196f3;
+}
+
+.draggable-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+  height: 40px;
+  background-color: #999;
+  border-radius: 1px;
+}
+
+.draggable-divider:hover::after {
+  background-color: #2196f3;
 }
 
 .test-content-area {
@@ -349,12 +383,12 @@
 .question-content {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
+  padding: 10px;
 }
 
 /* Question component spacing */
 .question-content > div {
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .question-content > div:last-child {
@@ -399,6 +433,114 @@
   border-radius: 4px;
   color: #856404;
   margin: 20px;
+}
+
+/* Test Controls */
+.test-controls {
+  padding: 20px;
+  border-top: 1px solid #eee;
+  background-color: #f8f9fa;
+}
+
+.submit-section {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.submit-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
+}
+
+.submit-button:active {
+  transform: translateY(1px);
+}
+
+.reset-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 4px rgba(108, 117, 125, 0.2);
+}
+
+.reset-button:hover {
+  background-color: #545b62;
+  box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+}
+
+.reset-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.3);
+}
+
+.reset-button:active {
+  transform: translateY(1px);
+}
+
+.start-test-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 4px rgba(40, 167, 69, 0.2);
+}
+
+.start-test-button:hover {
+  background-color: #218838;
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+.start-test-button:active {
+  transform: translateY(1px);
+}
+
+.results-section {
+  text-align: center;
+  padding: 20px;
+}
+
+.results-section h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.results-section p {
+  margin: 0 0 10px 0;
+  color: #666;
+  font-size: 1.1rem;
 }
 
 /* Responsive design */

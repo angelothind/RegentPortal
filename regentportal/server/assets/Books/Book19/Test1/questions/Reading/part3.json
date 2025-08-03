@@ -1,0 +1,110 @@
+{
+  "passageNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Choose the correct letter, A, B, C or D.",
+      "formattingInstruction": "Write the correct letter in boxes 27-30 on your answer sheet.",
+      "questionBlock": [
+        {
+          "questionNumber": "27",
+          "question": "What point does the writer make about misinformation in the first paragraph?",
+          "options": [
+            { "letter": "A", "text": "Misinformation is a relatively recent phenomenon." },
+            { "letter": "B", "text": "Some people find it easy to identify misinformation." },
+            { "letter": "C", "text": "Misinformation changes as it is passed from one person to another." },
+            { "letter": "D", "text": "There may be a number of reasons for the spread of misinformation." }
+          ]
+        },
+        {
+          "questionNumber": "28",
+          "question": "What does the writer say about the role of technology?",
+          "options": [
+            { "letter": "A", "text": "It may at some point provide us with a solution to misinformation." },
+            { "letter": "B", "text": "It could fundamentally alter the way in which people regard information." },
+            { "letter": "C", "text": "It has changed the way in which organisations use misinformation." },
+            { "letter": "D", "text": "It has made it easier for people to check whether information is accurate." }
+          ]
+        },
+        {
+          "questionNumber": "29",
+          "question": "What is the writer doing in the fourth paragraph?",
+          "options": [
+            { "letter": "A", "text": "comparing the different opinions people have of misinformation" },
+            { "letter": "B", "text": "explaining how the effects of misinformation have changed over time" },
+            { "letter": "C", "text": "outlining which issues connected with misinformation are significant today" },
+            { "letter": "D", "text": "describing the attitude of policy makers towards misinformation in the media" }
+          ]
+        },
+        {
+          "questionNumber": "30",
+          "question": "What point does the writer make about regulation in the USA?",
+          "options": [
+            { "letter": "A", "text": "The guidelines issued by the FDA need to be simplified." },
+            { "letter": "B", "text": "Regulation does not affect people's opinions of new prescription drugs." },
+            { "letter": "C", "text": "The USA has more regulatory bodies than most other countries." },
+            { "letter": "D", "text": "Regulation fails to prevent misinformation from appearing in the media." }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "27": "D",
+        "28": "A",
+        "29": "C",
+        "30": "D"
+      }
+    },
+    {
+      "questionType": "choose-from",
+      "introInstruction": "Complete the summary using the list of phrases, A-J, below.",
+      "formattingInstruction": "Write the correct letter, A-J, in boxes 31-36 on your answer sheet.",
+      "mainQuestion": "What happens when people encounter misinformation?",
+      "summaryText": "Although people have **31** ________ to misinformation, there is debate about precisely how and when we label something as true or untrue. The philosophers Descartes and Spinoza had **32** ________ about how people engage with information. While Descartes believed that people accept or reject information after considering whether it is true or not, Spinoza argued that people accepted all information they encountered (and by default misinformation) and did not verify or reject it until afterwards. Moreover, Spinoza believed that a distinct **33** ________ is involved in these stages. Recent research has provided **34** ________ for Spinoza's theory and it would appear that people accept all encountered information as if it were true, even if this is for an extremely **35** ________, and do not label the information as true or false until later. This is consistent with the fact that the resources for scepticism and the resources for perceiving and encoding are in **36** ________ in the brain.",
+      "questionBlock": [
+        { "questionNumber": "31" },
+        { "questionNumber": "32" },
+        { "questionNumber": "33" },
+        { "questionNumber": "34" },
+        { "questionNumber": "35" },
+        { "questionNumber": "36" }
+      ],
+      "options": [
+        { "letter": "A", "text": "constant conflict" },
+        { "letter": "B", "text": "additional evidence" },
+        { "letter": "C", "text": "different locations" },
+        { "letter": "D", "text": "experimental subjects" },
+        { "letter": "E", "text": "short period" },
+        { "letter": "F", "text": "extreme distrust" },
+        { "letter": "G", "text": "frequent exposure" },
+        { "letter": "H", "text": "mental operation" },
+        { "letter": "I", "text": "dubious reason" },
+        { "letter": "J", "text": "different ideas" }
+      ],
+      "correctAnswers": {
+        "31": "G",
+        "32": "J",
+        "33": "H",
+        "34": "B",
+        "35": "E",
+        "36": "C"
+      }
+    },
+    {
+      "questionType": "TFNG",
+      "introInstruction": "Do the following statements agree with the claims of the writer in Reading Passage 3?",
+      "formattingInstruction": "In boxes 37-40 on your answer sheet, write\nYES if the statement agrees with the claims of the writer\nNO if the statement contradicts the claims of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this",
+      "questionBlock": [
+        { "questionNumber": "37", "question": "Campaigns designed to correct misinformation will fail to achieve their purpose if people are unable to understand them." },
+        { "questionNumber": "38", "question": "Attempts to teach elementary school students about misinformation have been opposed." },
+        { "questionNumber": "39", "question": "It may be possible to overcome the problem of misinformation in a relatively short period." },
+        { "questionNumber": "40", "question": "The need to keep up with new information is hugely exaggerated in today's world." }
+      ],
+      "correctAnswers": {
+        "37": "YES",
+        "38": "NOT GIVEN",
+        "39": "NO",
+        "40": "NOT GIVEN"
+      }
+    }
+  ]
+} 

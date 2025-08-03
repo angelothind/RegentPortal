@@ -1,9 +1,9 @@
 .multiple-choice-container {
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 20px;
+  padding: 0;
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
 }
 
 .instructions {
@@ -41,36 +41,36 @@
 .questions-section {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 10px;
 }
 
 .question-item {
-  padding: 20px;
+  padding: 8px;
   background-color: #f9f9f9;
   border-radius: 8px;
   border-left: 4px solid #25245D;
 }
 
 .question-text {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: 1.4;
   color: #333;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   font-weight: 500;
 }
 
 .options-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 2px;
 }
 
 .option-label {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 6px;
   cursor: pointer;
-  padding: 8px;
+  padding: 3px;
   border-radius: 4px;
   transition: background-color 0.2s ease;
 }
@@ -88,13 +88,15 @@
 .option-letter {
   font-weight: 600;
   color: #25245D;
-  min-width: 20px;
+  min-width: 16px;
+  font-size: 0.8rem;
 }
 
 .option-text {
   flex: 1;
-  line-height: 1.5;
+  line-height: 1.2;
   color: #333;
+  font-size: 0.85rem;
 }
 
 /* Custom radio button styling */

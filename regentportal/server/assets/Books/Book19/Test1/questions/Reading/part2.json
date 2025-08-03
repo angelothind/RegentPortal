@@ -32,12 +32,12 @@
         }
       ],
       "correctAnswers": {
-        "14": "A",
-        "15": "B",
+        "14": "D",
+        "15": "G",
         "16": "C",
-        "17": "D",
-        "18": "E",
-        "19": "F"
+        "17": "A",
+        "18": "G",
+        "19": "B"
       }
     },
     {
@@ -68,8 +68,8 @@
         }
       ],
       "correctAnswers": {
-        "20": ["C", "D"],
-        "21": ["C", "D"]
+        "20": ["B", "D"],
+        "21": ["B", "D"]
       }
     },
     {
@@ -105,14 +105,13 @@
       }
     },
     {
-      "questionType": "summary-completion",
+      "questionType": "choose-x-word",
       "introInstruction": "Complete the summary below.",
       "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 24-26 on your answer sheet.",
-      "summaryText": "Piracy was an issue ancient Rome had to deal with, but it also brought some benefits for Rome. For example, pirates supplied slaves that were important for Rome's industries. However, attacks on vessels transporting **24** ________ to Rome **25** ________ for the pirates responsible. Nevertheless, piracy continued, with some pirates demanding a **26** ________ of the Roman officials they captured.",
       "questionBlock": [
         {
           "questionNumber": "24",
-          "question": "attacks on vessels transporting ________ to Rome",
+          "question": "Piracy was an issue ancient Rome had to deal with, but it also brought some benefits for Rome. For example, pirates supplied slaves that were important for Rome's industries. However, attacks on vessels transporting **24** ________ to Rome for the pirates responsible. Nevertheless, piracy continued, with some pirates demanding a **26** ________ of the Roman officials they captured.",
           "answer": "grain"
         },
         {
@@ -128,7 +127,7 @@
       ],
       "correctAnswers": {
         "24": "grain",
-        "25": "punishment", 
+        "25": "punishment",
         "26": "ransom"
       }
     }

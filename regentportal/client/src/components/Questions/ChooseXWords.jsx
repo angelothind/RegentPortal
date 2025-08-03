@@ -53,45 +53,41 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
         <p className="formatting-instruction">{template.formattingInstruction}</p>
       </div>
       
-      <div className="questions-section">
-        {template.questionBlock.map((question) => (
-          <div key={question.questionNumber} className="question-item">
-            <div className="question-text">
-              {stripMarkdownBold(question.question || '').split('________').map((part, index, array) => (
-                <span key={index}>
-                  <span dangerouslySetInnerHTML={{ __html: part || '' }} />
-                  {index < array.length - 1 && (
-                    <input
-                      type="text"
-                      className={`answer-input ${getAnswerClass(question.questionNumber)}`}
-                      placeholder="Answer"
-                      value={getAnswerValue(question.questionNumber)}
-                      onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
-                      disabled={testSubmitted}
-                      autoComplete="off"
-                      data-form-type="other"
-                      data-lpignore="true"
-                      data-1p-ignore="true"
-                    />
-                  )}
-                </span>
-              ))}
-            </div>
-            {testSubmitted && testResults && (
-              <div className="answer-feedback">
-                {testResults.answers?.[question.questionNumber] ? (
+      <div className="notes-container">
+        <div className="notes-content">
+          {template.questionBlock.map((question) => (
+            <div key={question.questionNumber} className="question-item">
+              <div className="question-text">
+                {stripMarkdownBold(question.question || '').split('________').map((part, index, array) => (
+                  <span key={index}>
+                    <span dangerouslySetInnerHTML={{ __html: part || '' }} />
+                    {index < array.length - 1 && (
+                      <input
+                        type="text"
+                        className={`answer-input ${getAnswerClass(question.questionNumber)}`}
+                        placeholder="Answer"
+                        value={getAnswerValue(question.questionNumber)}
+                        onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
+                        disabled={testSubmitted}
+                        autoComplete="off"
+                        data-form-type="other"
+                        data-lpignore="true"
+                        data-1p-ignore="true"
+                      />
+                    )}
+                  </span>
+                ))}
+              </div>
+              {testSubmitted && testResults && (
+                <div className="answer-feedback">
                   <span className="correct-answer">
                     Correct: {String(testResults.correctAnswers?.[question.questionNumber] || '')}
                   </span>
-                ) : (
-                  <span className="no-answer-given">
-                    No answer given
-                  </span>
-                )}
-              </div>
-            )}
-          </div>
-        ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

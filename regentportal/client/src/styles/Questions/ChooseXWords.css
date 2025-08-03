@@ -161,11 +161,23 @@
   gap: 15px;
 }
 
+/* Reading test specific styling - remove gaps */
+.choose-x-words-container.reading-test .questions-section {
+  gap: 0;
+}
+
 .question-item {
   padding: 15px;
   background-color: #f9f9f9;
   border-radius: 6px;
   border-left: 4px solid #25245D;
+}
+
+/* Reading test specific styling - remove grey background and purple border */
+.choose-x-words-container.reading-test .question-item {
+  padding: 0;
+  background-color: transparent;
+  border: none;
 }
 
 /* Part toggle styling */
@@ -251,7 +263,7 @@
   font-style: italic;
 }
 
-/* Listening notes styling - completely separate from ChooseXWords */
+/* Listening notes styling - use same styling as regular notes */
 .listening-notes-container {
   background-color: #fff;
   border: 1px solid #ddd;

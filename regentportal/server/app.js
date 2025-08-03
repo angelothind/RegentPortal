@@ -42,6 +42,9 @@ app.use('/api/tests', require('./routes/getTestContent'));
 app.use('/api/test', require('./routes/getTestById'));
 
 app.use('/api/submit', require('./routes/submitTest'));
+
+app.use('/api/teachers', require('./routes/teacherRoutes'));
+
 app.get('/', (req, res) => {
   res.send('Root route works!');
 });

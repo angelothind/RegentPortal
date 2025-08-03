@@ -82,15 +82,9 @@ const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, 
             </div>
             {testSubmitted && testResults && (
               <div className="answer-feedback">
-                {testResults.answers?.[question.questionNumber] ? (
-                  <span className="correct-answer">
-                    Correct: {String(testResults.correctAnswers?.[question.questionNumber] || '')}
-                  </span>
-                ) : (
-                  <span className="no-answer-given">
-                    No answer given
-                  </span>
-                )}
+                <span className="correct-answer">
+                  Correct: {String(testResults.correctAnswers?.[question.questionNumber] || '')}
+                </span>
               </div>
             )}
           </div>

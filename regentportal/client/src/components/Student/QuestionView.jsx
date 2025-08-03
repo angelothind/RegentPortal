@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import ChooseXWords from '../Questions/ChooseXWords';
+import ChooseFrom from '../Questions/ChooseFrom';
 import TFNG from '../Questions/TFNG';
 import Matching from '../Questions/Matching';
+import MultipleChoice from '../Questions/MultipleChoice';
 import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
 import SummaryCompletion from '../Questions/SummaryCompletion';
 
-const QuestionView = ({ selectedTest }) => {
+const QuestionView = ({ selectedTest, user }) => {
   console.log('🚀 QuestionView component mounted with selectedTest:', selectedTest);
+  console.log('🔍 QuestionView received user:', user);
   
   const [questionData, setQuestionData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [answers, setAnswers] = useState({});
   const [currentPassage, setCurrentPassage] = useState(1);
+  const [testSubmitted, setTestSubmitted] = useState(false);
+  const [testResults, setTestResults] = useState(null);
 
   // Load saved answers from localStorage on component mount
   useEffect(() => {
@@ -46,7 +51,7 @@ const QuestionView = ({ selectedTest }) => {
   // Add refresh confirmation warning
   useEffect(() => {
     const handleBeforeUnload = (e) => {
-      if (Object.keys(answers).length > 0) {
+      if (!testSubmitted && Object.keys(answers).length > 0) {
         e.preventDefault();
         e.returnValue = '⚠️ WARNING: You have unsaved test answers! Your progress will be lost if you leave this page. Are you sure you want to continue?';
         return '⚠️ WARNING: You have unsaved test answers! Your progress will be lost if you leave this page. Are you sure you want to continue?';
@@ -58,7 +63,7 @@ const QuestionView = ({ selectedTest }) => {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [answers]);
+  }, [testSubmitted, answers]);
 
   useEffect(() => {
     const fetchQuestionData = async () => {
@@ -115,6 +120,92 @@ const QuestionView = ({ selectedTest }) => {
     console.log('📝 Answers updated:', newAnswers);
   };
 
+
+
+  const handleSubmit = async () => {
+    const confirmed = window.confirm('Are you sure you want to submit the test? You cannot change your answers after submission.');
+    if (!confirmed) return;
+    
+    // Clear saved answers from localStorage after submission
+    if (selectedTest && selectedTest.testId) {
+      localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`);
+      console.log('📝 Cleared saved answers from localStorage after submission');
+    }
+    
+    console.log('📝 Submitting test with answers:', answers);
+    console.log('📝 User data:', user);
+    
+    try {
+      const response = await fetch('/api/submit/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          testId: selectedTest.testId._id,
+          testType: selectedTest.type,
+          answers: answers,
+          studentId: user?._id || 'dummy-student-id'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      
+      if (result.success) {
+        console.log('✅ Test submitted successfully:', result.data);
+        console.log('📝 Server results structure:', result.data.results);
+        
+        // Set the test results from the backend response
+        // Extract correct answers from the results
+        const correctAnswers = {};
+        Object.keys(result.data.results).forEach(questionNumber => {
+          const resultItem = result.data.results[questionNumber];
+          // Handle arrays (for multiple choice questions)
+          if (Array.isArray(resultItem.correctAnswer)) {
+            correctAnswers[questionNumber] = resultItem.correctAnswer.join(', ');
+          } else {
+            correctAnswers[questionNumber] = resultItem.correctAnswer;
+          }
+        });
+        
+        console.log('📝 Processed correct answers:', correctAnswers);
+        
+        setTestResults({
+          score: result.data.score,
+          totalQuestions: result.data.totalQuestions,
+          correctCount: result.data.correctCount,
+          answers: answers,
+          correctAnswers: correctAnswers,
+          results: result.data.results,
+          submittedAt: result.data.submittedAt
+        });
+        setTestSubmitted(true);
+        
+        alert(`Test submitted successfully!\nYour score: ${result.data.score}%`);
+      } else {
+        throw new Error(result.message || 'Failed to submit test');
+      }
+    } catch (error) {
+      console.error('❌ Error submitting test:', error);
+      alert('Failed to submit test. Please try again.');
+    }
+  };
+
+  const handleResetTest = () => {
+    const confirmed = window.confirm('Are you sure you want to reset the test? This will clear all your answers and return to the start.');
+    if (!confirmed) return;
+    
+    setTestSubmitted(false);
+    setTestResults(null);
+    setAnswers({});
+    setCurrentPassage(1);
+    console.log('🔄 Test reset');
+  };
+
   const handlePassageChange = (passageNumber) => {
     setCurrentPassage(passageNumber);
     setQuestionData(null); // Clear current data when switching passages
@@ -169,6 +260,19 @@ const QuestionView = ({ selectedTest }) => {
               template={template}
               onAnswerChange={handleAnswerChange}
               testType={selectedTest.type}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
+            />
+          );
+        case 'choose-from':
+          return (
+            <ChooseFrom
+              key={index}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+              testType={selectedTest.type}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
             />
           );
         case 'TFNG':
@@ -177,6 +281,8 @@ const QuestionView = ({ selectedTest }) => {
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
             />
           );
         case 'matching':
@@ -185,6 +291,18 @@ const QuestionView = ({ selectedTest }) => {
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
+            />
+          );
+        case 'multiple-choice':
+          return (
+            <MultipleChoice
+              key={index}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
             />
           );
         case 'multiple-choice-two':
@@ -193,6 +311,8 @@ const QuestionView = ({ selectedTest }) => {
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
             />
           );
         case 'summary-completion':
@@ -201,6 +321,8 @@ const QuestionView = ({ selectedTest }) => {
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
             />
           );
         // TODO: Add other question types here
@@ -245,6 +367,31 @@ const QuestionView = ({ selectedTest }) => {
       <div className="question-content">
         {renderQuestionComponent()}
       </div>
+      
+      {/* Test Controls - Submit only on last passage, reset only after submission */}
+      {currentPassage === 3 && !testSubmitted && (
+        <div className="test-controls">
+          <div className="submit-section">
+            <button className="submit-button" onClick={handleSubmit}>
+              Submit Test
+            </button>
+          </div>
+        </div>
+      )}
+      
+      {/* Results section - only show after submission */}
+      {testSubmitted && (
+        <div className="test-controls">
+          <div className="results-section">
+            <h3>Test Results</h3>
+            <p>Score: {testResults?.score}%</p>
+            <p>Correct: {testResults?.correctCount} / {testResults?.totalQuestions}</p>
+            <button className="reset-button" onClick={handleResetTest}>
+              Take Test Again
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

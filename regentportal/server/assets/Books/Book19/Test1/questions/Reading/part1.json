@@ -47,40 +47,48 @@
     },
     {
       "questionType": "choose-x-word",
-      "introInstruction": "Complete the summary using the list of words, A-G, below.",
-      "formattingInstruction": "Write the correct letter, A-G, in boxes 8-13 on your answer sheet.",
+      "introInstruction": "Complete the notes below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 8-13 on your answer sheet.",
       "questionBlock": [
         {
           "questionNumber": "8",
-          "question": "The discovery of **8** ________ in the human body led to new medical treatments.",
-          "answer": "enzymes"
+          "question": "Mike and Bob Bryan made changes to the types of **8** ________ used on their racket frames.",
+          "answer": "paint"
         },
         {
           "questionNumber": "9",
-          "question": "Scientists found that **9** ________ could be used to fight infections.",
-          "answer": "antibiotics"
+          "question": "Players were not allowed to use the spaghetti-strung racket because of the amount of **9** ________ it created.",
+          "answer": "noise"
         },
         {
           "questionNumber": "10",
-          "question": "The research showed that **10** ________ played a crucial role in cell division.",
-          "answer": "proteins"
+          "question": "Changes to rackets can be regarded as being as important as players' diets or the **10** ________ they do.",
+          "answer": "training"
         },
         {
           "questionNumber": "11",
-          "question": "Medical professionals now use **11** ________ to diagnose diseases more accurately.",
-          "answer": "scanners"
+          "question": "All rackets used to have natural strings made from the **11** ________ of animals.",
+          "answer": "guts"
         },
         {
           "questionNumber": "12",
-          "question": "The study revealed that **12** ________ could prevent certain types of cancer.",
-          "answer": "vitamins"
+          "question": "Pete Sampras had metal **12** ________ put into the frames of his rackets.",
+          "answer": "weights"
         },
         {
           "questionNumber": "13",
-          "question": "The research team discovered that **13** ________ were essential for brain function.",
-          "answer": "nutrients"
+          "question": "Gonçalo Oliveira changed the **13** ________ on his racket handles.",
+          "answer": "grip"
         }
-      ]
+      ],
+      "correctAnswers": {
+        "8": "paint",
+        "9": "noise",
+        "10": "training",
+        "11": "guts",
+        "12": "weights",
+        "13": "grip"
+      }
     }
   ]
 } 
