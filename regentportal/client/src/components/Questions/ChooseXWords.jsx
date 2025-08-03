@@ -49,7 +49,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
   return (
     <div className={`choose-x-words-container ${testType === 'Reading' ? 'reading-test' : ''}`}>
       <div className="instructions">
-        <h3>{template.introInstruction}</h3>
+        <h3 className="main-instruction">{template.introInstruction}</h3>
         <p className="formatting-instruction">{template.formattingInstruction}</p>
       </div>
       

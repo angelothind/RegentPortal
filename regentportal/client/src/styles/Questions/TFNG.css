@@ -20,12 +20,20 @@
   text-align: center;
 }
 
+.main-instruction {
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  color: #25245D !important;
+  margin-bottom: 15px !important;
+}
+
 .formatting-instruction {
   margin: 0;
-  color: #666;
-  font-size: 0.9rem;
-  font-style: italic;
+  color: #25245D;
+  font-size: 1.4rem;
+  font-weight: 700;
   text-align: center;
+  margin-bottom: 15px;
 }
 
 .answer-key {
@@ -57,7 +65,7 @@
 .tfng-questions {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 8px;
 }
 
 .tfng-question-item {
@@ -67,25 +75,33 @@
   background: transparent;
 }
 
+.question-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
 .question-number {
   font-weight: 600;
   color: #333;
-  margin-bottom: 8px;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  flex-shrink: 0;
 }
 
 .question-text {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.2;
   color: #333;
-  margin: 0 0 20px 0;
+  margin: 0;
   padding: 0;
+  flex: 1;
 }
 
 .answer-options {
   display: flex;
   gap: 25px;
-  margin-top: 15px;
+  margin-top: 0;
 }
 
 .option-label {
@@ -93,9 +109,9 @@
   align-items: center;
   gap: 6px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #333;
-  padding: 4px 0;
+  padding: 1px 0;
 }
 
 .option-label input[type="radio"] {

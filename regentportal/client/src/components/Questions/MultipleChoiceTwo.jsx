@@ -65,7 +65,7 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
   return (
     <div className="multiple-choice-two-container">
       <div className="instructions">
-        <h3>{template.introInstruction}</h3>
+        <h3 className="main-instruction">{template.introInstruction}</h3>
         <p className="formatting-instruction">{template.formattingInstruction}</p>
       </div>
       

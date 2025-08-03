@@ -42,7 +42,7 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
   return (
     <div className="tfng-container">
       <div className="tfng-instructions">
-        <h3>{template.introInstruction}</h3>
+        <h3 className="main-instruction">{template.introInstruction}</h3>
         <p className="formatting-instruction">{template.formattingInstruction}</p>
       </div>
       
@@ -64,8 +64,10 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
       <div className="tfng-questions">
         {template.questionBlock.map((question) => (
           <div key={question.questionNumber} className="tfng-question-item">
-            <div className="question-number">{question.questionNumber}.</div>
-            <div className="question-text">{question.question}</div>
+            <div className="question-line">
+              <span className="question-number">{question.questionNumber}.</span>
+              <span className="question-text">{question.question}</span>
+            </div>
             <div className="answer-options">
               <label className="option-label">
                 <input

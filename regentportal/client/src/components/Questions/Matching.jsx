@@ -40,7 +40,7 @@ const Matching = ({ template, onAnswerChange, testResults, testSubmitted, compon
   return (
     <div className="matching-container">
       <div className="instructions">
-        <h3>{template.introInstruction}</h3>
+        <h3 className="main-instruction">{template.introInstruction}</h3>
         <p className="formatting-instruction">{template.formattingInstruction}</p>
       </div>
       

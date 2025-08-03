@@ -218,10 +218,7 @@ const QuestionView = ({ selectedTest }) => {
     <div className="question-view-container">
       <div className="question-header">
         <div className="header-left">
-          <h3>Questions for Passage {currentPassage}</h3>
-          <p className="test-info">
-            {questionData.title} - {selectedTest.type}
-          </p>
+          <h3>Questions</h3>
         </div>
         <div className="passage-toggle">
           <button 

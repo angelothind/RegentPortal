@@ -3,7 +3,7 @@
   "questionNumbers": "1-7",
   "introInstruction": "Do the following statements agree with the information given in Reading Passage 1?",
   "questionInstruction": "In boxes 1-7 on your answer sheet, write",
-  "formattingInstruction": "TRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this",
+  "formattingInstruction": "In boxes 1-7 on your answer sheet, write",
   "template": {
     "questionBlock": [
       {

@@ -19,11 +19,19 @@
   font-weight: 600;
 }
 
+.main-instruction {
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  color: #25245D !important;
+  margin-bottom: 15px !important;
+}
+
 .formatting-instruction {
   margin: 0;
-  color: #666;
-  font-size: 0.9rem;
-  font-style: italic;
+  color: #25245D;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 15px;
 }
 
 .questions-section {
