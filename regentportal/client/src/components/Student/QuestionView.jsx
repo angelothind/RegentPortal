@@ -5,7 +5,7 @@ import Matching from '../Questions/Matching';
 import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
 import SummaryCompletion from '../Questions/SummaryCompletion';
 
-const QuestionView = ({ selectedTest }) => {
+const QuestionView = ({ selectedTest, testResults, testSubmitted, isTeacherMode = false, onBackToStudent = null }) => {
   console.log('🚀 QuestionView component mounted with selectedTest:', selectedTest);
   
   const [questionData, setQuestionData] = useState(null);
@@ -169,6 +169,8 @@ const QuestionView = ({ selectedTest }) => {
               template={template}
               onAnswerChange={handleAnswerChange}
               testType={selectedTest.type}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
             />
           );
         case 'TFNG':
@@ -177,6 +179,8 @@ const QuestionView = ({ selectedTest }) => {
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
             />
           );
         case 'matching':
@@ -185,6 +189,8 @@ const QuestionView = ({ selectedTest }) => {
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
             />
           );
         case 'multiple-choice-two':
@@ -193,6 +199,8 @@ const QuestionView = ({ selectedTest }) => {
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
             />
           );
         case 'summary-completion':
@@ -201,6 +209,8 @@ const QuestionView = ({ selectedTest }) => {
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
             />
           );
         // TODO: Add other question types here
@@ -245,6 +255,18 @@ const QuestionView = ({ selectedTest }) => {
       <div className="question-content">
         {renderQuestionComponent()}
       </div>
+      
+      {/* Back to Student Info button - Only show for teachers */}
+      {isTeacherMode && onBackToStudent && (
+        <div className="submit-section">
+          <button 
+            className="back-to-student-button"
+            onClick={onBackToStudent}
+          >
+            ← Back to Student Info
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -18,9 +18,18 @@ const Matching = ({ template, onAnswerChange, testResults, testSubmitted, compon
     if (!testSubmitted || !testResults) return '';
     
     const result = testResults.results?.[questionNumber];
-    if (!result) return '';
     
-    return result.isCorrect ? 'answer-correct' : 'answer-incorrect';
+    // If there's a result, use it
+    if (result) {
+      return result.isCorrect ? 'answer-correct' : 'answer-incorrect';
+    }
+    
+    // If there's no result but we have correct answers, mark as incorrect (unanswered)
+    if (testResults.correctAnswers?.[questionNumber]) {
+      return 'answer-incorrect';
+    }
+    
+    return '';
   };
 
   const getAnswerValue = (questionNumber) => {
@@ -81,15 +90,15 @@ const Matching = ({ template, onAnswerChange, testResults, testSubmitted, compon
             </div>
             {testSubmitted && testResults && (
               <div className="answer-feedback">
-                {testResults.answers?.[question.questionNumber] ? (
+                {testResults.correctAnswers?.[question.questionNumber] ? (
                   <span className="correct-answer">
-                    Correct: {String(testResults.correctAnswers?.[question.questionNumber] || '')}
+                    Correct: {String(testResults.correctAnswers[question.questionNumber])}
                   </span>
-                ) : (
+                ) : testResults.answers?.[question.questionNumber] ? (
                   <span className="no-answer-given">
                     No answer given
                   </span>
-                )}
+                ) : null}
               </div>
             )}
           </div>

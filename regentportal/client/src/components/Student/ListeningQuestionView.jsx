@@ -5,7 +5,7 @@ import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
 import Matching from '../Questions/Matching';
 import MapLabeling from '../Questions/MapLabeling';
 
-const ListeningQuestionView = ({ selectedTest, user }) => {
+const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null }) => {
   console.log('🔍 ListeningQuestionView received user:', user);
   console.log('🔍 ListeningQuestionView received selectedTest:', selectedTest);
   const [questionData, setQuestionData] = useState(null);
@@ -13,9 +13,13 @@ const ListeningQuestionView = ({ selectedTest, user }) => {
   const [error, setError] = useState(null);
   const [answers, setAnswers] = useState({});
   const [currentPart, setCurrentPart] = useState(1);
-  const [testStarted, setTestStarted] = useState(false);
+  const [testStarted, setTestStarted] = useState(isTeacherMode);
   const [testSubmitted, setTestSubmitted] = useState(false);
   const [testResults, setTestResults] = useState(null);
+  
+  // Use external test results if provided (for teacher view)
+  const finalTestResults = externalTestResults || testResults;
+  const finalTestSubmitted = externalTestSubmitted || testSubmitted;
 
   // Load saved answers from localStorage on component mount
   useEffect(() => {
@@ -359,9 +363,9 @@ const ListeningQuestionView = ({ selectedTest, user }) => {
                           {partIndex < array.length - 1 && (
                             <input
                               type="text"
-                              className={`listening-answer-input ${testSubmitted && testResults && testResults.results && testResults.results[item.questionNumber] ? (testResults.results[item.questionNumber].isCorrect ? 'answer-correct' : 'answer-incorrect') : ''}`}
+                              className={`listening-answer-input ${finalTestSubmitted && finalTestResults && finalTestResults.results && finalTestResults.results[item.questionNumber] ? (finalTestResults.results[item.questionNumber].isCorrect ? 'answer-correct' : 'answer-incorrect') : ''}`}
                               placeholder="Answer"
-                              value={testSubmitted && testResults && testResults.answers ? (testResults.answers[item.questionNumber] || '') : (answers[item.questionNumber] || '')}
+                              value={finalTestSubmitted && finalTestResults && finalTestResults.answers ? (finalTestResults.answers[item.questionNumber] || '') : (answers[item.questionNumber] || '')}
                               onChange={(e) => handleAnswerChange(item.questionNumber, e.target.value)}
                               disabled={testSubmitted}
                               autoComplete="off"
@@ -373,11 +377,11 @@ const ListeningQuestionView = ({ selectedTest, user }) => {
                         </span>
                       ))}
                     </div>
-                    {testSubmitted && testResults && testResults.correctAnswers && testResults.correctAnswers[item.questionNumber] && (
+                                        {finalTestSubmitted && finalTestResults && finalTestResults.correctAnswers && finalTestResults.correctAnswers[item.questionNumber] && (
                       <div className="answer-feedback">
-                                          <span className="correct-answer">
-                    Correct: {String(testResults.correctAnswers[item.questionNumber] || '')}
-                  </span>
+                        <span className="correct-answer">
+                          Correct: {String(finalTestResults.correctAnswers[item.questionNumber] || '')}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -403,8 +407,8 @@ const ListeningQuestionView = ({ selectedTest, user }) => {
               key={componentId}
               template={template}
               onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               componentId={componentId}
             />
           );
@@ -414,8 +418,8 @@ const ListeningQuestionView = ({ selectedTest, user }) => {
               key={componentId}
               template={template}
               onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               componentId={componentId}
             />
           );
@@ -425,8 +429,8 @@ const ListeningQuestionView = ({ selectedTest, user }) => {
               key={componentId}
               template={template}
               onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               componentId={componentId}
             />
           );
@@ -436,8 +440,8 @@ const ListeningQuestionView = ({ selectedTest, user }) => {
               key={componentId}
               template={template}
               onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               componentId={componentId}
             />
           );
@@ -447,8 +451,8 @@ const ListeningQuestionView = ({ selectedTest, user }) => {
               key={componentId}
               template={template}
               onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               componentId={componentId}
             />
           );
@@ -511,7 +515,8 @@ const ListeningQuestionView = ({ selectedTest, user }) => {
           
           {renderQuestionComponent()}
           
-          {currentPart === 4 && testStarted && (
+          {/* Submit button - Only show for students, not teachers */}
+          {currentPart === 4 && testStarted && !isTeacherMode && (
             <div className="submit-section">
               <button 
                 className={testSubmitted ? "reset-button" : "submit-button"}
@@ -522,24 +527,36 @@ const ListeningQuestionView = ({ selectedTest, user }) => {
             </div>
           )}
           
+          {/* Back to Student Info button - Only show for teachers */}
+          {isTeacherMode && onBackToStudent && (
+            <div className="submit-section">
+              <button 
+                className="back-to-student-button"
+                onClick={onBackToStudent}
+              >
+                ← Back to Student Info
+              </button>
+            </div>
+          )}
+          
           {/* Score Display - Only show on Part 4 after submission */}
-          {currentPart === 4 && testSubmitted && testResults && (
+          {currentPart === 4 && finalTestSubmitted && finalTestResults && (
             <div className="score-display">
               <div className="score-card">
                 <h3>Test Results</h3>
                 <div className="score-details">
                   <div className="score-item">
                     <span className="score-label">Score:</span>
-                    <span className="score-value">{testResults.score}%</span>
+                    <span className="score-value">{finalTestResults.score}%</span>
                   </div>
                   <div className="score-item">
                     <span className="score-label">Correct Answers:</span>
-                    <span className="score-value">{testResults.correctCount} / {testResults.totalQuestions}</span>
+                    <span className="score-value">{finalTestResults.correctCount} / {finalTestResults.totalQuestions}</span>
                   </div>
                   <div className="score-item">
                     <span className="score-label">Submitted:</span>
                     <span className="score-value">
-                      {new Date(testResults.submittedAt).toLocaleString()}
+                      {new Date(finalTestResults.submittedAt).toLocaleString()}
                     </span>
                   </div>
                 </div>
@@ -548,8 +565,8 @@ const ListeningQuestionView = ({ selectedTest, user }) => {
           )}
         </div>
         
-        {/* Start Test Overlay - Moved back to main container level */}
-        {!testStarted && (
+        {/* Start Test Overlay - Only show for students, not teachers */}
+        {!testStarted && !isTeacherMode && (
           <div className="test-overlay">
             <div className="overlay-content">
               <h2>Ready to Start?</h2>

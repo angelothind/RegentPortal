@@ -18,15 +18,21 @@ const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, 
     if (!testSubmitted || !testResults) return '';
     
     const result = testResults.results?.[questionNumber];
-    if (!result) return '';
-    
     const userAnswer = testResults.answers?.[questionNumber];
-    const correctAnswer = result.correctAnswer;
+    const correctAnswer = result?.correctAnswer || testResults.correctAnswers?.[questionNumber];
     
-    if (optionLetter === correctAnswer) {
-      return 'option-correct';
-    } else if (optionLetter === userAnswer && !result.isCorrect) {
-      return 'option-incorrect';
+    // If there's a result, use it
+    if (result) {
+      if (optionLetter === correctAnswer) {
+        return 'option-correct';
+      } else if (optionLetter === userAnswer && !result.isCorrect) {
+        return 'option-incorrect';
+      }
+    } else if (correctAnswer) {
+      // If there's no result but we have correct answers, show correct option
+      if (optionLetter === correctAnswer) {
+        return 'option-correct';
+      }
     }
     
     return '';
@@ -82,15 +88,15 @@ const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, 
             </div>
             {testSubmitted && testResults && (
               <div className="answer-feedback">
-                {testResults.answers?.[question.questionNumber] ? (
+                {testResults.correctAnswers?.[question.questionNumber] ? (
                   <span className="correct-answer">
-                    Correct: {String(testResults.correctAnswers?.[question.questionNumber] || '')}
+                    Correct: {String(testResults.correctAnswers[question.questionNumber])}
                   </span>
-                ) : (
+                ) : testResults.answers?.[question.questionNumber] ? (
                   <span className="no-answer-given">
                     No answer given
                   </span>
-                )}
+                ) : null}
               </div>
             )}
           </div>

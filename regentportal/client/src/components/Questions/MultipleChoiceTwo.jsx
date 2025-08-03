@@ -34,15 +34,21 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
     if (!testSubmitted || !testResults) return '';
     
     const result = testResults.results?.[questionNumber];
-    if (!result) return '';
-    
     const userAnswer = testResults.answers?.[questionNumber] || [];
-    const correctAnswer = result.correctAnswer || [];
+    const correctAnswer = result?.correctAnswer || testResults.correctAnswers?.[questionNumber] || [];
     
-    if (correctAnswer.includes(optionLetter)) {
-      return 'option-correct';
-    } else if (userAnswer.includes(optionLetter) && !result.isCorrect) {
-      return 'option-incorrect';
+    // If there's a result, use it
+    if (result) {
+      if (correctAnswer.includes(optionLetter)) {
+        return 'option-correct';
+      } else if (userAnswer.includes(optionLetter) && !result.isCorrect) {
+        return 'option-incorrect';
+      }
+    } else if (correctAnswer.length > 0) {
+      // If there's no result but we have correct answers, show correct options
+      if (correctAnswer.includes(optionLetter)) {
+        return 'option-correct';
+      }
     }
     
     return '';
@@ -105,17 +111,17 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
               </div>
               {testSubmitted && testResults && (
                 <div className="answer-feedback">
-                  {testResults.answers?.[question.questionNumber]?.length > 0 ? (
-                                      <span className="correct-answer">
-                    Correct: {Array.isArray(testResults.correctAnswers?.[question.questionNumber]) 
-                      ? testResults.correctAnswers[question.questionNumber].join(', ') 
-                      : String(testResults.correctAnswers?.[question.questionNumber] || '')}
-                  </span>
-                  ) : (
+                  {testResults.correctAnswers?.[question.questionNumber] ? (
+                    <span className="correct-answer">
+                      Correct: {Array.isArray(testResults.correctAnswers[question.questionNumber]) 
+                        ? testResults.correctAnswers[question.questionNumber].join(', ') 
+                        : String(testResults.correctAnswers[question.questionNumber])}
+                    </span>
+                  ) : testResults.answers?.[question.questionNumber]?.length > 0 ? (
                     <span className="no-answer-given">
                       No answer given
                     </span>
-                  )}
+                  ) : null}
                 </div>
               )}
             </div>
