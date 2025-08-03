@@ -48,6 +48,12 @@ const TeacherDashboard = () => {
     navigate('/'); // or '/login' depending on your setup
   };
 
+<<<<<<< HEAD
+=======
+  console.log('🔍 TeacherDashboard render - selectedStudent:', selectedStudent);
+  console.log('🔍 TeacherDashboard render - user:', user);
+  
+>>>>>>> student-teacher-testanalysis
   return (
     <div className="teacher-dashboard">
       <TeacherSidebar onLogout={handleLogout} />

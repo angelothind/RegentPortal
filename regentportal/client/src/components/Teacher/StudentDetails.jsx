@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+<<<<<<< HEAD
+=======
+import TeacherTestAnalysis from './TeacherTestAnalysis';
+>>>>>>> student-teacher-testanalysis
 import '../../styles/Admin/StudentTable.css';
 
 const StudentDetails = ({ student, onBack }) => {
@@ -100,6 +104,7 @@ const StudentDetails = ({ student, onBack }) => {
   // If showing detailed test view
   if (selectedTest) {
     return (
+<<<<<<< HEAD
       <div className="student-details-container">
         <div className="test-detail-view">
           <div className="test-detail-header">
@@ -154,6 +159,12 @@ const StudentDetails = ({ student, onBack }) => {
           </div>
         </div>
       </div>
+=======
+      <TeacherTestAnalysis 
+        submission={selectedTest} 
+        onBack={handleCloseTestView}
+      />
+>>>>>>> student-teacher-testanalysis
     );
   }
 

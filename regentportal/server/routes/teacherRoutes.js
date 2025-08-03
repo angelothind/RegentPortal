@@ -75,6 +75,10 @@ router.get('/submissions/student/:studentId', async (req, res) => {
       
       return {
         _id: submission._id,
+<<<<<<< HEAD
+=======
+        testId: submission.testId,
+>>>>>>> student-teacher-testanalysis
         testTitle: submission.testId?.title || 'Unknown Test',
         bookTitle: bookTitle,
         testName: testName,
@@ -87,7 +91,12 @@ router.get('/submissions/student/:studentId', async (req, res) => {
           studentAnswer: result.studentAnswer || '',
           correctAnswer: result.correctAnswer || '',
           isCorrect: result.isCorrect || false
+<<<<<<< HEAD
         })) : []
+=======
+        })) : [],
+        correctAnswers: submission.correctAnswers ? Object.fromEntries(submission.correctAnswers) : {}
+>>>>>>> student-teacher-testanalysis
       };
     });
     
