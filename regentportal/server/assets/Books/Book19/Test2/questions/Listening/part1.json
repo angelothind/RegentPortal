@@ -1,0 +1,78 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Complete the form below.",
+      "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
+      "notesTitle": "Guitar Group",
+      "questionBlock": [
+        {
+          "sectionHeading": "Questions 1-6"
+        },
+        {
+          "questionNumber": 1,
+          "question": "Coordinator: Gary **1** ________",
+          "answer": "Smith"
+        },
+        {
+          "questionNumber": 2,
+          "question": "Level: **2** ________",
+          "answer": "intermediate"
+        },
+        {
+          "questionNumber": 3,
+          "question": "Place: the **3** ________",
+          "answer": "community"
+        },
+        {
+          "questionNumber": 4,
+          "question": "**4** ________ Street",
+          "answer": "Main"
+        },
+        {
+          "descriptiveText": "First floor, Room T347"
+        },
+        {
+          "questionNumber": 5,
+          "question": "Time: Thursday morning at **5** ________",
+          "answer": "10"
+        },
+        {
+          "questionNumber": 6,
+          "question": "Recommended website: 'The perfect **6** ________'",
+          "answer": "guitar"
+        },
+        {
+          "sectionHeading": "Questions 7-10"
+        },
+        {
+          "descriptiveText": "Complete the table below. Write ONE WORD ONLY for each answer."
+        },
+        {
+          "descriptiveText": "A typical 45-minute guitar lesson"
+        },
+        {
+          "questionNumber": 7,
+          "question": "Time: 5 minutes | Activity: tuning guitars | Notes: using an app or by **7** ________",
+          "answer": "ear"
+        },
+        {
+          "questionNumber": 8,
+          "question": "Time: 10 minutes | Activity: strumming chords using our thumbs | Notes: keeping time while the teacher is **8** ________",
+          "answer": "playing"
+        },
+        {
+          "questionNumber": 9,
+          "question": "Time: 15 minutes | Activity: playing songs | Notes: often listening to a **9** ________ of a song",
+          "answer": "recording"
+        },
+        {
+          "questionNumber": 10,
+          "question": "Time: 10 minutes | Activity: playing single notes and simple tunes | Notes: playing together, then **10** ________",
+          "answer": "solo"
+        }
+      ]
+    }
+  ]
+} 

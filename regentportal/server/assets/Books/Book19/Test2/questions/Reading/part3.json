@@ -1,0 +1,18 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Complete the notes below.",
+      "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
+      "notesTitle": "Reading Test 2 - Part 3",
+      "questionBlock": [
+        {
+          "questionNumber": 1,
+          "question": "Sample question **1** ________",
+          "answer": "answer"
+        }
+      ]
+    }
+  ]
+} 

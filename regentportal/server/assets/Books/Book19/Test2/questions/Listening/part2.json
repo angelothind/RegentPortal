@@ -1,0 +1,188 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 11-16",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "sectionTitle": "Working as a lifeboat volunteer",
+      "questionBlock": [
+        {
+          "questionNumber": 11,
+          "question": "What made David leave London and move to Northsea?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "He was eager to develop a hobby."
+            },
+            {
+              "letter": "B",
+              "text": "He wanted to work shorter hours."
+            },
+            {
+              "letter": "C",
+              "text": "He found his job in website design unsatisfying."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 12,
+          "question": "The Lifeboat Institution in Northsea was built with money provided by",
+          "options": [
+            {
+              "letter": "A",
+              "text": "a local organisation."
+            },
+            {
+              "letter": "B",
+              "text": "a local resident."
+            },
+            {
+              "letter": "C",
+              "text": "the local council."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 13,
+          "question": "In his health assessment, the doctor was concerned about the fact that David",
+          "options": [
+            {
+              "letter": "A",
+              "text": "might be colour blind."
+            },
+            {
+              "letter": "B",
+              "text": "was rather short-sighted."
+            },
+            {
+              "letter": "C",
+              "text": "had undergone eye surgery."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 14,
+          "question": "After arriving at the lifeboat station, they aim to launch the boat within",
+          "options": [
+            {
+              "letter": "A",
+              "text": "five minutes."
+            },
+            {
+              "letter": "B",
+              "text": "six to eight minutes."
+            },
+            {
+              "letter": "C",
+              "text": "eight and a half minutes."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 15,
+          "question": "As a 'helmsman', David has the responsibility of deciding",
+          "options": [
+            {
+              "letter": "A",
+              "text": "who will be the members of his crew."
+            },
+            {
+              "letter": "B",
+              "text": "what equipment it will be necessary to take."
+            },
+            {
+              "letter": "C",
+              "text": "if the lifeboat should be launched."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 16,
+          "question": "As well as going out on the lifeboat, David",
+          "options": [
+            {
+              "letter": "A",
+              "text": "gives talks on safety at sea."
+            },
+            {
+              "letter": "B",
+              "text": "helps with fundraising."
+            },
+            {
+              "letter": "C",
+              "text": "recruits new volunteers."
+            }
+          ],
+          "answer": "A"
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 17-20",
+      "formattingInstruction": "Choose TWO letters, A-E.",
+      "questionBlock": [
+        {
+          "questionNumber": 17,
+          "question": "Which TWO things does David say about the lifeboat volunteer training?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The residential course developed his leadership skills."
+            },
+            {
+              "letter": "B",
+              "text": "The training in use of ropes and knots was quite brief."
+            },
+            {
+              "letter": "C",
+              "text": "The training exercises have built up his mental strength."
+            },
+            {
+              "letter": "D",
+              "text": "The casualty care activities were particularly challenging for him."
+            },
+            {
+              "letter": "E",
+              "text": "The wave tank activities provided practice in survival techniques."
+            }
+          ],
+          "answer": ["C", "E"]
+        },
+        {
+          "questionNumber": 18,
+          "question": "Which TWO things does David find most motivating about the work he does?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "working as part of a team"
+            },
+            {
+              "letter": "B",
+              "text": "experiences when working in winter"
+            },
+            {
+              "letter": "C",
+              "text": "being thanked by those he has helped"
+            },
+            {
+              "letter": "D",
+              "text": "the fact that it keeps him fit"
+            },
+            {
+              "letter": "E",
+              "text": "the chance to develop new equipment"
+            }
+          ],
+          "answer": ["A", "C"]
+        }
+      ]
+    }
+  ]
+} 

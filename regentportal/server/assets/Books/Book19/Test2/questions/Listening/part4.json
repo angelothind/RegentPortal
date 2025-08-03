@@ -1,0 +1,62 @@
+{
+  "partNumber": 4,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 31-40",
+      "formattingInstruction": "Complete the summary below. Write ONE WORD ONLY for each answer.",
+      "questionBlock": [
+        {
+          "questionNumber": 31,
+          "question": "The process involves the ability to **31** ________",
+          "answer": "move"
+        },
+        {
+          "questionNumber": 32,
+          "question": "The duration is **32** ________",
+          "answer": "short"
+        },
+        {
+          "questionNumber": 33,
+          "question": "The materials include **33** ________",
+          "answer": "discs"
+        },
+        {
+          "questionNumber": 34,
+          "question": "The environment requires **34** ________",
+          "answer": "oxygen"
+        },
+        {
+          "questionNumber": 35,
+          "question": "The structure uses a **35** ________",
+          "answer": "tube"
+        },
+        {
+          "questionNumber": 36,
+          "question": "The conditions involve **36** ________",
+          "answer": "temperatures"
+        },
+        {
+          "questionNumber": 37,
+          "question": "The composition includes **37** ________",
+          "answer": "protein"
+        },
+        {
+          "questionNumber": 38,
+          "question": "The location requires **38** ________",
+          "answer": "space"
+        },
+        {
+          "questionNumber": 39,
+          "question": "The source material is **39** ________",
+          "answer": "seaweed"
+        },
+        {
+          "questionNumber": 40,
+          "question": "The species is **40** ________",
+          "answer": "endangered"
+        }
+      ]
+    }
+  ]
+} 

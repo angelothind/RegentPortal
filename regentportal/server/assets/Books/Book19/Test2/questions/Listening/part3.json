@@ -1,0 +1,106 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 25-28",
+      "formattingInstruction": "What reasons did the recycling manager give for rejecting footwear, according to the students? Choose FOUR answers from the box and write the correct letter, A-F, next to Questions 25-28.",
+      "opinionsBox": {
+        "title": "Reasons",
+        "options": [
+          {
+            "letter": "A",
+            "text": "one shoe was missing"
+          },
+          {
+            "letter": "B",
+            "text": "the colour of one shoe had faded"
+          },
+          {
+            "letter": "C",
+            "text": "one shoe had a hole in it"
+          },
+          {
+            "letter": "D",
+            "text": "the shoes were brand new"
+          },
+          {
+            "letter": "E",
+            "text": "the shoes were too dirty"
+          },
+          {
+            "letter": "F",
+            "text": "the stitching on the shoes was broken"
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 25,
+          "question": "the high-heeled shoes",
+          "answer": "A"
+        },
+        {
+          "questionNumber": 26,
+          "question": "the ankle boots",
+          "answer": "C"
+        },
+        {
+          "questionNumber": 27,
+          "question": "the baby shoes",
+          "answer": "D"
+        },
+        {
+          "questionNumber": 28,
+          "question": "the trainers",
+          "answer": "E"
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 29-30",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "questionBlock": [
+        {
+          "questionNumber": 29,
+          "question": "Why did the project to make 'new' shoes out of old shoes fail?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "People believed the 'new' pairs of shoes were unhygienic."
+            },
+            {
+              "letter": "B",
+              "text": "There were not enough good parts to use in the old shoes."
+            },
+            {
+              "letter": "C",
+              "text": "The shoes in the 'new' pairs were not completely alike."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 30,
+          "question": "Bella and Don agree that they can present their topic",
+          "options": [
+            {
+              "letter": "A",
+              "text": "from a new angle."
+            },
+            {
+              "letter": "B",
+              "text": "with relevant images."
+            },
+            {
+              "letter": "C",
+              "text": "in a straightforward way."
+            }
+          ],
+          "answer": "B"
+        }
+      ]
+    }
+  ]
+} 
