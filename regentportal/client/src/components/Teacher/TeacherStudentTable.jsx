@@ -30,15 +30,10 @@ const TeacherStudentTable = ({ onStudentSelect }) => {
 
   const fetchStudents = async () => {
     try {
-<<<<<<< HEAD
-      const response = await fetch('/api/lookup/lookupstudents');
-      const data = await response.json();
-=======
       console.log('🔍 TeacherStudentTable: Fetching students...');
       const response = await fetch('/api/lookup/lookupstudents');
       const data = await response.json();
       console.log('🔍 TeacherStudentTable: Received students data:', data);
->>>>>>> student-teacher-testanalysis
       setStudents(data.students || []);
       setLoading(false);
     } catch (err) {
@@ -99,20 +94,14 @@ const TeacherStudentTable = ({ onStudentSelect }) => {
 
   if (loading) return <p>Loading students...</p>;
 
-<<<<<<< HEAD
-=======
   console.log('🔍 TeacherStudentTable render - students:', students);
   console.log('🔍 TeacherStudentTable render - loading:', loading);
 
->>>>>>> student-teacher-testanalysis
   return (
     <div className="student-table-container">
       <div className="student-header">
         <h2>Students</h2>
-<<<<<<< HEAD
-=======
         <p>Debug: Component is rendering</p>
->>>>>>> student-teacher-testanalysis
       </div>
 
       <table className="student-table">

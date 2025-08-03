@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
-=======
 import TeacherTestAnalysis from './TeacherTestAnalysis';
->>>>>>> student-teacher-testanalysis
 import '../../styles/Admin/StudentTable.css';
 
 const StudentDetails = ({ student, onBack }) => {
@@ -104,67 +101,10 @@ const StudentDetails = ({ student, onBack }) => {
   // If showing detailed test view
   if (selectedTest) {
     return (
-<<<<<<< HEAD
-      <div className="student-details-container">
-        <div className="test-detail-view">
-          <div className="test-detail-header">
-            <button className="back-button" onClick={handleCloseTestView}>
-              ← Back to Student Details
-            </button>
-            <h2>{selectedTest.testTitle}</h2>
-            <div className="test-detail-info">
-              <span className="book-name">{selectedTest.bookTitle}</span>
-              <span className="test-name">{selectedTest.testName}</span>
-              <span className="test-type">{selectedTest.testType}</span>
-              <span 
-                className="score-badge"
-                style={{ backgroundColor: getScoreColor(selectedTest.score) }}
-              >
-                {selectedTest.score === 0 ? 'Empty' : `${selectedTest.score}%`}
-              </span>
-            </div>
-          </div>
-          
-          <div className="test-detail-content">
-            <div className="test-summary">
-              <p><strong>Submitted:</strong> {formatDate(selectedTest.submittedAt)}</p>
-              <p><strong>Correct Answers:</strong> {selectedTest.correctCount}/{selectedTest.totalQuestions}</p>
-            </div>
-            
-            <div className="answers-detail">
-              <h3>Answer Details</h3>
-              <div className="answers-list">
-                {selectedTest.answers && selectedTest.answers.map((answer, answerIndex) => (
-                  <div key={answerIndex} className="answer-item">
-                    <div className="answer-header">
-                      <span className="question-number">Question {answerIndex + 1}</span>
-                      <span className={`result ${answer.isCorrect ? 'correct' : 'incorrect'}`}>
-                        {answer.isCorrect ? '✓ Correct' : '✗ Incorrect'}
-                      </span>
-                    </div>
-                    <div className="answer-content">
-                      <div className="answer-detail">
-                        <span className="detail-label">Student Answer:</span>
-                        <span className="student-answer">{answer.studentAnswer || 'No answer'}</span>
-                      </div>
-                      <div className="answer-detail">
-                        <span className="detail-label">Correct Answer:</span>
-                        <span className="correct-answer">{answer.correctAnswer}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-=======
       <TeacherTestAnalysis 
         submission={selectedTest} 
         onBack={handleCloseTestView}
       />
->>>>>>> student-teacher-testanalysis
     );
   }
 
