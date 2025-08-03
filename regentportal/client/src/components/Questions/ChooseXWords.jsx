@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/ChooseXWords.css';
 
-const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, testType, componentId = 'choose-x-words' }) => {
-  const [answers, setAnswers] = useState({});
-
+const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, testType, componentId = 'choose-x-words', currentAnswers = {} }) => {
   console.log('🎯 ChooseXWords rendered with template:', template);
   console.log('🎯 ChooseXWords testResults:', testResults);
   console.log('🎯 ChooseXWords testSubmitted:', testSubmitted);
@@ -15,8 +13,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
   };
 
   const handleAnswerChange = (questionNumber, value) => {
-    const newAnswers = { ...answers, [questionNumber]: value };
-    setAnswers(newAnswers);
+    const newAnswers = { ...currentAnswers, [questionNumber]: value };
     if (onAnswerChange) {
       onAnswerChange(newAnswers);
     }
@@ -36,7 +33,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
     if (testSubmitted && testResults) {
       return testResults.answers?.[questionNumber] || '';
     }
-    return answers[questionNumber] || '';
+    return currentAnswers[questionNumber] || '';
   };
 
   if (!template || !template.questionBlock) {

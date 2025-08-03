@@ -50,6 +50,9 @@ const StudentDetails = ({ student, onBack }) => {
   };
 
   const handleTestClick = (submission) => {
+    console.log('🔍 StudentDetails - Selected submission:', submission);
+    console.log('🔍 StudentDetails - submission.testId:', submission.testId);
+    console.log('🔍 StudentDetails - typeof submission.testId:', typeof submission.testId);
     setSelectedTest(submission);
   };
 

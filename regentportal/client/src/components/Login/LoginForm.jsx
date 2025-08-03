@@ -23,8 +23,10 @@ const LoginForm = ({ onBack, userType }) => {
         console.log('🔍 User data from server:', data.user);
         console.log('🔍 User _id field:', data.user._id);
         if (data.user.userType === 'Admin') {
+          localStorage.setItem('user', JSON.stringify(data.user));
           navigate('/admin', { state: { user: data.user  } });
         } else if (data.user.userType === 'Teacher') {
+          localStorage.setItem('user', JSON.stringify(data.user));
           navigate('/teacher', { state: { user: data.user  } });
         } else if (data.user.userType === 'Student') {
           console.log('🔍 Navigating to student dashboard with user:', data.user);

@@ -60,7 +60,7 @@ const TeacherTable = () => {
     if (!window.confirm('Are you sure you want to delete this teacher?')) return;
 
     try {
-      const res = await fetch(`/api/create/deleteteacher/${id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/delete/deleteteacher/${id}`, { method: 'DELETE' });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to delete');
 

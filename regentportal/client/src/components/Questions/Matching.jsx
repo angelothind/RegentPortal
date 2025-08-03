@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/Matching.css';
 
-const Matching = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'matching' }) => {
-  const [answers, setAnswers] = useState({});
-
+const Matching = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'matching', currentAnswers = {} }) => {
   console.log('🎯 Matching rendered with template:', template);
 
   const handleAnswerChange = (questionNumber, value) => {
-    const newAnswers = { ...answers, [questionNumber]: value };
-    setAnswers(newAnswers);
+    const newAnswers = { ...currentAnswers, [questionNumber]: value };
     if (onAnswerChange) {
       onAnswerChange(newAnswers);
     }
@@ -27,7 +24,7 @@ const Matching = ({ template, onAnswerChange, testResults, testSubmitted, compon
     if (testSubmitted && testResults) {
       return testResults.answers?.[questionNumber] || '';
     }
-    return answers[questionNumber] || '';
+    return currentAnswers[questionNumber] || '';
   };
 
   if (!template || !template.questionBlock) {

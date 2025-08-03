@@ -34,8 +34,12 @@ const TestViewer = ({ selectedTest, user }) => {
 
         console.log('📡 TestViewer: Calling endpoint:', endpoint);
         const res = await fetch(endpoint);
+        console.log('📡 TestViewer: Response status:', res.status);
+        
         if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+          const errorText = await res.text();
+          console.error('❌ TestViewer: HTTP error response:', errorText);
+          throw new Error(`HTTP error! status: ${res.status}, body: ${errorText}`);
         }
         
         const data = await res.json();
@@ -45,6 +49,7 @@ const TestViewer = ({ selectedTest, user }) => {
         setTestData(data);
       } catch (error) {
         console.error('❌ Failed to fetch test data:', error);
+        console.error('❌ Error details:', error.message);
         setTestData(null);
       } finally {
         setLoading(false);
@@ -54,9 +59,18 @@ const TestViewer = ({ selectedTest, user }) => {
     fetchTestData();
   }, [selectedTest]);
 
-  if (!selectedTest) return <div className="main-content">Please select a test</div>;
-  if (loading) return <div className="main-content">Loading test data...</div>;
-  if (!testData) return <div className="main-content">No test data available</div>;
+  if (!selectedTest) {
+    console.log('❌ TestViewer: No selectedTest');
+    return <div className="main-content">Please select a test</div>;
+  }
+  if (loading) {
+    console.log('⏳ TestViewer: Loading...');
+    return <div className="main-content">Loading test data...</div>;
+  }
+  if (!testData) {
+    console.log('❌ TestViewer: No testData available');
+    return <div className="main-content">No test data available</div>;
+  }
 
   console.log('🎯 TestViewer render - selectedTest:', selectedTest);
   console.log('🎯 TestViewer render - selectedTest.type:', selectedTest?.type);

@@ -1,26 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import '../../styles/Admin/StudentTable.css';
 
-const TeacherStudentTable = ({ onStudentSelect }) => {
+const TeacherStudentTable = ({ onStudentSelect, user: propUser }) => {
   const [students, setStudents] = useState([]);
   const [favoritedStudents, setFavoritedStudents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(propUser);
 
   useEffect(() => {
+    // Use propUser if available, otherwise get from localStorage
+    if (propUser) {
+      console.log('🔍 TeacherStudentTable: Using user from props:', propUser);
+      setUser(propUser);
+    } else {
     // Get user data from localStorage
     const storedUser = localStorage.getItem('user');
+      console.log('🔍 TeacherStudentTable: Stored user data:', storedUser);
+      
     if (storedUser) {
       try {
         const parsedUser = JSON.parse(storedUser);
+          console.log('🔍 TeacherStudentTable: Parsed user data:', parsedUser);
         setUser(parsedUser);
       } catch (error) {
-        console.error('Error parsing user data:', error);
+          console.error('❌ Error parsing user data:', error);
+        }
+      } else {
+        console.log('❌ No user data found in localStorage');
       }
     }
 
     fetchStudents();
-  }, []);
+  }, [propUser]);
 
   useEffect(() => {
     if (user) {
@@ -43,19 +54,38 @@ const TeacherStudentTable = ({ onStudentSelect }) => {
   };
 
   const fetchFavoritedStudents = async () => {
-    if (!user) return;
+    if (!user) {
+      console.log('❌ No user found for fetching favorites');
+      return;
+    }
+    
+    console.log('🔍 Fetching favorited students for user:', user._id);
     
     try {
       const response = await fetch(`/api/teachers/${user._id}/favorites`);
+      console.log('🔍 Favorites response status:', response.status);
+      
+      if (response.ok) {
       const data = await response.json();
+        console.log('🔍 Favorites data:', data);
       setFavoritedStudents(data.favoritedStudents || []);
+      } else {
+        console.error('❌ Failed to fetch favorited students:', response.status);
+      }
     } catch (err) {
-      console.error('Failed to fetch favorited students:', err);
+      console.error('❌ Failed to fetch favorited students:', err);
     }
   };
 
   const handleToggleFavorite = async (studentId) => {
-    if (!user) return;
+    if (!user) {
+      console.error('❌ No user found for favoriting');
+      return;
+    }
+
+    console.log('🔍 Toggling favorite for studentId:', studentId);
+    console.log('🔍 Current favoritedStudents:', favoritedStudents);
+    console.log('🔍 User ID:', user._id);
 
     try {
       const response = await fetch(`/api/teachers/${user._id}/favorites`, {
@@ -64,16 +94,23 @@ const TeacherStudentTable = ({ onStudentSelect }) => {
         body: JSON.stringify({ studentId }),
       });
 
+      console.log('🔍 Response status:', response.status);
+
       if (response.ok) {
+        const data = await response.json();
+        console.log('🔍 Response data:', data);
+        
         // Update local state
         if (favoritedStudents.includes(studentId)) {
           setFavoritedStudents(favoritedStudents.filter(id => id !== studentId));
         } else {
           setFavoritedStudents([...favoritedStudents, studentId]);
         }
+      } else {
+        console.error('❌ Failed to toggle favorite:', response.status);
       }
     } catch (err) {
-      console.error('Failed to toggle favorite:', err);
+      console.error('❌ Failed to toggle favorite:', err);
     }
   };
 
@@ -109,7 +146,7 @@ const TeacherStudentTable = ({ onStudentSelect }) => {
           <tr>
             <th>Name</th>
             <th>Username</th>
-            <th>Actions</th>
+            <th>Favorites</th>
           </tr>
         </thead>
         <tbody>

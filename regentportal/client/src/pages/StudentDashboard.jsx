@@ -35,15 +35,7 @@ const StudentDashboard = () => {
 
   const handleSelectTest = async (testInfo) => {
     console.log('Selected test:', testInfo);
-
-    try {
-      const response = await fetch(`/api/tests/${testInfo.testId._id}`);
-      const data = await response.json();
-      console.log('Fetched test data:', data);
-      setSelectedTest({ ...testInfo, testData: data });
-    } catch (error) {
-      console.error('Failed to fetch test data:', error);
-    }
+    setSelectedTest(testInfo);
   };
 
   const handleLogout = () => {

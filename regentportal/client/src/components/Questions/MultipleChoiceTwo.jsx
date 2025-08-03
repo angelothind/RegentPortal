@@ -1,30 +1,27 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/MultipleChoiceTwo.css';
 
-const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'multiple-choice-two' }) => {
-  const [answers, setAnswers] = useState({});
-
+const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'multiple-choice-two', currentAnswers = {} }) => {
   console.log('🎯 MultipleChoiceTwo rendered with template:', template);
 
   const handleAnswerChange = (questionNumber, value) => {
-    const currentAnswers = answers[questionNumber] || [];
+    const existingAnswers = currentAnswers[questionNumber] || [];
     let newAnswers;
     
-    if (currentAnswers.includes(value)) {
+    if (existingAnswers.includes(value)) {
       // Remove if already selected
-      newAnswers = currentAnswers.filter(answer => answer !== value);
+      newAnswers = existingAnswers.filter(answer => answer !== value);
     } else {
       // Add if not selected (but limit to 2)
-      if (currentAnswers.length < 2) {
-        newAnswers = [...currentAnswers, value];
+      if (existingAnswers.length < 2) {
+        newAnswers = [...existingAnswers, value];
       } else {
         // Replace the first answer if already have 2
-        newAnswers = [currentAnswers[1], value];
+        newAnswers = [existingAnswers[1], value];
       }
     }
     
-    const updatedAnswers = { ...answers, [questionNumber]: newAnswers };
-    setAnswers(updatedAnswers);
+    const updatedAnswers = { ...currentAnswers, [questionNumber]: newAnswers };
     if (onAnswerChange) {
       onAnswerChange(updatedAnswers);
     }
@@ -52,7 +49,7 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
     if (testSubmitted && testResults) {
       return testResults.answers?.[questionNumber] || [];
     }
-    return answers[questionNumber] || [];
+    return currentAnswers[questionNumber] || [];
   };
 
   if (!template || !template.questionBlock) {

@@ -9,6 +9,8 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
   const [questionData, setQuestionData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  console.log('🎯 TeacherTestAnalysis - Received submission:', submission);
+
   useEffect(() => {
     const fetchTestData = async () => {
       if (!submission) return;
@@ -16,7 +18,7 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
       setLoading(true);
       try {
         // Fetch test data
-        const testEndpoint = `/api/tests/${submission.testId._id}`;
+        const testEndpoint = `/api/tests/${submission.testId}`;
         const testResponse = await fetch(testEndpoint);
         if (!testResponse.ok) {
           throw new Error(`HTTP error! status: ${testResponse.status}`);
@@ -25,7 +27,7 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
         setTestData(testDataResult);
 
         // Fetch question data
-        const questionEndpoint = `/api/tests/${submission.testId._id}/questions/part1?testType=${submission.testType}`;
+        const questionEndpoint = `/api/tests/${submission.testId}/questions/part1?testType=${submission.testType}`;
         const questionResponse = await fetch(questionEndpoint);
         if (!questionResponse.ok) {
           throw new Error(`HTTP error! status: ${questionResponse.status}`);
@@ -52,8 +54,9 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
     const correctAnswers = {};
     const results = {};
 
-    // Process answered questions
-    submission.answers?.forEach((answer, index) => {
+    // Process answered questions from submission.answers array
+    if (submission.answers && Array.isArray(submission.answers)) {
+      submission.answers.forEach((answer, index) => {
       const questionNumber = index + 1;
       answers[questionNumber] = answer.studentAnswer || '';
       correctAnswers[questionNumber] = answer.correctAnswer || '';
@@ -63,6 +66,7 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
         correctAnswer: answer.correctAnswer || ''
       };
     });
+    }
 
     // Also use the correctAnswers from submission if available
     if (submission.correctAnswers) {
@@ -95,7 +99,7 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
     if (!submission) return null;
 
     return {
-      testId: submission.testId,
+      testId: { _id: submission.testId },
       type: submission.testType,
       title: submission.testTitle
     };
@@ -120,10 +124,8 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
   const testResults = formatTestResults();
   const selectedTest = formatSelectedTest();
   
-  console.log('🎯 TeacherTestAnalysis - submission:', submission);
   console.log('🎯 TeacherTestAnalysis - testResults:', testResults);
-  console.log('🎯 TeacherTestAnalysis - submission.answers:', submission.answers);
-  console.log('🎯 TeacherTestAnalysis - submission.correctAnswers:', submission.correctAnswers);
+  console.log('🎯 TeacherTestAnalysis - selectedTest:', selectedTest);
 
   return (
     <div className="teacher-test-analysis">
@@ -152,26 +154,24 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
       {submission.testType.toLowerCase() === 'reading' ? (
         <div className="test-viewer-container">
           <div className="test-content-area">
-            <ReadingTest testId={submission.testId} testData={testData} isTeacherMode={true} />
+            <ReadingTest testId={{ _id: submission.testId }} testData={testData} isTeacherMode={true} />
           </div>
           <div className="question-area">
             <QuestionView 
               selectedTest={selectedTest} 
-              testResults={testResults}
-              testSubmitted={true}
-              isTeacherMode={true}
-              onBackToStudent={onBack}
+              user={null}
             />
           </div>
         </div>
       ) : (
         <div className="listening-layout">
           <div className="audio-section">
-            <ListeningTest testId={submission.testId} testData={testData} />
+            <ListeningTest testId={{ _id: submission.testId }} testData={testData} />
           </div>
           <div className="questions-section">
             <ListeningQuestionView 
               selectedTest={selectedTest}
+              user={null}
               testResults={testResults}
               testSubmitted={true}
               isTeacherMode={true}

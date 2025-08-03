@@ -60,7 +60,7 @@ const StudentTable = () => {
     if (!window.confirm('Delete this student?')) return;
 
     try {
-      const res = await fetch(`/api/create/deletestudent/${id}`, {
+      const res = await fetch(`/api/delete/deletestudent/${id}`, {
         method: 'DELETE',
       });
 

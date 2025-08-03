@@ -21,11 +21,16 @@ const QuestionView = ({ selectedTest, user }) => {
 
   // Load saved answers from localStorage on component mount
   useEffect(() => {
+    console.log('🔄 Loading saved answers for test:', selectedTest);
     if (selectedTest && selectedTest.testId) {
-      const savedAnswers = localStorage.getItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`);
+      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+      console.log('🔍 Looking for answers in localStorage with key:', storageKey);
+      
+      const savedAnswers = localStorage.getItem(storageKey);
       if (savedAnswers) {
         try {
           const parsedAnswers = JSON.parse(savedAnswers);
+          console.log('📝 Found saved answers:', parsedAnswers);
           
           // Check if data is older than 4 hours
           const savedTimestamp = parsedAnswers._timestamp;
@@ -34,19 +39,42 @@ const QuestionView = ({ selectedTest, user }) => {
           
           if (savedTimestamp && (currentTime - savedTimestamp) > fourHours) {
             // Data is older than 4 hours, clear it
-            localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`);
+            localStorage.removeItem(storageKey);
             console.log('📝 Cleared expired saved answers (older than 4 hours)');
             return;
           }
           
-          setAnswers(parsedAnswers);
-          console.log('📝 Loaded saved answers from localStorage:', parsedAnswers);
+          // Remove the timestamp from the answers object before setting state
+          const { _timestamp, _currentPassage, ...answersWithoutTimestamp } = parsedAnswers;
+          setAnswers(answersWithoutTimestamp);
+          console.log('📝 Loaded saved answers from localStorage:', answersWithoutTimestamp);
         } catch (error) {
           console.error('❌ Error parsing saved answers:', error);
         }
+      } else {
+        console.log('📝 No saved answers found in localStorage');
       }
     }
   }, [selectedTest]);
+
+  // Reload answers from localStorage when passage changes
+  useEffect(() => {
+    console.log('🔄 Passage changed to:', currentPassage, '- reloading answers from localStorage');
+    if (selectedTest && selectedTest.testId) {
+      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+      const savedAnswers = localStorage.getItem(storageKey);
+      if (savedAnswers) {
+        try {
+          const parsedAnswers = JSON.parse(savedAnswers);
+          const { _timestamp, _currentPassage, ...answersWithoutTimestamp } = parsedAnswers;
+          setAnswers(answersWithoutTimestamp);
+          console.log('📝 Reloaded answers from localStorage after passage change:', answersWithoutTimestamp);
+        } catch (error) {
+          console.error('❌ Error parsing saved answers after passage change:', error);
+        }
+      }
+    }
+  }, [currentPassage, selectedTest]);
 
   // Add refresh confirmation warning
   useEffect(() => {
@@ -103,9 +131,25 @@ const QuestionView = ({ selectedTest, user }) => {
     fetchQuestionData();
   }, [selectedTest, currentPassage]);
 
-  const handleAnswerChange = (questionNumber, value) => {
-    const newAnswers = { ...answers, [questionNumber]: value };
+  const handleAnswerChange = (questionNumberOrNewAnswers, value) => {
+    let newAnswers;
+    
+    // Check if this is the new signature (newAnswers object) or old signature (questionNumber, value)
+    if (typeof questionNumberOrNewAnswers === 'object' && value === undefined) {
+      // New signature: handleAnswerChange(newAnswers) - used by question components
+      newAnswers = questionNumberOrNewAnswers;
+      console.log('📝 Answer changed - New answers object:', newAnswers);
+    } else {
+      // Old signature: handleAnswerChange(questionNumber, value) - fallback
+      const questionNumber = questionNumberOrNewAnswers;
+      console.log('📝 Answer changed - Question:', questionNumber, 'Value:', value);
+      console.log('📝 Previous answers:', answers);
+      newAnswers = { ...answers, [questionNumber]: value };
+    }
+    
     setAnswers(newAnswers);
+    
+    console.log('📝 New answers object:', newAnswers);
     
     // Save answers to localStorage with timestamp
     if (selectedTest && selectedTest.testId) {
@@ -113,8 +157,10 @@ const QuestionView = ({ selectedTest, user }) => {
         ...newAnswers,
         _timestamp: Date.now()
       };
-      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
-      console.log('📝 Answers saved to localStorage with timestamp:', answersWithTimestamp);
+      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+      localStorage.setItem(storageKey, JSON.stringify(answersWithTimestamp));
+      console.log('📝 Answers saved to localStorage with key:', storageKey);
+      console.log('📝 Saved data:', answersWithTimestamp);
     }
     
     console.log('📝 Answers updated:', newAnswers);
@@ -207,6 +253,20 @@ const QuestionView = ({ selectedTest, user }) => {
   };
 
   const handlePassageChange = (passageNumber) => {
+    console.log('🔄 Switching to passage:', passageNumber);
+    console.log('📝 Current answers before passage change:', answers);
+    
+    // Save current answers before switching
+    if (selectedTest && selectedTest.testId) {
+      const answersWithTimestamp = {
+        ...answers,
+        _timestamp: Date.now(),
+        _currentPassage: currentPassage
+      };
+      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
+      console.log('📝 Saved answers before passage change:', answersWithTimestamp);
+    }
+    
     setCurrentPassage(passageNumber);
     setQuestionData(null); // Clear current data when switching passages
   };
@@ -262,6 +322,7 @@ const QuestionView = ({ selectedTest, user }) => {
               testType={selectedTest.type}
               testResults={testResults}
               testSubmitted={testSubmitted}
+              currentAnswers={answers}
             />
           );
         case 'choose-from':
@@ -273,6 +334,7 @@ const QuestionView = ({ selectedTest, user }) => {
               testType={selectedTest.type}
               testResults={testResults}
               testSubmitted={testSubmitted}
+              currentAnswers={answers}
             />
           );
         case 'TFNG':
@@ -283,6 +345,7 @@ const QuestionView = ({ selectedTest, user }) => {
               onAnswerChange={handleAnswerChange}
               testResults={testResults}
               testSubmitted={testSubmitted}
+              currentAnswers={answers}
             />
           );
         case 'matching':
@@ -293,6 +356,7 @@ const QuestionView = ({ selectedTest, user }) => {
               onAnswerChange={handleAnswerChange}
               testResults={testResults}
               testSubmitted={testSubmitted}
+              currentAnswers={answers}
             />
           );
         case 'multiple-choice':
@@ -303,6 +367,7 @@ const QuestionView = ({ selectedTest, user }) => {
               onAnswerChange={handleAnswerChange}
               testResults={testResults}
               testSubmitted={testSubmitted}
+              currentAnswers={answers}
             />
           );
         case 'multiple-choice-two':
@@ -313,6 +378,7 @@ const QuestionView = ({ selectedTest, user }) => {
               onAnswerChange={handleAnswerChange}
               testResults={testResults}
               testSubmitted={testSubmitted}
+              currentAnswers={answers}
             />
           );
         case 'summary-completion':
@@ -323,6 +389,7 @@ const QuestionView = ({ selectedTest, user }) => {
               onAnswerChange={handleAnswerChange}
               testResults={testResults}
               testSubmitted={testSubmitted}
+              currentAnswers={answers}
             />
           );
         // TODO: Add other question types here

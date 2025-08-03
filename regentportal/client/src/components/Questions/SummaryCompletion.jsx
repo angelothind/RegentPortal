@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/SummaryCompletion.css';
 
-const SummaryCompletion = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'summary-completion' }) => {
-  const [answers, setAnswers] = useState({});
-
+const SummaryCompletion = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'summary-completion', currentAnswers = {} }) => {
   console.log('🎯 SummaryCompletion rendered with template:', template);
   console.log('🎯 SummaryCompletion testResults:', testResults);
   console.log('🎯 SummaryCompletion testSubmitted:', testSubmitted);
@@ -15,8 +13,7 @@ const SummaryCompletion = ({ template, onAnswerChange, testResults, testSubmitte
   };
 
   const handleAnswerChange = (questionNumber, value) => {
-    const newAnswers = { ...answers, [questionNumber]: value };
-    setAnswers(newAnswers);
+    const newAnswers = { ...currentAnswers, [questionNumber]: value };
     if (onAnswerChange) {
       onAnswerChange(newAnswers);
     }
@@ -45,7 +42,7 @@ const SummaryCompletion = ({ template, onAnswerChange, testResults, testSubmitte
     if (testSubmitted && testResults) {
       return testResults.answers?.[questionNumber] || '';
     }
-    return answers[questionNumber] || '';
+    return currentAnswers[questionNumber] || '';
   };
 
   if (!template || !template.questionBlock) {

@@ -37,10 +37,10 @@
       ],
       "correctAnswers": {
         "1": "FALSE",
-        "2": "TRUE",
-        "3": "TRUE",
-        "4": "NOT GIVEN",
-        "5": "TRUE",
+        "2": "FALSE",
+        "3": "NOT GIVEN",
+        "4": "FALSE",
+        "5": "NOT GIVEN",
         "6": "TRUE",
         "7": "TRUE"
       }
@@ -58,7 +58,7 @@
         {
           "questionNumber": "9",
           "question": "Players were not allowed to use the spaghetti-strung racket because of the amount of **9** ________ it created.",
-          "answer": "noise"
+          "answer": "topspin"
         },
         {
           "questionNumber": "10",
@@ -68,7 +68,7 @@
         {
           "questionNumber": "11",
           "question": "All rackets used to have natural strings made from the **11** ________ of animals.",
-          "answer": "guts"
+          "answer": "intestines"
         },
         {
           "questionNumber": "12",
@@ -78,16 +78,16 @@
         {
           "questionNumber": "13",
           "question": "Gonçalo Oliveira changed the **13** ________ on his racket handles.",
-          "answer": "grip"
+          "answer": "grips"
         }
       ],
       "correctAnswers": {
         "8": "paint",
-        "9": "noise",
+        "9": "topspin",
         "10": "training",
-        "11": "guts",
+        "11": "intestines / gut",
         "12": "weights",
-        "13": "grip"
+        "13": "grips"
       }
     }
   ]

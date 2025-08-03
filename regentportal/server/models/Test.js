@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const options = {
   collection: 'tests'
@@ -24,10 +25,7 @@ const testSchema = new mongoose.Schema({
   ],
   answers: {
     type: Map,
-    of: {
-      type: Map,
-      of: [String]  // Array of possible answers for each question
-    }
+    of: Schema.Types.Mixed  // Can store arrays, strings, or mixed types
   }
 }, options);
 

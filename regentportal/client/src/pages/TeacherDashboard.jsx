@@ -60,7 +60,7 @@ const TeacherDashboard = () => {
             onBack={handleBackToStudents}
           />
         ) : (
-          <TeacherStudentTable onStudentSelect={handleStudentSelect} />
+          <TeacherStudentTable onStudentSelect={handleStudentSelect} user={user} />
         )}
       </div>
     </div>

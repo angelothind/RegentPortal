@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/TFNG.css';
 
-const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'tfng' }) => {
-  const [answers, setAnswers] = useState({});
-
+const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'tfng', currentAnswers = {} }) => {
   console.log('🎯 TFNG rendered with template:', template);
   console.log('🎯 TFNG testResults:', testResults);
   console.log('🎯 TFNG testSubmitted:', testSubmitted);
 
   const handleAnswerChange = (questionNumber, value) => {
-    const newAnswers = { ...answers, [questionNumber]: value };
-    setAnswers(newAnswers);
+    const newAnswers = { ...currentAnswers, [questionNumber]: value };
     if (onAnswerChange) {
-      onAnswerChange(questionNumber, value);
+      onAnswerChange(newAnswers);
     }
   };
 
@@ -20,16 +17,28 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
     if (testSubmitted && testResults) {
       return testResults.answers?.[questionNumber] || '';
     }
-    return answers[questionNumber] || '';
+    return currentAnswers[questionNumber] || '';
   };
 
-  const getAnswerClass = (questionNumber) => {
+  const getAnswerClass = (questionNumber, optionValue) => {
     if (!testSubmitted || !testResults) return '';
     
     const result = testResults.results?.[questionNumber];
     if (!result) return '';
     
-    return result.isCorrect ? 'answer-correct' : 'answer-incorrect';
+    const userAnswer = testResults.answers?.[questionNumber];
+    const correctAnswer = result.correctAnswer;
+    
+    // If this option is the correct answer, show it as correct
+    if (optionValue === correctAnswer) {
+      return 'answer-correct';
+    }
+    // If this option is the user's answer but it's wrong, show it as incorrect
+    else if (optionValue === userAnswer && !result.isCorrect) {
+      return 'answer-incorrect';
+    }
+    
+    return '';
   };
 
   if (!template || !template.questionBlock) {
@@ -69,7 +78,7 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
               <span className="question-text">{question.question}</span>
             </div>
             <div className="answer-options">
-              <label className="option-label">
+              <label className={`option-label ${getAnswerClass(question.questionNumber, 'TRUE')}`}>
                 <input
                   type="radio"
                   name={`question-${question.questionNumber}`}
@@ -77,11 +86,10 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
                   checked={getAnswerValue(question.questionNumber) === 'TRUE'}
                   onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
                   disabled={testSubmitted}
-                  className={getAnswerClass(question.questionNumber)}
                 />
                 <span>TRUE</span>
               </label>
-              <label className="option-label">
+              <label className={`option-label ${getAnswerClass(question.questionNumber, 'FALSE')}`}>
                 <input
                   type="radio"
                   name={`question-${question.questionNumber}`}
@@ -89,11 +97,10 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
                   checked={getAnswerValue(question.questionNumber) === 'FALSE'}
                   onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
                   disabled={testSubmitted}
-                  className={getAnswerClass(question.questionNumber)}
                 />
                 <span>FALSE</span>
               </label>
-              <label className="option-label">
+              <label className={`option-label ${getAnswerClass(question.questionNumber, 'NOT GIVEN')}`}>
                 <input
                   type="radio"
                   name={`question-${question.questionNumber}`}
@@ -101,7 +108,6 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
                   checked={getAnswerValue(question.questionNumber) === 'NOT GIVEN'}
                   onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
                   disabled={testSubmitted}
-                  className={getAnswerClass(question.questionNumber)}
                 />
                 <span>NOT GIVEN</span>
               </label>

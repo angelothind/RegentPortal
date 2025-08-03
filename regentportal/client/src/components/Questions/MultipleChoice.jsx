@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/MultipleChoice.css';
 
-const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'multiple-choice' }) => {
-  const [answers, setAnswers] = useState({});
-
+const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'multiple-choice', currentAnswers = {} }) => {
   console.log('🎯 MultipleChoice rendered with template:', template);
 
   const handleAnswerChange = (questionNumber, value) => {
-    const newAnswers = { ...answers, [questionNumber]: value };
-    setAnswers(newAnswers);
+    const newAnswers = { ...currentAnswers, [questionNumber]: value };
     if (onAnswerChange) {
       onAnswerChange(newAnswers);
     }
@@ -36,7 +33,7 @@ const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, 
     if (testSubmitted && testResults) {
       return testResults.answers?.[questionNumber] || '';
     }
-    return answers[questionNumber] || '';
+    return currentAnswers[questionNumber] || '';
   };
 
   if (!template || !template.questionBlock) {

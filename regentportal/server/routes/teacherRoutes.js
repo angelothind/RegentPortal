@@ -4,6 +4,7 @@ const Teacher = require('../models/Teacher');
 const Student = require('../models/Student');
 const TestSubmission = require('../models/TestSubmission');
 const Book = require('../models/Book');
+const Test = require('../models/Test'); // Add this import
 
 // Get teacher's favorited students
 router.get('/:teacherId/favorites', async (req, res) => {
@@ -53,10 +54,10 @@ router.get('/submissions/student/:studentId', async (req, res) => {
   try {
     const submissions = await TestSubmission.find({ 
       studentId: req.params.studentId 
-    }).populate('testId');
+    });
     
     // Get all books to find which book each test belongs to
-    const books = await Book.find().populate('tests.testId');
+    const books = await Book.find();
     
     // Format submissions for frontend
     const formattedSubmissions = submissions.map(submission => {
@@ -64,19 +65,24 @@ router.get('/submissions/student/:studentId', async (req, res) => {
       let bookTitle = 'Unknown Book';
       let testName = 'Unknown Test';
       
+      // Add null check for submission.testId
+      if (submission.testId) {
       for (const book of books) {
-        const testInBook = book.tests.find(test => test.testId._id.toString() === submission.testId._id.toString());
+          const testInBook = book.tests.find(test => 
+            test.testId.toString() === submission.testId.toString()
+          );
         if (testInBook) {
           bookTitle = book.name;
           testName = testInBook.testName;
           break;
+          }
         }
       }
       
       return {
         _id: submission._id,
         testId: submission.testId,
-        testTitle: submission.testId?.title || 'Unknown Test',
+        testTitle: 'Test', // Default title since we don't have test details
         bookTitle: bookTitle,
         testName: testName,
         testType: submission.testType,
@@ -85,7 +91,7 @@ router.get('/submissions/student/:studentId', async (req, res) => {
         totalQuestions: submission.totalQuestions,
         submittedAt: submission.submittedAt,
         answers: submission.results ? Object.values(submission.results).map(result => ({
-          studentAnswer: result.studentAnswer || '',
+          studentAnswer: result.userAnswer || '',
           correctAnswer: result.correctAnswer || '',
           isCorrect: result.isCorrect || false
         })) : [],

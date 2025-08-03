@@ -4,56 +4,93 @@
     {
       "questionType": "choose-x-word",
       "introInstruction": "Questions 31-40",
-      "formattingInstruction": "Complete the summary below. Write ONE WORD ONLY for each answer.",
+      "formattingInstruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+      "notesTitle": "Tardigrades",
       "questionBlock": [
         {
+          "sectionHeading": "Tardigrades (General Information)"
+        },
+        {
+          "descriptiveText": "More than 1,000 species, 0.05-1.2 millimetres long"
+        },
+        {
           "questionNumber": 31,
-          "question": "The process involves the ability to **31** ________",
+          "question": "also known as water 'bears' (due to how they **31** ________) and 'moss piglets'",
           "answer": "move"
         },
         {
+          "sectionHeading": "Physical appearance"
+        },
+        {
           "questionNumber": 32,
-          "question": "The duration is **32** ________",
+          "question": "a **32** ________ round body and four pairs of legs",
           "answer": "short"
         },
         {
           "questionNumber": 33,
-          "question": "The materials include **33** ________",
+          "question": "claws or **33** ________ for gripping",
           "answer": "discs"
         },
         {
+          "descriptiveText": "absence of respiratory organs"
+        },
+        {
           "questionNumber": 34,
-          "question": "The environment requires **34** ________",
+          "question": "body filled with a liquid that carries both **34** ________ and blood",
           "answer": "oxygen"
         },
         {
           "questionNumber": 35,
-          "question": "The structure uses a **35** ________",
+          "question": "mouth shaped like a **35** ________ with teeth called stylets",
           "answer": "tube"
         },
         {
+          "sectionHeading": "Habitat"
+        },
+        {
+          "descriptiveText": "often found at the bottom of a lake or on plants"
+        },
+        {
           "questionNumber": 36,
-          "question": "The conditions involve **36** ________",
+          "question": "very resilient and can exist in very low or high **36** ________",
           "answer": "temperatures"
         },
         {
+          "sectionHeading": "Cryptobiosis"
+        },
+        {
+          "descriptiveText": "In dry conditions, they roll into a ball called a 'tun'."
+        },
+        {
+          "descriptiveText": "They stay alive with a much lower metabolism than usual."
+        },
+        {
           "questionNumber": 37,
-          "question": "The composition includes **37** ________",
+          "question": "A type of **37** ________ ensures their DNA is not damaged.",
           "answer": "protein"
         },
         {
           "questionNumber": 38,
-          "question": "The location requires **38** ________",
+          "question": "Research is underway to find out how many days they can stay alive in **38** ________",
           "answer": "space"
         },
         {
+          "sectionHeading": "Feeding"
+        },
+        {
           "questionNumber": 39,
-          "question": "The source material is **39** ________",
+          "question": "consume liquids, e.g., those found in moss or **39** ________",
           "answer": "seaweed"
         },
         {
+          "descriptiveText": "may eat other tardigrades"
+        },
+        {
+          "sectionHeading": "Conservation status"
+        },
+        {
           "questionNumber": 40,
-          "question": "The species is **40** ________",
+          "question": "They are not considered to be **40** ________",
           "answer": "endangered"
         }
       ]

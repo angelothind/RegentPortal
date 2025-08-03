@@ -148,11 +148,17 @@
 
 /* Review mode styling for correct/incorrect answers */
 .answer-correct {
-  accent-color: #28a745;
+  background-color: #d4edda !important;
+  border: 2px solid #28a745 !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
 }
 
 .answer-incorrect {
-  accent-color: #dc3545;
+  background-color: #f8d7da !important;
+  border: 2px solid #dc3545 !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
 }
 
 /* Responsive design */

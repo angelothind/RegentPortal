@@ -1,6 +1,123 @@
 const express = require('express');
 const router = express.Router();
 const TestSubmission = require('../models/TestSubmission');
+const Test = require('../models/Test');
+const path = require('path');
+const fs = require('fs');
+
+// Function to load correct answers from database based on test type
+const loadCorrectAnswers = async (testId, testType, submittedAnswers = {}) => {
+  try {
+    const test = await Test.findById(testId);
+    console.log('📝 Found test:', test ? test.title : 'NOT FOUND');
+    console.log('📝 Test ID being searched:', testId);
+    if (!test) {
+      throw new Error('Test not found');
+    }
+
+    const correctAnswers = {};
+    
+    // First, try to load answers from JSON files (prioritize these)
+    console.log(`📝 Loading correct answers from JSON files for ${testType}...`);
+    
+    // Determine which parts to load based on submitted question numbers
+    let partsToLoad = [];
+    
+    if (testType.toLowerCase() === 'reading') {
+      // For reading tests, determine parts based on question numbers
+      const questionNumbers = Object.keys(submittedAnswers).map(q => parseInt(q)).filter(q => !isNaN(q));
+      
+      if (questionNumbers.length > 0) {
+        const maxQuestion = Math.max(...questionNumbers);
+        if (maxQuestion <= 13) {
+          partsToLoad = [1];
+        } else if (maxQuestion <= 26) {
+          partsToLoad = [1, 2];
+        } else {
+          partsToLoad = [1, 2, 3];
+        }
+      } else {
+        // Fallback: load all parts if no questions submitted
+        partsToLoad = [1, 2, 3];
+      }
+    } else {
+      // For listening tests, load all parts
+      partsToLoad = [1, 2, 3, 4];
+    }
+    
+    console.log(`📝 Loading parts for ${testType} test:`, partsToLoad);
+    
+    for (const part of partsToLoad) {
+      const testPath = test.title.replace(/\s+/g, ''); // "Test 1" -> "Test1"
+      const questionFilePath = `assets/Books/Book19/${testPath}/questions/${testType.charAt(0).toUpperCase() + testType.slice(1)}/part${part}.json`;
+      const absolutePath = path.join(__dirname, '..', questionFilePath);
+      
+      console.log(`🔍 Test title: "${test.title}"`);
+      console.log(`🔍 Test path: "${testPath}"`);
+      console.log(`🔍 Question file path: "${questionFilePath}"`);
+      console.log(`🔍 Absolute path: "${absolutePath}"`);
+      console.log(`🔍 File exists: ${fs.existsSync(absolutePath)}`);
+      
+      if (fs.existsSync(absolutePath)) {
+        const rawContent = fs.readFileSync(absolutePath, 'utf-8');
+        const questionData = JSON.parse(rawContent);
+        
+        // Extract correct answers from each template
+        if (questionData.templates) {
+          questionData.templates.forEach(template => {
+            if (template.correctAnswers) {
+              // Reading test format - has correctAnswers object
+              Object.assign(correctAnswers, template.correctAnswers);
+            } else if (template.questionBlock) {
+              // Listening test format - has answer fields in questionBlock
+              template.questionBlock.forEach(question => {
+                if (question.questionNumber && question.answer) {
+                  correctAnswers[question.questionNumber] = question.answer;
+                }
+              });
+            }
+          });
+        }
+      } else {
+        console.warn(`⚠️ Question file not found: ${absolutePath}`);
+      }
+    }
+    
+    // If we found answers in JSON files, return them
+    if (Object.keys(correctAnswers).length > 0) {
+      console.log(`✅ Loaded ${Object.keys(correctAnswers).length} correct answers from JSON files`);
+      return correctAnswers;
+    }
+    
+    // Fallback to database answers if no JSON files found
+    console.log(`📝 No JSON files found, checking database for ${testType} answers...`);
+    if (test.answers && test.answers.size > 0) {
+      console.log('✅ Found answers in database');
+      
+      // Get answers for the specific test type
+      const testTypeAnswers = test.answers.get(testType.toLowerCase());
+      if (testTypeAnswers && Array.isArray(testTypeAnswers)) {
+        console.log(`📝 Found ${testTypeAnswers.length} ${testType} answers in database`);
+        
+        // Convert array to object with question numbers as keys
+        const dbAnswers = {};
+        testTypeAnswers.forEach((answer, index) => {
+          dbAnswers[(index + 1).toString()] = answer;
+        });
+        
+        console.log(`✅ Loaded ${Object.keys(dbAnswers).length} correct answers from database for ${testType}`);
+        return dbAnswers;
+      }
+    }
+    
+    console.log(`❌ No correct answers found for ${testType} in JSON files or database`);
+    return {};
+    
+  } catch (error) {
+    console.error('❌ Error loading correct answers:', error);
+    throw error;
+  }
+};
 
 // Test endpoint to verify route is working
 router.get('/test', (req, res) => {
@@ -39,6 +156,8 @@ router.post('/submit', async (req, res) => {
       studentId,
       answerCount: Object.keys(answers).length
     });
+    console.log('📝 TestId type:', typeof testId);
+    console.log('📝 TestId value:', testId);
 
     // Validate required fields
     console.log('📝 Validating fields:', { testId, testType, studentId, hasAnswers: !!answers });
@@ -64,59 +183,38 @@ router.post('/submit', async (req, res) => {
     const normalizedTestType = testType.toLowerCase();
     console.log('📝 Normalized testType:', { original: testType, normalized: normalizedTestType });
 
-    // Define correct answers for this test (this should come from the database in a real app)
-    const correctAnswers = {
-      1: "90",
-      2: "stream",
-      3: "facts",
-      4: "map",
-      5: "attractions",
-      6: "instruments",
-      7: "freedom",
-      8: "skills",
-      9: "5",
-      10: "teachers",
-      11: "B",
-      12: "A",
-      13: "B",
-      14: "C",
-      15: "A",
-      16: "D",
-      17: "E",
-      18: "F",
-      19: "G",
-      20: "A",
-      21: ["B", "C"],
-      22: ["B", "C"],
-      23: ["B", "C"],
-      24: ["B", "C"],
-      25: "C",
-      26: "D",
-      27: "A",
-      28: "B",
-      29: "F",
-      30: "H",
-      31: "walls",
-      32: "son",
-      33: "fuel",
-      34: "oxygen",
-      35: "round",
-      36: "cheese",
-      37: "family",
-      38: "winter",
-      39: "soil",
-      40: "rainfall"
-    };
+    // Load correct answers from database (with JSON fallback)
+    console.log('📝 Loading correct answers from database...');
+    const correctAnswers = await loadCorrectAnswers(testId, normalizedTestType, answers);
+    
+    if (!correctAnswers || Object.keys(correctAnswers).length === 0) {
+      console.error('❌ No correct answers loaded');
+      return res.status(500).json({
+        success: false,
+        message: 'Failed to load correct answers'
+      });
+    }
+    
+    console.log('📝 Loaded correct answers:', correctAnswers);
+    console.log('📝 Submitted answers:', answers);
+    console.log('📝 Question numbers in submitted answers:', Object.keys(answers));
+    console.log('📝 Question numbers in correct answers:', Object.keys(correctAnswers));
 
-    // Calculate score and results
+    // Calculate score and results - grade ALL questions, not just submitted ones
     let correctCount = 0;
-    const totalQuestions = Object.keys(correctAnswers).length;
+    const allQuestions = Object.keys(correctAnswers);
+    const totalQuestions = allQuestions.length;
     const results = {};
 
-    for (const questionNumber in correctAnswers) {
-      const userAnswer = answers[questionNumber];
+    console.log('📝 Grading ALL questions:', allQuestions);
+    console.log('📝 User answers:', answers);
+
+    for (const questionNumber of allQuestions) {
+      const userAnswer = answers[questionNumber] || ''; // Use empty string if no answer
       const correctAnswer = correctAnswers[questionNumber];
       let isCorrect = false;
+
+      console.log(`📝 Grading question ${questionNumber}:`, { userAnswer, correctAnswer });
 
       // Handle different answer types
       if (Array.isArray(correctAnswer)) {
@@ -130,9 +228,16 @@ router.post('/submit', async (req, res) => {
         }
       } else {
         // Single answer questions
-        isCorrect = userAnswer && 
-                   userAnswer.toString().trim() !== '' && 
-                   userAnswer.toString().trim() === correctAnswer.toString().trim();
+        const normalizedUserAnswer = userAnswer ? userAnswer.toString().trim().toUpperCase() : '';
+        const normalizedCorrectAnswer = correctAnswer ? correctAnswer.toString().trim().toUpperCase() : '';
+        
+        isCorrect = normalizedUserAnswer !== '' && normalizedUserAnswer === normalizedCorrectAnswer;
+        
+        console.log(`📝 Comparing answers for question ${questionNumber}:`, {
+          userAnswer: normalizedUserAnswer,
+          correctAnswer: normalizedCorrectAnswer,
+          isCorrect: isCorrect
+        });
       }
 
       results[questionNumber] = {
@@ -210,4 +315,4 @@ router.post('/submit', async (req, res) => {
   }
 });
 
-module.exports = router; 
+module.exports = router;

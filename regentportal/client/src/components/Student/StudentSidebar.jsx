@@ -35,9 +35,12 @@ const StudentSidebar = ({ onSelectTest, onLogout }) => {
   };
 
   const handleTestSelection = (testId, testName, testType) => {
+    // testId is an object with _id property, we need to pass the object structure
+    console.log('🔍 handleTestSelection called with:', { testId, testName, testType });
     setSelectedTest({ testId, testName });
     setSelectedTestType(testType);
     onSelectTest({ type: testType, testId });
+    console.log('🔍 Test selection completed');
   };
 
   const toggleSidebar = () => {
@@ -62,10 +65,10 @@ const StudentSidebar = ({ onSelectTest, onLogout }) => {
                 {openBook === book.name && (
                   <ul className="dropdown">
                     {book.tests.map(({ testId, testName }) => (
-                      <li key={testId._id}>
+                      <li key={testId?._id || testName}>
                         <button 
                           onClick={() => toggleTest(testName)}
-                          className={selectedTest && selectedTest.testId._id === testId._id ? 'selected' : ''}
+                          className={selectedTest && selectedTest.testId._id === testId?._id ? 'selected' : ''}
                         >
                           {testName}
                         </button>
@@ -75,7 +78,7 @@ const StudentSidebar = ({ onSelectTest, onLogout }) => {
                             <li>
                               <button 
                                 onClick={() => handleTestSelection(testId, testName, 'Reading')}
-                                className={selectedTest && selectedTest.testId._id === testId._id && selectedTestType === 'Reading' ? 'selected' : ''}
+                                className={selectedTest && selectedTest.testId._id === testId?._id && selectedTestType === 'Reading' ? 'selected' : ''}
                               >
                                 Reading
                               </button>
@@ -83,7 +86,7 @@ const StudentSidebar = ({ onSelectTest, onLogout }) => {
                             <li>
                               <button 
                                 onClick={() => handleTestSelection(testId, testName, 'Listening')}
-                                className={selectedTest && selectedTest.testId._id === testId._id && selectedTestType === 'Listening' ? 'selected' : ''}
+                                className={selectedTest && selectedTest.testId._id === testId?._id && selectedTestType === 'Listening' ? 'selected' : ''}
                               >
                                 Listening
                               </button>

@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/MapLabeling.css';
 
-const MapLabeling = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'map-labeling' }) => {
-  const [answers, setAnswers] = useState({});
-
+const MapLabeling = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'map-labeling', currentAnswers = {} }) => {
   console.log('🎯 MapLabeling rendered with template:', template);
 
   const handleAnswerChange = (questionNumber, value) => {
-    const newAnswers = { ...answers, [questionNumber]: value };
-    setAnswers(newAnswers);
+    const newAnswers = { ...currentAnswers, [questionNumber]: value };
     if (onAnswerChange) {
       onAnswerChange(newAnswers);
     }
@@ -36,7 +33,7 @@ const MapLabeling = ({ template, onAnswerChange, testResults, testSubmitted, com
     if (testSubmitted && testResults) {
       return testResults.answers?.[questionNumber] || '';
     }
-    return answers[questionNumber] || '';
+    return currentAnswers[questionNumber] || '';
   };
 
   if (!template || !template.questionBlock) {

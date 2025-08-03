@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/ChooseFrom.css';
 
-const ChooseFrom = ({ template, onAnswerChange, testResults, testSubmitted, testType, componentId = 'choose-from' }) => {
-  const [answers, setAnswers] = useState({});
-
+const ChooseFrom = ({ template, onAnswerChange, testResults, testSubmitted, testType, componentId = 'choose-from', currentAnswers = {} }) => {
   console.log('🎯 ChooseFrom rendered with template:', template);
   console.log('🎯 ChooseFrom testResults:', testResults);
   console.log('🎯 ChooseFrom testSubmitted:', testSubmitted);
@@ -15,8 +13,7 @@ const ChooseFrom = ({ template, onAnswerChange, testResults, testSubmitted, test
   };
 
   const handleAnswerChange = (questionNumber, value) => {
-    const newAnswers = { ...answers, [questionNumber]: value };
-    setAnswers(newAnswers);
+    const newAnswers = { ...currentAnswers, [questionNumber]: value };
     if (onAnswerChange) {
       onAnswerChange(newAnswers);
     }
@@ -36,7 +33,7 @@ const ChooseFrom = ({ template, onAnswerChange, testResults, testSubmitted, test
     if (testSubmitted && testResults) {
       return testResults.answers?.[questionNumber] || '';
     }
-    return answers[questionNumber] || '';
+    return currentAnswers[questionNumber] || '';
   };
 
   if (!template || !template.summaryText) {
