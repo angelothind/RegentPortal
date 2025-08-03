@@ -11,6 +11,38 @@
   left: 0;
   overflow-y: auto;
   font-family: 'Roboto', sans-serif;
+  transition: width 0.3s ease;
+}
+
+/* Shrunk state */
+.sidebar.shrunk {
+  width: 60px;
+  padding: 20px 10px;
+}
+
+/* Sidebar toggle button */
+.sidebar-toggle {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  z-index: 10;
+}
+
+.sidebar-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* Sidebar header */
@@ -18,6 +50,7 @@
   font-size: 1.6rem;
   font-weight: bold;
   margin-bottom: 2rem;
+  margin-top: 20px;
 }
 
 /* Current selection display */

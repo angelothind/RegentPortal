@@ -413,6 +413,13 @@
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  transition: left 0.3s ease, width 0.3s ease;
+}
+
+/* When sidebar is shrunk, expand overlay */
+.sidebar.shrunk ~ .main-content-area .test-overlay {
+  left: 60px;
+  width: calc(100% - 60px);
 }
 
 .overlay-content {
