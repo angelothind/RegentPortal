@@ -7,8 +7,8 @@ const StudentDetails = ({ student, onBack }) => {
   const [loading, setLoading] = useState(true);
   const [selectedTest, setSelectedTest] = useState(null);
   const [expandedSections, setExpandedSections] = useState({
-    reading: true,
-    listening: true
+    reading: false,
+    listening: false
   });
 
   useEffect(() => {
@@ -70,31 +70,35 @@ const StudentDetails = ({ student, onBack }) => {
 
   // Filter and process submissions
   const completedSubmissions = testSubmissions.filter(sub => sub.score > 0);
-  const readingSubmissions = completedSubmissions.filter(sub => sub.testType.toLowerCase() === 'reading');
-  const listeningSubmissions = completedSubmissions.filter(sub => sub.testType.toLowerCase() === 'listening');
+  const readingSubmissions = completedSubmissions
+    .filter(sub => sub.testType.toLowerCase() === 'reading')
+    .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt)); // Sort by most recent first
+  const listeningSubmissions = completedSubmissions
+    .filter(sub => sub.testType.toLowerCase() === 'listening')
+    .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt)); // Sort by most recent first
 
-  // Get first submission per test for averages
-  const getFirstSubmissionsByTest = (submissions) => {
+  // Get most recent submission per test for averages
+  const getMostRecentSubmissionsByTest = (submissions) => {
     const testMap = new Map();
     submissions.forEach(sub => {
       const testKey = `${sub.testId}-${sub.testType}`;
-      if (!testMap.has(testKey) || sub.submittedAt < testMap.get(testKey).submittedAt) {
+      if (!testMap.has(testKey) || sub.submittedAt > testMap.get(testKey).submittedAt) {
         testMap.set(testKey, sub);
       }
     });
     return Array.from(testMap.values());
   };
 
-  const firstReadingSubmissions = getFirstSubmissionsByTest(readingSubmissions);
-  const firstListeningSubmissions = getFirstSubmissionsByTest(listeningSubmissions);
+  const mostRecentReadingSubmissions = getMostRecentSubmissionsByTest(readingSubmissions);
+  const mostRecentListeningSubmissions = getMostRecentSubmissionsByTest(listeningSubmissions);
 
   // Calculate averages
-  const readingAverage = firstReadingSubmissions.length > 0 
-    ? Math.round(firstReadingSubmissions.reduce((sum, sub) => sum + sub.score, 0) / firstReadingSubmissions.length)
+  const readingAverage = mostRecentReadingSubmissions.length > 0 
+    ? Math.round(mostRecentReadingSubmissions.reduce((sum, sub) => sum + sub.score, 0) / mostRecentReadingSubmissions.length)
     : 0;
 
-  const listeningAverage = firstListeningSubmissions.length > 0 
-    ? Math.round(firstListeningSubmissions.reduce((sum, sub) => sum + sub.score, 0) / firstListeningSubmissions.length)
+  const listeningAverage = mostRecentListeningSubmissions.length > 0 
+    ? Math.round(mostRecentListeningSubmissions.reduce((sum, sub) => sum + sub.score, 0) / mostRecentListeningSubmissions.length)
     : 0;
 
   const bestScore = completedSubmissions.length > 0 

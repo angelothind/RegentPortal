@@ -45,6 +45,8 @@ app.use('/api/submit', require('./routes/submitTest'));
 
 app.use('/api/teachers', require('./routes/teacherRoutes'));
 
+app.use('/api/submissions', require('./routes/submissions'));
+
 app.get('/', (req, res) => {
   res.send('Root route works!');
 });

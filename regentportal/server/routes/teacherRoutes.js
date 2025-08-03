@@ -54,7 +54,7 @@ router.get('/submissions/student/:studentId', async (req, res) => {
   try {
     const submissions = await TestSubmission.find({ 
       studentId: req.params.studentId 
-    });
+    }).sort({ submittedAt: -1 }); // Sort by most recent first
     
     // Get all books to find which book each test belongs to
     const books = await Book.find();
