@@ -105,7 +105,10 @@ router.get('/:id/questions/:part', async (req, res) => {
 
     // Construct the path to the question file based on user's selection
     const testPath = test.title.replace(/\s+/g, ''); // "Test 1" -> "Test1"
-    const questionFilePath = `assets/Books/Book19/${testPath}/questions/${testType.charAt(0).toUpperCase() + testType.slice(1)}/part${part}.json`;
+    
+    // Extract just the number from the part parameter (e.g., "part1" -> "1")
+    const partNumber = part.replace(/^part/i, '');
+    const questionFilePath = `assets/Books/Book19/${testPath}/questions/${testType.charAt(0).toUpperCase() + testType.slice(1)}/part${partNumber}.json`;
     const absolutePath = path.join(__dirname, '..', questionFilePath);
     
     console.log(`🔍 Looking for question file: ${absolutePath}`);

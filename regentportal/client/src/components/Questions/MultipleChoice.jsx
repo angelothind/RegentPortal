@@ -51,6 +51,16 @@ const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, 
         </div>
       )}
       
+      {/* Instructions */}
+      {template.introInstruction && (
+        <div className="instructions">
+          <h3 className="main-instruction">{template.introInstruction}</h3>
+          {template.formattingInstruction && (
+            <p className="formatting-instruction">{template.formattingInstruction}</p>
+          )}
+        </div>
+      )}
+      
       <div className="questions-section">
         {template.questionBlock.map((question) => (
           <div key={question.questionNumber} className="question-item">

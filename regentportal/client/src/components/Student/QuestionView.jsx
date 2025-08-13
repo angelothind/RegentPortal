@@ -7,20 +7,28 @@ import MultipleChoice from '../Questions/MultipleChoice';
 import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
 import SummaryCompletion from '../Questions/SummaryCompletion';
 
-const QuestionView = ({ selectedTest, user }) => {
+const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false }) => {
   console.log('🚀 QuestionView component mounted with selectedTest:', selectedTest);
   console.log('🔍 QuestionView received user:', user);
+  console.log('🔍 QuestionView received externalTestResults:', externalTestResults);
+  console.log('🔍 QuestionView received externalTestSubmitted:', externalTestSubmitted);
+  console.log('🔍 QuestionView received isTeacherMode:', isTeacherMode);
   
   const [questionData, setQuestionData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [answers, setAnswers] = useState({});
   const [currentPassage, setCurrentPassage] = useState(1);
-  const [testSubmitted, setTestSubmitted] = useState(false);
-  const [testResults, setTestResults] = useState(null);
+  const [testSubmitted, setTestSubmitted] = useState(externalTestSubmitted || false);
+  const [testResults, setTestResults] = useState(externalTestResults || null);
 
-  // Load saved answers from localStorage on component mount
+  // Load saved answers from localStorage on component mount (only for students, not teachers)
   useEffect(() => {
+    if (isTeacherMode) {
+      console.log('👨‍🏫 Teacher mode: Using external test results instead of localStorage');
+      return;
+    }
+
     console.log('🔄 Loading saved answers for test:', selectedTest);
     if (selectedTest && selectedTest.testId) {
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
@@ -55,10 +63,15 @@ const QuestionView = ({ selectedTest, user }) => {
         console.log('📝 No saved answers found in localStorage');
       }
     }
-  }, [selectedTest]);
+  }, [selectedTest, isTeacherMode]);
 
-  // Reload answers from localStorage when passage changes
+  // Reload answers from localStorage when passage changes (only for students, not teachers)
   useEffect(() => {
+    if (isTeacherMode) {
+      console.log('👨‍🏫 Teacher mode: Skipping localStorage operations for passage changes');
+      return;
+    }
+
     console.log('🔄 Passage changed to:', currentPassage, '- reloading answers from localStorage');
     if (selectedTest && selectedTest.testId) {
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
@@ -74,10 +87,15 @@ const QuestionView = ({ selectedTest, user }) => {
         }
       }
     }
-  }, [currentPassage, selectedTest]);
+  }, [currentPassage, selectedTest, isTeacherMode]);
 
-  // Add refresh confirmation warning
+  // Add refresh confirmation warning (only for students, not teachers)
   useEffect(() => {
+    if (isTeacherMode) {
+      console.log('👨‍🏫 Teacher mode: Skipping refresh confirmation warning');
+      return;
+    }
+
     const handleBeforeUnload = (e) => {
       if (!testSubmitted && Object.keys(answers).length > 0) {
         e.preventDefault();
@@ -91,7 +109,7 @@ const QuestionView = ({ selectedTest, user }) => {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [testSubmitted, answers]);
+  }, [testSubmitted, answers, isTeacherMode]);
 
   useEffect(() => {
     const fetchQuestionData = async () => {
@@ -132,6 +150,12 @@ const QuestionView = ({ selectedTest, user }) => {
   }, [selectedTest, currentPassage]);
 
   const handleAnswerChange = (questionNumberOrNewAnswers, value) => {
+    // In teacher mode, don't allow answer changes
+    if (isTeacherMode) {
+      console.log('👨‍🏫 Teacher mode: Answer changes not allowed');
+      return;
+    }
+
     let newAnswers;
     
     // Check if this is the new signature (newAnswers object) or old signature (questionNumber, value)
@@ -169,6 +193,12 @@ const QuestionView = ({ selectedTest, user }) => {
 
 
   const handleSubmit = async () => {
+    // In teacher mode, don't allow test submission
+    if (isTeacherMode) {
+      console.log('👨‍🏫 Teacher mode: Test submission not allowed');
+      return;
+    }
+
     const confirmed = window.confirm('Are you sure you want to submit the test? You cannot change your answers after submission.');
     if (!confirmed) return;
     
@@ -180,6 +210,7 @@ const QuestionView = ({ selectedTest, user }) => {
     
     console.log('📝 Submitting test with answers:', answers);
     console.log('📝 User data:', user);
+    console.log('📝 Selected test before submission:', selectedTest);
     
     try {
       const response = await fetch('/api/submit/submit', {
@@ -204,6 +235,7 @@ const QuestionView = ({ selectedTest, user }) => {
       if (result.success) {
         console.log('✅ Test submitted successfully:', result.data);
         console.log('📝 Server results structure:', result.data.results);
+        console.log('📝 Selected test after submission:', selectedTest);
         
         // Set the test results from the backend response
         // Extract correct answers from the results
@@ -242,6 +274,12 @@ const QuestionView = ({ selectedTest, user }) => {
   };
 
   const handleResetTest = () => {
+    // In teacher mode, don't allow test reset
+    if (isTeacherMode) {
+      console.log('👨‍🏫 Teacher mode: Test reset not allowed');
+      return;
+    }
+
     const confirmed = window.confirm('Are you sure you want to reset the test? This will clear all your answers and return to the start.');
     if (!confirmed) return;
     
@@ -256,8 +294,8 @@ const QuestionView = ({ selectedTest, user }) => {
     console.log('🔄 Switching to passage:', passageNumber);
     console.log('📝 Current answers before passage change:', answers);
     
-    // Save current answers before switching
-    if (selectedTest && selectedTest.testId) {
+    // Save current answers before switching (only for students, not teachers)
+    if (!isTeacherMode && selectedTest && selectedTest.testId) {
       const answersWithTimestamp = {
         ...answers,
         _timestamp: Date.now(),
@@ -435,8 +473,8 @@ const QuestionView = ({ selectedTest, user }) => {
         {renderQuestionComponent()}
       </div>
       
-      {/* Test Controls - Submit only on last passage, reset only after submission */}
-      {currentPassage === 3 && !testSubmitted && (
+      {/* Test Controls - Submit only on last passage, reset only after submission (not shown in teacher mode) */}
+      {!isTeacherMode && currentPassage === 3 && !testSubmitted && (
         <div className="test-controls">
           <div className="submit-section">
             <button className="submit-button" onClick={handleSubmit}>
@@ -446,8 +484,8 @@ const QuestionView = ({ selectedTest, user }) => {
         </div>
       )}
       
-      {/* Results section - only show after submission */}
-      {testSubmitted && (
+      {/* Results section - only show after submission (not shown in teacher mode) */}
+      {!isTeacherMode && testSubmitted && (
         <div className="test-controls">
           <div className="results-section">
             <h3>Test Results</h3>

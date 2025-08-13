@@ -34,9 +34,15 @@ const StudentDashboard = () => {
   }, [navigate]);
 
   const handleSelectTest = async (testInfo) => {
-    console.log('Selected test:', testInfo);
+    console.log('🔍 StudentDashboard: handleSelectTest called with:', testInfo);
     setSelectedTest(testInfo);
+    console.log('🔍 StudentDashboard: selectedTest state set to:', testInfo);
   };
+
+  // Debug: Monitor selectedTest state changes
+  useEffect(() => {
+    console.log('🔍 StudentDashboard: selectedTest state changed to:', selectedTest);
+  }, [selectedTest]);
 
   const handleLogout = () => {
     localStorage.removeItem('user');

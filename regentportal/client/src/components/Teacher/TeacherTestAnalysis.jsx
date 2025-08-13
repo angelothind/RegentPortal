@@ -10,6 +10,9 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
   const [loading, setLoading] = useState(true);
 
   console.log('🎯 TeacherTestAnalysis - Received submission:', submission);
+  console.log('🎯 TeacherTestAnalysis - submission.answers:', submission?.answers);
+  console.log('🎯 TeacherTestAnalysis - submission.results:', submission?.results);
+  console.log('🎯 TeacherTestAnalysis - submission.correctAnswers:', submission?.correctAnswers);
 
   useEffect(() => {
     const fetchTestData = async () => {
@@ -17,8 +20,34 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
 
       setLoading(true);
       try {
+        // Fetch complete submission data if we only have basic info
+        let completeSubmission = submission;
+        if (!submission.answers || !submission.results || !submission.correctAnswers) {
+          console.log('🔍 Fetching complete submission data...');
+          const submissionResponse = await fetch(`/api/submissions/submission/${submission._id}`);
+          if (submissionResponse.ok) {
+            completeSubmission = await submissionResponse.json();
+            console.log('✅ Complete submission data fetched:', completeSubmission);
+            // Update the submission object with complete data
+            Object.assign(submission, completeSubmission);
+          } else {
+            console.error('❌ Failed to fetch complete submission data');
+          }
+        }
+
+        // Extract testId value for API calls
+        let testIdForAPI;
+        if (typeof completeSubmission.testId === 'object' && completeSubmission.testId._id) {
+          testIdForAPI = completeSubmission.testId._id;
+        } else {
+          testIdForAPI = completeSubmission.testId;
+        }
+        
+        console.log('🔍 API calls - testIdForAPI:', testIdForAPI);
+        console.log('🔍 API calls - completeSubmission.testId:', completeSubmission.testId);
+
         // Fetch test data
-        const testEndpoint = `/api/tests/${submission.testId}`;
+        const testEndpoint = `/api/tests/${testIdForAPI}`;
         const testResponse = await fetch(testEndpoint);
         if (!testResponse.ok) {
           throw new Error(`HTTP error! status: ${testResponse.status}`);
@@ -27,7 +56,7 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
         setTestData(testDataResult);
 
         // Fetch question data
-        const questionEndpoint = `/api/tests/${submission.testId}/questions/part1?testType=${submission.testType}`;
+        const questionEndpoint = `/api/tests/${testIdForAPI}/questions/part1?testType=${completeSubmission.testType}`;
         const questionResponse = await fetch(questionEndpoint);
         if (!questionResponse.ok) {
           throw new Error(`HTTP error! status: ${questionResponse.status}`);
@@ -54,31 +83,44 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
     const correctAnswers = {};
     const results = {};
 
-    // Process answered questions from submission.answers array
-    if (submission.answers && Array.isArray(submission.answers)) {
-      submission.answers.forEach((answer, index) => {
-      const questionNumber = index + 1;
-      answers[questionNumber] = answer.studentAnswer || '';
-      correctAnswers[questionNumber] = answer.correctAnswer || '';
-      results[questionNumber] = {
-        isCorrect: answer.isCorrect || false,
-        studentAnswer: answer.studentAnswer || '',
-        correctAnswer: answer.correctAnswer || ''
-      };
-    });
+    // Process answers from submission.answers (Map structure)
+    if (submission.answers) {
+      // Convert Map to object if needed
+      const answersMap = submission.answers instanceof Map ? submission.answers : new Map(Object.entries(submission.answers));
+      answersMap.forEach((value, key) => {
+        const questionNumber = key.toString();
+        answers[questionNumber] = value || '';
+      });
     }
 
-    // Also use the correctAnswers from submission if available
+    // Process results from submission.results (Map structure)
+    if (submission.results) {
+      // Convert Map to object if needed
+      const resultsMap = submission.results instanceof Map ? submission.results : new Map(Object.entries(submission.results));
+      resultsMap.forEach((value, key) => {
+        const questionNumber = key.toString();
+        results[questionNumber] = {
+          isCorrect: value.isCorrect || false,
+          studentAnswer: value.userAnswer || '',
+          correctAnswer: value.correctAnswer || ''
+        };
+      });
+    }
+
+    // Process correctAnswers from submission.correctAnswers (Map structure)
     if (submission.correctAnswers) {
-      Object.keys(submission.correctAnswers).forEach(questionNumber => {
-        correctAnswers[questionNumber] = submission.correctAnswers[questionNumber];
+      // Convert Map to object if needed
+      const correctAnswersMap = submission.correctAnswers instanceof Map ? submission.correctAnswers : new Map(Object.entries(submission.correctAnswers));
+      correctAnswersMap.forEach((value, key) => {
+        const questionNumber = key.toString();
+        correctAnswers[questionNumber] = value;
         
-        // Create results for unanswered questions
+        // Create results for unanswered questions if not already present
         if (!results[questionNumber]) {
           results[questionNumber] = {
             isCorrect: false,
             studentAnswer: '',
-            correctAnswer: submission.correctAnswers[questionNumber]
+            correctAnswer: value
           };
         }
       });
@@ -99,7 +141,7 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
     if (!submission) return null;
 
     return {
-      testId: { _id: submission.testId },
+      testId: { _id: testIdValue },
       type: submission.testType,
       title: submission.testTitle
     };
@@ -121,11 +163,22 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
     );
   }
 
+  // Extract testId value for use in components
+  let testIdValue;
+  if (typeof submission.testId === 'object' && submission.testId._id) {
+    // If testId is populated (has _id property)
+    testIdValue = submission.testId._id;
+  } else {
+    // If testId is just the string ID
+    testIdValue = submission.testId;
+  }
+
   const testResults = formatTestResults();
   const selectedTest = formatSelectedTest();
   
   console.log('🎯 TeacherTestAnalysis - testResults:', testResults);
   console.log('🎯 TeacherTestAnalysis - selectedTest:', selectedTest);
+  console.log('🎯 TeacherTestAnalysis - testIdValue:', testIdValue);
 
   return (
     <div className="teacher-test-analysis">
@@ -141,10 +194,11 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
             <span className="test-name">{submission.testName}</span>
             <span className="test-type">{submission.testType}</span>
             <span className="score-badge" style={{ 
-              backgroundColor: submission.score >= 80 ? '#4CAF50' : 
+              backgroundColor: submission.score === 0 ? '#6c757d' :
+                             submission.score >= 80 ? '#4CAF50' : 
                              submission.score >= 60 ? '#FF9800' : '#f44336' 
             }}>
-              {submission.score}%
+              {submission.score === 0 ? 'Incomplete' : `${submission.score}%`}
             </span>
           </div>
         </div>
@@ -154,12 +208,15 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
       {submission.testType.toLowerCase() === 'reading' ? (
         <div className="test-viewer-container">
           <div className="test-content-area">
-            <ReadingTest testId={{ _id: submission.testId }} testData={testData} isTeacherMode={true} />
+            <ReadingTest testId={{ _id: testIdValue }} testData={testData} isTeacherMode={true} />
           </div>
           <div className="question-area">
             <QuestionView 
               selectedTest={selectedTest} 
               user={null}
+              testResults={testResults}
+              testSubmitted={true}
+              isTeacherMode={true}
             />
           </div>
         </div>

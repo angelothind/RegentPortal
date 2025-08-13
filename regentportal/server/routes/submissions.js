@@ -3,7 +3,38 @@ const router = express.Router();
 const TestSubmission = require('../models/TestSubmission');
 const Student = require('../models/Student');
 
-// Get all submissions for a specific test
+// Get a specific submission by ID with complete details (MUST come first)
+router.get('/submission/:submissionId', async (req, res) => {
+  try {
+    const submission = await TestSubmission.findById(req.params.submissionId)
+      .populate('testId', 'title');
+    
+    if (!submission) {
+      return res.status(404).json({ error: 'Submission not found' });
+    }
+    
+    res.json(submission);
+  } catch (err) {
+    console.error('❌ Error fetching submission:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Get all submissions for a student
+router.get('/student/:studentId', async (req, res) => {
+  try {
+    const submissions = await TestSubmission.find({ studentId: req.params.studentId })
+      .populate('testId', 'title')
+      .sort({ submittedAt: -1 });
+    
+    res.json(submissions);
+  } catch (err) {
+    console.error('❌ Error fetching student submissions:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Get all submissions for a specific test (MUST come last)
 router.get('/:testId', async (req, res) => {
   try {
     const submissions = await TestSubmission.find({ 

@@ -14,11 +14,16 @@ const TestViewer = ({ selectedTest, user }) => {
   useEffect(() => {
     const fetchTestData = async () => {
       if (!selectedTest) {
+        console.log('❌ TestViewer: No selectedTest provided');
         setTestData(null);
         return;
       }
 
       console.log('🔍 TestViewer: Fetching test data for:', selectedTest);
+      console.log('🔍 TestViewer: selectedTest.testId:', selectedTest.testId);
+      console.log('🔍 TestViewer: selectedTest.testId._id:', selectedTest.testId?._id);
+      console.log('🔍 TestViewer: selectedTest.type:', selectedTest.type);
+      
       setLoading(true);
       try {
         // 🔒 SECURE: Use specific endpoints based on test type from sidebar selection
@@ -113,4 +118,4 @@ const TestViewer = ({ selectedTest, user }) => {
   );
 };
 
-export default TestViewer;
+export default TestViewer; 

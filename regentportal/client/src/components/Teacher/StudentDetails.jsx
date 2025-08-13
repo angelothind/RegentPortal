@@ -36,7 +36,7 @@ const StudentDetails = ({ student, onBack }) => {
   };
 
   const getScoreColor = (score) => {
-    if (score === 0) return '#6c757d'; // Gray for empty submissions
+    if (score === 0) return '#6c757d'; // Gray for incomplete submissions
     if (score >= 80) return '#4CAF50'; // Green
     if (score >= 60) return '#FF9800'; // Orange
     return '#f44336'; // Red
@@ -68,16 +68,16 @@ const StudentDetails = ({ student, onBack }) => {
     );
   }
 
-  // Filter and process submissions
-  const completedSubmissions = testSubmissions.filter(sub => sub.score > 0);
-  const readingSubmissions = completedSubmissions
+  // Filter and process submissions - show all submissions including score 0
+  const allSubmissions = testSubmissions;
+  const readingSubmissions = allSubmissions
     .filter(sub => sub.testType.toLowerCase() === 'reading')
     .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt)); // Sort by most recent first
-  const listeningSubmissions = completedSubmissions
+  const listeningSubmissions = allSubmissions
     .filter(sub => sub.testType.toLowerCase() === 'listening')
     .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt)); // Sort by most recent first
 
-  // Get most recent submission per test for averages
+  // Get most recent submission per test for averages (only completed submissions)
   const getMostRecentSubmissionsByTest = (submissions) => {
     const testMap = new Map();
     submissions.forEach(sub => {
@@ -89,10 +89,15 @@ const StudentDetails = ({ student, onBack }) => {
     return Array.from(testMap.values());
   };
 
-  const mostRecentReadingSubmissions = getMostRecentSubmissionsByTest(readingSubmissions);
-  const mostRecentListeningSubmissions = getMostRecentSubmissionsByTest(listeningSubmissions);
+  // Filter for completed submissions (score > 0) for averages
+  const completedSubmissions = testSubmissions.filter(sub => sub.score > 0);
+  const completedReadingSubmissions = readingSubmissions.filter(sub => sub.score > 0);
+  const completedListeningSubmissions = listeningSubmissions.filter(sub => sub.score > 0);
 
-  // Calculate averages
+  const mostRecentReadingSubmissions = getMostRecentSubmissionsByTest(completedReadingSubmissions);
+  const mostRecentListeningSubmissions = getMostRecentSubmissionsByTest(completedListeningSubmissions);
+
+  // Calculate averages (only from completed submissions)
   const readingAverage = mostRecentReadingSubmissions.length > 0 
     ? Math.round(mostRecentReadingSubmissions.reduce((sum, sub) => sum + sub.score, 0) / mostRecentReadingSubmissions.length)
     : 0;
@@ -177,14 +182,14 @@ const StudentDetails = ({ student, onBack }) => {
         {/* Reading Tests */}
         <div className="test-section">
           <div className="section-header" onClick={() => toggleSection('reading')}>
-            <h4>📖 Reading Tests ({readingSubmissions.length})</h4>
+            <h4>📖 Reading Tests ({readingSubmissions.length} total, {completedReadingSubmissions.length} completed)</h4>
             <span className="toggle-icon">{expandedSections.reading ? '▼' : '▶'}</span>
           </div>
           {expandedSections.reading && (
             <div className="submissions-list">
               {readingSubmissions.length === 0 ? (
                 <div className="no-submissions">
-                  <p>No reading tests completed.</p>
+                  <p>No reading tests submitted.</p>
                 </div>
               ) : (
                 readingSubmissions.map((submission, index) => (
@@ -203,7 +208,7 @@ const StudentDetails = ({ student, onBack }) => {
                           className="score-badge"
                           style={{ backgroundColor: getScoreColor(submission.score) }}
                         >
-                          {submission.score}%
+                          {submission.score === 0 ? 'Incomplete' : `${submission.score}%`}
                         </span>
                       </div>
                     </div>
@@ -227,14 +232,14 @@ const StudentDetails = ({ student, onBack }) => {
         {/* Listening Tests */}
         <div className="test-section">
           <div className="section-header" onClick={() => toggleSection('listening')}>
-            <h4>🎧 Listening Tests ({listeningSubmissions.length})</h4>
+            <h4>🎧 Listening Tests ({listeningSubmissions.length} total, {completedListeningSubmissions.length} completed)</h4>
             <span className="toggle-icon">{expandedSections.listening ? '▼' : '▶'}</span>
           </div>
           {expandedSections.listening && (
             <div className="submissions-list">
               {listeningSubmissions.length === 0 ? (
                 <div className="no-submissions">
-                  <p>No listening tests completed.</p>
+                  <p>No listening tests submitted.</p>
                 </div>
               ) : (
                 listeningSubmissions.map((submission, index) => (
