@@ -8,40 +8,16 @@
       "notesTitle": "Guitar Group",
       "questionBlock": [
         {
-          "sectionHeading": "Questions 1-6"
-        },
-        {
-          "questionNumber": 1,
-          "question": "Coordinator: Gary **1** ________",
-          "answer": "Smith"
-        },
-        {
-          "questionNumber": 2,
-          "question": "Level: **2** ________",
-          "answer": "intermediate"
-        },
-        {
-          "questionNumber": 3,
-          "question": "Place: the **3** ________",
-          "answer": "community"
-        },
-        {
-          "questionNumber": 4,
-          "question": "**4** ________ Street",
-          "answer": "Main"
-        },
-        {
-          "descriptiveText": "First floor, Room T347"
-        },
-        {
-          "questionNumber": 5,
-          "question": "Time: Thursday morning at **5** ________",
-          "answer": "10"
-        },
-        {
-          "questionNumber": 6,
-          "question": "Recommended website: 'The perfect **6** ________'",
-          "answer": "guitar"
+          "questionNumber": "1-6",
+          "text": "Coordinator: Gary **1** ________. \n Level: **2** ________. Place: the **3** ________. **4** ________ Street. First floor, Room T347. \n Time: Thursday morning at **5** ________. \n Recommended website:      'The perfect **6** ________'.",
+          "blanks": [
+            { "number": "1", "answer": "Smith" },
+            { "number": "2", "answer": "intermediate" },
+            { "number": "3", "answer": "community" },
+            { "number": "4", "answer": "Main" },
+            { "number": "5", "answer": "10" },
+            { "number": "6", "answer": "guitar" }
+          ]
         }
       ]
     },

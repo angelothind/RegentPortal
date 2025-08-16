@@ -23,12 +23,12 @@
 .main-instruction {
   margin: 0 0 8px 0;
   color: #333;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
 .formatting-instruction {
-  font-size: 1.1rem !important;
+  font-size: 1rem !important;
   font-weight: 600 !important;
   color: #666 !important;
   margin: 0 !important;

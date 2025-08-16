@@ -20,14 +20,14 @@
 }
 
 .main-instruction {
-  font-size: 1.1rem !important;
+  font-size: 1rem !important;
   font-weight: 700 !important;
   color: #25245D !important;
   margin-bottom: 15px !important;
 }
 
 .formatting-instruction {
-  font-size: 1.1rem !important;
+  font-size: 1rem !important;
   font-weight: 700 !important;
   color: #25245D !important;
   margin: 0 !important;
@@ -87,10 +87,10 @@
 }
 
 .question-text {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
+  display: block;
+  line-height: 1.6;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Bullet point styling */
@@ -98,6 +98,28 @@
   display: inline-block;
   color: #25245D;
   font-weight: 600;
+}
+
+/* Bullet level styling */
+.bullet-point[style*="margin-left: 20px"] {
+  color: #666;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.bullet-point[style*="margin-left: 40px"] {
+  color: #999;
+  font-size: 0.85em;
+  font-weight: 400;
+}
+
+.bullet-point[style*="margin-left: 60px"] {
+  color: #bbb;
+  font-size: 0.8em;
+  font-weight: 400;
+}
+
+.bullet-point {
   margin-right: 8px;
   font-size: 1.1rem;
 }
@@ -107,7 +129,9 @@
   border-radius: 4px;
   padding: 8px 12px;
   font-size: 0.9rem;
-  min-width: 120px;
+  min-width: 199px;
+  max-width: 199px;
+  width: 199px;
   background-color: white;
   color: #333;
   transition: border-color 0.2s ease;
@@ -115,13 +139,21 @@
   -moz-appearance: none;
   appearance: none;
   autocomplete: off;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 4px;
 }
 
 /* Smaller input boxes specifically for reading tests */
 .choose-x-words-container.reading-test .answer-input {
-  min-width: 80px;
+  min-width: 133px;
+  max-width: 133px;
+  width: 133px;
   padding: 6px 8px;
   font-size: 0.85rem;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 4px;
 }
 
 .answer-input:focus {
@@ -326,10 +358,9 @@
   color: #333;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
+  display: block;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .listening-answer-input {
@@ -337,7 +368,9 @@
   border-radius: 4px;
   padding: 8px 12px;
   font-size: 0.9rem;
-  min-width: 120px;
+  min-width: 199px;
+  max-width: 199px;
+  width: 199px;
   background-color: white;
   color: #333;
   transition: border-color 0.2s ease;
@@ -345,6 +378,9 @@
   -moz-appearance: none;
   appearance: none;
   autocomplete: off;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 4px;
 }
 
 .listening-answer-input:focus {

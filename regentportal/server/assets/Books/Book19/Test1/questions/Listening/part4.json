@@ -9,7 +9,8 @@
       "useBullets": true,
       "questionBlock": [
         {
-          "descriptiveText": "an important Neolithic archaeological site in the northwest of Ireland"
+          "descriptiveText": "an important Neolithic archaeological site in the northwest of Ireland",
+          "bulletLevel": 0
         },
         {
           "sectionHeading": "Discovery"
@@ -20,7 +21,8 @@
           "answer": "walls"
         },
         {
-          "descriptiveText": "His son became an archaeologist and undertook an investigation of the site:"
+          "descriptiveText": "His son became an archaeologist and undertook an investigation of the site:",
+          "bulletLevel": 0
         },
         {
           "questionNumber": 32,
@@ -28,7 +30,8 @@
           "answer": "son"
         },
         {
-          "descriptiveText": "A traditional method used by local people to dig for fuel was used to identify where stones were located."
+          "descriptiveText": "A traditional method used by local people to dig for fuel was used to identify where stones were located.",
+          "bulletLevel": 0
         },
         {
           "questionNumber": 33,
@@ -36,10 +39,12 @@
           "answer": "fuel"
         },
         {
-          "descriptiveText": "Carbon dating later proved the site was Neolithic."
+          "descriptiveText": "Carbon dating later proved the site was Neolithic.",
+          "bulletLevel": 0
         },
         {
-          "descriptiveText": "Items are well preserved in the bog because of a lack of oxygen."
+          "descriptiveText": "Items are well preserved in the bog because of a lack of oxygen.",
+          "bulletLevel": 0
         },
         {
           "questionNumber": 34,
@@ -55,13 +60,12 @@
           "answer": "round"
         },
         {
-          "descriptiveText": "Neolithic innovations include:"
+          "descriptiveText": "Neolithic innovations include:",
+          "bulletLevel": 0
         },
         {
-          "descriptiveText": "Cooking indoors"
-        },
-        {
-          "descriptiveText": "Pots used for storage and to make cheese."
+          "descriptiveText": "Cooking indoors",
+          "bulletLevel": 1
         },
         {
           "questionNumber": 36,
@@ -74,7 +78,8 @@
           "answer": "family"
         },
         {
-          "descriptiveText": "The fields were probably used to restrict the grazing of animals – no evidence of structures to house them during winter."
+          "descriptiveText": "The fields were probably used to restrict the grazing of animals – no evidence of structures to house them during winter.",
+          "bulletLevel": 0
         },
         {
           "questionNumber": 38,

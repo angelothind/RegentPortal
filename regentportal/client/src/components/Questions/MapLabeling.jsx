@@ -64,44 +64,44 @@ const MapLabeling = ({ template, onAnswerChange, testResults, testSubmitted, com
             className="map-image"
           />
         </div>
-      </div>
-      
-      <div className="questions-section">
-        {template.questionBlock.map((question) => (
-          <div key={question.questionNumber} className="question-item">
-            <div className="question-text">
-              <strong>{question.questionNumber}.</strong> {question.question}
-            </div>
-            <div className="answer-input-container">
-              <input
-                type="text"
-                className={`map-answer-input ${getAnswerClass(question.questionNumber)}`}
-                placeholder="A-H"
-                value={getAnswerValue(question.questionNumber)}
-                onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value.toUpperCase())}
-                maxLength="1"
-                disabled={testSubmitted}
-                autoComplete="off"
-                data-form-type="other"
-                data-lpignore="true"
-                data-1p-ignore="true"
-              />
-            </div>
-            {testSubmitted && testResults && (
-              <div className="answer-feedback">
-                {testResults.correctAnswers?.[question.questionNumber] ? (
-                  <span className="correct-answer">
-                    Correct: {String(testResults.correctAnswers[question.questionNumber])}
-                  </span>
-                ) : testResults.answers?.[question.questionNumber] ? (
-                  <span className="no-answer-given">
-                    No answer given
-                  </span>
-                ) : null}
+        
+        <div className="questions-section">
+          {template.questionBlock.map((question) => (
+            <div key={question.questionNumber} className="question-item">
+              <div className="question-text">
+                <strong>{question.questionNumber}.</strong> {question.question}
               </div>
-            )}
-          </div>
-        ))}
+              <div className="answer-input-container">
+                <input
+                  type="text"
+                  className={`map-answer-input ${getAnswerClass(question.questionNumber)}`}
+                  placeholder="A-H"
+                  value={getAnswerValue(question.questionNumber)}
+                  onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value.toUpperCase())}
+                  maxLength="1"
+                  disabled={testSubmitted}
+                  autoComplete="off"
+                  data-form-type="other"
+                  data-lpignore="true"
+                  data-1p-ignore="true"
+                />
+              </div>
+              {testSubmitted && testResults && (
+                <div className="answer-feedback">
+                  {testResults.correctAnswers?.[question.questionNumber] ? (
+                    <span className="correct-answer">
+                      Correct: {String(testResults.correctAnswers[question.questionNumber])}
+                    </span>
+                  ) : testResults.answers?.[question.questionNumber] ? (
+                    <span className="no-answer-given">
+                      No answer given
+                    </span>
+                ) : null}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

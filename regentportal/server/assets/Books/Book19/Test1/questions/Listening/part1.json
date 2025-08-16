@@ -16,7 +16,8 @@
           "answer": "90"
         },
         {
-          "descriptiveText": "Habitats: wetland, grassland and woodland"
+          "descriptiveText": "Habitats: wetland, grassland and woodland",
+          "bulletLevel": 0
         },
         {
           "questionNumber": 2,
@@ -24,7 +25,8 @@
           "answer": "stream"
         },
         {
-          "descriptiveText": "Wildlife includes birds, insects and animals"
+          "descriptiveText": "Wildlife includes birds, insects and animals",
+          "bulletLevel": 0
         },
         {
           "sectionHeading": "Subjects studied in educational visits include"
@@ -40,7 +42,8 @@
           "answer": "map"
         },
         {
-          "descriptiveText": "History: changes in land use"
+          "descriptiveText": "History: changes in land use",
+          "bulletLevel": 0
         },
         {
           "questionNumber": 5,
@@ -81,4 +84,4 @@
       ]
     }
   ]
-} 
+}

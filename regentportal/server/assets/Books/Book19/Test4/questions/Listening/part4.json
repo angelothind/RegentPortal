@@ -71,91 +71,109 @@
       "introInstruction": "Questions 31-40",
       "formattingInstruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
       "notesTitle": "Tree planting",
+      "useBullets": true,
       "questionBlock": [
         {
           "sectionHeading": "Reforestation projects should:"
         },
         {
-          "descriptiveText": "A bullet point about including a range of tree species."
+          "descriptiveText": "include a range of tree species",
+          "bulletLevel": 0
         },
         {
           "questionNumber": "31",
-          "question": "A bullet point about not including invasive species because of possible **31** ________ with native species.",
-          "answer": "competition"
+          "question": "not include invasive species because of possible **31** ________ with native species",
+          "answer": "competition",
+          "bulletLevel": 0
         },
         {
           "questionNumber": "32",
-          "question": "A bullet point about aiming to capture carbon, protect the environment, and provide sustainable sources of **32** ________ for local people.",
-          "answer": "income"
+          "question": "aim to capture carbon, protect the environment and provide sustainable sources of **32** ________ for local people",
+          "answer": "income",
+          "bulletLevel": 0
         },
         {
           "questionNumber": "33",
-          "question": "A bullet point about using tree seeds with high genetic diversity to increase resistance to **33** ________ and climate change.",
-          "answer": "disease"
+          "question": "use tree seeds with a high genetic diversity to increase resistance to **33** ________ and climate change",
+          "answer": "disease",
+          "bulletLevel": 0
         },
         {
           "questionNumber": "34",
-          "question": "A bullet point about planting trees on previously forested land in bad condition, not selecting land being used for **34** ________.",
-          "answer": "agriculture"
+          "question": "plant trees on previously forested land which is in a bad condition, not select land which is being used for **34** ________",
+          "answer": "agriculture",
+          "bulletLevel": 0
         },
         {
           "sectionHeading": "Large-scale reforestation projects"
         },
         {
           "questionNumber": "35",
-          "question": "A bullet point about basing planning decisions on information from accurate **35** ________.",
-          "answer": "maps"
+          "question": "Base planning decisions on information from accurate **35** ________.",
+          "answer": "maps",
+          "bulletLevel": 0
         },
         {
           "questionNumber": "36",
-          "question": "A bullet point stating that drones are useful for identifying areas in Brazil endangered by keeping **36** ________ and illegal logging.",
-          "answer": "cattle"
+          "question": "Drones are useful for identifying areas in Brazil which are endangered by keeping **36** ________ and illegal logging.",
+          "answer": "cattle",
+          "bulletLevel": 0
         },
         {
           "sectionHeading": "Lampang Province, Northern Thailand"
         },
         {
-          "descriptiveText": "A bullet point stating that a forest was restored in an area damaged by mining."
+          "descriptiveText": "A forest was restored in an area damaged by mining.",
+          "bulletLevel": 0
         },
         {
-          "descriptiveText": "A bullet point about a variety of native fig trees being planted, which are important for:"
+          "descriptiveText": "A variety of native fig trees were planted, which are important for:",
+          "bulletLevel": 0
         },
         {
-          "descriptiveText": "A sub-bullet point about supporting many wildlife species."
+          "descriptiveText": "supporting many wildlife species",
+          "bulletLevel": 1
         },
         {
           "questionNumber": "37",
-          "question": "A sub-bullet point about increasing the **37** ________ of recovery by attracting animals and birds.",
-          "answer": "speed"
+          "question": "increasing the **37** ________ of recovery by attracting animals and birds,",
+          "answer": "speed",
+          "bulletLevel": 1
         },
         {
           "questionNumber": "38",
-          "question": "A sub-bullet point stating that, e.g., **38** ________ were soon attracted to the area.",
-          "answer": "monkeys"
+          "question": "e.g., **38** ________ were soon attracted to the area.",
+          "answer": "monkeys",
+          "bulletLevel": 1
         },
         {
           "sectionHeading": "Involving local communities"
         },
         {
           "questionNumber": "39",
-          "question": "A bullet point stating that destruction of mangrove forests in Madagascar made it difficult for people to make a living from **39** ________.",
-          "answer": "fishing"
+          "question": "Destruction of mangrove forests in Madagascar made it difficult for people to make a living from **39** ________.",
+          "answer": "fishing",
+          "bulletLevel": 0
         },
         {
-          "descriptiveText": "A bullet point introducing \"The mangrove reforestation project:\""
+          "descriptiveText": "The mangrove reforestation project:",
+          "bulletLevel": 0
         },
         {
-          "descriptiveText": "A sub-bullet point stating it provided employment for local people."
+          "descriptiveText": "provided employment for local people",
+          "bulletLevel": 1
         },
         {
-          "descriptiveText": "A sub-bullet point stating it restored a healthy ecosystem."
+          "descriptiveText": "restored a healthy ecosystem",
+          "bulletLevel": 1
         },
         {
           "questionNumber": "40",
-          "question": "A sub-bullet point stating it protects against the higher risk of **40** ________.",
-          "answer": "flooding"
+          "question": "protects against the higher risk of **40** ________.",
+          "answer": "flooding",
+          "bulletLevel": 1
         }
       ]
     }
   ]
-} 
+}

@@ -57,19 +57,39 @@
   gap: 10px;
 }
 
-.question-item {
+.multiple-choice-container .question-item {
   padding: 8px;
   background-color: #f9f9f9;
   border-radius: 8px;
   border-left: 4px solid #25245D;
+  display: block !important;
+  width: 100% !important;
 }
 
-.question-text {
+.multiple-choice-container .question-header {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  display: block !important;
+  width: 100% !important;
+  clear: both !important;
+}
+
+.multiple-choice-container .question-text {
   font-size: 0.9rem;
   line-height: 1.4;
   color: #333;
-  margin-bottom: 10px;
+  margin: 0;
   font-weight: 500;
+  display: block !important;
+  width: 100% !important;
+}
+
+.multiple-choice-container .question-options {
+  margin-top: 10px;
+  display: block !important;
+  width: 100% !important;
+  clear: both !important;
 }
 
 .options-container {

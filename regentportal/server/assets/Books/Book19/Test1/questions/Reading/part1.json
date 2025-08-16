@@ -50,18 +50,44 @@
       "questionType": "choose-x-word",
       "introInstruction": "Complete the notes below.",
       "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 8-13 on your answer sheet.",
+      "notesTitle": "The tennis racket and how it has changed",
+      "useBullets": true,
       "questionBlock": [
         {
-          "questionNumber": "8-13",
-          "text": "Mike and Bob Bryan made changes to the types of **8** ________ used on their racket frames. Players were not allowed to use the spaghetti-strung racket because of the amount of **9** ________ it created. Changes to rackets can be regarded as being as important as players' diets or the **10** ________ they do. All rackets used to have natural strings made from the **11** ________ of animals. Pete Sampras had metal **12** ________ put into the frames of his rackets. Gonçalo Oliveira changed the **13** ________ on his racket handles.",
-          "blanks": [
-            { "number": "8", "answer": "paint" },
-            { "number": "9", "answer": "topspin" },
-            { "number": "10", "answer": "training" },
-            { "number": "11", "answer": "intestines / gut" },
-            { "number": "12", "answer": "weights" },
-            { "number": "13", "answer": "grips" }
-          ]
+          "questionNumber": "8",
+          "question": "Mike and Bob Bryan made changes to the types of **8** ________ used on their racket frames.",
+          "answer": "paint",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "9",
+          "question": "Players were not allowed to use the spaghetti-strung racket because of the amount of **9** ________ it created.",
+          "answer": "topspin",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "10",
+          "question": "Changes to rackets can be regarded as being as important as players' diets or the **10** ________ they do.",
+          "answer": "training",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "11",
+          "question": "All rackets used to have natural strings made from the **11** ________ of animals.",
+          "answer": "intestines / gut",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "12",
+          "question": "Pete Sampras had metal **12** ________ put into the frames of his rackets.",
+          "answer": "weights",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "13",
+          "question": "Gonçalo Oliveira changed the **13** ________ on his racket handles.",
+          "answer": "grips",
+          "bulletLevel": 0
         }
       ],
       "correctAnswers": {

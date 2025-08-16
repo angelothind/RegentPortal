@@ -37,7 +37,8 @@
           "answer": "Rose"
         },
         {
-          "descriptiveText": "below a restaurant in the large, grey building"
+          "descriptiveText": "below a restaurant in the large, grey building",
+          "bulletLevel": 0
         },
         {
           "questionNumber": 5,
@@ -62,7 +63,11 @@
       "tableStructure": {
         "columns": 3,
         "rows": 4,
-        "headers": ["Shop Type", "To buy", "Other ideas"]
+        "headers": [
+          "Shop Type",
+          "To buy",
+          "Other ideas"
+        ]
       },
       "tableData": [
         {
@@ -127,4 +132,4 @@
       ]
     }
   ]
-} 
+}

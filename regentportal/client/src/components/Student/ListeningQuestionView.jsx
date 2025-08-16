@@ -70,8 +70,22 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
 
 
 
-  const handleAnswerChange = (questionNumber, value) => {
-    const newAnswers = { ...answers, [questionNumber]: value };
+  const handleAnswerChange = (questionNumberOrNewAnswers, value) => {
+    let newAnswers;
+    
+    // Check if this is the new signature (newAnswers object) or old signature (questionNumber, value)
+    if (typeof questionNumberOrNewAnswers === 'object' && value === undefined) {
+      // New signature: handleAnswerChange(newAnswers) - used by question components
+      newAnswers = questionNumberOrNewAnswers;
+      console.log('📝 Answer changed - New answers object:', newAnswers);
+    } else {
+      // Old signature: handleAnswerChange(questionNumber, value) - fallback
+      const questionNumber = questionNumberOrNewAnswers;
+      console.log('📝 Answer changed - Question:', questionNumber, 'Value:', value);
+      console.log('📝 Previous answers:', answers);
+      newAnswers = { ...answers, [questionNumber]: value };
+    }
+    
     setAnswers(newAnswers);
     
     // Save answers to localStorage with timestamp

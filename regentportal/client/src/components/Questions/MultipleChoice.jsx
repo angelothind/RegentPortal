@@ -64,28 +64,32 @@ const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, 
       <div className="questions-section">
         {template.questionBlock.map((question) => (
           <div key={question.questionNumber} className="question-item">
-            <div className="question-text">
-              <strong>{question.questionNumber}.</strong> {question.question}
+            <div className="question-header">
+              <div className="question-text">
+                <strong>{question.questionNumber}.</strong> {question.question}
+              </div>
             </div>
-            <div className="options-container">
-              {question.options.map((option) => (
-                <label 
-                  key={option.letter} 
-                  className={`option-label ${getOptionClass(question.questionNumber, option.letter)}`}
-                >
-                  <input
-                    type="radio"
-                    name={`${componentId}-question-${question.questionNumber}`}
-                    value={option.letter}
-                    checked={getAnswerValue(question.questionNumber) === option.letter}
-                    onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
-                    className="option-radio"
-                    disabled={testSubmitted}
-                  />
-                  <span className="option-letter">{option.letter}.</span>
-                  <span className="option-text">{option.text}</span>
-                </label>
-              ))}
+            <div className="question-options">
+              <div className="options-container">
+                {question.options.map((option) => (
+                  <label 
+                    key={option.letter} 
+                    className={`option-label ${getOptionClass(question.questionNumber, option.letter)}`}
+                  >
+                    <input
+                      type="radio"
+                      name={`${componentId}-question-${question.questionNumber}`}
+                      value={option.letter}
+                      checked={getAnswerValue(question.questionNumber) === option.letter}
+                      onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
+                      className="option-radio"
+                      disabled={testSubmitted}
+                    />
+                    <span className="option-letter">{option.letter}.</span>
+                    <span className="option-text">{option.text}</span>
+                  </label>
+                ))}
+              </div>
             </div>
             {testSubmitted && testResults && (
               <div className="answer-feedback">

@@ -11,7 +11,8 @@
           "sectionHeading": "Tardigrades (General Information)"
         },
         {
-          "descriptiveText": "More than 1,000 species, 0.05-1.2 millimetres long"
+          "descriptiveText": "More than 1,000 species, 0.05-1.2 millimetres long",
+          "bulletLevel": 0
         },
         {
           "questionNumber": 31,
@@ -32,7 +33,8 @@
           "answer": "discs"
         },
         {
-          "descriptiveText": "absence of respiratory organs"
+          "descriptiveText": "absence of respiratory organs",
+          "bulletLevel": 0
         },
         {
           "questionNumber": 34,
@@ -48,7 +50,8 @@
           "sectionHeading": "Habitat"
         },
         {
-          "descriptiveText": "often found at the bottom of a lake or on plants"
+          "descriptiveText": "often found at the bottom of a lake or on plants",
+          "bulletLevel": 0
         },
         {
           "questionNumber": 36,
@@ -59,10 +62,12 @@
           "sectionHeading": "Cryptobiosis"
         },
         {
-          "descriptiveText": "In dry conditions, they roll into a ball called a 'tun'."
+          "descriptiveText": "In dry conditions, they roll into a ball called a 'tun'.",
+          "bulletLevel": 0
         },
         {
-          "descriptiveText": "They stay alive with a much lower metabolism than usual."
+          "descriptiveText": "They stay alive with a much lower metabolism than usual.",
+          "bulletLevel": 0
         },
         {
           "questionNumber": 37,
@@ -83,7 +88,8 @@
           "answer": "seaweed"
         },
         {
-          "descriptiveText": "may eat other tardigrades"
+          "descriptiveText": "may eat other tardigrades",
+          "bulletLevel": 0
         },
         {
           "sectionHeading": "Conservation status"
@@ -96,4 +102,4 @@
       ]
     }
   ]
-} 
+}

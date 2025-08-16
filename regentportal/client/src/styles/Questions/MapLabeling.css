@@ -4,6 +4,8 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 20px;
+  min-width: 800px;
+  overflow-x: auto;
 }
 
 .map-title {
@@ -20,17 +22,21 @@
 
 .map-section {
   margin-bottom: 30px;
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .map-image-container {
+  flex: 0 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .map-image {
-  max-width: 80%;
+  max-width: 550px;
   height: auto;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -38,9 +44,15 @@
 }
 
 .questions-section {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 15px;
+}
+
+/* Questions section now flexes to fill remaining space */
+.map-labeling-container .questions-section {
+  /* No max-width - will flex to fill available space */
 }
 
 .question-item {

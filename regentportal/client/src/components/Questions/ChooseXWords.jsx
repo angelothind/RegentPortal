@@ -5,6 +5,10 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
   console.log('🎯 ChooseXWords rendered with template:', template);
   console.log('🎯 ChooseXWords testResults:', testResults);
   console.log('🎯 ChooseXWords testSubmitted:', testSubmitted);
+  console.log('🎯 ChooseXWords testSubmitted type:', typeof testSubmitted);
+  console.log('🎯 ChooseXWords testSubmitted value:', testSubmitted);
+  console.log('🎯 ChooseXWords currentAnswers prop:', currentAnswers);
+  console.log('🎯 ChooseXWords onAnswerChange function:', typeof onAnswerChange);
 
   // Function to strip ** markers from text and convert to bold parentheses format
   const stripMarkdownBold = (text) => {
@@ -18,18 +22,43 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
     return text.replace(/\[bullet\]/g, '<span class="bullet-point">•</span>');
   };
 
+  // Function to process newline characters and convert them to HTML line breaks
+  const processNewlines = (text) => {
+    if (!text || typeof text !== 'string') return '';
+    return text.replace(/\n/g, '<br>');
+  };
+
   // Function to add bullet points to text (excluding section headings)
-  const addBulletPoints = (text, isSectionHeading = false) => {
+  const addBulletPoints = (text, bulletLevel = 0, isSectionHeading = false) => {
+    console.log(`🎯 addBulletPoints called with:`, { text, bulletLevel, isSectionHeading });
     if (!text || typeof text !== 'string') return '';
     if (isSectionHeading) return text; // Don't add bullets to section headings
     
-    return `<span class="bullet-point">•</span> ${text}`;
+    const bulletSymbols = {
+      0: '•',    // Main bullet
+      1: '◦',    // Sub bullet (hollow circle)
+      2: '▪',    // Sub-sub bullet (square)
+      3: '▫'     // Sub-sub-sub bullet (hollow square)
+    };
+    
+    const indent = bulletLevel * 20; // 20px indent per level
+    const symbol = bulletSymbols[bulletLevel] || '•';
+    
+    const result = `<span class="bullet-point" style="margin-left: ${indent}px">${symbol}</span> ${text}`;
+    console.log(`🎯 addBulletPoints result:`, result);
+    return result;
   };
 
   const handleAnswerChange = (questionNumber, value) => {
+    console.log(`🎯 handleAnswerChange called with questionNumber: ${questionNumber}, value: ${value}`);
+    console.log(`🎯 currentAnswers before update:`, currentAnswers);
     const newAnswers = { ...currentAnswers, [questionNumber]: value };
+    console.log(`🎯 newAnswers after update:`, newAnswers);
     if (onAnswerChange) {
+      console.log(`🎯 Calling onAnswerChange with:`, newAnswers);
       onAnswerChange(newAnswers);
+    } else {
+      console.log(`🎯 No onAnswerChange function provided`);
     }
   };
 
@@ -110,7 +139,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
           </h4>
         )}
         
-        <div className="listening-notes-content" style={{
+                <div className="listening-notes-content" style={{
           display: 'flex',
           flexDirection: 'column',
           gap: '12px'
@@ -139,11 +168,82 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                   padding: '0'
                 }}>
                   <span dangerouslySetInnerHTML={{ 
-                    __html: template.useBullets ? addBulletPoints(item.descriptiveText) : item.descriptiveText 
+                    __html: template.useBullets ? addBulletPoints(item.descriptiveText, item.bulletLevel || 0) : item.descriptiveText 
                   }} />
                 </div>
               );
+            } else if (item.text && item.blanks) {
+              // New structure: single text with blanks array
+              return (
+                <div key={index} className="listening-question-item" style={{
+                  padding: '0',
+                  margin: '0'
+                }}>
+                  <div className="listening-question-text" style={{
+                    fontSize: '1rem',
+                    lineHeight: '1.6',
+                    color: '#333',
+                    margin: '0',
+                    padding: '0',
+                    display: 'block',
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word'
+                  }}>
+                    {processNewlines(processBulletTags(stripMarkdownBold(item.text || ''))).split('________').map((part, partIndex, array) => {
+                      const blankNumber = item.blanks[partIndex]?.number;
+                      console.log(`🎯 Rendering input for part ${partIndex}, blank number: ${blankNumber}`);
+                      return (
+                        <span key={partIndex}>
+                          <span dangerouslySetInnerHTML={{ __html: part || '' }} />
+                                                  {partIndex < array.length - 1 && (
+                          <input
+                            type="text"
+                            className={`listening-answer-input ${getAnswerClass(blankNumber || '')}`}
+                            style={{
+                              border: '2px solid #ddd',
+                              borderRadius: '4px',
+                              padding: '8px 12px',
+                              fontSize: '0.9rem',
+                              backgroundColor: 'white',
+                              color: '#333',
+                              transition: 'border-color 0.2s ease'
+                            }}
+                            placeholder="Answer"
+                            value={getAnswerValue(blankNumber || '')}
+                            onChange={(e) => {
+                              console.log(`🎯 Input change event triggered for blank ${blankNumber}`);
+                              console.log(`🎯 Input value: ${e.target.value}`);
+                              console.log(`🎯 testSubmitted: ${testSubmitted}`);
+                              handleAnswerChange(blankNumber || '', e.target.value);
+                            }}
+                            disabled={testSubmitted}
+                            data-test-submitted={testSubmitted}
+                            data-blank-number={blankNumber}
+                            autoComplete="off"
+                            data-form-type="other"
+                            data-lpignore="true"
+                            data-1p-ignore="true"
+                          />
+                        )}
+                        </span>
+                      );
+                    })}
+                  </div>
+                  {testSubmitted && testResults && item.blanks && (
+                    <div className="answer-feedback">
+                      {item.blanks.map((blank, blankIndex) => (
+                        <span key={blankIndex} className="correct-answer">
+                          {blankIndex > 0 && ' | '}
+                          {blank.number}: {String(testResults.correctAnswers?.[blank.number] || '')}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
             } else if (item.questionNumber) {
+              console.log(`🎯 Rendering old structure question ${item.questionNumber}:`, item.question);
+              console.log(`🎯 Split parts:`, stripMarkdownBold(item.question).split('________'));
               return (
                 <div key={index} className="listening-question-item" style={{
                   padding: '0',
@@ -174,15 +274,21 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                               borderRadius: '4px',
                               padding: '8px 12px',
                               fontSize: '0.9rem',
-                              minWidth: '120px',
                               backgroundColor: 'white',
                               color: '#333',
                               transition: 'border-color 0.2s ease'
                             }}
                             placeholder="Answer"
-                            value={getAnswerValue(item.questionNumber)}
-                            onChange={(e) => handleAnswerChange(item.questionNumber, e.target.value)}
+                            value={getAnswerValue(item.questionNumber)} 
+                            onChange={(e) => {
+                              console.log(`🎯 Old structure input change for question ${item.questionNumber}`);
+                              console.log(`🎯 Input value: ${e.target.value}`);
+                              console.log(`🎯 testSubmitted: ${testSubmitted}`);
+                              handleAnswerChange(item.questionNumber, e.target.value);
+                            }}
                             disabled={testSubmitted}
+                            data-test-submitted={testSubmitted}
+                            data-question-number={item.questionNumber}
                             autoComplete="off"
                             data-form-type="other"
                             data-lpignore="true"
@@ -202,6 +308,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                 </div>
               );
             }
+            console.log(`🎯 Unhandled item type in listening section:`, item);
             return null;
           })}
         </div>
@@ -224,7 +331,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
             template.questionBlock.map((block, blockIndex) => (
               <div key={blockIndex} className="question-item">
                 <div className="question-text">
-                  {processBulletTags(stripMarkdownBold(block.text || '')).split('________').map((part, index, array) => (
+                  {processNewlines(processBulletTags(stripMarkdownBold(block.text || ''))).split('________').map((part, index, array) => (
                     <span key={index}>
                       <span dangerouslySetInnerHTML={{ __html: part || '' }} />
                       {index < array.length - 1 && (
@@ -269,18 +376,21 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                 return (
                   <div key={index} className="descriptive-text">
                     <span dangerouslySetInnerHTML={{ 
-                      __html: template.useBullets ? addBulletPoints(item.descriptiveText) : item.descriptiveText 
+                      __html: template.useBullets ? addBulletPoints(item.descriptiveText, item.bulletLevel || 0) : item.descriptiveText 
                     }} />
                   </div>
                 );
               } else if (item.questionNumber) {
+                console.log(`🎯 Rendering question ${item.questionNumber}:`, item);
+                console.log(`🎯 template.useBullets:`, template.useBullets);
+                console.log(`🎯 item.bulletLevel:`, item.bulletLevel);
                 return (
                   <div key={index} className="question-item">
                     <div className="question-text">
                       {stripMarkdownBold(item.question || '').split('________').map((part, partIndex, array) => (
                         <span key={partIndex}>
                           <span dangerouslySetInnerHTML={{ 
-                            __html: template.useBullets && partIndex === 0 ? addBulletPoints(part, false) : part 
+                            __html: template.useBullets && partIndex === 0 ? addBulletPoints(part, item.bulletLevel || 0) : part 
                           }} />
                           {partIndex < array.length - 1 && (
                             <input
