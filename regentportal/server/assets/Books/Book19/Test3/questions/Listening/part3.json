@@ -1,0 +1,178 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 21-25",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "sectionTitle": "Science experiment for Year 12 students",
+      "questionBlock": [
+        {
+          "questionNumber": 21,
+          "question": "How does Clare feel about the students in her Year 12 science class?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "worried that they are not making progress"
+            },
+            {
+              "letter": "B",
+              "text": "challenged by their poor behaviour in class"
+            },
+            {
+              "letter": "C",
+              "text": "frustrated at their lack of interest in the subject"
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 22,
+          "question": "How does Jake react to Clare's suggestion about an experiment based on children's diet?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "He is concerned that the results might not be meaningful."
+            },
+            {
+              "letter": "B",
+              "text": "He feels some of the data might be difficult to obtain."
+            },
+            {
+              "letter": "C",
+              "text": "He suspects that the conclusions might be upsetting."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 23,
+          "question": "What problem do they agree may be involved in an experiment involving animals?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Any results may not apply to humans."
+            },
+            {
+              "letter": "B",
+              "text": "It may be complicated to get permission."
+            },
+            {
+              "letter": "C",
+              "text": "Students may not be happy about animal experiments."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 24,
+          "question": "What question do they decide the experiment should address?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Are mice capable of controlling their food intake?"
+            },
+            {
+              "letter": "B",
+              "text": "Does an increase in sugar lead to health problems?"
+            },
+            {
+              "letter": "C",
+              "text": "How much do supplements of different kinds affect health?"
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 25,
+          "question": "Clare might also consider doing another experiment involving",
+          "options": [
+            {
+              "letter": "A",
+              "text": "other types of food supplement."
+            },
+            {
+              "letter": "B",
+              "text": "different genetic strains of mice."
+            },
+            {
+              "letter": "C",
+              "text": "varying amounts of exercise."
+            }
+          ],
+          "answer": "C"
+        }
+      ]
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Complete the flowchart below.",
+      "formattingInstruction": "Choose FIVE answers from the box and write the correct letter, A-H, next to Questions 26-30.",
+      "sectionTitle": "Science experiment flowchart",
+      "opinionsBox": {
+        "title": "Information",
+        "options": [
+          {
+            "letter": "A",
+            "text": "size"
+          },
+          {
+            "letter": "B",
+            "text": "escape"
+          },
+          {
+            "letter": "C",
+            "text": "age"
+          },
+          {
+            "letter": "D",
+            "text": "water"
+          },
+          {
+            "letter": "E",
+            "text": "cereal"
+          },
+          {
+            "letter": "F",
+            "text": "calculations"
+          },
+          {
+            "letter": "G",
+            "text": "changes"
+          },
+          {
+            "letter": "H",
+            "text": "colour"
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 26,
+          "question": "Choose mice which are all the same **26** ________",
+          "answer": "C"
+        },
+        {
+          "questionNumber": 27,
+          "question": "Divide the mice into two groups, each with a different **27** ________",
+          "answer": "H"
+        },
+        {
+          "questionNumber": 28,
+          "question": "Feed group B the same, but also sugar contained in **28** ________",
+          "answer": "E"
+        },
+        {
+          "questionNumber": 29,
+          "question": "Place them in a weighing chamber to prevent **29** ________",
+          "answer": "B"
+        },
+        {
+          "questionNumber": 30,
+          "question": "Do all necessary **30** ________",
+          "answer": "F"
+        }
+      ]
+    }
+  ]
+} 

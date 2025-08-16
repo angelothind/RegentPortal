@@ -47,7 +47,7 @@ const Matching = ({ template, onAnswerChange, testResults, testSubmitted, compon
           <div className="opinions-list">
             {template.opinionsBox.options.map((option) => (
               <div key={option.letter} className="opinion-item">
-                <span className="opinion-letter">{option.letter}:</span>
+                <span className="opinion-letter">{option.letter}</span>
                 <span className="opinion-text">{option.text}</span>
               </div>
             ))}
@@ -65,7 +65,7 @@ const Matching = ({ template, onAnswerChange, testResults, testSubmitted, compon
               <input
                 type="text"
                 className={`matching-answer-input ${getAnswerClass(question.questionNumber)}`}
-                placeholder="A-H"
+                placeholder=""
                 value={getAnswerValue(question.questionNumber)}
                 onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value.toUpperCase())}
                 maxLength="1"

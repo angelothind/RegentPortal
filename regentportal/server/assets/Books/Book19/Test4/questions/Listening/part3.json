@@ -1,0 +1,107 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 21-25",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "questionBlock": [
+        {
+          "questionNumber": "21",
+          "question": "Kieran thinks the packing advice given by Jane's grandfather is",
+          "options": [
+            {
+              "letter": "A",
+              "text": "common sense."
+            },
+            {
+              "letter": "B",
+              "text": "hard to follow."
+            },
+            {
+              "letter": "C",
+              "text": "over-protective."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": "22",
+          "question": "How does Jane feel about the books her grandfather has given her?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They are not worth keeping."
+            },
+            {
+              "letter": "B",
+              "text": "They should go to a collector."
+            },
+            {
+              "letter": "C",
+              "text": "They have sentimental value for her."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": "23",
+          "question": "Jane and Kieran agree that hardback books should be",
+          "options": [
+            {
+              "letter": "A",
+              "text": "put out on display."
+            },
+            {
+              "letter": "B",
+              "text": "given as gifts to visitors."
+            },
+            {
+              "letter": "C",
+              "text": "more attractively designed."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": "24",
+          "question": "While talking about taking a book from a shelf, Jane",
+          "options": [
+            {
+              "letter": "A",
+              "text": "describes the mistakes other people make doing it."
+            },
+            {
+              "letter": "B",
+              "text": "reflects on a significant childhood experience."
+            },
+            {
+              "letter": "C",
+              "text": "explains why some books are easier to remove than others."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": "25",
+          "question": "What do Jane and Kieran suggest about new books?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Their parents liked buying them as presents."
+            },
+            {
+              "letter": "B",
+              "text": "They would like to buy more of them."
+            },
+            {
+              "letter": "C",
+              "text": "Not everyone can afford them."
+            }
+          ],
+          "answer": "C"
+        }
+      ]
+    }
+  ]
+} 

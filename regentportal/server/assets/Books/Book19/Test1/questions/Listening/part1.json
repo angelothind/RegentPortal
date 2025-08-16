@@ -8,6 +8,9 @@
       "notesTitle": "Hinchingbrooke Country Park",
       "questionBlock": [
         {
+          "sectionHeading": "The park"
+        },
+        {
           "questionNumber": 1,
           "question": "Area: **1** ________ hectares",
           "answer": "90"

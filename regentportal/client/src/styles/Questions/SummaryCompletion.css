@@ -18,19 +18,20 @@
 }
 
 .main-instruction {
-  font-size: 1.4rem !important;
+  font-size: 1.1rem !important;
   font-weight: 700 !important;
   color: #25245D !important;
   margin-bottom: 15px !important;
 }
 
 .summary-completion-container .formatting-instruction {
-  color: #25245D;
-  font-size: 1.4rem;
-  font-weight: 700;
-  line-height: 1.5;
-  white-space: pre-line;
-  margin-bottom: 15px;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  color: #25245D !important;
+  line-height: 1.5 !important;
+  white-space: pre-line !important;
+  margin: 0 !important;
+  margin-bottom: 15px !important;
 }
 
 .summary-section {

@@ -20,26 +20,29 @@
 }
 
 .main-instruction {
-  font-size: 1.4rem !important;
+  font-size: 1.1rem !important;
   font-weight: 700 !important;
   color: #25245D !important;
   margin-bottom: 15px !important;
 }
 
 .formatting-instruction {
-  margin: 0;
-  color: #25245D;
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 15px;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  color: #25245D !important;
+  margin: 0 !important;
+  margin-bottom: 15px !important;
 }
 
 .opinions-box {
   background-color: #f9f9f9;
   border: 2px solid #25245D;
   border-radius: 8px;
-  padding: 20px;
+  padding: 20px 10px;
   margin-bottom: 25px;
+  width: 63%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .opinions-title {
@@ -60,7 +63,7 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 8px;
+  padding: 8px 4px;
   border-radius: 4px;
   background-color: white;
   border-left: 3px solid #25245D;

@@ -1,0 +1,154 @@
+{
+  "passageNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Choose the correct letter, A, B, C or D.",
+      "formattingInstruction": "Write the correct letter in boxes 27-30 on your answer sheet.",
+      "questionBlock": [
+        {
+          "questionNumber": "27",
+          "question": "What does the reader learn about the conversation in the first paragraph?",
+          "options": [
+            { "letter": "A", "text": "The speakers are communicating in different languages." },
+            { "letter": "B", "text": "Neither of the speakers is familiar with their environment." },
+            { "letter": "C", "text": "The topic of the conversation is difficult for both speakers." },
+            { "letter": "D", "text": "Aspects of the conversation are challenging for both speakers." }
+          ]
+        },
+        {
+          "questionNumber": "28",
+          "question": "What assists the electronic translator during lectures at Karlsruhe Institute of Technology?",
+          "options": [
+            { "letter": "A", "text": "the repeated content of lectures" },
+            { "letter": "B", "text": "the students' reading skills" },
+            { "letter": "C", "text": "the languages used" },
+            { "letter": "D", "text": "the lecturers' technical ability" }
+          ]
+        },
+        {
+          "questionNumber": "29",
+          "question": "When referring to The Hitchhiker's Guide to the Galaxy, the writer suggests that",
+          "options": [
+            { "letter": "A", "text": "the Babel fish was considered undesirable at the time." },
+            { "letter": "B", "text": "this book was not seriously intending to predict the future." },
+            { "letter": "C", "text": "artificial speech translation was not a surprising development." },
+            { "letter": "D", "text": "some speech translation techniques are better than others." }
+          ]
+        },
+        {
+          "questionNumber": "30",
+          "question": "What does the writer say about sharing earpieces?",
+          "options": [
+            { "letter": "A", "text": "It is something people will get used to doing." },
+            { "letter": "B", "text": "The reluctance to do this is understandable." },
+            { "letter": "C", "text": "The equipment will be unnecessary in the future." },
+            { "letter": "D", "text": "It is something few people need to worry about." }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "27": "D",
+        "28": "A",
+        "29": "C",
+        "30": "B"
+      }
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Complete each sentence with the correct ending, A-F, below.",
+      "formattingInstruction": "Write the correct letter, A-F, in boxes 31-34 on your answer sheet.",
+      "opinionsBox": {
+        "title": "Sentence Endings",
+        "options": [
+          {
+            "letter": "A",
+            "text": "but there are concerns about this."
+          },
+          {
+            "letter": "B",
+            "text": "as systems do not need to conform to standard practices."
+          },
+          {
+            "letter": "C",
+            "text": "but they are far from perfect."
+          },
+          {
+            "letter": "D",
+            "text": "despite the noise issues."
+          },
+          {
+            "letter": "E",
+            "text": "because translation is immediate."
+          },
+          {
+            "letter": "F",
+            "text": "and have an awareness of good manners."
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": "31",
+          "question": "Speech translation methods are developing fast in Japan"
+        },
+        {
+          "questionNumber": "32",
+          "question": "TV interviews that use translation voiceover methods are successful"
+        },
+        {
+          "questionNumber": "33",
+          "question": "Future translation systems should address people appropriately"
+        },
+        {
+          "questionNumber": "34",
+          "question": "Users may be able to maintain their local customs"
+        }
+      ],
+      "correctAnswers": {
+        "31": "C",
+        "32": "D",
+        "33": "F",
+        "34": "B"
+      }
+    },
+    {
+      "questionType": "TFNG",
+      "subType": "YSNG",
+      "introInstruction": "Do the following statements agree with the views of the writer in Reading Passage 3?",
+      "formattingInstruction": "For questions 35-40 select",
+      "questionBlock": [
+        {
+          "questionNumber": "35",
+          "question": "Language translation systems will be seen as very useful throughout the academic and professional worlds.",
+          "answer": "NO"
+        },
+        {
+          "questionNumber": "36",
+          "question": "The overall value of automated translation to family life is yet to be shown.",
+          "answer": "YES"
+        },
+        {
+          "questionNumber": "37",
+          "question": "Automated translation could make life more difficult for immigrant families.",
+          "answer": "NO"
+        },
+        {
+          "questionNumber": "38",
+          "question": "Visual aspects of language translation are being considered by scientists.",
+          "answer": "NOT GIVEN"
+        },
+        {
+          "questionNumber": "39",
+          "question": "International scientists have found English easier to translate into other languages than Latin.",
+          "answer": "NOT GIVEN"
+        },
+        {
+          "questionNumber": "40",
+          "question": "As far as language is concerned, there is a difference between people's social and practical needs.",
+          "answer": "YES"
+        }
+      ]
+    }
+  ]
+} 

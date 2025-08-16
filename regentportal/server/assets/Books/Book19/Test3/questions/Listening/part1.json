@@ -1,0 +1,130 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Complete the notes below.",
+      "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
+      "notesTitle": "Local food shops",
+      "questionBlock": [
+        {
+          "sectionHeading": "Where to go"
+        },
+        {
+          "questionNumber": 1,
+          "question": "Kite Place – near the **1** ________",
+          "answer": "harbour"
+        },
+        {
+          "sectionHeading": "Fish market"
+        },
+        {
+          "questionNumber": 2,
+          "question": "cross the **2** ________ and turn right",
+          "answer": "bridge"
+        },
+        {
+          "questionNumber": 3,
+          "question": "best to go before **3** ________ pm, earlier than closing time",
+          "answer": "3.30"
+        },
+        {
+          "sectionHeading": "Organic shop"
+        },
+        {
+          "questionNumber": 4,
+          "question": "called **4** '________'",
+          "answer": "Rose"
+        },
+        {
+          "descriptiveText": "below a restaurant in the large, grey building"
+        },
+        {
+          "questionNumber": 5,
+          "question": "look for the large **5** ________ outside",
+          "answer": "sign"
+        },
+        {
+          "sectionHeading": "Supermarket"
+        },
+        {
+          "questionNumber": 6,
+          "question": "take a **6** ________ minibus, number 289",
+          "answer": "purple"
+        }
+      ]
+    },
+    {
+      "questionType": "table-completion",
+      "introInstruction": "Complete the table below.",
+      "formattingInstruction": "Write ONE WORD ONLY for each answer.",
+      "tableTitle": "Shopping",
+      "tableStructure": {
+        "columns": 3,
+        "rows": 4,
+        "headers": ["Shop Type", "To buy", "Other ideas"]
+      },
+      "tableData": [
+        {
+          "row": 1,
+          "cells": [
+            {
+              "content": "Fish market",
+              "type": "text"
+            },
+            {
+              "content": "a dozen prawns",
+              "type": "text"
+            },
+            {
+              "content": "a handful of **7** ________ (type of seaweed)",
+              "type": "question",
+              "questionNumber": 7,
+              "answer": "samphire"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            {
+              "content": "Organic shop",
+              "type": "text"
+            },
+            {
+              "content": "beans and a **8** ________ for dessert",
+              "type": "question",
+              "questionNumber": 8,
+              "answer": "melon"
+            },
+            {
+              "content": "spices and **9** ________",
+              "type": "question",
+              "questionNumber": 9,
+              "answer": "coconut"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "cells": [
+            {
+              "content": "Bakery",
+              "type": "text"
+            },
+            {
+              "content": "a brown loaf",
+              "type": "text"
+            },
+            {
+              "content": "a **10** ________ tart",
+              "type": "question",
+              "questionNumber": 10,
+              "answer": "strawberry"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+} 

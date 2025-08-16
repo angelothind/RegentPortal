@@ -1,0 +1,157 @@
+{
+  "passageNumber": 3,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Complete the summary below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 24-26 on your answer sheet.",
+      "questionBlock": [
+        {
+          "questionNumber": "24",
+          "question": "Mining corporations believe that the mineral resources lying under the sea may be superior to those found in the earth. They also say that these can be removed without producing much **24** ________",
+          "answer": "waste"
+        },
+        {
+          "questionNumber": "25",
+          "question": "The extraction is often done by adapting the **25** ________ that has already been used to work on land.",
+          "answer": "machinery"
+        },
+        {
+          "questionNumber": "26",
+          "question": "However, concerned groups strongly believe that **26** ________ is necessary due to the possible number of unidentified consequences.",
+          "answer": "caution"
+        }
+      ],
+      "correctAnswers": {
+        "24": "waste",
+        "25": "machinery",
+        "26": "caution"
+      }
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Choose the correct letter, A, B, C or D.",
+      "formattingInstruction": "Write the correct letter in boxes 27-30 on your answer sheet.",
+      "questionBlock": [
+        {
+          "questionNumber": "27",
+          "question": "What is the writer doing in the first paragraph?",
+          "options": [
+            { "letter": "A", "text": "setting out two opposing views about human nature" },
+            { "letter": "B", "text": "justifying his opinion about our tendency to be greedy" },
+            { "letter": "C", "text": "describing a commonly held belief about people's behaviour" },
+            { "letter": "D", "text": "explaining why he thinks that humans act in a selfish manner" }
+          ]
+        },
+        {
+          "questionNumber": "28",
+          "question": "What point is made about Richard Dawkins' book *The Selfish Gene*?",
+          "options": [
+            { "letter": "A", "text": "Its appeal lay in the radical nature of its ideas." },
+            { "letter": "B", "text": "Its success was due to the scientific support it offered." },
+            { "letter": "C", "text": "It presented a view that was in line with the attitudes of its time." },
+            { "letter": "D", "text": "It took an innovative approach to the analysis of human psychology." }
+          ]
+        },
+        {
+          "questionNumber": "29",
+          "question": "What does the writer suggest about the prehistoric era in the fourth paragraph?",
+          "options": [
+            { "letter": "A", "text": "Societies were more complex than many people believe." },
+            { "letter": "B", "text": "Supplies of natural resources were probably relatively plentiful." },
+            { "letter": "C", "text": "Most estimates about population sizes are likely to be inaccurate." },
+            { "letter": "D", "text": "Humans moved across continents more than was previously thought." }
+          ]
+        },
+        {
+          "questionNumber": "30",
+          "question": "The writer refers to Bruce Knauft's work as support for the idea that",
+          "options": [
+            { "letter": "A", "text": "selfishness is a relatively recent development in human societies." },
+            { "letter": "B", "text": "only people in isolated communities can live in an unselfish manner." },
+            { "letter": "C", "text": "very few lifestyles have survived unchanged since prehistoric times." },
+            { "letter": "D", "text": "hunter-gatherer cultures worldwide are declining in number." }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "27": "C",
+        "28": "C",
+        "29": "B",
+        "30": "A"
+      }
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Complete the summary below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 31-35 on your answer sheet.",
+      "questionBlock": [
+        {
+          "questionNumber": "31",
+          "question": "Bruce Knauft's research shows that contemporary hunter-gatherer societies tend to exhibit a high level of **31** ________ in all areas of life.",
+          "answer": "egalitarianism"
+        },
+        {
+          "questionNumber": "32",
+          "question": "These societies also employ strategies to prevent differences in **32** ________ occurring.",
+          "answer": "status"
+        },
+        {
+          "questionNumber": "33",
+          "question": "For example, the !Kung follow a custom whereby the credit for one person's success at **33** ________ is given to another member of the group.",
+          "answer": "hunting"
+        },
+        {
+          "questionNumber": "34",
+          "question": "Individuals who behave in a **34** ________ manner are punished by being excluded from the group.",
+          "answer": "domineering"
+        },
+        {
+          "questionNumber": "35",
+          "question": "Women have a considerable amount of **35** ________ in choices regarding work and marriage.",
+          "answer": "autonomy"
+        }
+      ],
+      "correctAnswers": {
+        "31": "egalitarianism",
+        "32": "status",
+        "33": "hunting",
+        "34": "domineering",
+        "35": "autonomy"
+      }
+    },
+    {
+      "questionType": "TFNG",
+      "subType": "YSNG",
+      "introInstruction": "Do the following statements agree with the views of the writer in Reading Passage 3?",
+      "formattingInstruction": "For questions 36-40 select",
+      "questionBlock": [
+        {
+          "questionNumber": "36",
+          "question": "Some anthropologists are mistaken about the point when the number of societies such as the !Kung began to decline.",
+          "answer": "NOT GIVEN"
+        },
+        {
+          "questionNumber": "37",
+          "question": "Humans who developed warlike traits in prehistory would have had an advantage over those who did not.",
+          "answer": "NO"
+        },
+        {
+          "questionNumber": "38",
+          "question": "Being peaceful and cooperative is a natural way for people to behave.",
+          "answer": "YES"
+        },
+        {
+          "questionNumber": "39",
+          "question": "Negative traits are more apparent in some modern cultures than in others.",
+          "answer": "NOT GIVEN"
+        },
+        {
+          "questionNumber": "40",
+          "question": "Animal research has failed to reveal a link between changes in the environment and the emergence of aggressive tendencies.",
+          "answer": "NO"
+        }
+      ]
+    }
+  ]
+} 

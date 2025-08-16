@@ -91,8 +91,9 @@
     },
     {
       "questionType": "TFNG",
+      "subType": "TFNG",
       "introInstruction": "Do the following statements agree with the claims of the writer in Reading Passage 3?",
-      "formattingInstruction": "In boxes 37-40 on your answer sheet, write\nYES if the statement agrees with the claims of the writer\nNO if the statement contradicts the claims of the writer\nNOT GIVEN if it is impossible to say what the writer thinks about this",
+      "formattingInstruction": "For questions 37-40 select",
       "questionBlock": [
         { "questionNumber": "37", "question": "Campaigns designed to correct misinformation will fail to achieve their purpose if people are unable to understand them." },
         { "questionNumber": "38", "question": "Attempts to teach elementary school students about misinformation have been opposed." },

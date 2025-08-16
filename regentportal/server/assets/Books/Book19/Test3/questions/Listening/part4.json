@@ -1,0 +1,93 @@
+{
+  "partNumber": 4,
+  "templates": [
+    {
+      "questionType": "notes-completion",
+      "introInstruction": "Complete the notes below.",
+      "formattingInstruction": "Write ONE WORD ONLY for each answer.",
+      "notesTitle": "Microplastics",
+      "questionBlock": [
+        {
+          "sectionHeading": "Where microplastics come from"
+        },
+        {
+          "questionNumber": 31,
+          "question": "Fibres from some **31** ________ during washing.",
+          "answer": "clothing"
+        },
+        {
+          "descriptiveText": "The breakdown of large pieces of plastic."
+        },
+        {
+          "descriptiveText": "Waste from industry."
+        },
+        {
+          "descriptiveText": "The action of vehicle tyres on roads."
+        },
+        {
+          "sectionHeading": "Effects of microplastics"
+        },
+        {
+          "questionNumber": 32,
+          "question": "They cause injuries to the **32** ________ of wildlife and affect their digestive systems.",
+          "answer": "mouths"
+        },
+        {
+          "questionNumber": 33,
+          "question": "They enter the food chain, e.g., in bottled and tap water, **33** ________ and seafood.",
+          "answer": "salt"
+        },
+        {
+          "questionNumber": 34,
+          "question": "They may not affect human health, but they are already banned in skin cleaning products and **34** ________ in some countries.",
+          "answer": "toothpaste"
+        },
+        {
+          "questionNumber": 35,
+          "question": "Microplastics enter the soil through the air, rain and **35** ________.",
+          "answer": "fertilisers"
+        },
+        {
+          "sectionHeading": "Microplastics in the soil – a study by Anglia Ruskin University"
+        },
+        {
+          "questionNumber": 36,
+          "question": "Earthworms are important because they add **36** ________ to the soil.",
+          "answer": "nutrients"
+        },
+        {
+          "questionNumber": 37,
+          "question": "The study aimed to find whether microplastics in earthworms affect the **37** ________ of plants.",
+          "answer": "growth"
+        },
+        {
+          "descriptiveText": "The study found that microplastics caused:"
+        },
+        {
+          "questionNumber": 38,
+          "question": "– **38** ________ loss in earthworms",
+          "answer": "weight"
+        },
+        {
+          "descriptiveText": "– fewer seeds to germinate"
+        },
+        {
+          "questionNumber": 39,
+          "question": "– a rise in the level of **39** ________ in the soil.",
+          "answer": "acid"
+        },
+        {
+          "descriptiveText": "The study concluded:"
+        },
+        {
+          "descriptiveText": "– soil should be seen as an important natural process."
+        },
+        {
+          "questionNumber": 40,
+          "question": "– changes to soil damage both ecosystems and **40** ________.",
+          "answer": "society"
+        }
+      ]
+    }
+  ]
+} 

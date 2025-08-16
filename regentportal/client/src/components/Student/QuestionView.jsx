@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import ChooseXWords from '../Questions/ChooseXWords';
 import ChooseFrom from '../Questions/ChooseFrom';
 import TFNG from '../Questions/TFNG';
+
 import Matching from '../Questions/Matching';
 import MultipleChoice from '../Questions/MultipleChoice';
 import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
 import SummaryCompletion from '../Questions/SummaryCompletion';
+import TableCompletion from '../Questions/TableCompletion';
 
 const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false }) => {
   console.log('🚀 QuestionView component mounted with selectedTest:', selectedTest);
@@ -386,6 +388,17 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               currentAnswers={answers}
             />
           );
+        case 'ysng':
+          return (
+            <TFNG
+              key={index}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
+              currentAnswers={answers}
+            />
+          );
         case 'matching':
           return (
             <Matching
@@ -422,6 +435,50 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         case 'summary-completion':
           return (
             <SummaryCompletion
+              key={index}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
+              currentAnswers={answers}
+            />
+          );
+        case 'table-completion':
+          return (
+            <TableCompletion
+              key={index}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
+              currentAnswers={answers}
+            />
+          );
+        case 'notes-completion':
+          return (
+            <ChooseXWords
+              key={index}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
+              currentAnswers={answers}
+            />
+          );
+        case 'flowchart-completion':
+          return (
+            <ChooseXWords
+              key={index}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
+              currentAnswers={answers}
+            />
+          );
+        case 'choose-two-letters':
+          return (
+            <MultipleChoiceTwo
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}

@@ -6,6 +6,13 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
   console.log('🎯 TFNG testResults:', testResults);
   console.log('🎯 TFNG testSubmitted:', testSubmitted);
 
+  // Determine if this is YSNG or TFNG based on the subType field, fallback to answer detection
+  const isYSNG = template?.subType === 'YSNG' || 
+    (template?.correctAnswers && 
+     Object.values(template.correctAnswers).some(answer => answer === 'YES' || answer === 'NO'));
+  
+  const questionType = isYSNG ? 'YSNG' : 'TFNG';
+
   const handleAnswerChange = (questionNumber, value) => {
     const newAnswers = { ...currentAnswers, [questionNumber]: value };
     if (onAnswerChange) {
@@ -46,7 +53,20 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
     return <div>No questions available</div>;
   }
 
-  console.log('🎯 TFNG: Rendering', template.questionBlock.length, 'questions');
+  console.log('🎯 TFNG: Rendering', template.questionBlock.length, 'questions as', questionType);
+
+  // Define answer options and explanations based on question type
+  const answerOptions = isYSNG 
+    ? [
+        { value: 'YES', label: 'YES', explanation: 'if the statement agrees with the claims of the writer' },
+        { value: 'NO', label: 'NO', explanation: 'if the statement contradicts the claims of the writer' },
+        { value: 'NOT GIVEN', label: 'NOT GIVEN', explanation: 'if it is impossible to say what the writer thinks about this' }
+      ]
+    : [
+        { value: 'TRUE', label: 'TRUE', explanation: 'if the statement agrees with the information' },
+        { value: 'FALSE', label: 'FALSE', explanation: 'if the statement contradicts the information' },
+        { value: 'NOT GIVEN', label: 'NOT GIVEN', explanation: 'if there is no information on this' }
+      ];
 
   return (
     <div className="tfng-container">
@@ -56,18 +76,12 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
       </div>
       
       <div className="answer-key">
-        <div className="key-item">
-          <strong>TRUE</strong>
-          <span>if the statement agrees with the information</span>
-        </div>
-        <div className="key-item">
-          <strong>FALSE</strong>
-          <span>if the statement contradicts the information</span>
-        </div>
-        <div className="key-item">
-          <strong>NOT GIVEN</strong>
-          <span>if there is no information on this</span>
-        </div>
+        {answerOptions.map((option) => (
+          <div key={option.value} className="key-item">
+            <strong>{option.label}</strong>
+            <span>{option.explanation}</span>
+          </div>
+        ))}
       </div>
       
       <div className="tfng-questions">
@@ -78,39 +92,19 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
               <span className="question-text">{question.question}</span>
             </div>
             <div className="answer-options">
-              <label className={`option-label ${getAnswerClass(question.questionNumber, 'TRUE')}`}>
-                <input
-                  type="radio"
-                  name={`question-${question.questionNumber}`}
-                  value="TRUE"
-                  checked={getAnswerValue(question.questionNumber) === 'TRUE'}
-                  onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
-                  disabled={testSubmitted}
-                />
-                <span>TRUE</span>
-              </label>
-              <label className={`option-label ${getAnswerClass(question.questionNumber, 'FALSE')}`}>
-                <input
-                  type="radio"
-                  name={`question-${question.questionNumber}`}
-                  value="FALSE"
-                  checked={getAnswerValue(question.questionNumber) === 'FALSE'}
-                  onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
-                  disabled={testSubmitted}
-                />
-                <span>FALSE</span>
-              </label>
-              <label className={`option-label ${getAnswerClass(question.questionNumber, 'NOT GIVEN')}`}>
-                <input
-                  type="radio"
-                  name={`question-${question.questionNumber}`}
-                  value="NOT GIVEN"
-                  checked={getAnswerValue(question.questionNumber) === 'NOT GIVEN'}
-                  onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
-                  disabled={testSubmitted}
-                />
-                <span>NOT GIVEN</span>
-              </label>
+              {answerOptions.map((option) => (
+                <label key={option.value} className={`option-label ${getAnswerClass(question.questionNumber, option.value)}`}>
+                  <input
+                    type="radio"
+                    name={`question-${question.questionNumber}`}
+                    value={option.value}
+                    checked={getAnswerValue(question.questionNumber) === option.value}
+                    onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
+                    disabled={testSubmitted}
+                  />
+                  <span>{option.label}</span>
+                </label>
+              ))}
             </div>
             {testSubmitted && testResults && (
               <div className="answer-feedback">

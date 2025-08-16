@@ -3,14 +3,22 @@
   "templates": [
     {
       "questionType": "choose-x-word",
-      "introInstruction": "Complete the notes below.",
-      "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
-      "notesTitle": "Reading Test 2 - Part 1",
+      "introInstruction": "Questions 1-7",
+      "formattingInstruction": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 1-7 on your answer sheet.",
+      "notesTitle": "Britain's Industrial Revolution",
       "questionBlock": [
         {
-          "questionNumber": 1,
-          "question": "Sample question **1** ________",
-          "answer": "answer"
+          "questionNumber": "1-7",
+          "text": "Steam power: Newcomen's steam engine was used in mines to remove water. In Watt and Boulton's steam engine, the movement of the **1** ________ was linked to a gear system. A greater supply of **2** ________ was required to power steam engines. Textile industry: Before the Industrial Revolution, spinners and weavers worked at home and in **3** ________. Not as much **4** ________ was needed to produce cloth once the spinning jenny and power loom were invented. Iron industry: Smelting of iron ore with coke resulted in material that was better **5** ________. Demand for iron increased with the growth of the **6** ________. Communications: Cooke and Wheatstone patented the first telegraphy system. The telegraphy system was used to prevent locomotives colliding. Urbanisation: Small towns turned into cities very quickly. The new cities were dirty, crowded and lacked sufficient **7** ________.",
+          "blanks": [
+            { "number": "1", "answer": "piston" },
+            { "number": "2", "answer": "coal" },
+            { "number": "3", "answer": "workshops" },
+            { "number": "4", "answer": "labour" },
+            { "number": "5", "answer": "quality" },
+            { "number": "6", "answer": "railway" },
+            { "number": "7", "answer": "sanitation" }
+          ]
         }
       ]
     }

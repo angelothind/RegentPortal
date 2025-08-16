@@ -306,9 +306,10 @@
 }
 
 .formatting-instruction {
-  margin: 4px 0 0 0;
-  color: #888;
-  font-size: 0.85rem;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  color: #888 !important;
+  margin: 4px 0 0 0 !important;
 }
 
 /* Listening-specific instruction alignment */

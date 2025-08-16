@@ -1,0 +1,127 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Complete the notes below.",
+      "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
+      "notesTitle": "First day at work",
+      "questionBlock": [
+        {
+          "questionNumber": 1,
+          "question": "Name of supervisor: **1** ________",
+          "answer": "Kaeden"
+        },
+        {
+          "questionNumber": 2,
+          "question": "Where to leave coat and bag: use **2** ________  in staffroom",
+          "answer": "locker(s)"
+        },
+        {
+          "questionNumber": 3,
+          "question": "See Tiffany in HR: to give **3** ________ number",
+          "answer": "passport"
+        },
+        {
+          "questionNumber": 4,
+          "question": "See Tiffany in HR: to collect **4** ________",
+          "answer": "uniform"
+        },
+        {
+          "questionNumber": 5,
+          "question": "Location of HR office: on **5** ________ floor",
+          "answer": "third"
+        },
+        {
+          "questionNumber": 6,
+          "question": "Supervisor's mobile number: **6** ________",
+          "answer": "0412 665 903"
+        }
+      ]
+    },
+    {
+      "questionType": "table-completion",
+      "introInstruction": "Complete the table below.",
+      "formattingInstruction": "Write ONE WORD ONLY for each answer.",
+      "tableTitle": "Responsibilities",
+      "tableStructure": {
+        "columns": 4,
+        "rows": 3,
+        "headers": ["Section Name", "Task 1", "Task 2", "Notes"]
+      },
+      "tableData": [
+        {
+          "row": 1,
+          "cells": [
+            {
+              "content": "Bakery section",
+              "type": "text"
+            },
+            {
+              "content": "Check sell-by dates",
+              "type": "text"
+            },
+            {
+              "content": "Change price labels",
+              "type": "text"
+            },
+            {
+              "content": "Use **7** ________ labels",
+              "type": "question",
+              "questionNumber": 7,
+              "answer": "yellow"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            {
+              "content": "Sushi takeaway counter",
+              "type": "text"
+            },
+            {
+              "content": "Re-stock with **8** ________ boxes if needed",
+              "type": "question",
+              "questionNumber": 8,
+              "answer": "plastic"
+            },
+            {
+              "content": "Wipe preparation area and clean the sink",
+              "type": "text"
+            },
+            {
+              "content": "Do not clean any knives",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "cells": [
+            {
+              "content": "Meat and fish counters",
+              "type": "text"
+            },
+            {
+              "content": "Clean the serving area, including the weighing scales",
+              "type": "text"
+            },
+            {
+              "content": "Collect **9** ________ for the fish from the cold-room",
+              "type": "question",
+              "questionNumber": 9,
+              "answer": "ice"
+            },
+            {
+              "content": "Must wear special **10** ________",
+              "type": "question",
+              "questionNumber": 10,
+              "answer": "gloves"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+} 

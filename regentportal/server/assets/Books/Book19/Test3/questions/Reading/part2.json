@@ -1,0 +1,123 @@
+{
+  "passageNumber": 2,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Reading Passage 2 has eight paragraphs, A-H.",
+      "formattingInstruction": "Which paragraph contains the following information?\nWrite the correct letter, A-H, in boxes 14-17 on your answer sheet.",
+      "questionBlock": [
+        {
+          "questionNumber": "14",
+          "question": "reference to the need to ensure that inhabitants of wetland regions continue to benefit from them"
+        },
+        {
+          "questionNumber": "15",
+          "question": "the proportion of wetlands which have already been lost"
+        },
+        {
+          "questionNumber": "16",
+          "question": "reference to the idea that people are beginning to appreciate the value of wetlands"
+        },
+        {
+          "questionNumber": "17",
+          "question": "mention of the cultural significance of wetlands"
+        }
+      ],
+      "correctAnswers": {
+        "14": "G",
+        "15": "A",
+        "16": "H",
+        "17": "B"
+      }
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Complete the sentences below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 18-22 on your answer sheet.",
+      "questionBlock": [
+        {
+          "questionNumber": "18",
+          "question": "Peatlands which have been drained begin to release **18** ________ instead of storing it.",
+          "answer": "carbon"
+        },
+        {
+          "questionNumber": "19",
+          "question": "Once peatland areas have been cleared, **19** ________ are more likely to occur.",
+          "answer": "fires"
+        },
+        {
+          "questionNumber": "20",
+          "question": "Clearing peatland forests to make way for oil palm plantations destroys the **20** ________ of the local environment.",
+          "answer": "biodiversity"
+        },
+        {
+          "questionNumber": "21",
+          "question": "Water is drained out of peatlands through the **21** ________ which are created by logging companies.",
+          "answer": "ditches"
+        },
+        {
+          "questionNumber": "22",
+          "question": "Draining peatlands leads to **22** ________ : a serious problem which can eventually result in coastal flooding and land loss.",
+          "answer": "subsidence"
+        }
+      ],
+      "correctAnswers": {
+        "18": "carbon",
+        "19": "fires",
+        "20": "biodiversity",
+        "21": "ditches",
+        "22": "subsidence"
+      }
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Look at the following statements (Questions 23-26) and the list of experts below.",
+      "formattingInstruction": "Match each statement with the correct expert, A-D.\nWrite the correct letter, A-D, in boxes 23-26 on your answer sheet.",
+      "opinionsBox": {
+        "title": "List of Experts",
+        "options": [
+          {
+            "letter": "A",
+            "text": "Matthew McCartney"
+          },
+          {
+            "letter": "B",
+            "text": "Pieter van Eijk"
+          },
+          {
+            "letter": "C",
+            "text": "Marcel Silvius"
+          },
+          {
+            "letter": "D",
+            "text": "Dave Tickner"
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": "23",
+          "question": "Communities living in wetland regions must be included in discussions about the future of these areas."
+        },
+        {
+          "questionNumber": "24",
+          "question": "Official policies towards wetlands vary from one nation to the next."
+        },
+        {
+          "questionNumber": "25",
+          "question": "People cause harm to wetlands without having any intention to do so."
+        },
+        {
+          "questionNumber": "26",
+          "question": "Initiatives to reverse environmental damage need not be complex."
+        }
+      ],
+      "correctAnswers": {
+        "23": "A",
+        "24": "C",
+        "25": "D",
+        "26": "B"
+      }
+    }
+  ]
+} 

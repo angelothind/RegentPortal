@@ -3,40 +3,37 @@
   "introInstruction": "Complete the notes below",
   "questionInstruction": "Choose x words only from the passage for each answer",
   "formattingInstruction": "Write your answers in boxes 8-13",
+  "description": "This template uses a single question block with flowing text and inline blanks for better paragraph rendering.",
   "template": {
     "questionBlock": [
       {
-        "question": {
-          "questionNumber": "{{questionNumber}}",
-          "questionText": "{{questionText}} where // shows where the blank box should be",
-          "answer": "{{correctAnswer}}"
-        },
-        "fillText": "{{fillText1}}",
-        "fillText2": "{{fillText2}}",
-        "question2": {
-          "questionNumber": "{{questionNumber2}}",
-          "questionText": "{{questionText2}} where // shows where the blank box should be",
-          "answer": "{{correctAnswer2}}"
-    }
+        "questionNumber": "8-13",
+        "text": "This is an example of how the text flows naturally as one paragraph with **8** ________ and **9** ________ and **10** ________ and **11** ________ and **12** ________ and **13** ________.",
+        "blanks": [
+          { "number": "8", "answer": "example" },
+          { "number": "9", "answer": "text" },
+          { "number": "10", "answer": "flows" },
+          { "number": "11", "answer": "naturally" },
+          { "number": "12", "answer": "paragraph" },
+          { "number": "13", "answer": "blanks" }
+        ]
       }
     ]
   },
   "example": {
     "questionBlock": [
-        {
-        "question": {
-          "questionNumber": "8",
-          "questionText": "The main character's name is //",
-          "answer": "John Smith"
-        },
-        "fillText": "This information is found in the first paragraph",
-        "fillText2": "Additional context about the character",
-        "question2": {
-          "questionNumber": "9",
-          "questionText": "He lives in //",
-          "answer": "New York"
+      {
+        "questionNumber": "8-13",
+        "text": "This is an example of how the text flows naturally as one paragraph with **8** ________ and **9** ________ and **10** ________ and **11** ________ and **12** ________ and **13** ________.",
+        "blanks": [
+          { "number": "8", "answer": "example" },
+          { "number": "9", "answer": "text" },
+          { "number": "10", "answer": "flows" },
+          { "number": "11", "answer": "naturally" },
+          { "number": "12", "answer": "paragraph" },
+          { "number": "13", "answer": "blanks" }
+        ]
       }
-    }
     ]
   }
 } 

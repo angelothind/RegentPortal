@@ -1,0 +1,98 @@
+{
+  "passageNumber": 2,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Reading Passage 2 has six paragraphs, A-F.",
+      "formattingInstruction": "Which paragraph contains the following information?\nWrite the correct letter, A-F, in boxes 14-17.",
+      "questionBlock": [
+        {
+          "questionNumber": "14",
+          "question": "reference to the rapidly increasing need for one raw material in the transport industry"
+        },
+        {
+          "questionNumber": "15",
+          "question": "a rough estimate of the area of the Earth covered by the oceans"
+        },
+        {
+          "questionNumber": "16",
+          "question": "how a particular underwater habitat, where minerals and organisms co-exist, is formed"
+        },
+        {
+          "questionNumber": "17",
+          "question": "reference to the fact that the countries of the world have yet to agree on rules for the exploration of the seabed"
+        }
+      ],
+      "correctAnswers": {
+        "14": "C",
+        "15": "F",
+        "16": "E",
+        "17": "D"
+      }
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Look at the following statements (Questions 18-23) and the list of people below.",
+      "formattingInstruction": "Match each statement with the correct person or people, A-E.\nWrite the correct letter, A-E, in boxes 18-23 on your answer sheet.\nNB You may use any letter more than once.",
+      "opinionsBox": {
+        "title": "List of People",
+        "options": [
+          {
+            "letter": "A",
+            "text": "Professor Mat Upton"
+          },
+          {
+            "letter": "B",
+            "text": "Julie Hunter, Julian Aguon and Pradeep Singh"
+          },
+          {
+            "letter": "C",
+            "text": "Dr Jon Copley"
+          },
+          {
+            "letter": "D",
+            "text": "Mike Johnston"
+          },
+          {
+            "letter": "E",
+            "text": "Verena Tunnicliffe"
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": "18",
+          "question": "A move away from the exploration of heavily mined reserves on land is a good idea."
+        },
+        {
+          "questionNumber": "19",
+          "question": "The negative effects of undersea exploration on local areas and their inhabitants are being ignored."
+        },
+        {
+          "questionNumber": "20",
+          "question": "There are more worthwhile things to extract from the sea than minerals."
+        },
+        {
+          "questionNumber": "21",
+          "question": "No other form of human exploration will have such a destructive impact on marine life as deep-sea mining."
+        },
+        {
+          "questionNumber": "22",
+          "question": "More is known about outer space than about what lies beneath the oceans."
+        },
+        {
+          "questionNumber": "23",
+          "question": "There is one marine life habitat where experts agree mining should not take place."
+        }
+      ],
+      "correctAnswers": {
+        "18": "D",
+        "19": "B",
+        "20": "A",
+        "21": "E",
+        "22": "B",
+        "23": "C"
+      }
+    }
+  ]
+} 

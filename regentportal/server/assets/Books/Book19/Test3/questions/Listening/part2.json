@@ -1,0 +1,150 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "What information is given about each of the following festival workshops?",
+      "formattingInstruction": "Choose SIX answers from the box and write the correct letter, A-H, next to Questions 11-16.",
+      "sectionTitle": "Festival workshops",
+      "opinionsBox": {
+        "title": "Information",
+        "options": [
+          {
+            "letter": "A",
+            "text": "involves painting and drawing"
+          },
+          {
+            "letter": "B",
+            "text": "will be led by a prize-winning author"
+          },
+          {
+            "letter": "C",
+            "text": "is aimed at children with a disability"
+          },
+          {
+            "letter": "D",
+            "text": "involves a drama activity"
+          },
+          {
+            "letter": "E",
+            "text": "focuses on new relationships"
+          },
+          {
+            "letter": "F",
+            "text": "is aimed at a specific age group"
+          },
+          {
+            "letter": "G",
+            "text": "explores an unhappy feeling"
+          },
+          {
+            "letter": "H",
+            "text": "raises awareness of a particular culture"
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 11,
+          "question": "Superheroes",
+          "answer": "D"
+        },
+        {
+          "questionNumber": 12,
+          "question": "Just do it",
+          "answer": "F"
+        },
+        {
+          "questionNumber": 13,
+          "question": "Count on me",
+          "answer": "E"
+        },
+        {
+          "questionNumber": 14,
+          "question": "Speak up",
+          "answer": "G"
+        },
+        {
+          "questionNumber": 15,
+          "question": "Jump for joy",
+          "answer": "B"
+        },
+        {
+          "questionNumber": 16,
+          "question": "Sticks and stones",
+          "answer": "H"
+        }
+      ]
+    },
+    {
+      "questionType": "choose-two-letters",
+      "introInstruction": "Questions 17 and 18",
+      "formattingInstruction": "Choose TWO letters, A-E.",
+      "questionBlock": [
+        {
+          "questionNumber": "17&18",
+          "question": "Which TWO reasons does the speaker give for recommending Alive and Kicking?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It will appeal to both boys and girls."
+            },
+            {
+              "letter": "B",
+              "text": "The author is well known."
+            },
+            {
+              "letter": "C",
+              "text": "It has colourful illustrations."
+            },
+            {
+              "letter": "D",
+              "text": "It is funny."
+            },
+            {
+              "letter": "E",
+              "text": "It deals with an important topic."
+            }
+          ],
+          "answer": ["D", "E"],
+          "note": "IN EITHER ORDER"
+        }
+      ]
+    },
+    {
+      "questionType": "choose-two-letters",
+      "introInstruction": "Questions 19 and 20",
+      "formattingInstruction": "Choose TWO letters, A-E.",
+      "questionBlock": [
+        {
+          "questionNumber": "19&20",
+          "question": "Which TWO pieces of advice does the speaker give to parents about reading?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Encourage children to write down new vocabulary."
+            },
+            {
+              "letter": "B",
+              "text": "Allow children to listen to audio books."
+            },
+            {
+              "letter": "C",
+              "text": "Get recommendations from librarians."
+            },
+            {
+              "letter": "D",
+              "text": "Give children a choice about what they read."
+            },
+            {
+              "letter": "E",
+              "text": "Only read aloud to children until they can read independently."
+            }
+          ],
+          "answer": ["B", "C"],
+          "note": "IN EITHER ORDER"
+        }
+      ]
+    }
+  ]
+} 

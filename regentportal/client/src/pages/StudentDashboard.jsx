@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import StudentSidebar from '../components/Student/StudentSidebar';
-import TestViewer from '../components/Student/TestViewer';
+import TestViewer from '../components/Student/Testviewer';
 import '../styles/UserLayout/StudentDashboard.css';
 
 const StudentDashboard = () => {

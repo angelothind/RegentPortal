@@ -1,0 +1,255 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 11 and 12",
+      "formattingInstruction": "Choose TWO letters, A-E.",
+      "questionBlock": [
+        {
+          "questionNumber": 11,
+          "question": "Which TWO problems with some training programmes for new runners does Liz mention?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "There is a risk of serious injury."
+            },
+            {
+              "letter": "B",
+              "text": "They are unsuitable for certain age groups."
+            },
+            {
+              "letter": "C",
+              "text": "They are unsuitable for people with health issues."
+            },
+            {
+              "letter": "D",
+              "text": "It is difficult to stay motivated."
+            },
+            {
+              "letter": "E",
+              "text": "There is a lack of individual support."
+            }
+          ],
+          "answer": ["A", "D"]
+        },
+        {
+          "questionNumber": 12,
+          "question": "Which TWO problems with some training programmes for new runners does Liz mention?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "There is a risk of serious injury."
+            },
+            {
+              "letter": "B",
+              "text": "They are unsuitable for certain age groups."
+            },
+            {
+              "letter": "C",
+              "text": "They are unsuitable for people with health issues."
+            },
+            {
+              "letter": "D",
+              "text": "It is difficult to stay motivated."
+            },
+            {
+              "letter": "E",
+              "text": "There is a lack of individual support."
+            }
+          ],
+          "answer": ["A", "D"]
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 13 and 14",
+      "formattingInstruction": "Choose TWO letters, A-E.",
+      "questionBlock": [
+        {
+          "questionNumber": 13,
+          "question": "Which TWO tips does Liz recommend for new runners?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "doing two runs a week"
+            },
+            {
+              "letter": "B",
+              "text": "running in the evening"
+            },
+            {
+              "letter": "C",
+              "text": "going on runs with a friend"
+            },
+            {
+              "letter": "D",
+              "text": "listening to music during runs"
+            },
+            {
+              "letter": "E",
+              "text": "running very slowly"
+            }
+          ],
+          "answer": ["A", "E"]
+        },
+        {
+          "questionNumber": 14,
+          "question": "Which TWO tips does Liz recommend for new runners?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "doing two runs a week"
+            },
+            {
+              "letter": "B",
+              "text": "running in the evening"
+            },
+            {
+              "letter": "C",
+              "text": "going on runs with a friend"
+            },
+            {
+              "letter": "D",
+              "text": "listening to music during runs"
+            },
+            {
+              "letter": "E",
+              "text": "running very slowly"
+            }
+          ],
+          "answer": ["A", "E"]
+        }
+      ]
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 15-18",
+      "formattingInstruction": "What reason prevented each of the following members of the Compton Park Runners Club from joining until recently? Write the correct letter, A, B, or C next to Questions 15-18.",
+      "questionBlock": [
+        {
+          "questionNumber": "15",
+          "question": "Ceri",
+          "options": [
+            {
+              "letter": "A",
+              "text": "a lack of confidence"
+            },
+            {
+              "letter": "B",
+              "text": "a dislike of running"
+            },
+            {
+              "letter": "C",
+              "text": "a lack of time"
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": "16",
+          "question": "James",
+          "options": [
+            {
+              "letter": "A",
+              "text": "a lack of confidence"
+            },
+            {
+              "letter": "B",
+              "text": "a dislike of running"
+            },
+            {
+              "letter": "C",
+              "text": "a lack of time"
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": "17",
+          "question": "Leo",
+          "options": [
+            {
+              "letter": "A",
+              "text": "a lack of confidence"
+            },
+            {
+              "letter": "B",
+              "text": "a dislike of running"
+            },
+            {
+              "letter": "C",
+              "text": "a lack of time"
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": "18",
+          "question": "Mark",
+          "options": [
+            {
+              "letter": "A",
+              "text": "a lack of confidence"
+            },
+            {
+              "letter": "B",
+              "text": "a dislike of running"
+            },
+            {
+              "letter": "C",
+              "text": "a lack of time"
+            }
+          ],
+          "answer": "A"
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 19 and 20",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "questionBlock": [
+        {
+          "questionNumber": "19",
+          "question": "What does Liz say about running her first marathon?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It had always been her ambition."
+            },
+            {
+              "letter": "B",
+              "text": "Her husband persuaded her to do it."
+            },
+            {
+              "letter": "C",
+              "text": "She nearly gave up before the end."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": "20",
+          "question": "Liz says new runners should sign up for a race",
+          "options": [
+            {
+              "letter": "A",
+              "text": "every six months."
+            },
+            {
+              "letter": "B",
+              "text": "within a few weeks of taking up running."
+            },
+            {
+              "letter": "C",
+              "text": "after completing several practice runs."
+            }
+          ],
+          "answer": "B"
+        }
+      ]
+    }
+  ]
+} 

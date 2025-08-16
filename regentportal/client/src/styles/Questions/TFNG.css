@@ -7,7 +7,7 @@
 }
 
 .tfng-instructions {
-  margin-bottom: 20px;
+  margin-bottom: 0;
   padding-bottom: 0;
   border-bottom: none;
 }
@@ -21,22 +21,23 @@
 }
 
 .main-instruction {
-  font-size: 1.4rem !important;
+  font-size: 1.1rem !important;
   font-weight: 700 !important;
   color: #25245D !important;
   margin-bottom: 15px !important;
 }
 
 .formatting-instruction {
-  margin: 0;
-  color: #25245D;
-  font-size: 1.4rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 15px;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  color: #25245D !important;
+  margin: 0 !important;
+  margin-bottom: 15px !important;
+  text-align: left !important;
 }
 
 .answer-key {
+  margin-top: 0px;
   margin-bottom: 25px;
   padding: 15px 0;
   border-bottom: 1px solid #eee;

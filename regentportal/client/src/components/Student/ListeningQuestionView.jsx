@@ -4,6 +4,7 @@ import MultipleChoice from '../Questions/MultipleChoice';
 import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
 import Matching from '../Questions/Matching';
 import MapLabeling from '../Questions/MapLabeling';
+import TableCompletion from '../Questions/TableCompletion';
 
 const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null }) => {
   console.log('🔍 ListeningQuestionView received user:', user);
@@ -67,10 +68,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     };
   }, [testStarted, testSubmitted, answers]);
 
-  // Function to strip ** markers from text and convert to bold parentheses format
-  const stripMarkdownBold = (text) => {
-    return text.replace(/\*\*(\d+)\*\*/g, '<strong>($1)</strong>');
-  };
+
 
   const handleAnswerChange = (questionNumber, value) => {
     const newAnswers = { ...answers, [questionNumber]: value };
@@ -328,73 +326,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
       return <div>No question templates found</div>;
     }
 
-    // For Part 1 and Part 4, render the notes structure directly
-    if (currentPart === 1 || currentPart === 4) {
-      const template = templates[0];
-      return (
-        <div className="listening-notes-container">
-          {template.notesTitle && (
-            <h4 className="listening-notes-title">
-              {template.notesTitle}
-            </h4>
-          )}
-          
-          <div className="listening-notes-content">
-            {template.questionBlock?.map((item, index) => {
-              if (item.sectionHeading) {
-                return (
-                  <div key={index} className="listening-section-heading">
-                    <strong>{item.sectionHeading}</strong>
-                  </div>
-                );
-              } else if (item.descriptiveText) {
-                return (
-                  <div key={index} className="listening-descriptive-text">
-                    {item.descriptiveText}
-                  </div>
-                );
-              } else if (item.questionNumber) {
-                return (
-                  <div key={index} className="listening-question-item">
-                    <div className="listening-question-text">
-                      {stripMarkdownBold(item.question).split('________').map((part, partIndex, array) => (
-                        <span key={partIndex}>
-                          <span dangerouslySetInnerHTML={{ __html: part }} />
-                          {partIndex < array.length - 1 && (
-                            <input
-                              type="text"
-                              className={`listening-answer-input ${finalTestSubmitted && finalTestResults && finalTestResults.results && finalTestResults.results[item.questionNumber] ? (finalTestResults.results[item.questionNumber].isCorrect ? 'answer-correct' : 'answer-incorrect') : ''}`}
-                              placeholder="Answer"
-                              value={finalTestSubmitted && finalTestResults && finalTestResults.answers ? (finalTestResults.answers[item.questionNumber] || '') : (answers[item.questionNumber] || '')}
-                              onChange={(e) => handleAnswerChange(item.questionNumber, e.target.value)}
-                              disabled={testSubmitted}
-                              autoComplete="off"
-                              data-form-type="other"
-                              data-lpignore="true"
-                              data-1p-ignore="true"
-                            />
-                          )}
-                        </span>
-                      ))}
-                    </div>
-                                        {finalTestSubmitted && finalTestResults && finalTestResults.correctAnswers && finalTestResults.correctAnswers[item.questionNumber] && (
-                      <div className="answer-feedback">
-                        <span className="correct-answer">
-                          Correct: {String(finalTestResults.correctAnswers[item.questionNumber] || '')}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                );
-              }
-              return null;
-            })}
-          </div>
-        </div>
-      );
-    }
-
-    // For Part 2 and other parts, use the component system
+        // All parts now use the same component system
     return templates.map((template, index) => {
       console.log('🎯 Rendering template:', template.questionType);
       
@@ -409,7 +341,9 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
               onAnswerChange={handleAnswerChange}
               testResults={finalTestResults}
               testSubmitted={finalTestSubmitted}
+              testType={selectedTest.type}
               componentId={componentId}
+              currentAnswers={answers}
             />
           );
         case 'multiple-choice':
@@ -420,7 +354,9 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
               onAnswerChange={handleAnswerChange}
               testResults={finalTestResults}
               testSubmitted={finalTestSubmitted}
+              testType={selectedTest.type}
               componentId={componentId}
+              currentAnswers={answers}
             />
           );
         case 'multiple-choice-two':
@@ -431,7 +367,9 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
               onAnswerChange={handleAnswerChange}
               testResults={finalTestResults}
               testSubmitted={finalTestSubmitted}
+              testType={selectedTest.type}
               componentId={componentId}
+              currentAnswers={answers}
             />
           );
         case 'matching':
@@ -442,7 +380,9 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
               onAnswerChange={handleAnswerChange}
               testResults={finalTestResults}
               testSubmitted={finalTestSubmitted}
+              testType={selectedTest.type}
               componentId={componentId}
+              currentAnswers={answers}
             />
           );
         case 'map-labeling':
@@ -453,7 +393,61 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
               onAnswerChange={handleAnswerChange}
               testResults={finalTestResults}
               testSubmitted={finalTestSubmitted}
+              testType={selectedTest.type}
               componentId={componentId}
+              currentAnswers={answers}
+            />
+          );
+        case 'table-completion':
+          return (
+            <TableCompletion
+              key={componentId}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
+              testType={selectedTest.type}
+              componentId={componentId}
+              currentAnswers={answers}
+            />
+          );
+        case 'choose-two-letters':
+          return (
+            <MultipleChoiceTwo
+              key={componentId}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
+              testType={selectedTest.type}
+              componentId={componentId}
+              currentAnswers={answers}
+            />
+          );
+        case 'flowchart-completion':
+          return (
+            <ChooseXWords
+              key={componentId}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
+              testType={selectedTest.type}
+              componentId={componentId}
+              currentAnswers={answers}
+            />
+          );
+        case 'notes-completion':
+          return (
+            <ChooseXWords
+              key={componentId}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
+              testType={selectedTest.type}
+              componentId={componentId}
+              currentAnswers={answers}
             />
           );
         default:
@@ -473,13 +467,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
         <div className="question-content">
           <div className="question-header">
             <div className="header-left">
-              <h3>Part {currentPart}</h3>
-              <p className="test-instruction">
-                {questionData?.questionData?.templates?.[0]?.introInstruction}
-              </p>
-              <p className="formatting-instruction">
-                {questionData?.questionData?.templates?.[0]?.formattingInstruction}
-              </p>
+              <h3>Questions</h3>
             </div>
             <div className="part-toggle">
               <button 
@@ -512,6 +500,8 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
               </button>
             </div>
           </div>
+          
+
           
           {renderQuestionComponent()}
           

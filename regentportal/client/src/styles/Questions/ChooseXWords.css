@@ -20,18 +20,18 @@
 }
 
 .main-instruction {
-  font-size: 1.4rem !important;
+  font-size: 1.1rem !important;
   font-weight: 700 !important;
   color: #25245D !important;
   margin-bottom: 15px !important;
 }
 
 .formatting-instruction {
-  margin: 0;
-  color: #25245D;
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 15px;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  color: #25245D !important;
+  margin: 0 !important;
+  margin-bottom: 15px !important;
 }
 
 /* Notes container styling - separate from ChooseXWords */
@@ -91,6 +91,15 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
+}
+
+/* Bullet point styling */
+.bullet-point {
+  display: inline-block;
+  color: #25245D;
+  font-weight: 600;
+  margin-right: 8px;
+  font-size: 1.1rem;
 }
 
 .answer-input {

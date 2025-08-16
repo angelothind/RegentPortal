@@ -1,0 +1,74 @@
+{
+  "passageNumber": 1,
+  "templates": [
+    {
+      "questionType": "TFNG",
+      "subType": "TFNG",
+      "introInstruction": "Do the following statements agree with the information given in Reading Passage 1?",
+      "formattingInstruction": "For questions 1-7 select",
+      "questionBlock": [
+        {
+          "questionNumber": "1",
+          "question": "Forty years ago, there were fewer butterflies in Britain than at present."
+        },
+        {
+          "questionNumber": "2",
+          "question": "Caterpillars are eaten by a number of different predators."
+        },
+        {
+          "questionNumber": "3",
+          "question": "'Phenology' is a term used to describe a creature's ability to alter the location of a lifecycle event."
+        },
+        {
+          "questionNumber": "4",
+          "question": "Some species of butterfly have a reduced lifespan due to spring temperature increases."
+        },
+        {
+          "questionNumber": "5",
+          "question": "There is a clear reason for the adaptations that butterflies are making to climate change."
+        },
+        {
+          "questionNumber": "6",
+          "question": "The data used in the study was taken from the work of amateur butterfly watchers."
+        }
+      ],
+      "correctAnswers": {
+        "1": "FALSE",
+        "2": "TRUE",
+        "3": "FALSE",
+        "4": "NOT GIVEN",
+        "5": "FALSE",
+        "6": "TRUE"
+      }
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Complete the notes below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 7-13 on your answer sheet.",
+      "questionBlock": [
+        {
+          "questionNumber": "7-13",
+          "text": "The Small Blue: lives in large **7** ________ and first appears at the start of **8** ________. The High Brown Fritillary: is considered to be more **9** ________ than other species and its caterpillars occupy a limited range of **10** ________. The Silver-studded Blue: is already able to reproduce twice a year in warm areas of **11** ________. The White Admiral: is found in **12** ________ areas of England. Both climate change and the **13** ________ of the caterpillar are possible reasons for decline.",
+          "blanks": [
+            { "number": "7", "answer": "colonies" },
+            { "number": "8", "answer": "spring" },
+            { "number": "9", "answer": "endangered" },
+            { "number": "10", "answer": "habitat" },
+            { "number": "11", "answer": "Europe" },
+            { "number": "12", "answer": "southern" },
+            { "number": "13", "answer": "diet" }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "7": "colonies",
+        "8": "spring",
+        "9": "endangered",
+        "10": "habitat",
+        "11": "Europe",
+        "12": "southern",
+        "13": "diet"
+      }
+    }
+  ]
+} 

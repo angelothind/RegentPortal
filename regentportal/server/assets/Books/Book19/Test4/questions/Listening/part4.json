@@ -1,0 +1,161 @@
+{
+  "partNumber": 4,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 26-30",
+      "formattingInstruction": "Where does Jane's grandfather keep each of the following types of books in his shop? Choose FIVE answers from the box and write the correct letter, A-G, next to Questions 26-30.",
+      "opinionsBox": {
+        "title": "Location of books",
+        "options": [
+          {
+            "letter": "A",
+            "text": "near the entrance"
+          },
+          {
+            "letter": "B",
+            "text": "in the attic"
+          },
+          {
+            "letter": "C",
+            "text": "at the back of the shop"
+          },
+          {
+            "letter": "D",
+            "text": "on a high shelf"
+          },
+          {
+            "letter": "E",
+            "text": "near the stairs"
+          },
+          {
+            "letter": "F",
+            "text": "in a specially designed space"
+          },
+          {
+            "letter": "G",
+            "text": "within the café"
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 26,
+          "question": "rare books",
+          "answer": "F"
+        },
+        {
+          "questionNumber": 27,
+          "question": "children's books",
+          "answer": "A"
+        },
+        {
+          "questionNumber": 28,
+          "question": "unwanted books",
+          "answer": "B"
+        },
+        {
+          "questionNumber": 29,
+          "question": "requested books",
+          "answer": "C"
+        },
+        {
+          "questionNumber": 30,
+          "question": "coursebooks",
+          "answer": "G"
+        }
+      ]
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 31-40",
+      "formattingInstruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+      "notesTitle": "Tree planting",
+      "questionBlock": [
+        {
+          "sectionHeading": "Reforestation projects should:"
+        },
+        {
+          "descriptiveText": "A bullet point about including a range of tree species."
+        },
+        {
+          "questionNumber": "31",
+          "question": "A bullet point about not including invasive species because of possible **31** ________ with native species.",
+          "answer": "competition"
+        },
+        {
+          "questionNumber": "32",
+          "question": "A bullet point about aiming to capture carbon, protect the environment, and provide sustainable sources of **32** ________ for local people.",
+          "answer": "income"
+        },
+        {
+          "questionNumber": "33",
+          "question": "A bullet point about using tree seeds with high genetic diversity to increase resistance to **33** ________ and climate change.",
+          "answer": "disease"
+        },
+        {
+          "questionNumber": "34",
+          "question": "A bullet point about planting trees on previously forested land in bad condition, not selecting land being used for **34** ________.",
+          "answer": "agriculture"
+        },
+        {
+          "sectionHeading": "Large-scale reforestation projects"
+        },
+        {
+          "questionNumber": "35",
+          "question": "A bullet point about basing planning decisions on information from accurate **35** ________.",
+          "answer": "maps"
+        },
+        {
+          "questionNumber": "36",
+          "question": "A bullet point stating that drones are useful for identifying areas in Brazil endangered by keeping **36** ________ and illegal logging.",
+          "answer": "cattle"
+        },
+        {
+          "sectionHeading": "Lampang Province, Northern Thailand"
+        },
+        {
+          "descriptiveText": "A bullet point stating that a forest was restored in an area damaged by mining."
+        },
+        {
+          "descriptiveText": "A bullet point about a variety of native fig trees being planted, which are important for:"
+        },
+        {
+          "descriptiveText": "A sub-bullet point about supporting many wildlife species."
+        },
+        {
+          "questionNumber": "37",
+          "question": "A sub-bullet point about increasing the **37** ________ of recovery by attracting animals and birds.",
+          "answer": "speed"
+        },
+        {
+          "questionNumber": "38",
+          "question": "A sub-bullet point stating that, e.g., **38** ________ were soon attracted to the area.",
+          "answer": "monkeys"
+        },
+        {
+          "sectionHeading": "Involving local communities"
+        },
+        {
+          "questionNumber": "39",
+          "question": "A bullet point stating that destruction of mangrove forests in Madagascar made it difficult for people to make a living from **39** ________.",
+          "answer": "fishing"
+        },
+        {
+          "descriptiveText": "A bullet point introducing \"The mangrove reforestation project:\""
+        },
+        {
+          "descriptiveText": "A sub-bullet point stating it provided employment for local people."
+        },
+        {
+          "descriptiveText": "A sub-bullet point stating it restored a healthy ecosystem."
+        },
+        {
+          "questionNumber": "40",
+          "question": "A sub-bullet point stating it protects against the higher risk of **40** ________.",
+          "answer": "flooding"
+        }
+      ]
+    }
+  ]
+} 

@@ -42,35 +42,95 @@
           "questionNumber": 6,
           "question": "Recommended website: 'The perfect **6** ________'",
           "answer": "guitar"
+        }
+      ]
+    },
+    {
+      "questionType": "table-completion",
+      "introInstruction": "Complete the table below.",
+      "formattingInstruction": "Write ONE WORD ONLY for each answer.",
+      "tableTitle": "A typical 45-minute guitar lesson",
+      "tableStructure": {
+        "columns": 3,
+        "rows": 4,
+        "headers": ["Time", "Activity", "Notes"]
+      },
+      "tableData": [
+        {
+          "row": 1,
+          "cells": [
+            {
+              "content": "5 minutes",
+              "type": "text"
+            },
+            {
+              "content": "tuning guitars",
+              "type": "text"
+            },
+            {
+              "content": "using an app or by **7** ________",
+              "type": "question",
+              "questionNumber": 7,
+              "answer": "ear"
+            }
+          ]
         },
         {
-          "sectionHeading": "Questions 7-10"
+          "row": 2,
+          "cells": [
+            {
+              "content": "10 minutes",
+              "type": "text"
+            },
+            {
+              "content": "strumming chords using our thumbs",
+              "type": "text"
+            },
+            {
+              "content": "keeping time while the teacher is **8** ________",
+              "type": "question",
+              "questionNumber": 8,
+              "answer": "playing"
+            }
+          ]
         },
         {
-          "descriptiveText": "Complete the table below. Write ONE WORD ONLY for each answer."
+          "row": 3,
+          "cells": [
+            {
+              "content": "15 minutes",
+              "type": "text"
+            },
+            {
+              "content": "playing songs",
+              "type": "text"
+            },
+            {
+              "content": "often listening to a **9** ________ of a song",
+              "type": "question",
+              "questionNumber": 9,
+              "answer": "recording"
+            }
+          ]
         },
         {
-          "descriptiveText": "A typical 45-minute guitar lesson"
-        },
-        {
-          "questionNumber": 7,
-          "question": "Time: 5 minutes | Activity: tuning guitars | Notes: using an app or by **7** ________",
-          "answer": "ear"
-        },
-        {
-          "questionNumber": 8,
-          "question": "Time: 10 minutes | Activity: strumming chords using our thumbs | Notes: keeping time while the teacher is **8** ________",
-          "answer": "playing"
-        },
-        {
-          "questionNumber": 9,
-          "question": "Time: 15 minutes | Activity: playing songs | Notes: often listening to a **9** ________ of a song",
-          "answer": "recording"
-        },
-        {
-          "questionNumber": 10,
-          "question": "Time: 10 minutes | Activity: playing single notes and simple tunes | Notes: playing together, then **10** ________",
-          "answer": "solo"
+          "row": 4,
+          "cells": [
+            {
+              "content": "10 minutes",
+              "type": "text"
+            },
+            {
+              "content": "playing single notes and simple tunes",
+              "type": "text"
+            },
+            {
+              "content": "playing together, then **10** ________",
+              "type": "question",
+              "questionNumber": 10,
+              "answer": "solo"
+            }
+          ]
         }
       ]
     }

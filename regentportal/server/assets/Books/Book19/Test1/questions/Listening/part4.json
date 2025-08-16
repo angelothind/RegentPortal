@@ -6,7 +6,14 @@
       "introInstruction": "Questions 31-40",
       "formattingInstruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
       "notesTitle": "Céide Fields",
+      "useBullets": true,
       "questionBlock": [
+        {
+          "descriptiveText": "an important Neolithic archaeological site in the northwest of Ireland"
+        },
+        {
+          "sectionHeading": "Discovery"
+        },
         {
           "questionNumber": 31,
           "question": "In the 1930s, a local teacher realised that stones beneath the bog surface were once **31** ________.",

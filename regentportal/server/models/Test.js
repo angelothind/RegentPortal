@@ -15,7 +15,11 @@ const testSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  
+  belongsTo: {
+    type: String,
+    required: true,
+    default: 'Book 19'  // Default to Book 19 since that's what we have
+  },
   sources: [
     {
       name: String,
