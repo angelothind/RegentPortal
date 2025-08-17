@@ -2,7 +2,7 @@
   "questionType": "TFNG",
   "subType": "TFNG",
   "questionNumbers": "1-7",
-  "introInstruction": "Do the following statements agree with the information given in Reading Passage 1?",
+  "introInstruction": "Questions 1-7\nDo the following statements agree with the information given in Reading Passage 1?",
   "questionInstruction": "For questions 1-7 select",
   "formattingInstruction": "For questions 1-7 select",
   "description": "This template handles both TFNG (True/False/Not Given) and YSNG (Yes/No/Not Given) question types. Use subType field to explicitly specify which type.",

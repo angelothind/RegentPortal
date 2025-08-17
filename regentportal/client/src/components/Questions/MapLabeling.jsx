@@ -47,7 +47,7 @@ const MapLabeling = ({ template, onAnswerChange, testResults, testSubmitted, com
   return (
     <div className="map-labeling-container">
       <div className="instructions">
-        <h3 dangerouslySetInnerHTML={{ 
+        <h3 className="main-instruction" dangerouslySetInnerHTML={{ 
           __html: processTextFormatting(template.introInstruction) 
         }} />
         <p className="formatting-instruction" dangerouslySetInnerHTML={{ 

@@ -14,9 +14,10 @@
 
 .instructions h3 {
   margin: 0 0 10px 0;
-  color: #333;
+  color: #25245D;
   font-size: 1.2rem;
   font-weight: 600;
+  text-align: left;
 }
 
 .instructions {
@@ -27,16 +28,19 @@
 
 .instructions h3 {
   margin: 0 0 10px 0;
-  color: #333;
+  color: #25245D;
   font-size: 1.2rem;
   font-weight: 600;
+  text-align: left;
 }
 
 .formatting-instruction {
-  margin: 0;
-  color: #666;
-  font-size: 0.9rem;
-  font-style: italic;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  color: #25245D !important;
+  margin: 0 !important;
+  margin-bottom: 15px !important;
+  text-align: left !important;
 }
 
 .section-title {
@@ -78,7 +82,7 @@
 .multiple-choice-container .question-text {
   font-size: 0.95rem;
   line-height: 1.4;
-  color: #333;
+  color: #25245D;
   margin: 0;
   font-weight: 500;
   display: block !important;

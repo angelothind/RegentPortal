@@ -8,6 +8,35 @@
   overflow-x: auto;
 }
 
+.instructions {
+  margin-bottom: 20px;
+}
+
+.instructions h3 {
+  margin: 0 0 10px 0;
+  color: #25245D;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.main-instruction {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  color: #25245D !important;
+  margin-bottom: 15px !important;
+  text-align: left !important;
+}
+
+.formatting-instruction {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  color: #25245D !important;
+  margin: 0 !important;
+  margin-bottom: 15px !important;
+  text-align: left !important;
+}
+
 .map-title {
   text-align: center;
   margin-bottom: 20px;

@@ -3,8 +3,7 @@
   "templates": [
     {
       "questionType": "matching",
-      "introInstruction": "Questions 14-18",
-      "formattingInstruction": "Reading Passage 2 has six paragraphs, A-F. Which paragraph contains the following information? Write the correct letter, A-F, in boxes 14-18 on your answer sheet. \n NB You may use any letter more than once.",
+      "introInstruction": "Questions 14-18\nReading Passage 2 has six paragraphs, A-F. Which paragraph contains the following information? Write the correct letter, A-F, in boxes 14-18 on your answer sheet. \n NB You may use any letter more than once.",
       "questionBlock": [
         {
           "questionNumber": 14,
@@ -35,8 +34,7 @@
     },
     {
       "questionType": "choose-x-word",
-      "introInstruction": "Questions 19-22",
-      "formattingInstruction": "Complete the sentences below. Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 19-22 on your answer sheet.",
+      "introInstruction": "Questions 19-22\nComplete the sentences below. Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 19-22 on your answer sheet.",
       "questionBlock": [
         {
           "questionNumber": 19,
@@ -62,8 +60,7 @@
     },
     {
       "questionType": "multiple-choice-two",
-      "introInstruction": "Questions 23 and 24",
-      "formattingInstruction": "Which TWO facts about Emma Raducanu's withdrawal from the Wimbledon tournament are mentioned in the text? Choose TWO letters, A-E. Write the correct letters in boxes 23 and 24 on your answer sheet.",
+      "introInstruction": "Questions 23 and 24\nWhich TWO facts about Emma Raducanu's withdrawal from the Wimbledon tournament are mentioned in the text? Choose TWO letters, A-E. Write the correct letters in boxes 23 and 24 on your answer sheet.",
       "questionBlock": [
         {
           "questionNumber": 23,
@@ -93,8 +90,7 @@
     },
     {
       "questionType": "multiple-choice-two",
-      "introInstruction": "Questions 25 and 26",
-      "formattingInstruction": "Which TWO facts about anxiety are mentioned in Paragraph E of the text? Choose TWO letters, A-E. Write the correct letters in boxes 25 and 26 on your answer sheet.",
+      "introInstruction": "Questions 25 and 26\nWhich TWO facts about anxiety are mentioned in Paragraph E of the text? Choose TWO letters, A-E. Write the correct letters in boxes 25 and 26 on your answer sheet.",
       "questionBlock": [
         {
           "questionNumber": 25,

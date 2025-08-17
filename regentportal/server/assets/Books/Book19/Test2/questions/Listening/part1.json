@@ -3,7 +3,7 @@
   "templates": [
     {
       "questionType": "table-completion",
-      "introInstruction": "Complete the form below.",
+      "introInstruction": "Questions 1-6\nComplete the form below.",
       "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
       "tableTitle": "Guitar Group",
       "tableStructure": {
@@ -91,7 +91,7 @@
     },
     {
       "questionType": "table-completion",
-      "introInstruction": "Complete the table below.",
+      "introInstruction": "Questions 7-10\nComplete the table below.",
       "formattingInstruction": "Write ONE WORD ONLY for each answer.",
       "tableTitle": "A typical 45-minute guitar lesson",
       "tableStructure": {

@@ -90,7 +90,15 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
   console.log('🎯 ChooseXWords: template =', template);
 
   // Check if this is the new structure (single text with blanks array)
-  const isNewStructure = template.questionBlock[0] && template.questionBlock[0].text && template.questionBlock[0].blanks;
+  // Look for any item that has both text and blanks, not just the first item
+  const isNewStructure = template.questionBlock.some(item => item.text && item.blanks);
+  console.log(`🎯 ChooseXWords - isNewStructure:`, isNewStructure);
+  console.log(`🎯 ChooseXWords - questionBlock items:`, template.questionBlock.map(item => ({
+    hasSectionHeading: !!item.sectionHeading,
+    hasText: !!item.text,
+    hasBlanks: !!item.blanks,
+    type: item.sectionHeading ? 'sectionHeading' : item.text && item.blanks ? 'question' : 'other'
+  })));
 
   // For Listening tests, render with Listening-specific styling
   if (testType === 'Listening' || testType === 'listening' || testType === 'LISTENING') {
@@ -103,7 +111,6 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
         margin: '20px 0'
       }}>
 
-        
         {/* Instructions - keep them visible like we made sure to do */}
         <div className="instructions" style={{
           marginBottom: '20px',
@@ -337,41 +344,60 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
         <div className="notes-content">
           {isNewStructure ? (
             // New structure: single text with blanks array
-            template.questionBlock.map((block, blockIndex) => (
-              <div key={blockIndex} className="question-item">
-                <div className="question-text">
-                  {processNewlines(processBulletTags(stripMarkdownBold(block.text || ''))).split('________').map((part, index, array) => (
-                    <span key={index}>
-                      <span dangerouslySetInnerHTML={{ __html: part || '' }} />
-                      {index < array.length - 1 && (
-                        <input
-                          type="text"
-                          className={`answer-input ${getAnswerClass(block.blanks[index]?.number || '')}`}
-                          placeholder="Answer"
-                          value={getAnswerValue(block.blanks[index]?.number || '')}
-                          onChange={(e) => handleAnswerChange(block.blanks[index]?.number || '', e.target.value)}
-                          disabled={testSubmitted}
-                          autoComplete="off"
-                          data-form-type="other"
-                          data-lpignore="true"
-                          data-1p-ignore="true"
-                        />
-                      )}
-                    </span>
-                  ))}
-                </div>
-                {testSubmitted && testResults && block.blanks && (
-                  <div className="answer-feedback">
-                    {block.blanks.map((blank, blankIndex) => (
-                      <span key={blankIndex} className="correct-answer">
-                        {blankIndex > 0 && ' | '}
-                        {blank.number}: {String(testResults.correctAnswers?.[blank.number] || '')}
+            template.questionBlock.map((block, blockIndex) => {
+              console.log(`🎯 Reading - New structure - Block ${blockIndex}:`, block);
+              console.log(`🎯 Reading - Block has sectionHeading:`, !!block.sectionHeading);
+              console.log(`🎯 Reading - Block has text:`, !!block.text);
+              console.log(`🎯 Reading - Block has blanks:`, !!block.blanks);
+              
+              // Check if this block is a section heading
+              if (block.sectionHeading) {
+                console.log(`🎯 Reading - Rendering section heading:`, block.sectionHeading);
+                return (
+                  <div key={blockIndex} className="section-heading">
+                    <strong>{block.sectionHeading}</strong>
+                  </div>
+                );
+              }
+              
+              // Otherwise render the question with blanks
+              console.log(`🎯 Reading - Rendering question with blanks`);
+              return (
+                <div key={blockIndex} className="question-item">
+                  <div className="question-text">
+                    {processNewlines(processBulletTags(stripMarkdownBold(block.text || ''))).split('________').map((part, index, array) => (
+                      <span key={index}>
+                        <span dangerouslySetInnerHTML={{ __html: part || '' }} />
+                        {index < array.length - 1 && (
+                          <input
+                            type="text"
+                            className={`answer-input ${getAnswerClass(block.blanks[index]?.number || '')}`}
+                            placeholder="Answer"
+                            value={getAnswerValue(block.blanks[index]?.number || '')}
+                            onChange={(e) => handleAnswerChange(block.blanks[index]?.number || '', e.target.value)}
+                            disabled={testSubmitted}
+                            autoComplete="off"
+                            data-form-type="other"
+                            data-lpignore="true"
+                            data-1p-ignore="true"
+                          />
+                        )}
                       </span>
                     ))}
                   </div>
-                )}
-              </div>
-            ))
+                  {testSubmitted && testResults && block.blanks && (
+                    <div className="answer-feedback">
+                      {block.blanks.map((blank, blankIndex) => (
+                        <span key={blankIndex} className="correct-answer">
+                          {blankIndex > 0 && ' | '}
+                          {blank.number}: {String(testResults.correctAnswers?.[blank.number] || '')}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })
           ) : (
             // Old structure: individual questions
             template.questionBlock.map((item, index) => {

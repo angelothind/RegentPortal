@@ -55,16 +55,28 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
 
   if (!template || !template.questionBlock) {
     console.log('❌ MultipleChoiceTwo: No template or questionBlock');
+    console.log('❌ Template received:', template);
     return <div>No questions available</div>;
   }
 
+  console.log('🔍 MultipleChoiceTwo: Template structure:', template);
+  console.log('🔍 MultipleChoiceTwo: questionBlock:', template.questionBlock);
+
   // Filter out section headings and only keep actual questions
-  const actualQuestions = template.questionBlock.filter(q => 
-    q.questionNumber && q.question && q.options && Array.isArray(q.options)
-  );
+  const actualQuestions = template.questionBlock.filter(q => {
+    const isValid = q.questionNumber && q.options && Array.isArray(q.options);
+    console.log(`🔍 Question ${q.questionNumber}:`, { 
+      hasQuestionNumber: !!q.questionNumber, 
+      hasOptions: !!q.options, 
+      isArray: Array.isArray(q.options),
+      isValid 
+    });
+    return isValid;
+  });
 
   if (actualQuestions.length === 0) {
     console.log('❌ MultipleChoiceTwo: No valid questions found after filtering');
+    console.log('❌ All questions in questionBlock:', template.questionBlock);
     return <div>No valid questions available</div>;
   }
 
@@ -91,12 +103,21 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
 
       
       <div className="questions-section">
+        {/* Show main question if available */}
+        {template.mainQuestion && (
+          <div className="main-question">
+            <p dangerouslySetInnerHTML={{ 
+              __html: processTextFormatting(template.mainQuestion) 
+            }} />
+          </div>
+        )}
+        
         {actualQuestions.map((question) => {
           const currentAnswers = getAnswerValue(question.questionNumber);
           return (
             <div key={question.questionNumber} className="question-item">
               <div className="question-text">
-                <strong>{question.questionNumber}.</strong> {question.question}
+                <strong>{question.questionNumber}.</strong>
               </div>
               <div className="options-container">
                 {question.options.map((option) => {

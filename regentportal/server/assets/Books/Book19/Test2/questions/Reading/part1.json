@@ -3,7 +3,7 @@
   "templates": [
     {
       "questionType": "choose-x-word",
-      "introInstruction": "Complete the notes below.",
+      "introInstruction": "Questions 1-7\nComplete the notes below.",
       "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 1-7 on your answer sheet.",
       "notesTitle": "Britain's Industrial Revolution",
       "useBullets": true,
@@ -79,8 +79,8 @@
     {
       "questionType": "TFNG",
       "subType": "TFNG",
-      "introInstruction": "Questions 8-13",
-      "formattingInstruction": "Do the following statements agree with the information given in Reading Passage 1?",
+      "introInstruction": "Questions 8-13\nDo the following statements agree with the information given in Reading Passage 1?",
+      "formattingInstruction": "In boxes 8-13 on your answer sheet, write",
       "subFormattingInstruction": "In boxes 8-13 on your answer sheet, write",
       "answerKey": {
         "TRUE": "if the statement agrees with the information",
@@ -109,7 +109,7 @@
           "answer": "NOT GIVEN"
         },
         {
-          "questionNumber": 12,
+          "questionNumber": "12",
           "question": "Some skilled weavers believed that the introduction of the new textile machines would lead to job losses.",
           "answer": "TRUE"
         },

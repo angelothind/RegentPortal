@@ -3,7 +3,7 @@
   "templates": [
     {
       "questionType": "matching",
-      "introInstruction": "Reading Passage 2 has seven paragraphs, A-G.",
+      "introInstruction": "Questions 14-19\nReading Passage 2 has seven paragraphs, A-G.",
       "formattingInstruction": "Which paragraph contains the following information?\nWrite the correct letter, A-G, in boxes 14-19.\nNB You may use any letter more than once.",
       "questionBlock": [
         {
@@ -42,7 +42,7 @@
     },
     {
       "questionType": "multiple-choice-two",
-      "introInstruction": "Choose TWO letters, A-E.",
+      "introInstruction": "Questions 20 and 21\nChoose TWO letters, A-E.",
       "formattingInstruction": "Write the correct letters in boxes 20 and 21 on your answer sheet.",
       "mainQuestion": "Which TWO of the following statements does the writer make about inhabitants of the Mediterranean region in the ancient world?",
       "questionBlock": [
@@ -74,7 +74,7 @@
     },
     {
       "questionType": "multiple-choice-two",
-      "introInstruction": "Choose TWO letters, A-E.",
+      "introInstruction": "Questions 22 and 23\nChoose TWO letters, A-E.",
       "formattingInstruction": "Write the correct letters in boxes 22 and 23 on your answer sheet.",
       "mainQuestion": "Which TWO of the following statements does the writer make about piracy and ancient Greece?",
       "questionBlock": [
@@ -106,8 +106,9 @@
     },
     {
       "questionType": "choose-x-word",
-      "introInstruction": "Complete the summary below.",
+      "introInstruction": "Questions 24-26\nComplete the summary below.",
       "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 24-26 on your answer sheet.",
+      "notesTitle": "Ancient Rome and piracy",
       "questionBlock": [
         {
           "questionNumber": "24-26",

@@ -14,9 +14,10 @@
 
 .instructions h3 {
   margin: 0 0 10px 0;
-  color: #333;
+  color: #25245D;
   font-size: 1.2rem;
   font-weight: 600;
+  text-align: left;
 }
 
 .main-instruction {
@@ -24,6 +25,7 @@
   font-weight: 700 !important;
   color: #25245D !important;
   margin-bottom: 15px !important;
+  text-align: left !important;
 }
 
 .formatting-instruction {
@@ -32,6 +34,7 @@
   color: #25245D !important;
   margin: 0 !important;
   margin-bottom: 15px !important;
+  text-align: left !important;
 }
 
 /* Notes container styling - separate from ChooseXWords */
@@ -91,6 +94,7 @@
   line-height: 1.6;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  color: #25245D;
 }
 
 /* Bullet point styling */
@@ -278,9 +282,10 @@
 
 .formatting-instruction {
   margin: 0;
-  color: #666;
+  color: #25245D;
   font-size: 0.9rem;
   font-style: italic;
+  text-align: left;
 }
 
 /* Listening instructions styling */
@@ -299,9 +304,10 @@
 
 .listening-formatting-instruction {
   margin: 0;
-  color: #666;
+  color: #25245D;
   font-size: 0.9rem;
   font-style: italic;
+  text-align: left;
 }
 
 /* Listening notes styling - use same styling as regular notes */

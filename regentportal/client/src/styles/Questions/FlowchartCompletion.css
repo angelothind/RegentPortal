@@ -9,18 +9,29 @@
   margin-bottom: 20px;
 }
 
-.main-instruction {
+.instructions h3 {
+  margin: 0 0 10px 0;
+  color: #25245D;
   font-size: 1.2rem;
   font-weight: 600;
-  color: #333;
-  margin: 0 0 8px 0;
+  text-align: left;
+}
+
+.main-instruction {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  color: #25245D !important;
+  margin-bottom: 15px !important;
+  text-align: left !important;
 }
 
 .formatting-instruction {
-  font-size: 1rem;
-  color: #666;
-  margin: 0;
-  line-height: 1.4;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  color: #25245D !important;
+  margin: 0 !important;
+  margin-bottom: 15px !important;
+  text-align: left !important;
 }
 
 /* Main Content - Side by Side Layout */
@@ -80,7 +91,7 @@
   flex: 1;
   font-size: 1rem;
   line-height: 1.4;
-  color: #333;
+  color: #25245D;
 }
 
 /* Flowchart Answer Input - Visible and properly styled */

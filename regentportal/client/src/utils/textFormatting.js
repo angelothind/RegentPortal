@@ -21,30 +21,22 @@ export const convertAllCapsToBold = (text) => {
  * @param {Object} options - Processing options
  * @returns {string} - Processed text
  */
-export const processTextFormatting = (text, options = {}) => {
-  if (!text || typeof text !== 'string') return text;
+export const processTextFormatting = (text) => {
+  if (!text || typeof text !== 'string') return '';
   
   let processedText = text;
   
-  // Convert ALL CAPS to bold
-  if (options.convertAllCaps !== false) {
-    processedText = convertAllCapsToBold(processedText);
-  }
+  // Convert **text** to <strong>text</strong>
+  processedText = processedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
   
-  // Convert markdown bold markers to HTML
-  if (options.convertMarkdown !== false) {
-    processedText = processedText.replace(/\*\*(\d+)\*\*/g, '<strong>($1)</strong>');
-  }
+  // Convert *text* to <em>text</em>
+  processedText = processedText.replace(/\*(.*?)\*/g, '<em>$1</em>');
   
-  // Convert bullet tags
-  if (options.convertBullets !== false) {
-    processedText = processedText.replace(/\[bullet\]/g, '<span class="bullet-point">•</span>');
-  }
+  // Convert `text` to <code>text</code>
+  processedText = processedText.replace(/`(.*?)`/g, '<code>$1</code>');
   
-  // Convert newlines to HTML line breaks
-  if (options.convertNewlines !== false) {
-    processedText = processedText.replace(/\n/g, '<br>');
-  }
+  // Convert line breaks to <br> tags
+  processedText = processedText.replace(/\n/g, '<br>');
   
   return processedText;
 }; 

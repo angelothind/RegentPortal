@@ -3,8 +3,7 @@
   "templates": [
     {
       "questionType": "multiple-choice",
-      "introInstruction": "Questions 11-16",
-      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "introInstruction": "Questions 11-16\nChoose the correct letter, A, B or C.",
       "sectionTitle": "Working as a lifeboat volunteer",
       "questionBlock": [
         {
@@ -125,8 +124,7 @@
     },
     {
       "questionType": "multiple-choice-two",
-      "introInstruction": "Questions 17-20",
-      "formattingInstruction": "Choose TWO letters, A-E.",
+      "introInstruction": "Questions 17-20\nChoose TWO letters, A-E.",
       "questionBlock": [
         {
           "questionNumber": 17,

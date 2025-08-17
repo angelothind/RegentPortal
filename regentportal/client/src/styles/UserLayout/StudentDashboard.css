@@ -310,8 +310,9 @@
 .formatting-instruction {
   font-size: 1rem !important;
   font-weight: 600 !important;
-  color: #888 !important;
+  color: #25245D !important;
   margin: 4px 0 0 0 !important;
+  text-align: left !important;
 }
 
 /* Listening-specific instruction alignment */

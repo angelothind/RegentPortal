@@ -4,7 +4,7 @@
     {
       "questionType": "TFNG",
       "subType": "TFNG",
-      "introInstruction": "Do the following statements agree with the information given in Reading Passage 1?",
+      "introInstruction": "Questions 1-7\nDo the following statements agree with the information given in Reading Passage 1?",
       "formattingInstruction": "For questions 1-7 select",
       "questionBlock": [
         {
@@ -48,7 +48,7 @@
     },
     {
       "questionType": "choose-x-word",
-      "introInstruction": "Complete the notes below.",
+      "introInstruction": "Questions 8-13\nComplete the notes below.",
       "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 8-13 on your answer sheet.",
       "notesTitle": "The tennis racket and how it has changed",
       "useBullets": true,

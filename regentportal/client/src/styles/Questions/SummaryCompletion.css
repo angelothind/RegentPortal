@@ -11,10 +11,11 @@
 }
 
 .summary-completion-container .instructions h3 {
-  color: #333;
-  margin-bottom: 10px;
-  font-size: 18px;
+  margin: 0 0 10px 0;
+  color: #25245D;
+  font-size: 1.2rem;
   font-weight: 600;
+  text-align: left;
 }
 
 .main-instruction {
@@ -22,6 +23,7 @@
   font-weight: 700 !important;
   color: #25245D !important;
   margin-bottom: 15px !important;
+  text-align: left !important;
 }
 
 .summary-completion-container .formatting-instruction {
@@ -32,6 +34,7 @@
   white-space: pre-line !important;
   margin: 0 !important;
   margin-bottom: 15px !important;
+  text-align: left !important;
 }
 
 .summary-section {

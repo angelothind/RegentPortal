@@ -42,33 +42,32 @@ const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, 
     return <div>No questions available</div>;
   }
 
-  // Filter out section headings and only keep actual questions
+  // Filter out section headings and only keep actual questions with options
   const actualQuestions = template.questionBlock.filter(q => 
-    q.questionNumber && q.question && q.options && Array.isArray(q.options)
+    q.questionNumber && q.question && q.options && Array.isArray(q.options) && q.options.length > 0
   );
 
   if (actualQuestions.length === 0) {
-    console.log('❌ MultipleChoice: No valid questions found after filtering');
-    return <div>No valid questions available</div>;
-  }
-
-  // Validate that all filtered questions have options
-  const questionsWithoutOptions = actualQuestions.filter(q => !q.options || !Array.isArray(q.options));
-  if (questionsWithoutOptions.length > 0) {
-    console.error('❌ MultipleChoice: Questions without options found:', questionsWithoutOptions);
+    console.log('❌ MultipleChoice: No valid multiple choice questions found');
     return (
       <div className="error-container">
-        <h3>Error: Invalid question structure</h3>
-        <p>Some questions are missing options. Please check the question data.</p>
-        <details>
-          <summary>Debug info</summary>
-          <pre>{JSON.stringify(template, null, 2)}</pre>
-        </details>
+        <h3>No Multiple Choice Questions</h3>
+        <p>This section contains other question types that are not multiple choice.</p>
+        <p>Question types in this section:</p>
+        <ul>
+          {template.questionBlock.map((q, index) => (
+            <li key={index}>
+              {q.sectionHeading ? `Section: ${q.sectionHeading}` : 
+               q.questionNumber ? `Question ${q.questionNumber}: ${q.questionType || 'Unknown type'}` : 
+               'Unknown item'}
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }
 
-  console.log('🎯 MultipleChoice: Rendering', actualQuestions.length, 'questions');
+  console.log('🎯 MultipleChoice: Rendering', actualQuestions.length, 'multiple choice questions');
   console.log('🎯 MultipleChoice: Template structure:', {
     hasTemplate: !!template,
     hasQuestionBlock: !!template?.questionBlock,

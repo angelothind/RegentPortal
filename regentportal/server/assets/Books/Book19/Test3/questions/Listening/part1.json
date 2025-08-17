@@ -57,7 +57,7 @@
     },
     {
       "questionType": "table-completion",
-      "introInstruction": "Complete the table below.",
+      "introInstruction": "Questions 7-10\nComplete the table below.",
       "formattingInstruction": "Write ONE WORD ONLY for each answer.",
       "tableTitle": "Shopping",
       "tableStructure": {

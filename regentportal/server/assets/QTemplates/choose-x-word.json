@@ -1,6 +1,6 @@
 {
   "questionType": "choose-x-word",
-  "introInstruction": "Complete the notes below",
+  "introInstruction": "Questions 8-13\nComplete the notes below",
   "questionInstruction": "Choose x words only from the passage for each answer",
   "formattingInstruction": "Write your answers in boxes 8-13",
   "description": "This template uses a single question block with flowing text and inline blanks for better paragraph rendering.",

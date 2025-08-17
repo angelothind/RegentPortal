@@ -14,24 +14,27 @@
 
 .instructions h3 {
   margin: 0 0 10px 0;
-  color: #333;
+  color: #25245D;
   font-size: 1.2rem;
   font-weight: 600;
+  text-align: left;
 }
 
 .main-instruction {
-  font-size: 1.1rem !important;
+  font-size: 0.95rem !important;
   font-weight: 700 !important;
   color: #25245D !important;
   margin-bottom: 15px !important;
+  text-align: left !important;
 }
 
 .formatting-instruction {
-  font-size: 1.1rem !important;
+  font-size: 0.95rem !important;
   font-weight: 700 !important;
   color: #25245D !important;
   margin: 0 !important;
   margin-bottom: 15px !important;
+  text-align: left !important;
 }
 
 .opinions-box {
@@ -103,7 +106,7 @@
   flex: 1;
   font-size: 0.95rem;
   line-height: 1.6;
-  color: #333;
+  color: #25245D;
   font-weight: 500;
 }
 

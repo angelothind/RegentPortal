@@ -14,7 +14,7 @@
 
 .ysng-instructions h3 {
   margin: 0 0 10px 0;
-  color: #333;
+  color: #25245D;
   font-size: 1.2rem;
   font-weight: 600;
   text-align: center;
@@ -25,6 +25,7 @@
   font-weight: 700 !important;
   color: #25245D !important;
   margin-bottom: 15px !important;
+  text-align: left !important;
 }
 
 .ysng-instructions .formatting-instruction {
@@ -33,7 +34,7 @@
   color: #25245D !important;
   margin: 0 !important;
   margin-bottom: 15px !important;
-  text-align: center !important;
+  text-align: left !important;
 }
 
 .ysng-container .answer-key {

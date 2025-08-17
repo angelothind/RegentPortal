@@ -3,7 +3,7 @@
   "templates": [
     {
       "questionType": "choose-x-word",
-      "introInstruction": "Complete the notes below.",
+      "introInstruction": "Questions 1-10\nComplete the notes below.",
       "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
       "notesTitle": "Hinchingbrooke Country Park",
       "questionBlock": [
