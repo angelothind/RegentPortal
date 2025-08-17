@@ -152,4 +152,34 @@
   .ysng-question-item .question-number {
     align-self: flex-start;
   }
+}
+
+/* Answer feedback styling */
+.answer-feedback {
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.correct-answer {
+  color: #155724;
+  font-weight: 600;
+  background-color: #d4edda;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border-left: 3px solid #28a745;
+}
+
+/* Review mode styling for correct/incorrect answers */
+.ysng-question-item .option-label.answer-correct {
+  background-color: #d4edda !important;
+  border: 2px solid #28a745 !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
+}
+
+.ysng-question-item .option-label.answer-incorrect {
+  background-color: #f8d7da !important;
+  border: 2px solid #dc3545 !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
 } 

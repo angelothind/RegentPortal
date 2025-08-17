@@ -299,7 +299,7 @@ router.post('/submit', async (req, res) => {
         const normalizedUserAnswer = userAnswer ? userAnswer.toString().trim().toUpperCase() : '';
         const normalizedCorrectAnswer = correctAnswer ? correctAnswer.toString().trim().toUpperCase() : '';
         
-        isCorrect = normalizedUserAnswer !== '' && normalizedCorrectAnswer === normalizedCorrectAnswer;
+        isCorrect = normalizedUserAnswer !== '' && normalizedUserAnswer === normalizedCorrectAnswer;
         
         console.log(`📝 Single answer question ${questionNumber} result:`, {
           userAnswer: normalizedUserAnswer,
@@ -313,6 +313,14 @@ router.post('/submit', async (req, res) => {
         correctAnswer: correctAnswer,
         isCorrect: isCorrect
       };
+
+      console.log(`📝 Results for Q${questionNumber}:`, {
+        userAnswer,
+        correctAnswer,
+        isCorrect,
+        correctAnswerType: typeof correctAnswer,
+        userAnswerType: typeof userAnswer
+      });
 
       if (isCorrect) {
         correctCount++;

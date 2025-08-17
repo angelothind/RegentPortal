@@ -10,20 +10,24 @@ import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
 import SummaryCompletion from '../Questions/SummaryCompletion';
 import TableCompletion from '../Questions/TableCompletion';
 
-const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false }) => {
+const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, testStarted, onTestReset, sharedPassage, onPassageChange }) => {
   console.log('🚀 QuestionView component mounted with selectedTest:', selectedTest);
   console.log('🔍 QuestionView received user:', user);
   console.log('🔍 QuestionView received externalTestResults:', externalTestResults);
   console.log('🔍 QuestionView received externalTestSubmitted:', externalTestSubmitted);
-  console.log('🔍 QuestionView received isTeacherMode:', isTeacherMode);
+  console.log('🔍 QuestionView received sharedPassage:', sharedPassage);
   
   const [questionData, setQuestionData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [answers, setAnswers] = useState({});
-  const [currentPassage, setCurrentPassage] = useState(1);
   const [testSubmitted, setTestSubmitted] = useState(externalTestSubmitted || false);
   const [testResults, setTestResults] = useState(externalTestResults || null);
+
+  // Debug currentPassage changes
+  useEffect(() => {
+    console.log('🔄 currentPassage state changed to:', sharedPassage);
+  }, [sharedPassage]);
 
   // Load saved answers from localStorage on component mount (only for students, not teachers)
   useEffect(() => {
@@ -56,8 +60,24 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
           }
           
           // Remove the timestamp from the answers object before setting state
-          const { _timestamp, _currentPassage, ...answersWithoutTimestamp } = parsedAnswers;
+          const { _timestamp, _currentPassage, _testSubmitted, _testResults, _testStarted, ...answersWithoutTimestamp } = parsedAnswers;
           setAnswers(answersWithoutTimestamp);
+          
+          // Restore the current passage if it was saved
+          if (_currentPassage && typeof _currentPassage === 'number') {
+            // setCurrentPassage(_currentPassage); // This line is removed as per the edit hint
+            console.log('📝 Restored current passage from localStorage:', _currentPassage);
+          }
+          
+          // Restore testSubmitted and testResults if they were saved
+          if (_testSubmitted && _testResults) {
+            setTestSubmitted(true);
+            setTestResults(_testResults);
+            console.log('📝 Restored testSubmitted and testResults from localStorage');
+          }
+          
+          // Note: _testStarted is handled by the parent TestViewer component
+          
           console.log('📝 Loaded saved answers from localStorage:', answersWithoutTimestamp);
         } catch (error) {
           console.error('❌ Error parsing saved answers:', error);
@@ -75,14 +95,15 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       return;
     }
 
-    console.log('🔄 Passage changed to:', currentPassage, '- reloading answers from localStorage');
-    if (selectedTest && selectedTest.testId) {
+    // Only reload answers if we have a selectedTest (to avoid running on initial mount)
+    if (selectedTest && selectedTest.testId && Object.keys(answers).length > 0) {
+      console.log('🔄 Passage changed to:', sharedPassage, '- reloading answers from localStorage');
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
       const savedAnswers = localStorage.getItem(storageKey);
       if (savedAnswers) {
         try {
           const parsedAnswers = JSON.parse(savedAnswers);
-          const { _timestamp, _currentPassage, ...answersWithoutTimestamp } = parsedAnswers;
+          const { _timestamp, _currentPassage, _testSubmitted, _testResults, _testStarted, ...answersWithoutTimestamp } = parsedAnswers;
           setAnswers(answersWithoutTimestamp);
           console.log('📝 Reloaded answers from localStorage after passage change:', answersWithoutTimestamp);
         } catch (error) {
@@ -90,7 +111,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         }
       }
     }
-  }, [currentPassage, selectedTest, isTeacherMode]);
+  }, [sharedPassage, selectedTest, isTeacherMode, answers]);
 
   // Add refresh confirmation warning (only for students, not teachers)
   useEffect(() => {
@@ -114,6 +135,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     };
   }, [testSubmitted, answers, isTeacherMode]);
 
+  // Fetch question data when passage changes
   useEffect(() => {
     const fetchQuestionData = async () => {
       if (!selectedTest) {
@@ -122,13 +144,13 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         return;
       }
 
-      console.log('🔍 QuestionView: Fetching questions for passage:', currentPassage);
+      console.log('🔍 QuestionView: Fetching questions for passage:', sharedPassage);
       setLoading(true);
       setError(null);
 
       try {
         // Fetch question data for current passage with test type
-        const endpoint = `/api/tests/${selectedTest.testId._id}/questions/part${currentPassage}?testType=${selectedTest.type}`;
+        const endpoint = `/api/tests/${selectedTest.testId._id}/questions/part${sharedPassage}?testType=${selectedTest.type}`;
         console.log('📡 Fetching from endpoint:', endpoint);
         
         const response = await fetch(endpoint);
@@ -150,7 +172,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     };
 
     fetchQuestionData();
-  }, [selectedTest, currentPassage]);
+  }, [selectedTest, sharedPassage]);
 
   const handleAnswerChange = (questionNumberOrNewAnswers, value) => {
     // In teacher mode, don't allow answer changes
@@ -182,11 +204,15 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     if (selectedTest && selectedTest.testId) {
       const answersWithTimestamp = {
         ...newAnswers,
-        _timestamp: Date.now()
+        _timestamp: Date.now(),
+        _currentPassage: sharedPassage,
+        _testSubmitted: testSubmitted,
+        _testStarted: true,
+        _testResults: testResults
       };
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
       localStorage.setItem(storageKey, JSON.stringify(answersWithTimestamp));
-      console.log('📝 Answers saved to localStorage with key:', storageKey);
+      console.log('📝 Answers and test state saved to localStorage with key:', storageKey);
       console.log('📝 Saved data:', answersWithTimestamp);
     }
     
@@ -266,6 +292,29 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         });
         setTestSubmitted(true);
         
+        // Save the submitted answers and current passage state to localStorage
+        if (selectedTest && selectedTest.testId) {
+          const answersWithTimestamp = {
+            ...answers,
+            _timestamp: Date.now(),
+            _currentPassage: sharedPassage,
+            _testSubmitted: true,
+            _testStarted: true,
+            _testResults: {
+              score: result.data.score,
+              totalQuestions: result.data.totalQuestions,
+              correctCount: result.data.correctCount,
+              answers: answers,
+              correctAnswers: correctAnswers,
+              results: result.data.results,
+              submittedAt: result.data.submittedAt
+            }
+          };
+          const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+          localStorage.setItem(storageKey, JSON.stringify(answersWithTimestamp));
+          console.log('📝 Saved submitted answers, passage state, test results, and testStarted to localStorage:', answersWithTimestamp);
+        }
+        
         alert(`Test submitted successfully!\nYour score: ${result.data.score}%`);
       } else {
         throw new Error(result.message || 'Failed to submit test');
@@ -289,27 +338,20 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     setTestSubmitted(false);
     setTestResults(null);
     setAnswers({});
-    setCurrentPassage(1);
-    console.log('🔄 Test reset');
-  };
-
-  const handlePassageChange = (passageNumber) => {
-    console.log('🔄 Switching to passage:', passageNumber);
-    console.log('📝 Current answers before passage change:', answers);
     
-    // Save current answers before switching (only for students, not teachers)
-    if (!isTeacherMode && selectedTest && selectedTest.testId) {
-      const answersWithTimestamp = {
-        ...answers,
-        _timestamp: Date.now(),
-        _currentPassage: currentPassage
-      };
-      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
-      console.log('📝 Saved answers before passage change:', answersWithTimestamp);
+    // Clear localStorage for this test
+    if (selectedTest && selectedTest.testId) {
+      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+      localStorage.removeItem(storageKey);
+      console.log('🧹 Cleared localStorage for test reset:', storageKey);
     }
     
-    setCurrentPassage(passageNumber);
-    setQuestionData(null); // Clear current data when switching passages
+    // Call the parent's reset callback
+    if (onTestReset) {
+      onTestReset();
+    }
+    
+    console.log('🔄 Test reset');
   };
 
   console.log('🔍 QuestionView render state:', {
@@ -431,6 +473,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               testResults={testResults}
               testSubmitted={testSubmitted}
               currentAnswers={answers}
+              testType={selectedTest.type}
             />
           );
         case 'summary-completion':
@@ -486,6 +529,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               testResults={testResults}
               testSubmitted={testSubmitted}
               currentAnswers={answers}
+              testType={selectedTest.type}
             />
           );
         // TODO: Add other question types here
@@ -507,20 +551,20 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         </div>
         <div className="passage-toggle">
           <button 
-            className={`passage-button ${currentPassage === 1 ? 'active' : ''}`}
-            onClick={() => handlePassageChange(1)}
+            className={`passage-button ${sharedPassage === 1 ? 'active' : ''}`}
+            onClick={() => onPassageChange(1)}
           >
             Passage 1
           </button>
           <button 
-            className={`passage-button ${currentPassage === 2 ? 'active' : ''}`}
-            onClick={() => handlePassageChange(2)}
+            className={`passage-button ${sharedPassage === 2 ? 'active' : ''}`}
+            onClick={() => onPassageChange(2)}
           >
             Passage 2
           </button>
           <button 
-            className={`passage-button ${currentPassage === 3 ? 'active' : ''}`}
-            onClick={() => handlePassageChange(3)}
+            className={`passage-button ${sharedPassage === 3 ? 'active' : ''}`}
+            onClick={() => onPassageChange(3)}
           >
             Passage 3
           </button>
@@ -532,7 +576,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       </div>
       
       {/* Test Controls - Submit only on last passage, reset only after submission (not shown in teacher mode) */}
-      {!isTeacherMode && currentPassage === 3 && !testSubmitted && (
+      {!isTeacherMode && sharedPassage === 3 && !testSubmitted && (
         <div className="test-controls">
           <div className="submit-section">
             <button className="submit-button" onClick={handleSubmit}>

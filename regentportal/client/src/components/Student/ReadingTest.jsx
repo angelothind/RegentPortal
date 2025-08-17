@@ -2,15 +2,22 @@
 import React, { useEffect, useState } from 'react';
 import '../../styles/UserLayout/ReadingTest.css';
 
-const ReadingTest = ({ testId, testData, isTeacherMode = false }) => {
-  const [currentPassage, setCurrentPassage] = useState(0);
+const ReadingTest = ({ testId, testData, testStarted, onStartTest, onPassageChange, currentPassage, isTeacherMode = false }) => {
   const [passageContent, setPassageContent] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [testStarted, setTestStarted] = useState(isTeacherMode);
 
   const handleStartTest = () => {
-    setTestStarted(true);
+    if (onStartTest) {
+      onStartTest();
+    }
     console.log('🚀 Reading test started');
+  };
+
+  const handlePassageChange = (passageNumber) => {
+    if (onPassageChange) {
+      onPassageChange(passageNumber);
+    }
+    console.log('🔄 ReadingTest: Switching to passage:', passageNumber);
   };
 
   useEffect(() => {
@@ -26,7 +33,9 @@ const ReadingTest = ({ testId, testData, isTeacherMode = false }) => {
         // 🔒 SECURE: Backend already filtered for JSON sources only
         // No need to filter again on frontend
         if (testData.sources.length > 0) {
-          const currentSource = testData.sources[currentPassage];
+          // Convert 1-based passage number to 0-based array index
+          const passageIndex = currentPassage - 1;
+          const currentSource = testData.sources[passageIndex];
           
           // Backend already sent the parsed JSON content
           if (currentSource && currentSource.content) {
@@ -84,8 +93,8 @@ const ReadingTest = ({ testId, testData, isTeacherMode = false }) => {
             {testData.sources.map((_, index) => (
               <button 
                 key={index}
-                onClick={() => setCurrentPassage(index)}
-                className={currentPassage === index ? 'active' : ''}
+                onClick={() => handlePassageChange(index + 1)}
+                className={currentPassage === (index + 1) ? 'active' : ''}
               >
                 Passage {index + 1}
               </button>

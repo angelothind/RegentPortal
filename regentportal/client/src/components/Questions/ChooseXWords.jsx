@@ -362,6 +362,19 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
         }} />
       </div>
       
+      {/* Show notes title for Reading tests */}
+      {template.notesTitle && (
+        <h4 className="reading-notes-title" style={{
+          margin: '0 0 20px 0',
+          color: '#333',
+          fontSize: '1.3rem',
+          fontWeight: '600',
+          textAlign: 'center'
+        }}>
+          {template.notesTitle}
+        </h4>
+      )}
+      
       <div className="notes-container">
         <div className="notes-content">
           {isNewStructure ? (

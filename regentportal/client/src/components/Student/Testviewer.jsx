@@ -10,6 +10,67 @@ const TestViewer = ({ selectedTest, user }) => {
   const [loading, setLoading] = useState(false);
   const [passageWidth, setPassageWidth] = useState(56);
   const [questionWidth, setQuestionWidth] = useState(44);
+  const [testStarted, setTestStarted] = useState(false);
+
+  // Load test state from localStorage when selectedTest changes
+  useEffect(() => {
+    if (selectedTest && selectedTest.testId) {
+      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+      const savedData = localStorage.getItem(storageKey);
+      if (savedData) {
+        try {
+          const parsedData = JSON.parse(savedData);
+          if (parsedData._testStarted) {
+            setTestStarted(true);
+            console.log('📝 Restored testStarted state from localStorage');
+          }
+        } catch (error) {
+          console.error('❌ Error parsing saved test state:', error);
+        }
+      }
+    }
+  }, [selectedTest]);
+
+  const handleStartTest = () => {
+    setTestStarted(true);
+    console.log('🚀 Test started');
+    
+    // Save test state to localStorage
+    if (selectedTest && selectedTest.testId) {
+      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+      const existingData = localStorage.getItem(storageKey);
+      let savedData = {};
+      
+      if (existingData) {
+        try {
+          savedData = JSON.parse(existingData);
+        } catch (error) {
+          console.error('❌ Error parsing existing saved data:', error);
+        }
+      }
+      
+      const updatedData = {
+        ...savedData,
+        _testStarted: true,
+        _timestamp: Date.now()
+      };
+      
+      localStorage.setItem(storageKey, JSON.stringify(updatedData));
+      console.log('📝 Saved testStarted state to localStorage');
+    }
+  };
+
+  const handleTestReset = () => {
+    setTestStarted(false);
+    console.log('🔄 Test reset - testStarted set to false');
+  };
+
+  const [sharedPassage, setSharedPassage] = useState(1);
+
+  const handlePassageChange = (passageNumber) => {
+    console.log('🔄 TestViewer: Passage changed to:', passageNumber);
+    setSharedPassage(passageNumber);
+  };
 
   useEffect(() => {
     const fetchTestData = async () => {
@@ -93,14 +154,28 @@ const TestViewer = ({ selectedTest, user }) => {
             className="test-content-area"
             style={{ width: `${passageWidth}%` }}
           >
-            <ReadingTest testId={selectedTest.testId} testData={testData} />
+            <ReadingTest 
+              testId={selectedTest.testId} 
+              testData={testData} 
+              testStarted={testStarted}
+              onStartTest={handleStartTest}
+              onPassageChange={handlePassageChange}
+              currentPassage={sharedPassage}
+            />
           </div>
           <DraggableDivider onResize={handleResize} />
           <div 
             className="question-area"
             style={{ width: `${questionWidth}%` }}
           >
-            <QuestionView selectedTest={selectedTest} user={user} />
+            <QuestionView 
+              selectedTest={selectedTest} 
+              user={user} 
+              testStarted={testStarted}
+              onTestReset={handleTestReset}
+              sharedPassage={sharedPassage}
+              onPassageChange={handlePassageChange}
+            />
           </div>
         </div>
       )}

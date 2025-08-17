@@ -43,9 +43,10 @@
   border-radius: 8px;
   padding: 20px 10px;
   margin-bottom: 25px;
-  width: 63%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 35%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .opinions-title {
@@ -86,10 +87,18 @@
   font-size: 0.9rem;
 }
 
+/* New layout container for side-by-side display */
+.matching-layout {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
 .questions-section {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  flex: 1;
 }
 
 .question-item {

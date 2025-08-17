@@ -50,6 +50,7 @@
       "questionType": "choose-x-word",
       "introInstruction": "Complete the notes below.",
               "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 8-13.",
+      "notesTitle": "Archaeological excavations at Kelo",
       "questionBlock": [
         {
           "questionNumber": "8-13",

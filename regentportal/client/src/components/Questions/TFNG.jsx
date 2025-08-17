@@ -28,14 +28,9 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
     if (!result) return '';
     
     const userAnswer = testResults.answers?.[questionNumber];
-    const correctAnswer = result.correctAnswer;
     
-    // If this option is the correct answer, show it as correct
-    if (optionValue === correctAnswer) {
-      return 'answer-correct';
-    }
-    // If this option is the user's answer but it's wrong, show it as incorrect
-    else if (optionValue === userAnswer && !result.isCorrect) {
+    // Only highlight incorrect user selections in red
+    if (optionValue === userAnswer && !result.isCorrect) {
       return 'answer-incorrect';
     }
     
@@ -97,19 +92,24 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
               <span className="question-text">{question.question}</span>
             </div>
             <div className="answer-options">
-              {answerOptions.map((option) => (
-                <label key={option.value} className={`option-label ${getAnswerClass(question.questionNumber, option.value)}`}>
-                  <input
-                    type="radio"
-                    name={`question-${question.questionNumber}`}
-                    value={option.value}
-                    checked={getAnswerValue(question.questionNumber) === option.value}
-                    onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
-                    disabled={testSubmitted}
-                  />
-                  <span>{option.label}</span>
-                </label>
-              ))}
+              {answerOptions.map((option) => {
+                const answerClass = getAnswerClass(question.questionNumber, option.value);
+                const finalClass = `option-label ${answerClass}`;
+                
+                return (
+                  <label key={option.value} className={finalClass}>
+                    <input
+                      type="radio"
+                      name={`question-${question.questionNumber}`}
+                      value={option.value}
+                      checked={getAnswerValue(question.questionNumber) === option.value}
+                      onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
+                      disabled={testSubmitted}
+                    />
+                    <span>{option.label}</span>
+                  </label>
+                );
+              })}
             </div>
             {testSubmitted && testResults && (
               <div className="answer-feedback">

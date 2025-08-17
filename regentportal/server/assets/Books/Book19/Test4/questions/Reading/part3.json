@@ -5,6 +5,7 @@
       "questionType": "choose-x-word",
       "introInstruction": "Complete the summary below.",
               "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 24-26.",
+      "notesTitle": "Deep sea mining",
       "questionBlock": [
         {
           "questionNumber": "24",
@@ -85,6 +86,7 @@
       "questionType": "choose-x-word",
       "introInstruction": "Complete the summary below.",
               "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 31-35.",
+      "notesTitle": "Hunter-gatherer societies",
       "questionBlock": [
         {
           "questionNumber": "31",

@@ -10,9 +10,10 @@
 export const convertAllCapsToBold = (text) => {
   if (!text || typeof text !== 'string') return text;
   
-  // Pattern to match ALL CAPS words (1 or more consecutive uppercase letters)
-  // This will match words like "A", "OR", "ONE", "TWO", "NB", "TRUE", "FALSE", etc.
-  return text.replace(/\b([A-Z]+)\b/g, '<strong>$1</strong>');
+  // Pattern to match ALL CAPS words (2 or more consecutive uppercase letters)
+  // This will match words like "NB", "TRUE", "FALSE", "NOT GIVEN", "YES", "NO", etc.
+  // But won't match single letters like "A", "B", "C" which are just option labels
+  return text.replace(/\b([A-Z]{2,})\b/g, '<strong>$1</strong>');
 };
 
 /**
@@ -25,6 +26,9 @@ export const processTextFormatting = (text) => {
   if (!text || typeof text !== 'string') return '';
   
   let processedText = text;
+  
+  // Convert ALL CAPS words to bold first
+  processedText = convertAllCapsToBold(processedText);
   
   // Convert **text** to <strong>text</strong>
   processedText = processedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');

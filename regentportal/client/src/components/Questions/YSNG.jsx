@@ -28,14 +28,9 @@ const YSNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
     if (!result) return '';
     
     const userAnswer = testResults.answers?.[questionNumber];
-    const correctAnswer = result.correctAnswer;
     
-    // If this option is the correct answer, show it as correct
-    if (optionValue === correctAnswer) {
-      return 'answer-correct';
-    }
-    // If this option is the user's answer but it's wrong, show it as incorrect
-    else if (optionValue === userAnswer && !result.isCorrect) {
+    // Only highlight incorrect user selections in red
+    if (optionValue === userAnswer && !result.isCorrect) {
       return 'answer-incorrect';
     }
     
@@ -83,40 +78,57 @@ const YSNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
               <span className="question-text">{question.question}</span>
             </div>
             <div className="answer-options">
-              <label className={`option-label ${getAnswerClass(question.questionNumber, 'YES')}`}>
-                <input
-                  type="radio"
-                  name={`question-${question.questionNumber}`}
-                  value="YES"
-                  checked={getAnswerValue(question.questionNumber) === 'YES'}
-                  onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
-                  disabled={testSubmitted}
-                />
-                <span>YES</span>
-              </label>
-              <label className={`option-label ${getAnswerClass(question.questionNumber, 'NO')}`}>
-                <input
-                  type="radio"
-                  name={`question-${question.questionNumber}`}
-                  value="NO"
-                  checked={getAnswerValue(question.questionNumber) === 'NO'}
-                  onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
-                  disabled={testSubmitted}
-                />
-                <span>NO</span>
-              </label>
-              <label className={`option-label ${getAnswerClass(question.questionNumber, 'NOT GIVEN')}`}>
-                <input
-                  type="radio"
-                  name={`question-${question.questionNumber}`}
-                  value="NOT GIVEN"
-                  checked={getAnswerValue(question.questionNumber) === 'NOT GIVEN'}
-                  onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
-                  disabled={testSubmitted}
-                />
-                <span>NOT GIVEN</span>
-              </label>
+              {(() => {
+                const yesClass = getAnswerClass(question.questionNumber, 'YES');
+                const noClass = getAnswerClass(question.questionNumber, 'NO');
+                const notGivenClass = getAnswerClass(question.questionNumber, 'NOT GIVEN');
+                
+                return (
+                  <>
+                    <label className={`option-label ${yesClass}`}>
+                      <input
+                        type="radio"
+                        name={`question-${question.questionNumber}`}
+                        value="YES"
+                        checked={getAnswerValue(question.questionNumber) === 'YES'}
+                        onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
+                        disabled={testSubmitted}
+                      />
+                      <span>YES</span>
+                    </label>
+                    <label className={`option-label ${noClass}`}>
+                      <input
+                        type="radio"
+                        name={`question-${question.questionNumber}`}
+                        value="NO"
+                        checked={getAnswerValue(question.questionNumber) === 'NO'}
+                        onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
+                        disabled={testSubmitted}
+                      />
+                      <span>NO</span>
+                    </label>
+                    <label className={`option-label ${notGivenClass}`}>
+                      <input
+                        type="radio"
+                        name={`question-${question.questionNumber}`}
+                        value="NOT GIVEN"
+                        checked={getAnswerValue(question.questionNumber) === 'NOT GIVEN'}
+                        onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
+                        disabled={testSubmitted}
+                      />
+                      <span>NOT GIVEN</span>
+                    </label>
+                  </>
+                );
+              })()}
             </div>
+            {testSubmitted && testResults && (
+              <div className="answer-feedback">
+                <span className="correct-answer">
+                  Correct: {String(testResults.correctAnswers?.[question.questionNumber] || '')}
+                </span>
+              </div>
+            )}
           </div>
         ))}
       </div>

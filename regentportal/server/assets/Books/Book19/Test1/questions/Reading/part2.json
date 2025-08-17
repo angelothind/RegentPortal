@@ -4,7 +4,7 @@
     {
       "questionType": "matching",
       "introInstruction": "Questions 14-19\nReading Passage 2 has seven paragraphs, A-G.",
-      "formattingInstruction": "Which paragraph contains the following information?\nWrite the correct letter, A-G, in boxes 14-19.\nNB You may use any letter more than once.",
+      "formattingInstruction": "Which paragraph contains the following information?\nWrite the correct letter, A-G, in boxes 14-19.\n \nNB You may use any letter more than once.",
       "questionBlock": [
         {
           "questionNumber": "14",

@@ -149,14 +149,14 @@
 }
 
 /* Review mode styling for correct/incorrect answers */
-.answer-correct {
+.option-label.answer-correct {
   background-color: #d4edda !important;
   border: 2px solid #28a745 !important;
   border-radius: 4px !important;
   padding: 4px 8px !important;
 }
 
-.answer-incorrect {
+.option-label.answer-incorrect {
   background-color: #f8d7da !important;
   border: 2px solid #dc3545 !important;
   border-radius: 4px !important;

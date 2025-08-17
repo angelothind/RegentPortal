@@ -35,6 +35,7 @@
     {
       "questionType": "choose-x-word",
       "introInstruction": "Questions 19-22\nComplete the sentences below. Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 19-22.",
+      "notesTitle": "Performance stress in athletes",
       "questionBlock": [
         {
           "questionNumber": 19,
@@ -63,13 +64,13 @@
       "introInstruction": "Questions 23 and 24\nWhich TWO facts about Emma Raducanu's withdrawal from the Wimbledon tournament are mentioned in the text? Choose TWO letters, A-E. Write the correct letters in boxes 23 and 24.",
       "questionGroup": {
         "questionNumbers": ["23", "24"],
-        "options": [
-          { "letter": "A", "text": "the stage at which she dropped out of the tournament" },
-          { "letter": "B", "text": "symptoms of her performance stress at the tournament" },
-          { "letter": "C", "text": "measures which she had taken to manage her stress levels" },
-          { "letter": "D", "text": "aspects of the Wimbledon tournament which increased her stress levels" },
-          { "letter": "E", "text": "reactions to her social media posts about her experience at Wimbledon" }
-        ],
+          "options": [
+            { "letter": "A", "text": "the stage at which she dropped out of the tournament" },
+            { "letter": "B", "text": "symptoms of her performance stress at the tournament" },
+            { "letter": "C", "text": "measures which she had taken to manage her stress levels" },
+            { "letter": "D", "text": "aspects of the Wimbledon tournament which increased her stress levels" },
+            { "letter": "E", "text": "reactions to her social media posts about her experience at Wimbledon" }
+          ],
         "correctAnswers": ["B", "D"],
         "maxSelections": 2
       }
@@ -79,13 +80,13 @@
       "introInstruction": "Questions 25 and 26\nWhich TWO facts about anxiety are mentioned in Paragraph E of the text? Choose TWO letters, A-E. Write the correct letters in boxes 25 and 26.",
       "questionGroup": {
         "questionNumbers": ["25", "26"],
-        "options": [
-          { "letter": "A", "text": "the factors which determine how severe it may be" },
-          { "letter": "B", "text": "how long it takes for its effects to become apparent" },
-          { "letter": "C", "text": "which of its symptoms is most frequently encountered" },
-          { "letter": "D", "text": "the types of athletes who are most likely to suffer from it" },
-          { "letter": "E", "text": "the harm that can result if athletes experience it too often" }
-        ],
+          "options": [
+            { "letter": "A", "text": "the factors which determine how severe it may be" },
+            { "letter": "B", "text": "how long it takes for its effects to become apparent" },
+            { "letter": "C", "text": "which of its symptoms is most frequently encountered" },
+            { "letter": "D", "text": "the types of athletes who are most likely to suffer from it" },
+            { "letter": "E", "text": "the harm that can result if athletes experience it too often" }
+          ],
         "correctAnswers": ["A", "E"],
         "maxSelections": 2
       }
