@@ -4,83 +4,116 @@ import { processTextFormatting } from '../../utils/textFormatting';
 
 const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'multiple-choice-two', currentAnswers = {} }) => {
   console.log('🎯 MultipleChoiceTwo rendered with template:', template);
+  console.log('🎯 MultipleChoiceTwo testResults:', testResults);
+  console.log('🎯 MultipleChoiceTwo testSubmitted:', testSubmitted);
+  console.log('🎯 MultipleChoiceTwo currentAnswers:', currentAnswers);
 
-  const handleAnswerChange = (questionNumber, value) => {
-    const existingAnswers = currentAnswers[questionNumber] || [];
-    let newAnswers;
+  const handleAnswerChange = (questionNumber, selectedOptions) => {
+    // Each question number gets its own answer
+    const updatedAnswers = { ...currentAnswers, [questionNumber]: [...selectedOptions] };
     
-    if (existingAnswers.includes(value)) {
-      // Remove if already selected
-      newAnswers = existingAnswers.filter(answer => answer !== value);
-    } else {
-      // Add if not selected (but limit to 2)
-      if (existingAnswers.length < 2) {
-        newAnswers = [...existingAnswers, value];
-      } else {
-        // Replace the first answer if already have 2
-        newAnswers = [existingAnswers[1], value];
-      }
-    }
-    
-    const updatedAnswers = { ...currentAnswers, [questionNumber]: newAnswers };
     if (onAnswerChange) {
       onAnswerChange(updatedAnswers);
     }
   };
 
-  const getOptionClass = (questionNumber, optionLetter) => {
+  const getOptionClass = (option, questionNumber, selectedOptions) => {
     if (!testSubmitted || !testResults) return '';
     
-    const result = testResults.results?.[questionNumber];
-    if (!result) return '';
+    const isSelected = selectedOptions.includes(option.letter);
     
-    const userAnswer = testResults.answers?.[questionNumber] || [];
-    const correctAnswer = result.correctAnswer || [];
+    // For MultipleChoiceTwo, we should use the correct answers from the template
+    // since they're the same for all questions in the group
+    const correctAnswer = questionGroup.correctAnswers || [];
+    const isCorrect = correctAnswer.includes(option.letter);
     
-    if (correctAnswer.includes(optionLetter)) {
+    if (isSelected && isCorrect) {
       return 'option-correct';
-    } else if (userAnswer.includes(optionLetter) && !result.isCorrect) {
+    } else if (isSelected && !isCorrect) {
       return 'option-incorrect';
     }
     
     return '';
   };
 
+  const isQuestionUnanswered = (questionNumber) => {
+    if (!testSubmitted || !testResults) return false;
+    
+    // Handle both old and new result structures
+    let userAnswer;
+    if (testResults.answers && testResults.answers[questionNumber]) {
+      // New structure
+      userAnswer = testResults.answers[questionNumber];
+    } else if (testResults.givenAnswers) {
+      // Old structure - find the answer for this question
+      const testSubmission = testResults.givenAnswers.find(sub => 
+        sub.testId === testResults.testId
+      );
+      if (testSubmission && testSubmission.answers) {
+        userAnswer = testSubmission.answers[questionNumber];
+      }
+    }
+    
+    return !userAnswer || !Array.isArray(userAnswer) || userAnswer.length === 0;
+  };
+
   const getAnswerValue = (questionNumber) => {
     if (testSubmitted && testResults) {
-      return testResults.answers?.[questionNumber] || [];
+      // Handle both old and new result structures
+      if (testResults.answers && testResults.answers[questionNumber]) {
+        // New structure
+        return testResults.answers[questionNumber] || [];
+      } else if (testResults.givenAnswers) {
+        // Old structure - find the answer for this question
+        const testSubmission = testResults.givenAnswers.find(sub => 
+          sub.testId === testResults.testId
+        );
+        if (testSubmission && testSubmission.answers) {
+          return testSubmission.answers[questionNumber] || [];
+        }
+      }
+      return [];
     }
     return currentAnswers[questionNumber] || [];
   };
 
-  if (!template || !template.questionBlock) {
-    console.log('❌ MultipleChoiceTwo: No template or questionBlock');
+  // Handle both old and new JSON formats
+  const getQuestionData = () => {
+    if (template.questionGroup) {
+      // New format
+      return {
+        questionNumbers: template.questionGroup.questionNumbers,
+        options: template.questionGroup.options,
+        correctAnswers: template.questionGroup.correctAnswers,
+        maxSelections: template.questionGroup.maxSelections || 2
+      };
+    } else if (template.questionBlock) {
+      // Old format - convert to new format
+      const firstQuestion = template.questionBlock[0];
+      if (firstQuestion && firstQuestion.options) {
+        return {
+          questionNumbers: template.questionBlock.map(q => q.questionNumber),
+          options: firstQuestion.options,
+          correctAnswers: firstQuestion.answer || [],
+          maxSelections: 2
+        };
+      }
+    }
+    return null;
+  };
+
+  const questionData = getQuestionData();
+
+  if (!questionData) {
+    console.log('❌ MultipleChoiceTwo: No valid question data found');
     console.log('❌ Template received:', template);
     return <div>No questions available</div>;
   }
 
-  console.log('🔍 MultipleChoiceTwo: Template structure:', template);
-  console.log('🔍 MultipleChoiceTwo: questionBlock:', template.questionBlock);
+  console.log('🎯 MultipleChoiceTwo: Question data:', questionData);
+  console.log('🎯 MultipleChoiceTwo: Correct answers from template:', questionData.correctAnswers);
 
-  // Filter out section headings and only keep actual questions
-  const actualQuestions = template.questionBlock.filter(q => {
-    const isValid = q.questionNumber && q.options && Array.isArray(q.options);
-    console.log(`🔍 Question ${q.questionNumber}:`, { 
-      hasQuestionNumber: !!q.questionNumber, 
-      hasOptions: !!q.options, 
-      isArray: Array.isArray(q.options),
-      isValid 
-    });
-    return isValid;
-  });
-
-  if (actualQuestions.length === 0) {
-    console.log('❌ MultipleChoiceTwo: No valid questions found after filtering');
-    console.log('❌ All questions in questionBlock:', template.questionBlock);
-    return <div>No valid questions available</div>;
-  }
-
-  console.log('🎯 MultipleChoiceTwo: Rendering', actualQuestions.length, 'questions');
+  const questionGroup = questionData;
 
   return (
     <div className="multiple-choice-two-container">
@@ -93,73 +126,128 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
         }} />
       </div>
       
-      {/* Section Title - check if first item is a section heading */}
-      {template.questionBlock[0]?.sectionHeading && (
-        <div className="section-title">
-          <h4>{template.questionBlock[0].sectionHeading}</h4>
-        </div>
-      )}
-      
-
-      
       <div className="questions-section">
-        {/* Show main question if available */}
+        {/* Show main question prominently if available */}
         {template.mainQuestion && (
           <div className="main-question">
-            <p dangerouslySetInnerHTML={{ 
+            <h4 className="main-question-title">Main Question:</h4>
+            <p className="main-question-text" dangerouslySetInnerHTML={{ 
               __html: processTextFormatting(template.mainQuestion) 
             }} />
           </div>
         )}
         
-        {actualQuestions.map((question) => {
-          const currentAnswers = getAnswerValue(question.questionNumber);
-          return (
-            <div key={question.questionNumber} className="question-item">
-              <div className="question-text">
-                <strong>{question.questionNumber}.</strong>
-              </div>
-              <div className="options-container">
-                {question.options.map((option) => {
-                  const isSelected = currentAnswers.includes(option.letter);
-                  return (
-                    <label 
-                      key={option.letter} 
-                      className={`option-label ${isSelected ? 'selected' : ''} ${getOptionClass(question.questionNumber, option.letter)}`}
-                    >
-                      <input
-                        type="checkbox"
-                        name={`question-${question.questionNumber}`}
-                        value={option.letter}
-                        checked={isSelected}
-                        onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
-                        className="option-checkbox"
-                        disabled={testSubmitted}
-                      />
-                      <span className="option-letter">{option.letter}.</span>
-                      <span className="option-text">{option.text}</span>
-                    </label>
-                  );
-                })}
-              </div>
-              <div className="selection-info">
-                Selected: {currentAnswers.join(', ') || 'None'} ({currentAnswers.length}/2)
-              </div>
-              {testSubmitted && testResults && (
-                <div className="answer-feedback">
-                  <span className="correct-answer">
-                    Correct: {Array.isArray(testResults.correctAnswers?.[question.questionNumber]) 
-                      ? testResults.correctAnswers[question.questionNumber].join(', ') 
-                      : String(testResults.correctAnswers?.[question.questionNumber] || '')}
+        {/* Show question numbers for the group */}
+        <div className="question-numbers">
+          <strong>Questions {questionGroup.questionNumbers.join(' & ')}.</strong>
+        </div>
+        
+        {/* Render options only once */}
+        <div className="options-container">
+          {questionGroup.options.map((option) => {
+            // Check if this option is selected in any of the questions
+            const isSelectedInAnyQuestion = questionGroup.questionNumbers.some(questionNumber => {
+              const selectedOptions = getAnswerValue(questionNumber);
+              return selectedOptions.includes(option.letter);
+            });
+            
+            // Get the combined option class from all questions
+            let combinedOptionClass = '';
+            if (testSubmitted && testResults) {
+              // Check if this option is selected in any question
+              const isSelectedInAnyQuestion = questionGroup.questionNumbers.some(questionNumber => {
+                const selectedOptions = getAnswerValue(questionNumber);
+                return selectedOptions.includes(option.letter);
+              });
+              
+              if (isSelectedInAnyQuestion) {
+                // If selected, determine if it's correct or incorrect
+                const isCorrect = questionGroup.correctAnswers.includes(option.letter);
+                console.log(`🔍 Option ${option.letter}: selected=${isSelectedInAnyQuestion}, correct=${isCorrect}, correctAnswers=${JSON.stringify(questionGroup.correctAnswers)}`);
+                if (isCorrect) {
+                  combinedOptionClass = 'option-correct';
+                } else {
+                  combinedOptionClass = 'option-incorrect';
+                }
+              }
+            }
+            
+            return (
+              <label 
+                key={option.letter} 
+                className={`option-label ${isSelectedInAnyQuestion ? 'selected' : ''} ${combinedOptionClass}`}
+              >
+                <input
+                  type="checkbox"
+                  value={option.letter}
+                  checked={isSelectedInAnyQuestion}
+                  className="option-checkbox"
+                  disabled={testSubmitted}
+                  onChange={(e) => {
+                    console.log(`🔍 Option clicked:`, option.letter, 'Checked:', e.target.checked);
+                    
+                    // Handle selection for all questions in the group
+                    questionGroup.questionNumbers.forEach(questionNumber => {
+                      const currentSelectedOptions = getAnswerValue(questionNumber);
+                      let newSelectedOptions;
+                      
+                      if (e.target.checked) {
+                        // Add option if we have room
+                        if (currentSelectedOptions.length < questionGroup.maxSelections) {
+                          newSelectedOptions = [...currentSelectedOptions, option.letter];
+                        } else {
+                          // Replace the oldest selection if we're at max
+                          newSelectedOptions = [...currentSelectedOptions.slice(1), option.letter];
+                        }
+                      } else {
+                        // Remove option
+                        newSelectedOptions = currentSelectedOptions.filter(opt => opt !== option.letter);
+                      }
+                      
+                      console.log(`🔍 Question ${questionNumber} - New selected options:`, newSelectedOptions);
+                      handleAnswerChange(questionNumber, newSelectedOptions);
+                    });
+                  }}
+                />
+                <span className="option-letter">{option.letter}.</span>
+                <span className="option-text">{option.text}</span>
+              </label>
+            );
+          })}
+        </div>
+        
+        {/* Show single selection info for the entire group */}
+        <div className="selection-info">
+          <strong>Selected: {questionGroup.questionNumbers.reduce((total, questionNumber) => {
+            const selectedOptions = getAnswerValue(questionNumber);
+            return total + selectedOptions.length;
+          }, 0)}/{questionGroup.maxSelections}</strong>
+          
+          {testSubmitted && testResults && (() => {
+            // Check if any question in the group has answers
+            const hasAnyAnswers = questionGroup.questionNumbers.some(questionNumber => {
+              const answers = getAnswerValue(questionNumber);
+              return answers && answers.length > 0;
+            });
+
+            return (
+              <div className="answer-feedback">
+                {!hasAnyAnswers ? (
+                  <span className="no-answer-given">
+                    No answer given for Questions {questionGroup.questionNumbers.join(' & ')}
                   </span>
-                </div>
-              )}
-            </div>
-          );
-        })}
+                ) : (
+                  <span className="correct-answer">
+                    Correct answers for Questions {questionGroup.questionNumbers.join(' & ')}: {questionGroup.correctAnswers.join(', ')}
+                  </span>
+                )}
+              </div>
+            );
+          })()}
+        </div>
       </div>
     </div>
   );
 };
 
-export default MultipleChoiceTwo; 
+export default MultipleChoiceTwo;

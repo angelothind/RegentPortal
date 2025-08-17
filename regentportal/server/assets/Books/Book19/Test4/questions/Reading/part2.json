@@ -33,7 +33,7 @@
     {
       "questionType": "matching",
       "introInstruction": "Look at the following statements (Questions 18-23) and the list of people below.",
-      "formattingInstruction": "Match each statement with the correct person or people, A-E.\nWrite the correct letter, A-E, in boxes 18-23 on your answer sheet.\nNB You may use any letter more than once.",
+              "formattingInstruction": "Match each statement with the correct person or people, A-E.\nWrite the correct letter, A-E, in boxes 18-23.\nNB You may use any letter more than once.",
       "opinionsBox": {
         "title": "List of People",
         "options": [

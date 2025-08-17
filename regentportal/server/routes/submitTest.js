@@ -75,6 +75,13 @@ const loadCorrectAnswers = async (testId, testType, submittedAnswers = {}) => {
                   correctAnswers[question.questionNumber] = question.answer;
                 }
               });
+            } else if (template.questionGroup && template.questionType === 'multiple-choice-two') {
+              // New MultipleChoiceTwo format with questionGroup
+              const group = template.questionGroup;
+              group.questionNumbers.forEach(questionNumber => {
+                correctAnswers[questionNumber] = group.correctAnswers;
+              });
+              console.log(`📝 Loaded grouped answers for questions ${group.questionNumbers.join(', ')}:`, group.correctAnswers);
             }
           });
         }
@@ -199,18 +206,51 @@ router.post('/submit', async (req, res) => {
     console.log('📝 Submitted answers:', answers);
     console.log('📝 Question numbers in submitted answers:', Object.keys(answers));
     console.log('📝 Question numbers in correct answers:', Object.keys(correctAnswers));
+    
+    // Debug: Show the structure of submitted answers
+    Object.keys(answers).forEach(questionNumber => {
+      console.log(`🔍 Submitted answer for question ${questionNumber}:`, {
+        answer: answers[questionNumber],
+        type: typeof answers[questionNumber],
+        isArray: Array.isArray(answers[questionNumber]),
+        length: Array.isArray(answers[questionNumber]) ? answers[questionNumber].length : 'N/A'
+      });
+    });
+    
+    // Fix: Ensure MultipleChoiceTwo answers are properly formatted as arrays
+    const normalizedAnswers = { ...answers };
+    Object.keys(normalizedAnswers).forEach(questionNumber => {
+      const answer = normalizedAnswers[questionNumber];
+      if (answer && typeof answer === 'string') {
+        // If it's a string, try to parse it as JSON (in case it was stringified)
+        try {
+          const parsed = JSON.parse(answer);
+          if (Array.isArray(parsed)) {
+            normalizedAnswers[questionNumber] = parsed;
+            console.log(`🔧 Fixed question ${questionNumber}: converted string "${answer}" to array:`, parsed);
+          }
+        } catch (e) {
+          // If parsing fails, treat as single answer
+          normalizedAnswers[questionNumber] = [answer];
+          console.log(`🔧 Fixed question ${questionNumber}: converted string "${answer}" to single-item array:`, [answer]);
+        }
+      }
+    });
+    
+    console.log('🔧 Normalized answers:', normalizedAnswers);
 
-    // Calculate score and results - grade ALL questions, not just submitted ones
+    // Calculate score and results - grade ALL questions individually
     let correctCount = 0;
     const allQuestions = Object.keys(correctAnswers);
     const totalQuestions = allQuestions.length;
     const results = {};
 
-    console.log('📝 Grading ALL questions:', allQuestions);
-    console.log('📝 User answers:', answers);
+    console.log('📝 Grading ALL questions individually:', allQuestions);
+    console.log('📝 User answers:', normalizedAnswers);
 
+    // Grade each question individually
     for (const questionNumber of allQuestions) {
-      const userAnswer = answers[questionNumber] || ''; // Use empty string if no answer
+      const userAnswer = normalizedAnswers[questionNumber];
       const correctAnswer = correctAnswers[questionNumber];
       let isCorrect = false;
 
@@ -218,22 +258,50 @@ router.post('/submit', async (req, res) => {
 
       // Handle different answer types
       if (Array.isArray(correctAnswer)) {
-        // Multiple choice with multiple answers
-        if (Array.isArray(userAnswer)) {
-          isCorrect = userAnswer.length > 0 && 
-                     userAnswer.length === correctAnswer.length &&
-                     userAnswer.every(answer => correctAnswer.includes(answer));
+        // Multiple choice with multiple answers (including MultipleChoiceTwo)
+        if (Array.isArray(userAnswer) && userAnswer.length > 0) {
+          // Count how many correct answers the user selected
+          const correctSelections = userAnswer.filter(answer => correctAnswer.includes(answer)).length;
+          const totalCorrect = correctAnswer.length;
+          
+          // Award marks based on correct selections
+          if (correctSelections === totalCorrect) {
+            // All correct answers selected - award full marks
+            isCorrect = true;
+            correctCount += totalCorrect; // Award marks for each correct answer
+            console.log(`📝 Multiple choice question ${questionNumber}: ALL CORRECT! Awarding ${totalCorrect} marks. Total: ${correctCount}`);
+          } else if (correctSelections > 0) {
+            // Partial correct answers - award partial marks
+            isCorrect = false; // Not fully correct
+            correctCount += correctSelections; // Award marks for correct selections
+            console.log(`📝 Multiple choice question ${questionNumber}: PARTIAL! Awarding ${correctSelections}/${totalCorrect} marks. Total: ${correctCount}`);
+          } else {
+            // No correct answers
+            isCorrect = false;
+            console.log(`📝 Multiple choice question ${questionNumber}: INCORRECT! No marks awarded. Total: ${correctCount}`);
+          }
+          
+          console.log(`📝 Multiple choice question ${questionNumber} result:`, {
+            userAnswer,
+            correctAnswer,
+            userAnswerLength: userAnswer.length,
+            correctAnswerLength: correctAnswer.length,
+            correctSelections,
+            totalCorrect,
+            isCorrect: isCorrect || correctSelections > 0 // Consider partially correct as "correct" for display
+          });
         } else {
           isCorrect = false;
+          console.log(`📝 Multiple choice question ${questionNumber}: no valid user answer`);
         }
       } else {
         // Single answer questions
         const normalizedUserAnswer = userAnswer ? userAnswer.toString().trim().toUpperCase() : '';
         const normalizedCorrectAnswer = correctAnswer ? correctAnswer.toString().trim().toUpperCase() : '';
         
-        isCorrect = normalizedUserAnswer !== '' && normalizedUserAnswer === normalizedCorrectAnswer;
+        isCorrect = normalizedUserAnswer !== '' && normalizedCorrectAnswer === normalizedCorrectAnswer;
         
-        console.log(`📝 Comparing answers for question ${questionNumber}:`, {
+        console.log(`📝 Single answer question ${questionNumber} result:`, {
           userAnswer: normalizedUserAnswer,
           correctAnswer: normalizedCorrectAnswer,
           isCorrect: isCorrect
@@ -241,13 +309,16 @@ router.post('/submit', async (req, res) => {
       }
 
       results[questionNumber] = {
-        userAnswer: userAnswer || '',
+        userAnswer: userAnswer,
         correctAnswer: correctAnswer,
         isCorrect: isCorrect
       };
 
       if (isCorrect) {
         correctCount++;
+        console.log(`📝 ✅ Question ${questionNumber} marked as CORRECT! Total correct: ${correctCount}`);
+      } else {
+        console.log(`📝 ❌ Question ${questionNumber} marked as INCORRECT! Total correct: ${correctCount}`);
       }
     }
 
@@ -267,7 +338,8 @@ router.post('/submit', async (req, res) => {
       studentId: studentId,
       testId: testId,
       testType: normalizedTestType,
-      answers: answers,
+      answers: normalizedAnswers, // Use normalized answers
+      originalAnswers: answers, // Store original answers for reference
       correctAnswers: correctAnswers,
       results: results,
       score: score,

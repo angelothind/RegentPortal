@@ -81,6 +81,13 @@
   cursor: not-allowed;
 }
 
+/* Styling for "No answer given" placeholder text */
+.summary-text .answer-input:disabled::placeholder {
+  color: #721c24;
+  font-weight: 600;
+  font-style: italic;
+}
+
 /* Answer feedback styles */
 .answer-feedback-section {
   margin-top: 20px;

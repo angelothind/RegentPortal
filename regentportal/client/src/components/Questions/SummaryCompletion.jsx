@@ -39,11 +39,33 @@ const SummaryCompletion = ({ template, onAnswerChange, testResults, testSubmitte
     return '';
   };
 
+  const isQuestionUnanswered = (questionNumber) => {
+    if (!testSubmitted || !testResults) return false;
+    
+    const userAnswer = testResults.answers?.[questionNumber];
+    return !userAnswer || userAnswer === '';
+  };
+
   const getAnswerValue = (questionNumber) => {
     if (testSubmitted && testResults) {
-      return testResults.answers?.[questionNumber] || '';
+      const userAnswer = testResults.answers?.[questionNumber];
+      // If no answer was given, return empty string so we can show placeholder
+      if (!userAnswer || userAnswer === '') {
+        return '';
+      }
+      return userAnswer;
     }
     return currentAnswers[questionNumber] || '';
+  };
+
+  const getInputPlaceholder = (questionNumber) => {
+    if (testSubmitted && testResults) {
+      const userAnswer = testResults.answers?.[questionNumber];
+      if (!userAnswer || userAnswer === '') {
+        return 'No answer given';
+      }
+    }
+    return 'Answer';
   };
 
   if (!template || !template.questionBlock) {
@@ -73,7 +95,7 @@ const SummaryCompletion = ({ template, onAnswerChange, testResults, testSubmitte
                 <input
                   type="text"
                   className={`answer-input ${getAnswerClass(template.questionBlock[index]?.questionNumber)}`}
-                  placeholder="Answer"
+                  placeholder={getInputPlaceholder(template.questionBlock[index]?.questionNumber)}
                   value={getAnswerValue(template.questionBlock[index]?.questionNumber)}
                   onChange={(e) => handleAnswerChange(template.questionBlock[index]?.questionNumber, e.target.value)}
                   disabled={testSubmitted}
@@ -93,15 +115,9 @@ const SummaryCompletion = ({ template, onAnswerChange, testResults, testSubmitte
           {template.questionBlock.map((question) => (
             <div key={question.questionNumber} className="feedback-item">
               <span className="question-number">Question {question.questionNumber}:</span>
-              {testResults.correctAnswers?.[question.questionNumber] ? (
                 <span className="correct-answer">
-                  Correct: {String(testResults.correctAnswers[question.questionNumber])}
+                Correct: {String(testResults.correctAnswers?.[question.questionNumber] || '')}
                 </span>
-              ) : testResults.answers?.[question.questionNumber] ? (
-                <span className="no-answer-given">
-                  No answer given
-                </span>
-              ) : null}
             </div>
           ))}
         </div>

@@ -73,11 +73,33 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
     return result.isCorrect ? 'answer-correct' : 'answer-incorrect';
   };
 
+  const isQuestionUnanswered = (questionNumber) => {
+    if (!testSubmitted || !testResults) return false;
+    
+    const userAnswer = testResults.answers?.[questionNumber];
+    return !userAnswer || userAnswer === '';
+  };
+
   const getAnswerValue = (questionNumber) => {
     if (testSubmitted && testResults) {
-      return testResults.answers?.[questionNumber] || '';
+      const userAnswer = testResults.answers?.[questionNumber];
+      // If no answer was given, return empty string so we can show placeholder
+      if (!userAnswer || userAnswer === '') {
+        return '';
+      }
+      return userAnswer;
     }
     return currentAnswers[questionNumber] || '';
+  };
+
+  const getInputPlaceholder = (questionNumber) => {
+    if (testSubmitted && testResults) {
+      const userAnswer = testResults.answers?.[questionNumber];
+      if (!userAnswer || userAnswer === '') {
+        return 'No answer given';
+      }
+    }
+    return 'Answer';
   };
 
   if (!template || !template.questionBlock) {
@@ -220,7 +242,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                               color: '#333',
                               transition: 'border-color 0.2s ease'
                             }}
-                            placeholder="Answer"
+                            placeholder={getInputPlaceholder(blankNumber || '')}
                             value={getAnswerValue(blankNumber || '')}
                             onChange={(e) => {
                               console.log(`🎯 Input change event triggered for blank ${blankNumber}`);
@@ -290,7 +312,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                               color: '#333',
                               transition: 'border-color 0.2s ease'
                             }}
-                            placeholder="Answer"
+                            placeholder={getInputPlaceholder(item.questionNumber)}
                             value={getAnswerValue(item.questionNumber)}
                             onChange={(e) => {
                               console.log(`🎯 Old structure input change for question ${item.questionNumber}`);
@@ -372,7 +394,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                           <input
                             type="text"
                             className={`answer-input ${getAnswerClass(block.blanks[index]?.number || '')}`}
-                            placeholder="Answer"
+                            placeholder={getInputPlaceholder(block.blanks[index]?.number || '')}
                             value={getAnswerValue(block.blanks[index]?.number || '')}
                             onChange={(e) => handleAnswerChange(block.blanks[index]?.number || '', e.target.value)}
                             disabled={testSubmitted}
@@ -431,7 +453,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                             <input
                               type="text"
                               className={`answer-input ${getAnswerClass(item.questionNumber)}`}
-                              placeholder="Answer"
+                              placeholder={getInputPlaceholder(item.questionNumber)}
                               value={getAnswerValue(item.questionNumber)}
                               onChange={(e) => handleAnswerChange(item.questionNumber, e.target.value)}
                               disabled={testSubmitted}

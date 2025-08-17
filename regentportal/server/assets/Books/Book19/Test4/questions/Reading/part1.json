@@ -44,7 +44,7 @@
     {
       "questionType": "choose-x-word",
       "introInstruction": "Complete the notes below.",
-      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 7-13 on your answer sheet.",
+              "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 7-13.",
       "questionBlock": [
         {
           "questionNumber": "7-13",

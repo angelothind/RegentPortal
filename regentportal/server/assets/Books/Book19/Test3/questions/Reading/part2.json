@@ -4,7 +4,7 @@
     {
       "questionType": "matching",
       "introInstruction": "Reading Passage 2 has eight paragraphs, A-H.",
-      "formattingInstruction": "Which paragraph contains the following information?\nWrite the correct letter, A-H, in boxes 14-17 on your answer sheet.",
+              "formattingInstruction": "Which paragraph contains the following information?\nWrite the correct letter, A-H, in boxes 14-17.",
       "questionBlock": [
         {
           "questionNumber": "14",
@@ -33,7 +33,7 @@
     {
       "questionType": "choose-x-word",
       "introInstruction": "Complete the sentences below.",
-      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 18-22 on your answer sheet.",
+              "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 18-22.",
       "questionBlock": [
         {
           "questionNumber": "18",
@@ -72,7 +72,7 @@
     {
       "questionType": "matching",
       "introInstruction": "Look at the following statements (Questions 23-26) and the list of experts below.",
-      "formattingInstruction": "Match each statement with the correct expert, A-D.\nWrite the correct letter, A-D, in boxes 23-26 on your answer sheet.",
+              "formattingInstruction": "Match each statement with the correct expert, A-D.\nWrite the correct letter, A-D, in boxes 23-26.",
       "opinionsBox": {
         "title": "List of Experts",
         "options": [

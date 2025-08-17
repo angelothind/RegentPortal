@@ -3,7 +3,7 @@
   "templates": [
     {
       "questionType": "choose-from",
-      "introInstruction": "Questions 27-32\nComplete the summary using the list of phrases, A-K, below. Write the correct letter, A–K, in boxes 27-32 on your answer sheet.",
+      "introInstruction": "Questions 27-32\nComplete the summary using the list of phrases, A-K, below. Write the correct letter, A–K, in boxes 27-32.",
       "summaryTitle": "Maryam Mirzakhani",
       "summaryText": "Maryam Mirzakhani is regarded as **27** ________ in the field of mathematics because she was the only female holder of the prestigious Fields Medal – a record that she retained at the time of her death. However, maths held little **28** ________ for her as a child and in fact her performance was below average until she was **29** ________ by a difficult puzzle that one of her siblings showed her. Later, as a professional mathematician, she had an inquiring mind and proved herself to be **30** ________ when things did not go smoothly. She said she got the greatest **31** ________ from making ground-breaking discoveries and in fact she was responsible for some extremely **32** ________ mathematical studies.",
       "questionBlock": [
@@ -71,7 +71,7 @@
     },
     {
       "questionType": "multiple-choice",
-      "introInstruction": "Questions 38-40\nChoose the correct letter, A, B, C or D. Write the correct letter in boxes 38-40 on your answer sheet.",
+      "introInstruction": "Questions 38-40\nChoose the correct letter, A, B, C or D. Write the correct letter in boxes 38-40.",
       "questionBlock": [
         {
           "questionNumber": 38,

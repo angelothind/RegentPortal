@@ -4,7 +4,7 @@
     {
       "questionType": "multiple-choice",
       "introInstruction": "Questions 27-30\nChoose the correct letter, A, B, C or D.",
-      "formattingInstruction": "Write the correct letter in boxes 27-30 on your answer sheet.",
+              "formattingInstruction": "Write the correct letter in boxes 27-30.",
       "questionBlock": [
         {
           "questionNumber": "27",
@@ -57,7 +57,7 @@
     {
       "questionType": "choose-from",
       "introInstruction": "Questions 31-36\nComplete the summary using the list of phrases, A-J, below.",
-      "formattingInstruction": "Write the correct letter, A-J, in boxes 31-36 on your answer sheet.",
+              "formattingInstruction": "Write the correct letter, A-J, in boxes 31-36.",
       "mainQuestion": "What happens when people encounter misinformation?",
       "summaryText": "Although people have **31** ________ to misinformation, there is debate about precisely how and when we label something as true or untrue. The philosophers Descartes and Spinoza had **32** ________ about how people engage with information. While Descartes believed that people accept or reject information after considering whether it is true or not, Spinoza argued that people accepted all information they encountered (and by default misinformation) and did not verify or reject it until afterwards. Moreover, Spinoza believed that a distinct **33** ________ is involved in these stages. Recent research has provided **34** ________ for Spinoza's theory and it would appear that people accept all encountered information as if it were true, even if this is for an extremely **35** ________, and do not label the information as true or false until later. This is consistent with the fact that the resources for scepticism and the resources for perceiving and encoding are in **36** ________ in the brain.",
       "questionBlock": [

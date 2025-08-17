@@ -608,6 +608,14 @@
   cursor: not-allowed;
 }
 
+/* Styling for "No answer given" placeholder text */
+.answer-input:disabled::placeholder,
+.listening-answer-input:disabled::placeholder {
+  color: #721c24;
+  font-weight: 600;
+  font-style: italic;
+}
+
 /* Review mode styling for correct/incorrect answers */
 .answer-correct {
   background-color: #d4edda !important;

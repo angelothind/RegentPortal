@@ -39,39 +39,35 @@
 
 .main-question {
   margin-bottom: 20px;
-  padding: 15px;
-  background-color: #f8f9fa;
-  border-radius: 6px;
-  border-left: 4px solid #25245D;
 }
 
-.main-question p {
-  margin: 0;
+.main-question-title {
   font-size: 1rem;
-  line-height: 1.5;
-  color: #333;
+  font-weight: 600;
+  color: #25245D;
+  margin-bottom: 8px;
+}
+
+.main-question-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #25245D;
+  font-style: italic;
+}
+
+.question-numbers {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #25245D;
   font-weight: 500;
+  margin-bottom: 15px;
+  text-align: left;
 }
 
 .questions-section {
   display: flex;
   flex-direction: column;
   gap: 25px;
-}
-
-.question-item {
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  border-left: 4px solid #25245D;
-}
-
-.question-text {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #25245D;
-  margin-bottom: 15px;
-  font-weight: 500;
 }
 
 .options-container {
@@ -155,23 +151,17 @@
 }
 
 .selection-info {
-  margin-top: 10px;
-  padding: 8px 12px;
-  background-color: #f0f0f0;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  color: #666;
-  font-style: italic;
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  text-align: center;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
   .multiple-choice-two-container {
     margin: 10px;
-    padding: 15px;
-  }
-  
-  .question-item {
     padding: 15px;
   }
   
@@ -201,6 +191,30 @@
 .option-incorrect .option-checkbox:checked {
   background-color: #dc3545 !important;
   border-color: #dc3545 !important;
+}
+
+/* Override purple selection when option is incorrect */
+.option-label.selected.option-incorrect {
+  background-color: #f8d7da !important;
+  border-color: #f5c6cb !important;
+  color: #721c24 !important;
+}
+
+.option-label.selected.option-incorrect .option-checkbox:checked {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+}
+
+/* Override purple selection when option is correct */
+.option-label.selected.option-correct {
+  background-color: #d4edda !important;
+  border-color: #c3e6cb !important;
+  color: #155724 !important;
+}
+
+.option-label.selected.option-correct .option-checkbox:checked {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
 }
 
 /* Disabled input styling */

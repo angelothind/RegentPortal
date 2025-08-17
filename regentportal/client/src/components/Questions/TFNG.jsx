@@ -21,13 +21,6 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
     }
   };
 
-  const getAnswerValue = (questionNumber) => {
-    if (testSubmitted && testResults) {
-      return testResults.answers?.[questionNumber] || '';
-    }
-    return currentAnswers[questionNumber] || '';
-  };
-
   const getAnswerClass = (questionNumber, optionValue) => {
     if (!testSubmitted || !testResults) return '';
     
@@ -47,6 +40,13 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
     }
     
     return '';
+  };
+
+  const getAnswerValue = (questionNumber) => {
+    if (testSubmitted && testResults) {
+      return testResults.answers?.[questionNumber] || '';
+    }
+    return currentAnswers[questionNumber] || '';
   };
 
   if (!template || !template.questionBlock) {

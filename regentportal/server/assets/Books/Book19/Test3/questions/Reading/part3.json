@@ -4,7 +4,7 @@
     {
       "questionType": "multiple-choice",
       "introInstruction": "Choose the correct letter, A, B, C or D.",
-      "formattingInstruction": "Write the correct letter in boxes 27-30 on your answer sheet.",
+              "formattingInstruction": "Write the correct letter in boxes 27-30.",
       "questionBlock": [
         {
           "questionNumber": "27",
@@ -57,7 +57,7 @@
     {
       "questionType": "matching",
       "introInstruction": "Complete each sentence with the correct ending, A-F, below.",
-      "formattingInstruction": "Write the correct letter, A-F, in boxes 31-34 on your answer sheet.",
+              "formattingInstruction": "Write the correct letter, A-F, in boxes 31-34.",
       "opinionsBox": {
         "title": "Sentence Endings",
         "options": [

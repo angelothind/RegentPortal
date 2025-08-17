@@ -21,13 +21,23 @@ const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, 
     const userAnswer = testResults.answers?.[questionNumber];
     const correctAnswer = result.correctAnswer;
     
+    // Only highlight options that are selected by the user
+    if (optionLetter === userAnswer) {
     if (optionLetter === correctAnswer) {
-      return 'option-correct';
-    } else if (optionLetter === userAnswer && !result.isCorrect) {
-      return 'option-incorrect';
+        return 'option-correct'; // User selected correct answer
+      } else {
+        return 'option-incorrect'; // User selected incorrect answer
+      }
     }
     
     return '';
+  };
+
+  const isQuestionUnanswered = (questionNumber) => {
+    if (!testSubmitted || !testResults) return false;
+    
+    const userAnswer = testResults.answers?.[questionNumber];
+    return !userAnswer || userAnswer === '';
   };
 
   const getAnswerValue = (questionNumber) => {
@@ -142,9 +152,15 @@ const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, 
             </div>
             {testSubmitted && testResults && (
               <div className="answer-feedback">
+                {isQuestionUnanswered(question.questionNumber) ? (
+                  <span className="no-answer-given">
+                    No answer given
+                  </span>
+                ) : (
                 <span className="correct-answer">
                   Correct: {String(testResults.correctAnswers?.[question.questionNumber] || '')}
                 </span>
+                )}
               </div>
             )}
           </div>

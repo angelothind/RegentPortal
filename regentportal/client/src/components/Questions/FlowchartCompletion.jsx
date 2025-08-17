@@ -21,11 +21,33 @@ const FlowchartCompletion = ({ template, onAnswerChange, testResults, testSubmit
     return result.isCorrect ? 'answer-correct' : 'answer-incorrect';
   };
 
+  const isQuestionUnanswered = (questionNumber) => {
+    if (!testSubmitted || !testResults) return false;
+    
+    const userAnswer = testResults.answers?.[questionNumber];
+    return !userAnswer || userAnswer === '';
+  };
+
   const getAnswerValue = (questionNumber) => {
     if (testSubmitted && testResults) {
-      return testResults.answers?.[questionNumber] || '';
+      const userAnswer = testResults.answers?.[questionNumber];
+      // If no answer was given, return empty string so we can show placeholder
+      if (!userAnswer || userAnswer === '') {
+        return '';
+      }
+      return userAnswer;
     }
     return currentAnswers[questionNumber] || '';
+  };
+
+  const getInputPlaceholder = (questionNumber) => {
+    if (testSubmitted && testResults) {
+      const userAnswer = testResults.answers?.[questionNumber];
+      if (!userAnswer || userAnswer === '') {
+        return 'No answer given';
+      }
+    }
+    return '';
   };
 
   if (!template || !template.questionBlock) {
@@ -79,7 +101,7 @@ const FlowchartCompletion = ({ template, onAnswerChange, testResults, testSubmit
                           <input
                             type="text"
                             className={`flowchart-answer-input ${getAnswerClass(question.questionNumber)}`}
-                            placeholder=""
+                            placeholder={getInputPlaceholder(question.questionNumber)}
                             value={getAnswerValue(question.questionNumber)}
                             onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value.toUpperCase())}
                             maxLength="1"

@@ -4,7 +4,7 @@
     {
       "questionType": "choose-x-word",
       "introInstruction": "Questions 1-7\nComplete the notes below.",
-      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 1-7 on your answer sheet.",
+              "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 1-7.",
       "notesTitle": "Britain's Industrial Revolution",
       "useBullets": true,
       "questionBlock": [
