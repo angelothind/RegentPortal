@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/UserLayout/TeacherDashboard.css';
+import { processTextFormatting } from '../../utils/textFormatting';
+import FlowchartCompletion from '../Questions/FlowchartCompletion';
 
 const TestContentViewer = ({ selectedTest, testData }) => {
   const [currentPassage, setCurrentPassage] = useState(1);
@@ -132,8 +134,12 @@ const TestContentViewer = ({ selectedTest, testData }) => {
                 <div key={index} className="question-template">
                   <h5>Question Type: {template.questionType}</h5>
                   <div className="template-details">
-                    <p><strong>Instructions:</strong> {template.introInstruction}</p>
-                    <p><strong>Formatting:</strong> {template.formattingInstruction}</p>
+                    <p><strong>Instructions:</strong> <span dangerouslySetInnerHTML={{ 
+                      __html: processTextFormatting(template.introInstruction) 
+                    }} /></p>
+                    <p><strong>Formatting:</strong> <span dangerouslySetInnerHTML={{ 
+                      __html: processTextFormatting(template.formattingInstruction) 
+                    }} /></p>
                     {template.questionBlock && (
                       <div className="question-block">
                         <strong>Questions:</strong>

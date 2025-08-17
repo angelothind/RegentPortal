@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/YSNG.css';
+import { processTextFormatting } from '../../utils/textFormatting';
 
 const YSNG = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'ysng', currentAnswers = {} }) => {
   console.log('🎯 YSNG rendered with template:', template);
@@ -51,8 +52,12 @@ const YSNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
   return (
     <div className="ysng-container">
       <div className="ysng-instructions">
-        <h3 className="main-instruction">{template.introInstruction}</h3>
-        <p className="formatting-instruction">{template.formattingInstruction}</p>
+        <h3 className="main-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.introInstruction) 
+        }} />
+        <p className="formatting-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.formattingInstruction) 
+        }} />
       </div>
       
       <div className="answer-key">

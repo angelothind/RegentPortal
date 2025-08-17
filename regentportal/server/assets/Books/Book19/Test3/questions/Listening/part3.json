@@ -5,8 +5,9 @@
       "questionType": "multiple-choice",
       "introInstruction": "Questions 21-25",
       "formattingInstruction": "Choose the correct letter, A, B or C.",
-      "sectionTitle": "Science experiment for Year 12 students",
+      
       "questionBlock": [
+        {"sectionHeading": "Science experiment for Year 12 students"},
         {
           "questionNumber": 21,
           "question": "How does Clare feel about the students in her Year 12 science class?",
@@ -105,7 +106,7 @@
       ]
     },
     {
-      "questionType": "matching",
+      "questionType": "flowchart-completion",
       "introInstruction": "Complete the flowchart below.",
       "formattingInstruction": "Choose FIVE answers from the box and write the correct letter, A-H, next to Questions 26-30.",
       "sectionTitle": "Science experiment flowchart",
@@ -159,12 +160,12 @@
         },
         {
           "questionNumber": 28,
-          "question": "Feed group B the same, but also sugar contained in **28** ________",
+          "question": "Put each group in a separate cage. Feed group A commercial mouse food. Feed group B the same, but also sugar contained in **28** ________",
           "answer": "E"
         },
         {
           "questionNumber": 29,
-          "question": "Place them in a weighing chamber to prevent **29** ________",
+          "question": "Take measurements using an electronic scale. Place them in a weighing chamber to prevent **29** ________",
           "answer": "B"
         },
         {

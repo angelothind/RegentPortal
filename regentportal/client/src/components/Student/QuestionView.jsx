@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ChooseXWords from '../Questions/ChooseXWords';
 import ChooseFrom from '../Questions/ChooseFrom';
 import TFNG from '../Questions/TFNG';
+import FlowchartCompletion from '../Questions/FlowchartCompletion';
 
 import Matching from '../Questions/Matching';
 import MultipleChoice from '../Questions/MultipleChoice';
@@ -467,7 +468,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
           );
         case 'flowchart-completion':
           return (
-            <ChooseXWords
+            <FlowchartCompletion
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}

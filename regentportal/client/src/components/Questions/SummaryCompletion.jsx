@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/SummaryCompletion.css';
+import { processTextFormatting } from '../../utils/textFormatting';
 
 const SummaryCompletion = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'summary-completion', currentAnswers = {} }) => {
   console.log('🎯 SummaryCompletion rendered with template:', template);
@@ -55,8 +56,12 @@ const SummaryCompletion = ({ template, onAnswerChange, testResults, testSubmitte
   return (
     <div className="summary-completion-container">
       <div className="instructions">
-        <h3 className="main-instruction">{template.introInstruction}</h3>
-        <p className="formatting-instruction">{template.formattingInstruction}</p>
+        <h3 className="main-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.introInstruction) 
+        }} />
+        <p className="formatting-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.formattingInstruction) 
+        }} />
       </div>
       
       <div className="summary-section">

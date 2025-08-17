@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/MultipleChoice.css';
+import { processTextFormatting } from '../../utils/textFormatting';
 
 const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'multiple-choice', currentAnswers = {} }) => {
   console.log('🎯 MultipleChoice rendered with template:', template);
@@ -41,28 +42,67 @@ const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, 
     return <div>No questions available</div>;
   }
 
-  console.log('🎯 MultipleChoice: Rendering', template.questionBlock.length, 'questions');
+  // Filter out section headings and only keep actual questions
+  const actualQuestions = template.questionBlock.filter(q => 
+    q.questionNumber && q.question && q.options && Array.isArray(q.options)
+  );
+
+  if (actualQuestions.length === 0) {
+    console.log('❌ MultipleChoice: No valid questions found after filtering');
+    return <div>No valid questions available</div>;
+  }
+
+  // Validate that all filtered questions have options
+  const questionsWithoutOptions = actualQuestions.filter(q => !q.options || !Array.isArray(q.options));
+  if (questionsWithoutOptions.length > 0) {
+    console.error('❌ MultipleChoice: Questions without options found:', questionsWithoutOptions);
+    return (
+      <div className="error-container">
+        <h3>Error: Invalid question structure</h3>
+        <p>Some questions are missing options. Please check the question data.</p>
+        <details>
+          <summary>Debug info</summary>
+          <pre>{JSON.stringify(template, null, 2)}</pre>
+        </details>
+      </div>
+    );
+  }
+
+  console.log('🎯 MultipleChoice: Rendering', actualQuestions.length, 'questions');
+  console.log('🎯 MultipleChoice: Template structure:', {
+    hasTemplate: !!template,
+    hasQuestionBlock: !!template?.questionBlock,
+    questionBlockLength: template?.questionBlock?.length,
+    actualQuestionsLength: actualQuestions.length,
+    firstQuestion: actualQuestions?.[0],
+    firstQuestionOptions: actualQuestions?.[0]?.options
+  });
 
   return (
     <div className="multiple-choice-container">
-      {template.sectionTitle && (
-        <div className="section-title">
-          <h4>{template.sectionTitle}</h4>
-        </div>
-      )}
-      
       {/* Instructions */}
       {template.introInstruction && (
         <div className="instructions">
-          <h3 className="main-instruction">{template.introInstruction}</h3>
+          <h3 className="main-instruction" dangerouslySetInnerHTML={{ 
+            __html: processTextFormatting(template.introInstruction) 
+          }} />
           {template.formattingInstruction && (
-            <p className="formatting-instruction">{template.formattingInstruction}</p>
+            <p className="formatting-instruction" dangerouslySetInnerHTML={{ 
+              __html: processTextFormatting(template.formattingInstruction) 
+            }} />
           )}
         </div>
       )}
       
+      {/* Section Title - check if first item is a section heading */}
+      {template.questionBlock[0]?.sectionHeading && (
+        <div className="section-title">
+          <h4>{template.questionBlock[0].sectionHeading}</h4>
+        </div>
+      )}
+      
       <div className="questions-section">
-        {template.questionBlock.map((question) => (
+        {actualQuestions.map((question) => (
           <div key={question.questionNumber} className="question-item">
             <div className="question-header">
               <div className="question-text">
@@ -70,26 +110,36 @@ const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, 
               </div>
             </div>
             <div className="question-options">
-              <div className="options-container">
-                {question.options.map((option) => (
-                  <label 
-                    key={option.letter} 
-                    className={`option-label ${getOptionClass(question.questionNumber, option.letter)}`}
-                  >
-                    <input
-                      type="radio"
-                      name={`${componentId}-question-${question.questionNumber}`}
-                      value={option.letter}
-                      checked={getAnswerValue(question.questionNumber) === option.letter}
-                      onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
-                      className="option-radio"
-                      disabled={testSubmitted}
-                    />
-                    <span className="option-letter">{option.letter}.</span>
-                    <span className="option-text">{option.text}</span>
-                  </label>
-                ))}
-              </div>
+              {question.options && Array.isArray(question.options) ? (
+                <div className="options-container">
+                  {question.options.map((option) => (
+                    <label 
+                      key={option.letter} 
+                      className={`option-label ${getOptionClass(question.questionNumber, option.letter)}`}
+                    >
+                      <input
+                        type="radio"
+                        name={`${componentId}-question-${question.questionNumber}`}
+                        value={option.letter}
+                        checked={getAnswerValue(question.questionNumber) === option.letter}
+                        onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
+                        className="option-radio"
+                        disabled={testSubmitted}
+                      />
+                      <span className="option-letter">{option.letter}.</span>
+                      <span className="option-text">{option.text}</span>
+                    </label>
+                  ))}
+                </div>
+              ) : (
+                <div className="error-message">
+                  <p>Error: Question options not found for question {question.questionNumber}</p>
+                  <details>
+                    <summary>Debug info</summary>
+                    <pre>{JSON.stringify(question, null, 2)}</pre>
+                  </details>
+                </div>
+              )}
             </div>
             {testSubmitted && testResults && (
               <div className="answer-feedback">

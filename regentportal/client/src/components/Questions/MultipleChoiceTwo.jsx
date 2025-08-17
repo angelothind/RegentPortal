@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/MultipleChoiceTwo.css';
+import { processTextFormatting } from '../../utils/textFormatting';
 
 const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'multiple-choice-two', currentAnswers = {} }) => {
   console.log('🎯 MultipleChoiceTwo rendered with template:', template);
@@ -57,17 +58,40 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
     return <div>No questions available</div>;
   }
 
-  console.log('🎯 MultipleChoiceTwo: Rendering', template.questionBlock.length, 'questions');
+  // Filter out section headings and only keep actual questions
+  const actualQuestions = template.questionBlock.filter(q => 
+    q.questionNumber && q.question && q.options && Array.isArray(q.options)
+  );
+
+  if (actualQuestions.length === 0) {
+    console.log('❌ MultipleChoiceTwo: No valid questions found after filtering');
+    return <div>No valid questions available</div>;
+  }
+
+  console.log('🎯 MultipleChoiceTwo: Rendering', actualQuestions.length, 'questions');
 
   return (
     <div className="multiple-choice-two-container">
       <div className="instructions">
-        <h3 className="main-instruction">{template.introInstruction}</h3>
-        <p className="formatting-instruction">{template.formattingInstruction}</p>
+        <h3 className="main-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.introInstruction) 
+        }} />
+        <p className="formatting-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.formattingInstruction) 
+        }} />
       </div>
       
+      {/* Section Title - check if first item is a section heading */}
+      {template.questionBlock[0]?.sectionHeading && (
+        <div className="section-title">
+          <h4>{template.questionBlock[0].sectionHeading}</h4>
+        </div>
+      )}
+      
+
+      
       <div className="questions-section">
-        {template.questionBlock.map((question) => {
+        {actualQuestions.map((question) => {
           const currentAnswers = getAnswerValue(question.questionNumber);
           return (
             <div key={question.questionNumber} className="question-item">

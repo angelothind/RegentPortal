@@ -126,7 +126,7 @@
     {
       "questionType": "matching",
       "introInstruction": "Questions 25-30",
-      "formattingInstruction": "What is the students' opinion about each of the following food trends? Choose SIX answers from the box and write the correct letter, A-H, next to Questions 25-30.",
+      "formattingInstruction": "What is the students' opinion about each of the following food trends? Choose SIX answers from the box and write the correct letter, A-H.",
       "opinionsBox": {
         "title": "Opinions",
         "options": [

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/TFNG.css';
+import { processTextFormatting } from '../../utils/textFormatting';
 
 const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'tfng', currentAnswers = {} }) => {
   console.log('🎯 TFNG rendered with template:', template);
@@ -71,8 +72,12 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
   return (
     <div className="tfng-container">
       <div className="tfng-instructions">
-        <h3 className="main-instruction">{template.introInstruction}</h3>
-        <p className="formatting-instruction">{template.formattingInstruction}</p>
+        <h3 className="main-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.introInstruction) 
+        }} />
+        <p className="formatting-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.formattingInstruction) 
+        }} />
       </div>
       
       <div className="answer-key">

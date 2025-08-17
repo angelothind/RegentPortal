@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/Matching.css';
+import { processTextFormatting } from '../../utils/textFormatting';
 
 const Matching = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'matching', currentAnswers = {} }) => {
   console.log('🎯 Matching rendered with template:', template);
@@ -32,14 +33,35 @@ const Matching = ({ template, onAnswerChange, testResults, testSubmitted, compon
     return <div>No questions available</div>;
   }
 
-  console.log('🎯 Matching: Rendering', template.questionBlock.length, 'questions');
+  // Filter out section headings and only keep actual questions
+  const actualQuestions = template.questionBlock.filter(q => 
+    q.questionNumber && q.question
+  );
+
+  if (actualQuestions.length === 0) {
+    console.log('❌ Matching: No valid questions found after filtering');
+    return <div>No valid questions available</div>;
+  }
+
+  console.log('🎯 Matching: Rendering', actualQuestions.length, 'questions');
 
   return (
     <div className="matching-container">
       <div className="instructions">
-        <h3 className="main-instruction">{template.introInstruction}</h3>
-        <p className="formatting-instruction">{template.formattingInstruction}</p>
+        <h3 className="main-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.introInstruction) 
+        }} />
+        <p className="formatting-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.formattingInstruction) 
+        }} />
       </div>
+      
+      {/* Section Title - check if first item is a section heading */}
+      {template.questionBlock[0]?.sectionHeading && (
+        <div className="section-title">
+          <h4>{template.questionBlock[0].sectionHeading}</h4>
+        </div>
+      )}
       
       {template.opinionsBox && (
         <div className="opinions-box">
@@ -56,7 +78,7 @@ const Matching = ({ template, onAnswerChange, testResults, testSubmitted, compon
       )}
       
       <div className="questions-section">
-        {template.questionBlock.map((question) => (
+        {actualQuestions.map((question) => (
           <div key={question.questionNumber} className="question-item">
             <div className="question-text">
               <strong>{question.questionNumber}.</strong> {question.question}

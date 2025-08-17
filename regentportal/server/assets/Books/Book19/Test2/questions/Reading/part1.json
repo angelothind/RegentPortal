@@ -75,6 +75,50 @@
           "answer": "sanitation"
         }
       ]
+    },
+    {
+      "questionType": "TFNG",
+      "subType": "TFNG",
+      "introInstruction": "Questions 8-13",
+      "formattingInstruction": "Do the following statements agree with the information given in Reading Passage 1?",
+      "subFormattingInstruction": "In boxes 8-13 on your answer sheet, write",
+      "answerKey": {
+        "TRUE": "if the statement agrees with the information",
+        "FALSE": "if the statement contradicts the information",
+        "NOT GIVEN": "if there is no information on this"
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 8,
+          "question": "Britain's canal network grew rapidly so that more goods could be transported around the country.",
+          "answer": "NOT GIVEN"
+        },
+        {
+          "questionNumber": 9,
+          "question": "Costs in the iron industry rose when the technique of smelting iron ore with coke was introduced.",
+          "answer": "FALSE"
+        },
+        {
+          "questionNumber": 10,
+          "question": "Samuel Morse's communication system was more reliable than that developed by William Cooke and Charles Wheatstone.",
+          "answer": "NOT GIVEN"
+        },
+        {
+          "questionNumber": 11,
+          "question": "The economic benefits of industrialisation were limited to certain sectors of society.",
+          "answer": "NOT GIVEN"
+        },
+        {
+          "questionNumber": 12,
+          "question": "Some skilled weavers believed that the introduction of the new textile machines would lead to job losses.",
+          "answer": "TRUE"
+        },
+        {
+          "questionNumber": 13,
+          "question": "There was some sympathy among local people for the Luddites who were arrested near Huddersfield.",
+          "answer": "NOT GIVEN"
+        }
+      ]
     }
   ]
 } 

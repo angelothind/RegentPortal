@@ -90,7 +90,7 @@
 
 .listening-layout .questions-section {
   height: 70%;
-  background-color: #fff;
+  background-color: white;
   overflow-y: auto;
   padding: 20px;
 }
@@ -120,6 +120,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  background-color: white;
 }
 
 .listening-question-view-container .question-header {
@@ -145,6 +146,7 @@
   flex: 1;
   overflow-y: auto;
   padding: 20px;
+  background-color: white;
 }
 
 .reading-test-container {
@@ -385,6 +387,7 @@
   flex: 1;
   overflow-y: auto;
   padding: 10px;
+  background-color: white;
 }
 
 /* Question component spacing */

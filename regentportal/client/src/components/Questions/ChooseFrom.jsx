@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/ChooseFrom.css';
+import { processTextFormatting } from '../../utils/textFormatting';
 
 const ChooseFrom = ({ template, onAnswerChange, testResults, testSubmitted, testType, componentId = 'choose-from', currentAnswers = {} }) => {
   console.log('🎯 ChooseFrom rendered with template:', template);
@@ -46,8 +47,12 @@ const ChooseFrom = ({ template, onAnswerChange, testResults, testSubmitted, test
   return (
     <div className="choose-from-container">
       <div className="instructions">
-        <h3 className="main-instruction">{template.introInstruction}</h3>
-        <p className="formatting-instruction">{template.formattingInstruction}</p>
+        <h3 className="main-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.introInstruction) 
+        }} />
+        <p className="formatting-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.formattingInstruction) 
+        }} />
       </div>
       
       {template.mainQuestion && (

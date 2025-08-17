@@ -5,6 +5,7 @@ import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
 import Matching from '../Questions/Matching';
 import MapLabeling from '../Questions/MapLabeling';
 import TableCompletion from '../Questions/TableCompletion';
+import FlowchartCompletion from '../Questions/FlowchartCompletion';
 
 const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null }) => {
   console.log('🔍 ListeningQuestionView received user:', user);
@@ -440,7 +441,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
           );
         case 'flowchart-completion':
           return (
-            <ChooseXWords
+            <FlowchartCompletion
               key={componentId}
               template={template}
               onAnswerChange={handleAnswerChange}

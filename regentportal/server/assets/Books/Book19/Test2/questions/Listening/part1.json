@@ -2,21 +2,89 @@
   "partNumber": 1,
   "templates": [
     {
-      "questionType": "choose-x-word",
+      "questionType": "table-completion",
       "introInstruction": "Complete the form below.",
       "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
-      "notesTitle": "Guitar Group",
-      "questionBlock": [
+      "tableTitle": "Guitar Group",
+      "tableStructure": {
+        "columns": 2,
+        "rows": 5,
+        "headers": ["Information", "Details"]
+      },
+      "tableData": [
         {
-          "questionNumber": "1-6",
-          "text": "Coordinator: Gary **1** ________. \n Level: **2** ________. Place: the **3** ________. **4** ________ Street. First floor, Room T347. \n Time: Thursday morning at **5** ________. \n Recommended website:      'The perfect **6** ________'.",
-          "blanks": [
-            { "number": "1", "answer": "Smith" },
-            { "number": "2", "answer": "intermediate" },
-            { "number": "3", "answer": "community" },
-            { "number": "4", "answer": "Main" },
-            { "number": "5", "answer": "10" },
-            { "number": "6", "answer": "guitar" }
+          "row": 1,
+          "cells": [
+            {
+              "content": "Coordinator:",
+              "type": "text"
+            },
+            {
+              "content": "Gary **1** ________",
+              "type": "question",
+              "questionNumber": 1,
+              "answer": "Smith"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            {
+              "content": "Level:",
+              "type": "text"
+            },
+            {
+              "content": "**2** ________",
+              "type": "question",
+              "questionNumber": 2,
+              "answer": "intermediate"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "cells": [
+            {
+              "content": "Place:",
+              "type": "text"
+            },
+            {
+              "content": "the **3** ________ , **4** ________ Street, First floor, Room T347",
+              "type": "question",
+              "questionNumber": "3-4",
+              "answer": ["community", "Main"]
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "cells": [
+            {
+              "content": "Time:",
+              "type": "text"
+            },
+            {
+              "content": "Thursday morning at **5** ________",
+              "type": "question",
+              "questionNumber": 5,
+              "answer": "10"
+            }
+          ]
+        },
+        {
+          "row": 5,
+          "cells": [
+            {
+              "content": "Recommended website:",
+              "type": "text"
+            },
+            {
+              "content": "'The perfect **6** ________'",
+              "type": "question",
+              "questionNumber": 6,
+              "answer": "guitar"
+            }
           ]
         }
       ]

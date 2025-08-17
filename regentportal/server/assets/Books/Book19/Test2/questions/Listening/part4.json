@@ -6,6 +6,7 @@
       "introInstruction": "Questions 31-40",
       "formattingInstruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
       "notesTitle": "Tardigrades",
+      "useBullets": true,
       "questionBlock": [
         {
           "sectionHeading": "Tardigrades (General Information)"
@@ -17,7 +18,8 @@
         {
           "questionNumber": 31,
           "question": "also known as water 'bears' (due to how they **31** ________) and 'moss piglets'",
-          "answer": "move"
+          "answer": "move",
+          "bulletLevel": 0
         },
         {
           "sectionHeading": "Physical appearance"
@@ -25,12 +27,14 @@
         {
           "questionNumber": 32,
           "question": "a **32** ________ round body and four pairs of legs",
-          "answer": "short"
+          "answer": "short",
+          "bulletLevel": 0
         },
         {
           "questionNumber": 33,
           "question": "claws or **33** ________ for gripping",
-          "answer": "discs"
+          "answer": "discs",
+          "bulletLevel": 0
         },
         {
           "descriptiveText": "absence of respiratory organs",
@@ -39,12 +43,14 @@
         {
           "questionNumber": 34,
           "question": "body filled with a liquid that carries both **34** ________ and blood",
-          "answer": "oxygen"
+          "answer": "oxygen",
+          "bulletLevel": 0
         },
         {
           "questionNumber": 35,
           "question": "mouth shaped like a **35** ________ with teeth called stylets",
-          "answer": "tube"
+          "answer": "tube",
+          "bulletLevel": 0
         },
         {
           "sectionHeading": "Habitat"
@@ -56,7 +62,8 @@
         {
           "questionNumber": 36,
           "question": "very resilient and can exist in very low or high **36** ________",
-          "answer": "temperatures"
+          "answer": "temperatures",
+          "bulletLevel": 0
         },
         {
           "sectionHeading": "Cryptobiosis"
@@ -72,12 +79,14 @@
         {
           "questionNumber": 37,
           "question": "A type of **37** ________ ensures their DNA is not damaged.",
-          "answer": "protein"
+          "answer": "protein",
+          "bulletLevel": 0
         },
         {
           "questionNumber": 38,
           "question": "Research is underway to find out how many days they can stay alive in **38** ________",
-          "answer": "space"
+          "answer": "space",
+          "bulletLevel": 0
         },
         {
           "sectionHeading": "Feeding"
@@ -85,7 +94,8 @@
         {
           "questionNumber": 39,
           "question": "consume liquids, e.g., those found in moss or **39** ________",
-          "answer": "seaweed"
+          "answer": "seaweed",
+          "bulletLevel": 0
         },
         {
           "descriptiveText": "may eat other tardigrades",
@@ -97,7 +107,8 @@
         {
           "questionNumber": 40,
           "question": "They are not considered to be **40** ________",
-          "answer": "endangered"
+          "answer": "endangered",
+          "bulletLevel": 0
         }
       ]
     }

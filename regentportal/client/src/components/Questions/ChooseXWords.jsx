@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/ChooseXWords.css';
+import { processTextFormatting } from '../../utils/textFormatting';
 
 const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, testType, componentId = 'choose-x-words', currentAnswers = {} }) => {
   console.log('🎯 ChooseXWords rendered with template:', template);
@@ -116,14 +117,18 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
             color: '#333',
             fontSize: '1rem',
             fontWeight: '600'
-          }}>{template.introInstruction}</h3>
+          }} dangerouslySetInnerHTML={{ 
+            __html: processTextFormatting(template.introInstruction) 
+          }} />
           {template.formattingInstruction && (
             <p className="formatting-instruction" style={{
               margin: '0',
               color: '#666',
               fontSize: '0.9rem',
               fontStyle: 'italic'
-            }}>{template.formattingInstruction}</p>
+            }} dangerouslySetInnerHTML={{ 
+              __html: processTextFormatting(template.formattingInstruction) 
+            }} />
           )}
         </div>
         
@@ -139,7 +144,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
           </h4>
         )}
         
-                <div className="listening-notes-content" style={{
+        <div className="listening-notes-content" style={{
           display: 'flex',
           flexDirection: 'column',
           gap: '12px'
@@ -279,7 +284,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                               transition: 'border-color 0.2s ease'
                             }}
                             placeholder="Answer"
-                            value={getAnswerValue(item.questionNumber)} 
+                            value={getAnswerValue(item.questionNumber)}
                             onChange={(e) => {
                               console.log(`🎯 Old structure input change for question ${item.questionNumber}`);
                               console.log(`🎯 Input value: ${e.target.value}`);
@@ -320,8 +325,12 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
   return (
     <div className={`choose-x-words-container ${testType === 'Reading' ? 'reading-test' : ''}`}>
       <div className="instructions">
-        <h3 className="main-instruction">{template.introInstruction}</h3>
-        <p className="formatting-instruction">{template.formattingInstruction}</p>
+        <h3 className="main-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.introInstruction) 
+        }} />
+        <p className="formatting-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.formattingInstruction) 
+        }} />
       </div>
       
       <div className="notes-container">

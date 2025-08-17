@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/Questions/TableCompletion.css';
+import { processTextFormatting } from '../../utils/textFormatting';
 
 const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted, testType, componentId = 'table-completion', currentAnswers = {} }) => {
   console.log('🎯 TableCompletion rendered with template:', template);
@@ -10,6 +11,12 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
   const stripMarkdownBold = (text) => {
     if (!text || typeof text !== 'string') return '';
     return text.replace(/\*\*(\d+)\*\*/g, '<strong>($1)</strong>');
+  };
+
+  // Function to convert \n to <br> tags for line breaks
+  const processNewlines = (text) => {
+    if (!text || typeof text !== 'string') return '';
+    return text.replace(/\n/g, '<br>');
   };
 
   const handleAnswerChange = (questionNumber, value) => {
@@ -69,14 +76,18 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
             color: '#333',
             fontSize: '1rem',
             fontWeight: '600'
-          }}>{template.introInstruction}</h3>
+          }} dangerouslySetInnerHTML={{ 
+            __html: processTextFormatting(template.introInstruction) 
+          }} />
           {template.formattingInstruction && (
             <p className="formatting-instruction" style={{
               margin: '0',
               color: '#666',
               fontSize: '0.9rem',
               fontStyle: 'italic'
-            }}>{template.formattingInstruction}</p>
+            }} dangerouslySetInnerHTML={{ 
+              __html: processTextFormatting(template.formattingInstruction) 
+            }} />
           )}
         </div>
         
@@ -109,7 +120,7 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                     <td key={cellIndex} className="table-cell">
                       {cell.type === 'question' ? (
                         <div className="question-cell">
-                          {stripMarkdownBold(cell.content).split('________').map((part, partIndex, array) => (
+                          {processNewlines(stripMarkdownBold(cell.content)).split('________').map((part, partIndex, array) => (
                             <span key={partIndex}>
                               <span dangerouslySetInnerHTML={{ __html: part }} />
                               {partIndex < array.length - 1 && (
@@ -166,8 +177,12 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
   return (
     <div className={`table-completion-container ${testType === 'Reading' ? 'reading-test' : ''}`}>
       <div className="instructions">
-        <h3 className="main-instruction">{template.introInstruction}</h3>
-        <p className="formatting-instruction">{template.formattingInstruction}</p>
+        <h3 className="main-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.introInstruction) 
+        }} />
+        <p className="formatting-instruction" dangerouslySetInnerHTML={{ 
+          __html: processTextFormatting(template.formattingInstruction) 
+        }} />
       </div>
       
       <div className="table-container">
@@ -192,7 +207,7 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                     <td key={cellIndex} className="table-cell">
                       {cell.type === 'question' ? (
                         <div className="question-cell">
-                          {stripMarkdownBold(cell.content).split('________').map((part, partIndex, array) => (
+                          {processNewlines(stripMarkdownBold(cell.content)).split('________').map((part, partIndex, array) => (
                             <span key={partIndex}>
                               <span dangerouslySetInnerHTML={{ __html: part }} />
                               {partIndex < array.length - 1 && (

@@ -4,7 +4,7 @@
     {
       "questionType": "matching",
       "introInstruction": "Questions 14-18",
-      "formattingInstruction": "Reading Passage 2 has six paragraphs, A-F. Which paragraph contains the following information? Write the correct letter, A-F, in boxes 14-18 on your answer sheet. NB You may use any letter more than once.",
+      "formattingInstruction": "Reading Passage 2 has six paragraphs, A-F. Which paragraph contains the following information? Write the correct letter, A-F, in boxes 14-18 on your answer sheet. \n NB You may use any letter more than once.",
       "questionBlock": [
         {
           "questionNumber": 14,
@@ -63,11 +63,11 @@
     {
       "questionType": "multiple-choice-two",
       "introInstruction": "Questions 23 and 24",
-      "formattingInstruction": "Choose TWO letters, A-E. Write the correct letters in boxes 23 and 24 on your answer sheet.",
-      "mainQuestion": "Which TWO facts about Emma Raducanu's withdrawal from the Wimbledon tournament are mentioned in the text?",
+      "formattingInstruction": "Which TWO facts about Emma Raducanu's withdrawal from the Wimbledon tournament are mentioned in the text? Choose TWO letters, A-E. Write the correct letters in boxes 23 and 24 on your answer sheet.",
       "questionBlock": [
         {
           "questionNumber": 23,
+          "question": "Which TWO facts about Emma Raducanu's withdrawal from the Wimbledon tournament are mentioned in the text?",
           "options": [
             { "letter": "A", "text": "the stage at which she dropped out of the tournament" },
             { "letter": "B", "text": "symptoms of her performance stress at the tournament" },
@@ -79,6 +79,7 @@
         },
         {
           "questionNumber": 24,
+          "question": "Which TWO facts about Emma Raducanu's withdrawal from the Wimbledon tournament are mentioned in the text?",
           "options": [
             { "letter": "A", "text": "the stage at which she dropped out of the tournament" },
             { "letter": "B", "text": "symptoms of her performance stress at the tournament" },
@@ -93,11 +94,11 @@
     {
       "questionType": "multiple-choice-two",
       "introInstruction": "Questions 25 and 26",
-      "formattingInstruction": "Choose TWO letters, A-E. Write the correct letters in boxes 25 and 26 on your answer sheet.",
-      "mainQuestion": "Which TWO facts about anxiety are mentioned in Paragraph E of the text?",
+      "formattingInstruction": "Which TWO facts about anxiety are mentioned in Paragraph E of the text? Choose TWO letters, A-E. Write the correct letters in boxes 25 and 26 on your answer sheet.",
       "questionBlock": [
         {
           "questionNumber": 25,
+          "question": "Which TWO facts about anxiety are mentioned in Paragraph E of the text?",
           "options": [
             { "letter": "A", "text": "the factors which determine how severe it may be" },
             { "letter": "B", "text": "how long it takes for its effects to become apparent" },
@@ -109,6 +110,7 @@
         },
         {
           "questionNumber": 26,
+          "question": "Which TWO facts about anxiety are mentioned in Paragraph E of the text?",
           "options": [
             { "letter": "A", "text": "the factors which determine how severe it may be" },
             { "letter": "B", "text": "how long it takes for its effects to become apparent" },

@@ -4,11 +4,7 @@
   width: 100%;
 }
 
-<<<<<<< HEAD
-.test-manager-container {
-=======
 .main-content-area {
->>>>>>> student-teacher-testanalysis
   flex: 1;
   margin-left: 234px; /* Account for sidebar width */
   height: 100vh;
@@ -17,8 +13,7 @@
 }
 
 /* When sidebar is shrunk */
-<<<<<<< HEAD
-.sidebar.shrunk ~ .main-content-area .test-manager-container {
+.sidebar.shrunk ~ .main-content-area .main-content-area {
   margin-left: 60px;
 }
 
@@ -399,7 +394,7 @@
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .test-manager-container {
+  .main-content-area {
     margin-left: 0;
   }
   
@@ -419,15 +414,4 @@
     width: 100%;
     justify-content: center;
   }
-=======
-.sidebar.shrunk ~ .main-content-area {
-  margin-left: 60px;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .main-content-area {
-    margin-left: 0;
-  }
->>>>>>> student-teacher-testanalysis
 } 
