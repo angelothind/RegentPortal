@@ -24,19 +24,7 @@ const ListeningTest = ({ testId, testData }) => {
 
   return (
     <div className="listening-test-container">
-      {/* Audio Section - Full height since questions are in separate panel */}
-      <div className="audio-section">
-        {audioSources.length > 0 ? (
-          <AudioPlayer 
-            audioSrc={`/assets/${audioSources[0].contentPath}`}
-            title="Listening Test Audio"
-          />
-        ) : (
-          <div className="no-audio">
-            <p>No audio sources available for this test.</p>
-          </div>
-        )}
-      </div>
+      {/* Audio section completely removed - now integrated into question header */}
     </div>
   );
 };

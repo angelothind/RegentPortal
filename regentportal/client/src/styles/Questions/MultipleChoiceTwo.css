@@ -55,6 +55,37 @@
   font-style: italic;
 }
 
+.individual-question {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  border-left: 3px solid #25245D;
+}
+
+.individual-question .question-text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #333;
+  margin: 0;
+}
+
+.question-text-display {
+  margin-bottom: 15px;
+  padding: 12px 15px;
+  background-color: #f0f8ff;
+  border-radius: 6px;
+  border-left: 4px solid #25245D;
+}
+
+.question-text-content {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #25245D;
+  font-weight: 500;
+  margin: 0;
+}
+
 .question-numbers {
   font-size: 0.95rem;
   line-height: 1.6;

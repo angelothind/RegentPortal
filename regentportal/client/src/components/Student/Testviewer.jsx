@@ -140,6 +140,8 @@ const TestViewer = ({ selectedTest, user }) => {
 
   console.log('🎯 TestViewer render - selectedTest:', selectedTest);
   console.log('🎯 TestViewer render - selectedTest.type:', selectedTest?.type);
+  console.log('🎯 TestViewer render - testData:', testData);
+  console.log('🎯 TestViewer render - testData.sources:', testData?.sources);
   
   const handleResize = (newPassageWidth, newQuestionWidth) => {
     setPassageWidth(newPassageWidth);
@@ -181,11 +183,16 @@ const TestViewer = ({ selectedTest, user }) => {
       )}
       {selectedTest.type === 'Listening' && (
         <div className="listening-layout">
-          <div className="audio-section">
-            <ListeningTest testId={selectedTest.testId} testData={testData} />
-          </div>
           <div className="questions-section">
-            <ListeningQuestionView selectedTest={selectedTest} user={user} />
+            <ListeningQuestionView 
+              selectedTest={{
+                ...selectedTest,
+                audioSrc: testData.sources && testData.sources.length > 0 
+                  ? `/assets/${testData.sources[0].contentPath}` 
+                  : null
+              }} 
+              user={user} 
+            />
           </div>
         </div>
       )}

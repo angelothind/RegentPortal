@@ -7,24 +7,12 @@
   background-color: #f9f9f9;
 }
 
-/* Audio Section: Top 15% of the screen (reduced from 25%) */
-.audio-section {
-  height: 15%;
-  min-height: 150px;
-  max-height: 200px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #fff;
-  border-bottom: 1px solid #e0e0e0;
-  padding: 15px;
-}
+/* Audio section completely removed - no space allocated */
 
-/* Questions Section: Bottom 85% of the screen (increased from 75%) */
+/* Questions Section: Full height since audio section is completely removed */
 .questions-section {
   flex: 1;
-  height: 85%;
+  height: 100%;
   width: 100%;
   background-color: #fff;
   overflow-y: auto;
@@ -124,11 +112,7 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .audio-section {
-    min-height: 120px;
-    max-height: 180px;
-    padding: 10px;
-  }
+  /* Audio section removed - no responsive rules needed */
   
   .questions-content {
     padding: 20px;

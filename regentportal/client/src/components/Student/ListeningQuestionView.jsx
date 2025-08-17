@@ -6,6 +6,7 @@ import Matching from '../Questions/Matching';
 import MapLabeling from '../Questions/MapLabeling';
 import TableCompletion from '../Questions/TableCompletion';
 import FlowchartCompletion from '../Questions/FlowchartCompletion';
+import CompactAudioPlayer from './CompactAudioPlayer';
 
 const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null }) => {
   console.log('🔍 ListeningQuestionView received user:', user);
@@ -288,6 +289,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
 
   console.log('🔍 ListeningQuestionView render state:', {
     selectedTest,
+    audioSrc: selectedTest?.audioSrc,
     loading,
     error,
     questionData: questionData ? 'has data' : 'no data',
@@ -482,7 +484,15 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
         <div className="question-content">
           <div className="question-header">
             <div className="header-left">
-              <h3>Questions</h3>
+              <div className="header-top-row">
+                {selectedTest && selectedTest.audioSrc ? (
+                  <CompactAudioPlayer 
+                    audioSrc={selectedTest.audioSrc}
+                    title="Listening Audio"
+                  />
+                ) : null}
+                <h3>Questions</h3>
+              </div>
             </div>
             <div className="part-toggle">
               <button 

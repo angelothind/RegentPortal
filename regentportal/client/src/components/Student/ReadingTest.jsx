@@ -83,12 +83,6 @@ const ReadingTest = ({ testId, testData, testStarted, onStartTest, onPassageChan
     <div className="reading-test-container">
       <div className="passage-section">
         <div className="passage-header">
-          <div className="passage-title-section">
-            <h2>{passageContent.title}</h2>
-            {passageContent.hasSubtitle && passageContent.subtitle && (
-              <p className="passage-subtitle">{passageContent.subtitle}</p>
-            )}
-          </div>
           <div className="passage-controls">
             {testData.sources.map((_, index) => (
               <button 
@@ -103,6 +97,12 @@ const ReadingTest = ({ testId, testData, testStarted, onStartTest, onPassageChan
         </div>
         
         <div className="passage-content">
+          <div className="passage-title-section">
+            <h2>{passageContent.title}</h2>
+            {passageContent.hasSubtitle && passageContent.subtitle && (
+              <p className="passage-subtitle">{passageContent.subtitle}</p>
+            )}
+          </div>
           {passageContent.paragraphs.map((paragraph, index) => (
             <div key={index} className="paragraph">
               {paragraph.label && <strong>{paragraph.label}</strong>}

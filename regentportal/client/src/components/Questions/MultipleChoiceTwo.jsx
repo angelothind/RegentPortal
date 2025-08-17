@@ -127,7 +127,7 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
       </div>
       
       <div className="questions-section">
-        {/* Show main question text directly for all test types */}
+        {/* Show main question text for all test types */}
         {template.mainQuestion && (
           <div className="main-question">
             <p className="main-question-text" dangerouslySetInnerHTML={{ 
@@ -136,13 +136,17 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
           </div>
         )}
         
-        {/* Show question numbers for the group */}
-              <div className="question-numbers">
-          <strong>Questions {questionGroup.questionNumbers.join(' & ')}.</strong>
-              </div>
-              
-              {/* Render options only once */}
-              <div className="options-container">
+        {/* Show the actual question text from the first question in the block */}
+        {template.questionBlock && template.questionBlock[0] && template.questionBlock[0].question && (
+          <div className="question-text-display">
+            <p className="question-text-content" dangerouslySetInnerHTML={{ 
+              __html: processTextFormatting(template.questionBlock[0].question) 
+            }} />
+          </div>
+        )}
+        
+        {/* Render options only once */}
+        <div className="options-container">
           {questionGroup.options.map((option) => {
             // Check if this option is selected in any of the questions
             const isSelectedInAnyQuestion = questionGroup.questionNumbers.some(questionNumber => {
