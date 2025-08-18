@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ChooseXWords from '../Questions/ChooseXWords';
 import MultipleChoice from '../Questions/MultipleChoice';
 import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
@@ -6,7 +6,6 @@ import Matching from '../Questions/Matching';
 import MapLabeling from '../Questions/MapLabeling';
 import TableCompletion from '../Questions/TableCompletion';
 import FlowchartCompletion from '../Questions/FlowchartCompletion';
-import CompactAudioPlayer from './CompactAudioPlayer';
 
 const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null }) => {
   console.log('🔍 ListeningQuestionView received user:', user);
@@ -19,6 +18,12 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
   const [testStarted, setTestStarted] = useState(isTeacherMode);
   const [testSubmitted, setTestSubmitted] = useState(false);
   const [testResults, setTestResults] = useState(null);
+  
+  // Audio player state - lifted up to persist across part changes
+  const [audioIsPlaying, setAudioIsPlaying] = useState(false);
+  const [audioCurrentTime, setAudioCurrentTime] = useState(0);
+  const [audioDuration, setAudioDuration] = useState(0);
+  const audioRef = useRef(null);
   
   // Use external test results if provided (for teacher view)
   const finalTestResults = externalTestResults || testResults;
@@ -106,6 +111,50 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
   const handleStartTest = () => {
     setTestStarted(true);
     console.log('🚀 Test started');
+  };
+
+  // Audio player event handlers
+  const handleAudioPlayPause = () => {
+    if (audioRef.current) {
+      if (audioIsPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setAudioIsPlaying(!audioIsPlaying);
+    }
+  };
+
+  const handleAudioTimeUpdate = () => {
+    if (audioRef.current) {
+      setAudioCurrentTime(audioRef.current.currentTime);
+    }
+  };
+
+  const handleAudioLoadedMetadata = () => {
+    if (audioRef.current) {
+      setAudioDuration(audioRef.current.duration);
+    }
+  };
+
+  const handleAudioEnded = () => {
+    setAudioIsPlaying(false);
+  };
+
+  const handleAudioSeek = (e) => {
+    if (audioRef.current) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const percent = (e.clientX - rect.left) / rect.width;
+      const newTime = percent * audioDuration;
+      audioRef.current.currentTime = newTime;
+      setAudioCurrentTime(newTime);
+    }
+  };
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
   const checkAnswers = (userAnswers, correctAnswers) => {
@@ -283,8 +332,16 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
   }, [selectedTest, currentPart]);
 
   const handlePartChange = (partNumber) => {
+    // Prevent unnecessary re-renders if user is already on this part
+    if (currentPart === partNumber) {
+      console.log('🔄 Already on Part', partNumber, '- no change needed');
+      return;
+    }
+    
+    console.log('🔄 Switching from Part', currentPart, 'to Part', partNumber);
     setCurrentPart(partNumber);
     setQuestionData(null); // Clear current data when switching parts
+    // Note: Audio player state is preserved as it's in the header and doesn't depend on question data
   };
 
   console.log('🔍 ListeningQuestionView render state:', {
@@ -303,37 +360,26 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     return <div className="question-area-placeholder">Please select a test to view questions</div>;
   }
 
-  // Safety check - if we have no question data and we're not loading, show error
-  if (!questionData && !loading && selectedTest) {
-    console.log('❌ No question data available and not loading');
-    return (
-      <div className="listening-question-view-container">
-        <div className="error-message">
-          <h3>No Questions Available</h3>
-          <p>Unable to load questions for this test. Please try selecting a different test or refreshing the page.</p>
-          <button onClick={() => window.location.reload()}>Refresh Page</button>
-        </div>
-      </div>
-    );
-  }
-
-  if (loading) {
-    console.log('⏳ Loading questions...');
-    return <div className="question-loading">Loading questions...</div>;
-  }
-
-  if (error) {
-    console.log('❌ Error loading questions:', error);
-    return <div className="question-error">Error: {error}</div>;
-  }
-
-  if (!questionData || !questionData.questionData) {
-    console.log('❌ No question data available');
-    return <div className="question-error">No question data available</div>;
-  }
-
   // Render the appropriate question component based on the template type
   const renderQuestionComponent = () => {
+    // Handle loading state
+    if (loading) {
+      console.log('⏳ Loading questions...');
+      return <div className="question-loading">Loading questions...</div>;
+    }
+
+    // Handle error state
+    if (error) {
+      console.log('❌ Error loading questions:', error);
+      return <div className="question-error">Error: {error}</div>;
+    }
+
+    // Handle no question data state
+    if (!questionData || !questionData.questionData) {
+      console.log('⏳ No question data available yet');
+      return <div className="question-loading">Loading questions for Part {currentPart}...</div>;
+    }
+
     const { templates } = questionData.questionData;
     
     console.log('🎯 Rendering templates:', templates);
@@ -486,10 +532,39 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
             <div className="header-left">
               <div className="header-top-row">
                 {selectedTest && selectedTest.audioSrc ? (
-                  <CompactAudioPlayer 
-                    audioSrc={selectedTest.audioSrc}
-                    title="Listening Audio"
-                  />
+                  <div className="compact-audio-player">
+                    <div className="audio-info">
+                      <span className="audio-title">Listening Audio</span>
+                      <span className="audio-time">{formatTime(audioCurrentTime)} / {formatTime(audioDuration)}</span>
+                    </div>
+                    
+                    <div className="audio-controls">
+                      <button 
+                        className={`play-pause-btn ${audioIsPlaying ? 'playing' : ''}`}
+                        onClick={handleAudioPlayPause}
+                        title={audioIsPlaying ? 'Pause' : 'Play'}
+                      >
+                        {audioIsPlaying ? (
+                          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zm4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
+                          </svg>
+                        ) : (
+                          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                          </svg>
+                        )}
+                      </button>
+                      
+                      <div className="progress-container">
+                        <div className="progress-bar" onClick={handleAudioSeek}>
+                          <div 
+                            className="progress-fill" 
+                            style={{ width: `${(audioCurrentTime / audioDuration) * 100}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 ) : null}
                 <h3>Questions</h3>
               </div>
@@ -591,6 +666,17 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
               </button>
             </div>
           </div>
+        )}
+        
+        {/* Hidden audio element - state managed by parent component */}
+        {selectedTest && selectedTest.audioSrc && (
+          <audio
+            ref={audioRef}
+            src={selectedTest.audioSrc}
+            onTimeUpdate={handleAudioTimeUpdate}
+            onLoadedMetadata={handleAudioLoadedMetadata}
+            onEnded={handleAudioEnded}
+          />
         )}
       </div>
     );

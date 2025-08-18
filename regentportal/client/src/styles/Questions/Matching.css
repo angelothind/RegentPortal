@@ -92,6 +92,7 @@
   display: flex;
   gap: 30px;
   align-items: flex-start;
+  flex-direction: row-reverse;
 }
 
 .questions-section {
@@ -233,8 +234,14 @@
     padding: 15px;
   }
   
+  .matching-layout {
+    flex-direction: column;
+  }
+  
   .opinions-box {
     padding: 15px;
+    width: 100%;
+    margin-bottom: 20px;
   }
   
   .question-item {

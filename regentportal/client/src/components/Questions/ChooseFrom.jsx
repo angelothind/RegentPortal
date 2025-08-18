@@ -37,6 +37,23 @@ const ChooseFrom = ({ template, onAnswerChange, testResults, testSubmitted, test
     return currentAnswers[questionNumber] || '';
   };
 
+  // Function to get the full text for a correct answer (letter + word)
+  const getCorrectAnswerText = (questionNumber) => {
+    if (!testSubmitted || !testResults) return '';
+    
+    const correctAnswerLetter = testResults.correctAnswers?.[questionNumber];
+    if (!correctAnswerLetter) return '';
+    
+    // Find the option text associated with this letter
+    const option = template.options?.find(opt => opt.letter === correctAnswerLetter);
+    if (option) {
+      return `${correctAnswerLetter}: ${option.text}`;
+    }
+    
+    // Fallback to just the letter if option not found
+    return correctAnswerLetter;
+  };
+
   if (!template || !template.summaryText) {
     console.log('❌ ChooseFrom: No template or summaryText');
     return <div>No questions available</div>;
@@ -92,7 +109,7 @@ const ChooseFrom = ({ template, onAnswerChange, testResults, testSubmitted, test
             <div key={question.questionNumber} className="feedback-item">
               <span className="question-number">Question {question.questionNumber}:</span>
               <span className="correct-answer">
-                Correct: {String(testResults.correctAnswers?.[question.questionNumber] || '')}
+                Correct: {getCorrectAnswerText(question.questionNumber)}
               </span>
             </div>
           ))}

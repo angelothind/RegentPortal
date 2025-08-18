@@ -124,7 +124,8 @@
     },
     {
       "questionType": "multiple-choice-two",
-      "introInstruction": "Questions 17-20\nChoose TWO letters, A-E.",
+      "introInstruction": "Questions 17-18\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Which TWO things does David say about the lifeboat volunteer training?",
       "questionBlock": [
         {
           "questionNumber": 17,
@@ -155,6 +156,67 @@
         },
         {
           "questionNumber": 18,
+          "question": "Which TWO things does David find most motivating about the work he does?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "working as part of a team"
+            },
+            {
+              "letter": "B",
+              "text": "experiences when working in winter"
+            },
+            {
+              "letter": "C",
+              "text": "being thanked by those he has helped"
+            },
+            {
+              "letter": "D",
+              "text": "the fact that it keeps him fit"
+            },
+            {
+              "letter": "E",
+              "text": "the chance to develop new equipment"
+            }
+          ],
+          "answer": ["A", "C"]
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 19-20\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Which TWO things does David find most motivating about the work he does?",
+      "questionBlock": [
+        {
+          "questionNumber": 19,
+          "question": "Which TWO things does David find most motivating about the work he does?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "working as part of a team"
+            },
+            {
+              "letter": "B",
+              "text": "experiences when working in winter"
+            },
+            {
+              "letter": "C",
+              "text": "being thanked by those he has helped"
+            },
+            {
+              "letter": "D",
+              "text": "the fact that it keeps him fit"
+            },
+            {
+              "letter": "E",
+              "text": "the chance to develop new equipment"
+            }
+          ],
+          "answer": ["A", "C"]
+        },
+        {
+          "questionNumber": 20,
           "question": "Which TWO things does David find most motivating about the work he does?",
           "options": [
             {

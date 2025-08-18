@@ -126,3 +126,101 @@
 .error {
   color: #d32f2f;
 }
+
+/* Submit button and results section styles */
+.submit-section {
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+.submit-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.submit-button:hover {
+  background-color: #218838;
+}
+
+.results-section {
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+.results-section h3 {
+  margin: 0 0 15px 0;
+  color: #25245D;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.results-section p {
+  margin: 8px 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+/* Test overlay styles */
+.test-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.overlay-content {
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.overlay-content h2 {
+  margin: 0 0 20px 0;
+  color: #25245D;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.overlay-content p {
+  margin: 0 0 30px 0;
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.start-test-button {
+  background-color: #25245D;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.start-test-button:hover {
+  background-color: #1a1a4a;
+}
+

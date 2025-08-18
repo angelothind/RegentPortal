@@ -230,49 +230,48 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                         <span key={partIndex}>
                           <span dangerouslySetInnerHTML={{ __html: part || '' }} />
                                                   {partIndex < array.length - 1 && (
-                          <input
-                            type="text"
-                            className={`listening-answer-input ${getAnswerClass(blankNumber || '')}`}
-                            style={{
-                              border: '2px solid #ddd',
-                              borderRadius: '4px',
-                              padding: '8px 12px',
-                              fontSize: '0.9rem',
-                              backgroundColor: 'white',
-                              color: '#333',
-                              transition: 'border-color 0.2s ease'
-                            }}
-                            placeholder={getInputPlaceholder(blankNumber || '')}
-                            value={getAnswerValue(blankNumber || '')}
-                            onChange={(e) => {
-                              console.log(`🎯 Input change event triggered for blank ${blankNumber}`);
-                              console.log(`🎯 Input value: ${e.target.value}`);
-                              console.log(`🎯 testSubmitted: ${testSubmitted}`);
-                              handleAnswerChange(blankNumber || '', e.target.value);
-                            }}
-                            disabled={testSubmitted}
-                            data-test-submitted={testSubmitted}
-                            data-blank-number={blankNumber}
-                            autoComplete="off"
-                            data-form-type="other"
-                            data-lpignore="true"
-                            data-1p-ignore="true"
-                          />
-                        )}
+                            <>
+                              <input
+                                type="text"
+                                className={`listening-answer-input ${getAnswerClass(blankNumber || '')}`}
+                                style={{
+                                  border: '2px solid #ddd',
+                                  borderRadius: '4px',
+                                  padding: '8px 12px',
+                                  fontSize: '0.9rem',
+                                  backgroundColor: 'white',
+                                  color: '#333',
+                                  transition: 'border-color 0.2s ease'
+                                }}
+                                placeholder={getInputPlaceholder(blankNumber || '')}
+                                value={getAnswerValue(blankNumber || '')}
+                                onChange={(e) => {
+                                  console.log(`🎯 Input change event triggered for blank ${blankNumber}`);
+                                  console.log(`🎯 Input value: ${e.target.value}`);
+                                  console.log(`🎯 testSubmitted: ${testSubmitted}`);
+                                  handleAnswerChange(blankNumber || '', e.target.value);
+                                }}
+                                disabled={testSubmitted}
+                                data-test-submitted={testSubmitted}
+                                data-blank-number={blankNumber}
+                                autoComplete="off"
+                                data-form-type="other"
+                                data-lpignore="true"
+                                data-1p-ignore="true"
+                              />
+                              {/* Show inline correction after input field */}
+                              {testSubmitted && testResults && (
+                                <span className="inline-correction">
+                                  Correct: {String(testResults.correctAnswers?.[blankNumber || ''] || '')}
+                                </span>
+                              )}
+                            </>
+                          )}
                         </span>
                       );
                     })}
                   </div>
-                  {testSubmitted && testResults && item.blanks && (
-                    <div className="answer-feedback">
-                      {item.blanks.map((blank, blankIndex) => (
-                        <span key={blankIndex} className="correct-answer">
-                          {blankIndex > 0 && ' | '}
-                          {blank.number}: {String(testResults.correctAnswers?.[blank.number] || '')}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+
                 </div>
               );
             } else if (item.questionNumber) {
@@ -300,45 +299,47 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                           __html: template.useBullets && partIndex === 0 ? addBulletPoints(part) : part 
                         }} />
                         {partIndex < array.length - 1 && (
-                          <input
-                            type="text"
-                            className={`listening-answer-input ${getAnswerClass(item.questionNumber)}`}
-                            style={{
-                              border: '2px solid #ddd',
-                              borderRadius: '4px',
-                              padding: '8px 12px',
-                              fontSize: '0.9rem',
-                              backgroundColor: 'white',
-                              color: '#333',
-                              transition: 'border-color 0.2s ease'
-                            }}
-                            placeholder={getInputPlaceholder(item.questionNumber)}
-                            value={getAnswerValue(item.questionNumber)}
-                            onChange={(e) => {
-                              console.log(`🎯 Old structure input change for question ${item.questionNumber}`);
-                              console.log(`🎯 Input value: ${e.target.value}`);
-                              console.log(`🎯 testSubmitted: ${testSubmitted}`);
-                              handleAnswerChange(item.questionNumber, e.target.value);
-                            }}
-                            disabled={testSubmitted}
-                            data-test-submitted={testSubmitted}
-                            data-question-number={item.questionNumber}
-                            autoComplete="off"
-                            data-form-type="other"
-                            data-lpignore="true"
-                            data-1p-ignore="true"
-                          />
+                          <>
+                            <input
+                              type="text"
+                              className={`listening-answer-input ${getAnswerClass(item.questionNumber)}`}
+                              style={{
+                                border: '2px solid #ddd',
+                                borderRadius: '4px',
+                                padding: '8px 12px',
+                                fontSize: '0.9rem',
+                                backgroundColor: 'white',
+                                color: '#333',
+                                transition: 'border-color 0.2s ease'
+                              }}
+                              placeholder={getInputPlaceholder(item.questionNumber)}
+                              value={getAnswerValue(item.questionNumber)}
+                              onChange={(e) => {
+                                console.log(`🎯 Old structure input change for question ${item.questionNumber}`);
+                                console.log(`🎯 Input value: ${e.target.value}`);
+                                console.log(`🎯 testSubmitted: ${testSubmitted}`);
+                                handleAnswerChange(item.questionNumber, e.target.value);
+                              }}
+                              disabled={testSubmitted}
+                              data-test-submitted={testSubmitted}
+                              data-question-number={item.questionNumber}
+                              autoComplete="off"
+                              data-form-type="other"
+                              data-lpignore="true"
+                              data-1p-ignore="true"
+                            />
+                            {/* Show inline correction after input field */}
+                            {testSubmitted && testResults && (
+                              <span className="inline-correction">
+                                Correct: {String(testResults.correctAnswers?.[item.questionNumber] || '')}
+                              </span>
+                            )}
+                          </>
                         )}
                       </span>
                     ))}
                   </div>
-                  {testSubmitted && testResults && (
-                    <div className="answer-feedback">
-                      <span className="correct-answer">
-                        Correct: {String(testResults.correctAnswers?.[item.questionNumber] || '')}
-                      </span>
-                    </div>
-                  )}
+
                 </div>
               );
             }
@@ -404,27 +405,35 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                       <span key={index}>
                         <span dangerouslySetInnerHTML={{ __html: part || '' }} />
                         {index < array.length - 1 && (
-                          <input
-                            type="text"
-                            className={`answer-input ${getAnswerClass(block.blanks[index]?.number || '')}`}
-                            placeholder={getInputPlaceholder(block.blanks[index]?.number || '')}
-                            value={getAnswerValue(block.blanks[index]?.number || '')}
-                            onChange={(e) => handleAnswerChange(block.blanks[index]?.number || '', e.target.value)}
-                            disabled={testSubmitted}
-                            autoComplete="off"
-                            data-form-type="other"
-                            data-lpignore="true"
-                            data-1p-ignore="true"
-                          />
+                          <>
+                            <input
+                              type="text"
+                              className={`answer-input ${getAnswerClass(block.blanks[index]?.number || '')}`}
+                              placeholder={getInputPlaceholder(block.blanks[index]?.number || '')}
+                              value={getAnswerValue(block.blanks[index]?.number || '')}
+                              onChange={(e) => handleAnswerChange(block.blanks[index]?.number || '', e.target.value)}
+                              disabled={testSubmitted}
+                              autoComplete="off"
+                              data-form-type="other"
+                              data-lpignore="true"
+                              data-1p-ignore="true"
+                            />
+                            {/* Show inline correction after input field */}
+                            {testSubmitted && testResults && (
+                              <span className="inline-correction">
+                                Correct: {String(testResults.correctAnswers?.[block.blanks[index]?.number || ''] || '')}
+                              </span>
+                            )}
+                          </>
                         )}
                       </span>
                     ))}
                   </div>
+                  {/* Inline corrections for new structure */}
                   {testSubmitted && testResults && block.blanks && (
-                    <div className="answer-feedback">
+                    <div className="inline-corrections">
                       {block.blanks.map((blank, blankIndex) => (
-                        <span key={blankIndex} className="correct-answer">
-                          {blankIndex > 0 && ' | '}
+                        <span key={blankIndex} className="inline-correct-answer">
                           {blank.number}: {String(testResults.correctAnswers?.[blank.number] || '')}
                         </span>
                       ))}
@@ -463,29 +472,31 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                             __html: template.useBullets && partIndex === 0 ? addBulletPoints(part, item.bulletLevel || 0) : part 
                           }} />
                           {partIndex < array.length - 1 && (
-                            <input
-                              type="text"
-                              className={`answer-input ${getAnswerClass(item.questionNumber)}`}
-                              placeholder={getInputPlaceholder(item.questionNumber)}
-                              value={getAnswerValue(item.questionNumber)}
-                              onChange={(e) => handleAnswerChange(item.questionNumber, e.target.value)}
-                              disabled={testSubmitted}
-                              autoComplete="off"
-                              data-form-type="other"
-                              data-lpignore="true"
-                              data-1p-ignore="true"
-                            />
+                            <>
+                              <input
+                                type="text"
+                                className={`answer-input ${getAnswerClass(item.questionNumber)}`}
+                                placeholder={getInputPlaceholder(item.questionNumber)}
+                                value={getAnswerValue(item.questionNumber)}
+                                onChange={(e) => handleAnswerChange(item.questionNumber, e.target.value)}
+                                disabled={testSubmitted}
+                                autoComplete="off"
+                                data-form-type="other"
+                                data-lpignore="true"
+                                data-1p-ignore="true"
+                              />
+                              {/* Show inline correction after input field */}
+                              {testSubmitted && testResults && (
+                                <span className="inline-correction">
+                                  Correct: {String(testResults.correctAnswers?.[item.questionNumber] || '')}
+                                </span>
+                              )}
+                            </>
                           )}
                         </span>
                       ))}
                     </div>
-                    {testSubmitted && testResults && (
-                      <div className="answer-feedback">
-                        <span className="correct-answer">
-                          Correct: {String(testResults.correctAnswers?.[item.questionNumber] || '')}
-                        </span>
-                      </div>
-                    )}
+
                   </div>
                 );
               }

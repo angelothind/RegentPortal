@@ -19,15 +19,15 @@ const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, 
     if (!result) return '';
     
     const userAnswer = testResults.answers?.[questionNumber];
-    const correctAnswer = result.correctAnswer;
     
-    // Only highlight options that are selected by the user
-    if (optionLetter === userAnswer) {
-    if (optionLetter === correctAnswer) {
-        return 'option-correct'; // User selected correct answer
-      } else {
-        return 'option-incorrect'; // User selected incorrect answer
-      }
+    // If user selected this option and got it correct, highlight in green
+    if (optionLetter === userAnswer && result.isCorrect) {
+      return 'option-correct';
+    }
+    
+    // If user selected this option and got it wrong, highlight in red
+    if (optionLetter === userAnswer && !result.isCorrect) {
+      return 'option-incorrect';
     }
     
     return '';

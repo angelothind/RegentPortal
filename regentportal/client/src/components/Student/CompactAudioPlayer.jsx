@@ -1,11 +1,20 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, memo, useEffect } from 'react';
 import '../../styles/UserLayout/CompactAudioPlayer.css';
 
-const CompactAudioPlayer = ({ audioSrc, title = "Audio" }) => {
+const CompactAudioPlayer = memo(({ audioSrc, title = "Audio" }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
+  
+  console.log('🎵 CompactAudioPlayer rendered - audioSrc:', audioSrc, 'isPlaying:', isPlaying);
+  
+  useEffect(() => {
+    console.log('🎵 CompactAudioPlayer mounted/updated');
+    return () => {
+      console.log('🎵 CompactAudioPlayer unmounting');
+    };
+  });
 
   const handlePlayPause = () => {
     if (isPlaying) {
@@ -81,6 +90,6 @@ const CompactAudioPlayer = ({ audioSrc, title = "Audio" }) => {
       />
     </div>
   );
-};
+});
 
 export default CompactAudioPlayer; 

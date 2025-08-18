@@ -629,6 +629,39 @@
   color: #721c24 !important;
 }
 
+/* Inline correction styling */
+.inline-correction {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 6px;
+  background-color: #e8f5e8;
+  border: 1px solid #4CAF50;
+  border-radius: 3px;
+  color: #2e7d32;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.inline-corrections {
+  margin-top: 10px;
+  padding: 8px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  border-left: 3px solid #28a745;
+}
+
+.inline-correct-answer {
+  display: inline-block;
+  margin-right: 15px;
+  padding: 4px 8px;
+  background-color: #d4edda;
+  border-radius: 3px;
+  color: #155724;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .choose-x-words-container {

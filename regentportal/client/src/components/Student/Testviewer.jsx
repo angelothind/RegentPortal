@@ -11,9 +11,15 @@ const TestViewer = ({ selectedTest, user }) => {
   const [passageWidth, setPassageWidth] = useState(56);
   const [questionWidth, setQuestionWidth] = useState(44);
   const [testStarted, setTestStarted] = useState(false);
+  const [testSubmitted, setTestSubmitted] = useState(false);
+  const [testResults, setTestResults] = useState(null);
 
   // Load test state from localStorage when selectedTest changes
   useEffect(() => {
+    // Reset testStarted to false when a new test is selected
+    setTestStarted(false);
+    console.log('🔄 TestViewer: Reset testStarted to false for new test');
+    
     if (selectedTest && selectedTest.testId) {
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
       const savedData = localStorage.getItem(storageKey);
@@ -33,7 +39,7 @@ const TestViewer = ({ selectedTest, user }) => {
 
   const handleStartTest = () => {
     setTestStarted(true);
-    console.log('🚀 Test started');
+    console.log('🚀 Test started - testStarted set to true');
     
     // Save test state to localStorage
     if (selectedTest && selectedTest.testId) {
@@ -62,8 +68,29 @@ const TestViewer = ({ selectedTest, user }) => {
 
   const handleTestReset = () => {
     setTestStarted(false);
+    setTestSubmitted(false);
+    setTestResults(null);
     console.log('🔄 Test reset - testStarted set to false');
   };
+
+  const handleSubmit = async () => {
+    const confirmed = window.confirm('Are you sure you want to submit the test? You cannot change your answers after submission.');
+    if (!confirmed) return;
+    
+    try {
+      setTestSubmitted(true);
+      // For now, just mark as submitted. In a real implementation, you'd send data to server
+      console.log('📝 Test submitted');
+    } catch (error) {
+      console.error('❌ Error submitting test:', error);
+      setTestSubmitted(false);
+    }
+  };
+
+  // Monitor testStarted state changes
+  useEffect(() => {
+    console.log('🔄 TestViewer: testStarted state changed to:', testStarted);
+  }, [testStarted]);
 
   const [sharedPassage, setSharedPassage] = useState(1);
 
@@ -159,7 +186,6 @@ const TestViewer = ({ selectedTest, user }) => {
             <ReadingTest 
               testId={selectedTest.testId} 
               testData={testData} 
-              testStarted={testStarted}
               onStartTest={handleStartTest}
               onPassageChange={handlePassageChange}
               currentPassage={sharedPassage}
@@ -177,6 +203,9 @@ const TestViewer = ({ selectedTest, user }) => {
               onTestReset={handleTestReset}
               sharedPassage={sharedPassage}
               onPassageChange={handlePassageChange}
+              testSubmitted={testSubmitted}
+              testResults={testResults}
+              onTestSubmit={handleSubmit}
             />
           </div>
         </div>

@@ -29,7 +29,12 @@ const YSNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
     
     const userAnswer = testResults.answers?.[questionNumber];
     
-    // Only highlight incorrect user selections in red
+    // If user selected this option and got it correct, highlight in green
+    if (optionValue === userAnswer && result.isCorrect) {
+      return 'answer-correct';
+    }
+    
+    // If user selected this option and got it wrong, highlight in red
     if (optionValue === userAnswer && !result.isCorrect) {
       return 'answer-incorrect';
     }
