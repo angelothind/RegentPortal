@@ -565,6 +565,62 @@
   font-size: 1.1rem;
 }
 
+/* Score Details Styles */
+.score-details {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5px; /* Reduced from 15px */
+  margin: 10px 0; /* Reduced from 20px */
+  padding: 10px; /* Reduced from 20px */
+  background-color: #f8f9fa;
+  border-radius: 6px; /* Reduced from 8px */
+  border: 1px solid #e9ecef;
+}
+
+.score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0; /* Reduced from 12px */
+  border-bottom: 1px solid #dee2e6;
+}
+
+.score-item:last-child {
+  border-bottom: none;
+}
+
+.score-label {
+  font-weight: 500;
+  font-size: 0.9rem; /* Reduced from 1rem */
+  color: #495057;
+}
+
+.score-value {
+  font-weight: 600;
+  font-size: 1rem; /* Reduced from 1.1rem */
+  color: #25245D;
+}
+
+/* Compact variant for reading tests */
+.score-details.compact {
+  gap: 5px; /* Even smaller gap */
+  margin: 8px 0; /* Smaller margin */
+  padding: 8px; /* Smaller padding */
+  border-radius: 4px; /* Smaller border radius */
+}
+
+.score-details.compact .score-item {
+  padding: 4px 0; /* Smaller item padding */
+}
+
+.score-details.compact .score-label {
+  font-size: 0.8rem; /* Smaller label font */
+}
+
+.score-details.compact .score-value {
+  font-size: 0.9rem; /* Smaller value font */
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .main-content-area {
@@ -598,5 +654,31 @@
   .passage-controls {
     width: 100%;
     justify-content: center;
+  }
+  
+  .score-details {
+    padding: 7.5px; /* Reduced from 15px */
+    margin: 7.5px 0; /* Reduced from 15px */
+  }
+  
+  .score-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2.5px; /* Reduced from 5px */
+  }
+  
+  .score-label,
+  .score-value {
+    font-size: 0.8rem; /* Reduced from 0.9rem */
+  }
+  
+  .score-details.compact {
+    padding: 5px; /* Even smaller for mobile */
+    margin: 5px 0;
+  }
+  
+  .score-details.compact .score-label,
+  .score-details.compact .score-value {
+    font-size: 0.7rem; /* Smaller for mobile compact */
   }
 } 

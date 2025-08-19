@@ -6,6 +6,7 @@ import Matching from '../Questions/Matching';
 import MapLabeling from '../Questions/MapLabeling';
 import TableCompletion from '../Questions/TableCompletion';
 import FlowchartCompletion from '../Questions/FlowchartCompletion';
+import { calculateIELTSBand, formatBandScore, getBandScoreDescription } from '../../utils/bandScoreCalculator';
 
 const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null }) => {
   console.log('🔍 ListeningQuestionView received user:', user);
@@ -642,6 +643,18 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
                   <div className="score-item">
                     <span className="score-label">Correct Answers:</span>
                     <span className="score-value">{finalTestResults.correctCount} / {finalTestResults.totalQuestions}</span>
+                  </div>
+                  <div className="score-item">
+                    <span className="score-label">IELTS Band:</span>
+                    <span className="score-value">
+                      {formatBandScore(calculateIELTSBand(finalTestResults.correctCount, selectedTest.type))}
+                    </span>
+                  </div>
+                  <div className="score-item">
+                    <span className="score-label">Band Description:</span>
+                    <span className="score-value">
+                      {getBandScoreDescription(calculateIELTSBand(finalTestResults.correctCount, selectedTest.type))}
+                    </span>
                   </div>
                   <div className="score-item">
                     <span className="score-label">Submitted:</span>

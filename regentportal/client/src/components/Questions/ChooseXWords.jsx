@@ -429,16 +429,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                       </span>
                     ))}
                   </div>
-                  {/* Inline corrections for new structure */}
-                  {testSubmitted && testResults && block.blanks && (
-                    <div className="inline-corrections">
-                      {block.blanks.map((blank, blankIndex) => (
-                        <span key={blankIndex} className="inline-correct-answer">
-                          {blank.number}: {String(testResults.correctAnswers?.[blank.number] || '')}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+
                 </div>
               );
             })

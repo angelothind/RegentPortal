@@ -9,6 +9,7 @@ import MultipleChoice from '../Questions/MultipleChoice';
 import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
 import SummaryCompletion from '../Questions/SummaryCompletion';
 import TableCompletion from '../Questions/TableCompletion';
+import { calculateIELTSBand, formatBandScore, getBandScoreDescription } from '../../utils/bandScoreCalculator';
 
 const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, testStarted, onTestReset, sharedPassage, onPassageChange }) => {
   console.log('🚀 QuestionView component mounted with selectedTest:', selectedTest);
@@ -586,13 +587,33 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         </div>
       )}
       
-      {/* Results section - only show after submission (not shown in teacher mode) */}
-      {!isTeacherMode && testSubmitted && (
+      {/* Results section - only show after submission on last passage (not shown in teacher mode) */}
+      {!isTeacherMode && testSubmitted && sharedPassage === 3 && (
         <div className="test-controls">
           <div className="results-section">
             <h3>Test Results</h3>
-            <p>Score: {testResults?.score}%</p>
-            <p>Correct: {testResults?.correctCount} / {testResults?.totalQuestions}</p>
+            <div className="score-details compact">
+              <div className="score-item">
+                <span className="score-label">Score:</span>
+                <span className="score-value">{testResults?.score}%</span>
+              </div>
+              <div className="score-item">
+                <span className="score-label">Correct:</span>
+                <span className="score-value">{testResults?.correctCount} / {testResults?.totalQuestions}</span>
+              </div>
+              <div className="score-item">
+                <span className="score-label">Band:</span>
+                <span className="score-value">
+                  {formatBandScore(calculateIELTSBand(testResults?.correctCount, selectedTest?.type))}
+                </span>
+              </div>
+              <div className="score-item">
+                <span className="score-label">Level:</span>
+                <span className="score-value">
+                  {getBandScoreDescription(calculateIELTSBand(testResults?.correctCount, selectedTest?.type))}
+                </span>
+              </div>
+            </div>
             <button className="reset-button" onClick={handleResetTest}>
               Take Test Again
             </button>
