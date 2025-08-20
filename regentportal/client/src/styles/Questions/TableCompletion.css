@@ -127,6 +127,22 @@
   color: #333;
 }
 
+.section-heading-cell {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #25245D;
+  font-weight: 600;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin: 4px 0;
+}
+
+.section-heading-cell strong {
+  color: #25245D;
+  font-weight: 700;
+}
+
 .table-answer-input {
   border: 2px solid #ddd;
   border-radius: 4px;
@@ -248,6 +264,22 @@
 .listening-table .text-cell {
   line-height: 1.6;
   color: #333;
+}
+
+.listening-table .section-heading-cell {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #25245D;
+  font-weight: 600;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin: 4px 0;
+}
+
+.listening-table .section-heading-cell strong {
+  color: #25245D;
+  font-weight: 700;
 }
 
 .listening-table-answer-input {

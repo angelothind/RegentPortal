@@ -1,0 +1,204 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 21-24\nChoose the correct letter, A, B or C.",
+      "questionBlock": [
+        {
+          "questionNumber": 21,
+          "question": "Why do the students think the Laki eruption of 1783 is so important?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It was the most severe eruption in modern times."
+            },
+            {
+              "letter": "B",
+              "text": "It led to the formal study of volcanoes."
+            },
+            {
+              "letter": "C",
+              "text": "It had a profound effect on society."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 22,
+          "question": "What surprised Adam about observations made at the time?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "the number of places producing them"
+            },
+            {
+              "letter": "B",
+              "text": "the contradictions in them"
+            },
+            {
+              "letter": "C",
+              "text": "the lack of scientific data to support them"
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 23,
+          "question": "According to Michelle, what did the contemporary sources say about the Laki haze?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "People thought it was similar to ordinary fog."
+            },
+            {
+              "letter": "B",
+              "text": "It was associated with health issues."
+            },
+            {
+              "letter": "C",
+              "text": "It completely blocked out the sun for weeks."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 24,
+          "question": "Adam corrects Michelle when she claims that Benjamin Franklin",
+          "options": [
+            {
+              "letter": "A",
+              "text": "came to the wrong conclusion about the cause of the haze."
+            },
+            {
+              "letter": "B",
+              "text": "was the first to identify the reason for the haze."
+            },
+            {
+              "letter": "C",
+              "text": "supported the opinions of other observers about the haze."
+            }
+          ],
+          "answer": "B"
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 25 and 26\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Which TWO issues following the Laki eruption surprised the students?",
+      "questionBlock": [
+        {
+          "questionNumber": 25,
+          "question": "Which TWO issues following the Laki eruption surprised the students?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "how widespread the effects were"
+            },
+            {
+              "letter": "B",
+              "text": "how long-lasting the effects were"
+            },
+            {
+              "letter": "C",
+              "text": "the number of deaths it caused"
+            },
+            {
+              "letter": "D",
+              "text": "the speed at which the volcanic ash cloud spread"
+            },
+            {
+              "letter": "E",
+              "text": "how people ignored the warning signs"
+            }
+          ],
+          "answer": ["A", "B"]
+        },
+        {
+          "questionNumber": 26,
+          "question": "Which TWO issues following the Laki eruption surprised the students?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "how widespread the effects were"
+            },
+            {
+              "letter": "B",
+              "text": "how long-lasting the effects were"
+            },
+            {
+              "letter": "C",
+              "text": "the number of deaths it caused"
+            },
+            {
+              "letter": "D",
+              "text": "the speed at which the volcanic ash cloud spread"
+            },
+            {
+              "letter": "E",
+              "text": "how people ignored the warning signs"
+            }
+          ],
+          "answer": ["A", "B"]
+        }
+      ]
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 27-30",
+      "formattingInstruction": "What comment do the students make about the impact of the Laki eruption on the following countries?\nChoose FOUR answers from the box and write the correct letter, A-F, next to Questions 27-30.",
+      "opinionsBox": {
+        "title": "Comments",
+        "options": [
+          {
+            "letter": "A",
+            "text": "This country suffered the most severe loss of life."
+          },
+          {
+            "letter": "B",
+            "text": "The impact on agriculture was predictable."
+          },
+          {
+            "letter": "C",
+            "text": "There was a significant increase in deaths of young people."
+          },
+          {
+            "letter": "D",
+            "text": "Animals suffered from a sickness."
+          },
+          {
+            "letter": "E",
+            "text": "This country saw the highest rise in food prices in the world."
+          },
+          {
+            "letter": "F",
+            "text": "It caused a particularly harsh winter."
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 27,
+          "question": "Iceland",
+          "answer": "A"
+        },
+        {
+          "questionNumber": 28,
+          "question": "Egypt",
+          "answer": "E"
+        },
+        {
+          "questionNumber": 29,
+          "question": "UK",
+          "answer": "F"
+        },
+        {
+          "questionNumber": 30,
+          "question": "USA",
+          "answer": "C"
+        }
+      ]
+    }
+  ]
+} 

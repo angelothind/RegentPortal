@@ -33,4 +33,7 @@ const testSchema = new mongoose.Schema({
   }
 }, options);
 
+// Create compound unique index: allows same title across different books
+testSchema.index({ title: 1, belongsTo: 1 }, { unique: true });
+
 module.exports = mongoose.model('Test', testSchema);

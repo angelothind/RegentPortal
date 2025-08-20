@@ -1,0 +1,166 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 11-12\nChoose TWO letters, A-E.",
+      "formattingInstruction": "What are the TWO main reasons why this site has been chosen for the housing development?",
+      "questionBlock": [
+        {
+          "questionNumber": 11,
+          "question": "What are the TWO main reasons why this site has been chosen for the housing development?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It has suitable geographical features."
+            },
+            {
+              "letter": "B",
+              "text": "There is easy access to local facilities."
+            },
+            {
+              "letter": "C",
+              "text": "It has good connections with the airport."
+            },
+            {
+              "letter": "D",
+              "text": "The land is of little agricultural value."
+            },
+            {
+              "letter": "E",
+              "text": "It will be convenient for workers."
+            }
+          ],
+          "answer": ["A", "D"]
+        },
+        {
+          "questionNumber": 12,
+          "question": "What are the TWO main reasons why this site has been chosen for the housing development?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It has suitable geographical features."
+            },
+            {
+              "letter": "B",
+              "text": "There is easy access to local facilities."
+            },
+            {
+              "letter": "C",
+              "text": "It has good connections with the airport."
+            },
+            {
+              "letter": "D",
+              "text": "The land is of little agricultural value."
+            },
+            {
+              "letter": "E",
+              "text": "It will be convenient for workers."
+            }
+          ],
+          "answer": ["A", "D"]
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 13-14\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Which TWO aspects of the planned housing development have people given positive feedback about?",
+      "questionBlock": [
+        {
+          "questionNumber": 13,
+          "question": "Which TWO aspects of the planned housing development have people given positive feedback about?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "the facilities for cyclists"
+            },
+            {
+              "letter": "B",
+              "text": "the impact on the environment"
+            },
+            {
+              "letter": "C",
+              "text": "the encouragement of good relations between residents"
+            },
+            {
+              "letter": "D",
+              "text": "the low cost of all the accommodation"
+            },
+            {
+              "letter": "E",
+              "text": "the rural location"
+            }
+          ],
+          "answer": ["A", "C"]
+        },
+        {
+          "questionNumber": 14,
+          "question": "Which TWO aspects of the planned housing development have people given positive feedback about?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "the facilities for cyclists"
+            },
+            {
+              "letter": "B",
+              "text": "the impact on the environment"
+            },
+            {
+              "letter": "C",
+              "text": "the encouragement of good relations between residents"
+            },
+            {
+              "letter": "D",
+              "text": "the low cost of all the accommodation"
+            },
+            {
+              "letter": "E",
+              "text": "the rural location"
+            }
+          ],
+          "answer": ["A", "C"]
+        }
+      ]
+    },
+    {
+      "questionType": "map-labeling",
+      "introInstruction": "Questions 15-20",
+      "formattingInstruction": "Label the map below. Write the correct letter, A-I, next to Questions 15-20.",
+      "mapTitle": "Housing Development Map",
+      "mapImage": "housingmap.png",
+      "questionBlock": [
+        {
+          "questionNumber": 15,
+          "question": "School",
+          "answer": "C"
+        },
+        {
+          "questionNumber": 16,
+          "question": "Sports centre",
+          "answer": "D"
+        },
+        {
+          "questionNumber": 17,
+          "question": "Clinic",
+          "answer": "E"
+        },
+        {
+          "questionNumber": 18,
+          "question": "Community centre",
+          "answer": "F"
+        },
+        {
+          "questionNumber": 19,
+          "question": "Supermarket",
+          "answer": "G"
+        },
+        {
+          "questionNumber": 20,
+          "question": "Playground",
+          "answer": "H"
+        }
+      ]
+    }
+  ]
+} 

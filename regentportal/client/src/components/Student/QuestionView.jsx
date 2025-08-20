@@ -3,7 +3,7 @@ import ChooseXWords from '../Questions/ChooseXWords';
 import ChooseFrom from '../Questions/ChooseFrom';
 import TFNG from '../Questions/TFNG';
 import FlowchartCompletion from '../Questions/FlowchartCompletion';
-
+import MapLabeling from '../Questions/MapLabeling';
 import Matching from '../Questions/Matching';
 import MultipleChoice from '../Questions/MultipleChoice';
 import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
@@ -531,6 +531,17 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               testSubmitted={testSubmitted}
               currentAnswers={answers}
               testType={selectedTest.type}
+            />
+          );
+        case 'map-labeling':
+          return (
+            <MapLabeling
+              key={index}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+              testResults={testResults}
+              testSubmitted={testSubmitted}
+              currentAnswers={answers}
             />
           );
         // TODO: Add other question types here

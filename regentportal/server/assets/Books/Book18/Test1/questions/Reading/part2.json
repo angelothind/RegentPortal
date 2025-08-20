@@ -1,0 +1,119 @@
+{
+  "passageNumber": 2,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 14-18\nReading Passage 2 has seven paragraphs, A-G.",
+      "formattingInstruction": "Which paragraph contains the following information?\nWrite the correct letter, A-G, in boxes 14-18.\n\nNB You may use any letter more than once.",
+      "questionBlock": [
+        {
+          "questionNumber": "14",
+          "question": "bad outcomes for a forest when people focus only on its financial reward"
+        },
+        {
+          "questionNumber": "15",
+          "question": "reference to the aspects of any tree that contribute to its worth"
+        },
+        {
+          "questionNumber": "16",
+          "question": "mention of the potential use of wood to help run vehicles"
+        },
+        {
+          "questionNumber": "17",
+          "question": "examples of insects that attack trees"
+        },
+        {
+          "questionNumber": "18",
+          "question": "an alternative name for trees that produce low-use wood"
+        }
+      ],
+      "correctAnswers": {
+        "14": "A",
+        "15": "B",
+        "16": "C",
+        "17": "D",
+        "18": "E"
+      }
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Look at the following purposes (Questions 19-21) and the list of timber cuts below.",
+      "formattingInstruction": "Match each purpose with the correct timber cut, A, B or C.\nWrite the correct letter, A, B or C, in boxes 19-21.\nNB You may use any letter more than once.",
+      "opinionsBox": {
+        "title": "List of Timber Cuts",
+        "options": [
+          {
+            "letter": "A",
+            "text": "a TSI Cut"
+          },
+          {
+            "letter": "B",
+            "text": "a Salvage Cut"
+          },
+          {
+            "letter": "C",
+            "text": "a Shelterwood Cut"
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": "19",
+          "question": "to remove trees that are diseased"
+        },
+        {
+          "questionNumber": "20",
+          "question": "to generate income across a number of years"
+        },
+        {
+          "questionNumber": "21",
+          "question": "to create a forest whose trees are close in age"
+        }
+      ],
+      "correctAnswers": {
+        "19": "B",
+        "20": "A",
+        "21": "C"
+      }
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 22-26\nComplete the sentences below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 22-26.",
+      "questionBlock": [
+        {
+          "questionNumber": "22",
+          "question": "Some dead wood is removed to avoid the possibility of **22** ________ .",
+          "answer": "fire"
+        },
+        {
+          "questionNumber": "23",
+          "question": "The **23** ________ from the tops of cut trees can help improve soil quality.",
+          "answer": "branches"
+        },
+        {
+          "questionNumber": "24",
+          "question": "Some damaged trees should be left, as their **24** ________ provide habitats for a range of creatures.",
+          "answer": "trunks"
+        },
+        {
+          "questionNumber": "25",
+          "question": "Some trees that are small, such as **25** ________ , are a source of food for animals and insects.",
+          "answer": "saplings"
+        },
+        {
+          "questionNumber": "26",
+          "question": "Any trees that are **26** ________ should be left to grow, as they add to the variety of species in the forest.",
+          "answer": "rare"
+        }
+      ],
+      "correctAnswers": {
+        "22": "fire",
+        "23": "branches",
+        "24": "trunks",
+        "25": "saplings",
+        "26": "rare"
+      }
+    }
+  ]
+} 

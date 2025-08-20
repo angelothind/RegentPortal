@@ -1,0 +1,231 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "table-completion",
+      "introInstruction": "Questions 1-10\nComplete the notes below.",
+      "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
+      "tableTitle": "Transport survey",
+      "tableStructure": {
+        "columns": 2,
+        "rows": 15,
+        "headers": ["Category", "Details"]
+      },
+      "tableData": [
+        {
+          "row": 1,
+          "cells": [
+            {
+              "content": "Personal Details",
+              "type": "section-heading"
+            },
+            {
+              "content": "",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            {
+              "content": "Name:",
+              "type": "text"
+            },
+            {
+              "content": "Sadie Jones",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "cells": [
+            {
+              "content": "Year of birth:",
+              "type": "text"
+            },
+            {
+              "content": "1991",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "cells": [
+            {
+              "content": "Postcode:",
+              "type": "text"
+            },
+            {
+              "content": "**1** ________",
+              "type": "question",
+              "questionNumber": 1,
+              "answer": "DW30 7YZ"
+            }
+          ]
+        },
+        {
+          "row": 5,
+          "cells": [
+            {
+              "content": "Travelling by bus",
+              "type": "section-heading"
+            },
+            {
+              "content": "",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "row": 6,
+          "cells": [
+            {
+              "content": "Date of bus journey:",
+              "type": "text"
+            },
+            {
+              "content": "**2** ________",
+              "type": "question",
+              "questionNumber": 2,
+              "answer": "24(th) April"
+            }
+          ]
+        },
+        {
+          "row": 7,
+          "cells": [
+            {
+              "content": "Reason for trip:",
+              "type": "text"
+            },
+            {
+              "content": "shopping and visit to the **3** ________",
+              "type": "question",
+              "questionNumber": 3,
+              "answer": "dentist"
+            }
+          ]
+        },
+        {
+          "row": 8,
+          "cells": [
+            {
+              "content": "Travelled by bus because cost of:",
+              "type": "text"
+            },
+            {
+              "content": "**4** ________ too high",
+              "type": "question",
+              "questionNumber": 4,
+              "answer": "parking"
+            }
+          ]
+        },
+        {
+          "row": 9,
+          "cells": [
+            {
+              "content": "Got on bus at:",
+              "type": "text"
+            },
+            {
+              "content": "**5** ________ Street",
+              "type": "question",
+              "questionNumber": 5,
+              "answer": "Claxby"
+            }
+          ]
+        },
+        {
+          "row": 10,
+          "cells": [
+            {
+              "content": "Complaints about bus service:",
+              "type": "text"
+            },
+            {
+              "content": "bus today was **6** ________, frequency of buses in the **7** ________",
+              "type": "question",
+              "questionNumber": "6-7",
+              "answer": ["late", "evening"]
+            }
+          ]
+        },
+        {
+          "row": 11,
+          "cells": [
+            {
+              "content": "Travelling by car",
+              "type": "section-heading"
+            },
+            {
+              "content": "",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "row": 12,
+          "cells": [
+            {
+              "content": "Goes to the:",
+              "type": "text"
+            },
+            {
+              "content": "**8** ________ by car",
+              "type": "question",
+              "questionNumber": 8,
+              "answer": "supermarket"
+            }
+          ]
+        },
+        {
+          "row": 13,
+          "cells": [
+            {
+              "content": "Travelling by bicycle",
+              "type": "section-heading"
+            },
+            {
+              "content": "",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "row": 14,
+          "cells": [
+            {
+              "content": "Dislikes travelling by bike in city centre because of the:",
+              "type": "text"
+            },
+            {
+              "content": "**9** ________",
+              "type": "question",
+              "questionNumber": 9,
+              "answer": "pollution"
+            }
+          ]
+        },
+        {
+          "row": 15,
+          "cells": [
+            {
+              "content": "Doesn't own a bike because of lack of:",
+              "type": "text"
+            },
+            {
+              "content": "**10** ________",
+              "type": "question",
+              "questionNumber": 10,
+              "answer": "storage"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+} 

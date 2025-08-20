@@ -17,6 +17,18 @@ export const convertAllCapsToBold = (text) => {
 };
 
 /**
+ * Converts **X** ________ patterns to input field placeholders
+ * @param {string} text - The text to process
+ * @returns {string} - Text with **X** ________ converted to [INPUT_X] placeholders
+ */
+export const convertInputFields = (text) => {
+  if (!text || typeof text !== 'string') return text;
+  
+  // Convert **X** ________ to [INPUT_X] placeholders
+  return text.replace(/\*\*(\d+)\*\*\s*_{8,}/g, '[INPUT_$1]');
+};
+
+/**
  * Processes text with multiple formatting options
  * @param {string} text - The text to process
  * @param {Object} options - Processing options
@@ -27,14 +39,17 @@ export const processTextFormatting = (text) => {
   
   let processedText = text;
   
-  // Convert ALL CAPS words to bold first
+  // Convert **X** ________ to input field placeholders first
+  processedText = convertInputFields(processedText);
+  
+  // Convert ALL CAPS words to bold
   processedText = convertAllCapsToBold(processedText);
   
-  // Convert **text** to <strong>text</strong>
-  processedText = processedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  // Convert **text** to <strong>text</strong> (but not the input field placeholders)
+  processedText = processedText.replace(/\*\*(?!INPUT_)(.*?)\*\*/g, '<strong>$1</strong>');
   
   // Convert *text* to <em>text</em>
-  processedText = processedText.replace(/\*(.*?)\*/g, '<em>$1</em>');
+  processedText = processedText.replace(/\*(?!INPUT_)(.*?)\*/g, '<em>$1</em>');
   
   // Convert `text` to <code>text</code>
   processedText = processedText.replace(/`(.*?)`/g, '<code>$1</code>');

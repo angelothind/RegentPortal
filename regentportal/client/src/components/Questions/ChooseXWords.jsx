@@ -30,11 +30,17 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
   };
 
   // Function to add bullet points to text (excluding section headings)
-  const addBulletPoints = (text, bulletLevel = 0, isSectionHeading = false) => {
-    console.log(`🎯 addBulletPoints called with:`, { text, bulletLevel, isSectionHeading });
+  const addBulletPoints = (text, bulletLevel = 0, isSectionHeading = false, isNumbered = false, numberedIndex = null) => {
+    console.log(`🎯 addBulletPoints called with:`, { text, bulletLevel, isSectionHeading, isNumbered, numberedIndex });
     if (!text || typeof text !== 'string') return '';
     if (isSectionHeading) return text; // Don't add bullets to section headings
     
+    // For numbered bullets, create numbered list
+    if (isNumbered && numberedIndex !== null) {
+      return `<span class="numbered-bullet">${numberedIndex}.</span> ${text}`;
+    }
+    
+    // Default bullet behavior for other levels
     const bulletSymbols = {
       0: '•',    // Main bullet
       1: '◦',    // Sub bullet (hollow circle)
@@ -202,7 +208,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                   padding: '0'
                 }}>
                   <span dangerouslySetInnerHTML={{ 
-                    __html: template.useBullets ? addBulletPoints(item.descriptiveText, item.bulletLevel || 0) : item.descriptiveText 
+                    __html: (template.useBullets || item.numbered) ? addBulletPoints(item.descriptiveText, item.bulletLevel || 0, false, item.numbered || false, item.numberedIndex || null) : item.descriptiveText 
                   }} />
                 </div>
               );
@@ -296,7 +302,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                     {stripMarkdownBold(item.question).split('________').map((part, partIndex, array) => (
                       <span key={partIndex}>
                         <span dangerouslySetInnerHTML={{ 
-                          __html: template.useBullets && partIndex === 0 ? addBulletPoints(part) : part 
+                          __html: (template.useBullets || item.numbered) && partIndex === 0 ? addBulletPoints(part, item.bulletLevel || 0, false, item.numbered || false, item.numberedIndex || null) : part 
                         }} />
                         {partIndex < array.length - 1 && (
                           <>
@@ -446,7 +452,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                 return (
                   <div key={index} className="descriptive-text">
                     <span dangerouslySetInnerHTML={{ 
-                      __html: template.useBullets ? addBulletPoints(item.descriptiveText, item.bulletLevel || 0) : item.descriptiveText 
+                      __html: (template.useBullets || item.numbered) ? addBulletPoints(item.descriptiveText, item.bulletLevel || 0, false, item.numbered || false, item.numberedIndex || null) : item.descriptiveText 
                     }} />
                   </div>
                 );
@@ -460,7 +466,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                       {stripMarkdownBold(item.question || '').split('________').map((part, partIndex, array) => (
                         <span key={partIndex}>
                           <span dangerouslySetInnerHTML={{ 
-                            __html: template.useBullets && partIndex === 0 ? addBulletPoints(part, item.bulletLevel || 0) : part 
+                            __html: (template.useBullets || item.numbered) && partIndex === 0 ? addBulletPoints(part, item.bulletLevel || 0, false, item.numbered || false, item.numberedIndex || null) : part 
                           }} />
                           {partIndex < array.length - 1 && (
                             <>

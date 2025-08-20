@@ -118,15 +118,28 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                 <tr key={rowIndex} className="table-row">
                   {rowData.cells.map((cell, cellIndex) => (
                     <td key={cellIndex} className="table-cell">
-                      {cell.type === 'question' ? (
+                      {cell.type === 'section-heading' ? (
+                        <div className="section-heading-cell" style={{
+                          fontSize: '1rem',
+                          lineHeight: '1.6',
+                          color: '#25245D',
+                          fontWeight: '600',
+                          padding: '8px 0'
+                        }}>
+                          <strong>{cell.content}</strong>
+                        </div>
+                      ) : cell.type === 'question' ? (
                         <div className="question-cell">
-                          {processNewlines(stripMarkdownBold(cell.content)).split('________').map((part, partIndex, array) => (
-                            <span key={partIndex}>
-                              <span dangerouslySetInnerHTML={{ __html: part }} />
-                              {partIndex < array.length - 1 && (
+                          {processNewlines(processTextFormatting(cell.content)).split(/\[INPUT_(\d+)\]/).map((part, partIndex, array) => {
+                            // Check if this part is a question number placeholder
+                            const questionMatch = part.match(/^(\d+)$/);
+                            if (questionMatch) {
+                              const questionNumber = questionMatch[1];
+                              return (
                                 <input
+                                  key={partIndex}
                                   type="text"
-                                  className={`listening-table-answer-input ${getAnswerClass(cell.questionNumber)}`}
+                                  className={`listening-table-answer-input ${getAnswerClass(questionNumber)}`}
                                   style={{
                                     border: '2px solid #ddd',
                                     borderRadius: '4px',
@@ -138,17 +151,21 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                                     transition: 'border-color 0.2s ease'
                                   }}
                                   placeholder="Answer"
-                                  value={getAnswerValue(cell.questionNumber)}
-                                  onChange={(e) => handleAnswerChange(cell.questionNumber, e.target.value)}
+                                  value={getAnswerValue(questionNumber)}
+                                  onChange={(e) => handleAnswerChange(questionNumber, e.target.value)}
                                   disabled={testSubmitted}
                                   autoComplete="off"
                                   data-form-type="other"
                                   data-lpignore="true"
                                   data-1p-ignore="true"
                                 />
-                              )}
-                            </span>
-                          ))}
+                              );
+                            }
+                            // Regular text content
+                            return (
+                              <span key={partIndex} dangerouslySetInnerHTML={{ __html: part }} />
+                            );
+                          })}
                           {testSubmitted && testResults && (
                             <div className="answer-feedback">
                               <span className="correct-answer">
@@ -205,7 +222,17 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                 <tr key={rowIndex} className="table-row">
                   {rowData.cells.map((cell, cellIndex) => (
                     <td key={cellIndex} className="table-cell">
-                      {cell.type === 'question' ? (
+                      {cell.type === 'section-heading' ? (
+                        <div className="section-heading-cell" style={{
+                          fontSize: '1rem',
+                          lineHeight: '1.6',
+                          color: '#25245D',
+                          fontWeight: '600',
+                          padding: '8px 0'
+                        }}>
+                          <strong>{cell.content}</strong>
+                        </div>
+                      ) : cell.type === 'question' ? (
                         <div className="question-cell">
                           {processNewlines(stripMarkdownBold(cell.content)).split('________').map((part, partIndex, array) => (
                             <span key={partIndex}>

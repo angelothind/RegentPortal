@@ -1,0 +1,163 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 21-26",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "sectionTitle": "Talk on jobs in fashion design",
+      "questionBlock": [
+        {
+          "questionNumber": 21,
+          "question": "What problem did Chantal have at the start of the talk?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Her view of the speaker was blocked."
+            },
+            {
+              "letter": "B",
+              "text": "She was unable to find an empty seat."
+            },
+            {
+              "letter": "C",
+              "text": "The students next to her were talking."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 22,
+          "question": "What were Hugo and Chantal surprised to hear about the job market?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It has become more competitive than it used to be."
+            },
+            {
+              "letter": "B",
+              "text": "There is more variety in it than they had realised."
+            },
+            {
+              "letter": "C",
+              "text": "Some areas of it are more exciting than others."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 23,
+          "question": "Hugo and Chantal agree that the speaker's message was",
+          "options": [
+            {
+              "letter": "A",
+              "text": "unfair to them at times."
+            },
+            {
+              "letter": "B",
+              "text": "hard for them to follow."
+            },
+            {
+              "letter": "C",
+              "text": "critical of the industry."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 24,
+          "question": "What do Hugo and Chantal criticise about their school careers advice?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "when they received the advice"
+            },
+            {
+              "letter": "B",
+              "text": "how much advice was given"
+            },
+            {
+              "letter": "C",
+              "text": "who gave the advice"
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 25,
+          "question": "When discussing their future, Hugo and Chantal disagree on",
+          "options": [
+            {
+              "letter": "A",
+              "text": "which is the best career in fashion."
+            },
+            {
+              "letter": "B",
+              "text": "when to choose a career in fashion."
+            },
+            {
+              "letter": "C",
+              "text": "why they would like a career in fashion."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 26,
+          "question": "How does Hugo feel about being an unpaid assistant?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "He is realistic about the practice."
+            },
+            {
+              "letter": "B",
+              "text": "He feels the practice is dishonest."
+            },
+            {
+              "letter": "C",
+              "text": "He thinks others want to change the practice."
+            }
+          ],
+          "answer": "A"
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 27 and 28",
+      "formattingInstruction": "Choose TWO letters, A-E.",
+      "mainQuestion": "Which TWO mistakes did the speaker admit she made in her first job?",
+      "questionGroup": {
+        "questionNumbers": ["27", "28"],
+        "options": [
+          { "letter": "A", "text": "being dishonest to her employer" },
+          { "letter": "B", "text": "paying too much attention to how she looked" },
+          { "letter": "C", "text": "expecting to become well known" },
+          { "letter": "D", "text": "trying to earn a lot of money" },
+          { "letter": "E", "text": "openly disliking her client" }
+        ],
+        "correctAnswers": ["B", "E"],
+        "maxSelections": 2
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 29 and 30",
+      "formattingInstruction": "Choose TWO letters, A-E.",
+      "mainQuestion": "Which TWO pieces of retail information do Hugo and Chantal agree would be useful?",
+      "questionGroup": {
+        "questionNumbers": ["29", "30"],
+        "options": [
+          { "letter": "A", "text": "the reasons people return fashion items" },
+          { "letter": "B", "text": "how much time people have to shop for clothes" },
+          { "letter": "C", "text": "fashion designs people want but can't find" },
+          { "letter": "D", "text": "the best time of year for fashion buying" },
+          { "letter": "E", "text": "the most popular fashion sizes" }
+        ],
+        "correctAnswers": ["A", "C"],
+        "maxSelections": 2
+      }
+    }
+  ]
+} 

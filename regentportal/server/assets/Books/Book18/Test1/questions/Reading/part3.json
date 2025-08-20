@@ -1,0 +1,118 @@
+{
+  "passageNumber": 3,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 27-31\nReading Passage 3 has six sections, A-F.",
+      "formattingInstruction": "Which section contains the following information?\nWrite the correct letter, A-F.",
+      "questionBlock": [
+        {
+          "questionNumber": "27",
+          "question": "a reference to the cooperation that takes place to try and minimise risk"
+        },
+        {
+          "questionNumber": "28",
+          "question": "an explanation of a person's aims"
+        },
+        {
+          "questionNumber": "29",
+          "question": "a description of a major collision that occurred in space"
+        },
+        {
+          "questionNumber": "30",
+          "question": "a comparison between tracking objects in space and the efficiency of a transportation system"
+        },
+        {
+          "questionNumber": "31",
+          "question": "a reference to efforts to classify space junk"
+        }
+      ],
+      "correctAnswers": {
+        "27": "A",
+        "28": "B",
+        "29": "C",
+        "30": "D",
+        "31": "E"
+      }
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 32-35\nComplete the summary below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 32-35.",
+      "notesTitle": "The Inter-Agency Space Debris Coordination Committee",
+      "questionBlock": [
+        {
+          "questionNumber": "32-35",
+          "text": "The committee gives advice on how the **32** ________ of space can be achieved. The committee advises that when satellites are no longer active, any unused **33** ________ or pressurised material that could cause **34** ________ should be removed. Although operators of large satellite constellations accept that they have obligations as stewards of space, Holger Krag points out that the operators that become **35** ________ are unlikely to prioritise removing their satellites from space.",
+          "blanks": [
+            { "number": "32", "answer": "sustainability" },
+            { "number": "33", "answer": "fuel" },
+            { "number": "34", "answer": "explosions" },
+            { "number": "35", "answer": "bankrupt" }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "32": "sustainability",
+        "33": "fuel",
+        "34": "explosions",
+        "35": "bankrupt"
+      }
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Look at the following statements (Questions 36-40) and the list of people below.",
+      "formattingInstruction": "Match each statement with the correct person, A, B, C or D.\nWrite the correct letter, A, B, C or D, in boxes 36-40.\nNB You may use any letter more than once.",
+      "opinionsBox": {
+        "title": "List of People",
+        "options": [
+          {
+            "letter": "A",
+            "text": "Carolin Frueh"
+          },
+          {
+            "letter": "B",
+            "text": "Holger Krag"
+          },
+          {
+            "letter": "C",
+            "text": "Marlon Sorge"
+          },
+          {
+            "letter": "D",
+            "text": "Moriba Jah"
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": "36",
+          "question": "Knowing the exact location of space junk would help prevent any possible danger."
+        },
+        {
+          "questionNumber": "37",
+          "question": "Space should be available to everyone and should be preserved for the future."
+        },
+        {
+          "questionNumber": "38",
+          "question": "A recommendation regarding satellites is widely ignored."
+        },
+        {
+          "questionNumber": "39",
+          "question": "There is conflicting information about where some satellites are in space."
+        },
+        {
+          "questionNumber": "40",
+          "question": "There is a risk we will not be able to undo the damage that occurs in space."
+        }
+      ],
+      "correctAnswers": {
+        "36": "A",
+        "37": "D",
+        "38": "B",
+        "39": "C",
+        "40": "D"
+      }
+    }
+  ]
+} 

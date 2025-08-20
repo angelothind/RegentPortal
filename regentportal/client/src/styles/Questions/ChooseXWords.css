@@ -643,6 +643,21 @@
   white-space: nowrap;
 }
 
+/* Add styling for numbered bullets */
+.numbered-bullet {
+  display: inline-block;
+  font-weight: 600;
+  color: #333;
+  margin-right: 8px;
+  min-width: 20px;
+  text-align: right;
+}
+
+/* Ensure numbered bullets are properly aligned */
+.listening-notes-content .numbered-bullet {
+  font-size: 1rem;
+  line-height: 1.6;
+}
 
 
 /* Responsive design */

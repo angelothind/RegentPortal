@@ -2,6 +2,88 @@
   "partNumber": 3,
   "templates": [
     {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 21-24\nChoose the correct letter, A, B or C.",
+      "questionBlock": [
+        {
+          "questionNumber": 21,
+          "question": "At first, Don thought the topic of recycling footwear might be too",
+          "options": [
+            {
+              "letter": "A",
+              "text": "limited in scope."
+            },
+            {
+              "letter": "B",
+              "text": "hard to research."
+            },
+            {
+              "letter": "C",
+              "text": "boring for listeners."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 22,
+          "question": "When discussing trainers, Bella and Don disagree about",
+          "options": [
+            {
+              "letter": "A",
+              "text": "how popular they are among young people."
+            },
+            {
+              "letter": "B",
+              "text": "how suitable they are for school."
+            },
+            {
+              "letter": "C",
+              "text": "how quickly they wear out."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 23,
+          "question": "Bella says that she sometimes recycles shoes because",
+          "options": [
+            {
+              "letter": "A",
+              "text": "they no longer fit."
+            },
+            {
+              "letter": "B",
+              "text": "she no longer likes them."
+            },
+            {
+              "letter": "C",
+              "text": "they are no longer in fashion."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 24,
+          "question": "What did the article say that confused Don?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Public consumption of footwear has risen."
+            },
+            {
+              "letter": "B",
+              "text": "Less footwear is recycled now than in the past."
+            },
+            {
+              "letter": "C",
+              "text": "People dispose of more footwear than they used to."
+            }
+          ],
+          "answer": "B"
+        }
+      ]
+    },
+    {
       "questionType": "matching",
       "introInstruction": "Questions 25-28",
       "formattingInstruction": "What reasons did the recycling manager give for rejecting footwear, according to the students? Choose FOUR answers from the box and write the correct letter, A-F.",

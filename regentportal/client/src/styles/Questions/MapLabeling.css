@@ -4,7 +4,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 20px;
-  min-width: 800px;
+  min-width: 1000px;
   overflow-x: auto;
 }
 
@@ -52,7 +52,7 @@
 .map-section {
   margin-bottom: 30px;
   display: flex;
-  gap: 30px;
+  gap: 40px;
   align-items: flex-start;
   flex-wrap: wrap;
 }
@@ -65,7 +65,7 @@
 }
 
 .map-image {
-  max-width: 550px;
+  max-width: 800px;
   height: auto;
   border: 1px solid #ddd;
   border-radius: 8px;

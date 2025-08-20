@@ -1,0 +1,233 @@
+{
+  "passageNumber": 2,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 14-19\nChoose the correct letter, A, B, C or D.",
+      "formattingInstruction": "Write the correct letter in boxes 14-19.",
+      "questionBlock": [
+        {
+          "questionNumber": 14,
+          "question": "What point does the writer make about AI in the first paragraph?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It is difficult to predict how quickly AI will progress."
+            },
+            {
+              "letter": "B",
+              "text": "Much can be learned about the use of AI in chess machines."
+            },
+            {
+              "letter": "C",
+              "text": "The future is unlikely to see limitations on the capabilities of AI."
+            },
+            {
+              "letter": "D",
+              "text": "Experts disagree on which specialised tasks AI will be able to perform."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 15,
+          "question": "What is the writer doing in the second paragraph?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "explaining why machines will be able to outperform humans"
+            },
+            {
+              "letter": "B",
+              "text": "describing the characteristics that humans and machines share"
+            },
+            {
+              "letter": "C",
+              "text": "giving information about the development of machine intelligence"
+            },
+            {
+              "letter": "D",
+              "text": "indicating which aspects of humans are the most advanced"
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 16,
+          "question": "Why does the writer mention the story of King Midas?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "to compare different visions of progress"
+            },
+            {
+              "letter": "B",
+              "text": "to illustrate that poorly defined objectives can go wrong"
+            },
+            {
+              "letter": "C",
+              "text": "to emphasise the need for cooperation"
+            },
+            {
+              "letter": "D",
+              "text": "to point out the financial advantages of a course of action"
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 17,
+          "question": "What challenge does the writer refer to in the fourth paragraph?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "encouraging humans to behave in a more principled way"
+            },
+            {
+              "letter": "B",
+              "text": "deciding which values we want AI to share with us"
+            },
+            {
+              "letter": "C",
+              "text": "creating a better world for all creatures on the planet"
+            },
+            {
+              "letter": "D",
+              "text": "ensuring AI is more human-friendly than we are ourselves"
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 18,
+          "question": "What does the writer suggest about the future of AI in the fifth paragraph?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The safety of machines will become a key issue."
+            },
+            {
+              "letter": "B",
+              "text": "It is hard to know what impact machines will have on the world."
+            },
+            {
+              "letter": "C",
+              "text": "Machines will be superior to humans in certain respects."
+            },
+            {
+              "letter": "D",
+              "text": "Many humans will oppose machines having a wider role."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 19,
+          "question": "Which of the following best summarises the writer's argument in the sixth paragraph?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "More intelligent machines will result in greater abuses of power."
+            },
+            {
+              "letter": "B",
+              "text": "Machine learning will share very few features with human learning."
+            },
+            {
+              "letter": "C",
+              "text": "There are a limited number of people with the knowledge to program machines."
+            },
+            {
+              "letter": "D",
+              "text": "Human shortcomings will make creating the machines we need more difficult."
+            }
+          ],
+          "answer": "D"
+        }
+      ]
+    },
+    {
+      "questionType": "TFNG",
+      "subType": "YSNG",
+      "introInstruction": "Questions 20-23\nDo the following statements agree with the claims of the writer in Reading Passage 2?",
+      "formattingInstruction": "For questions 20-23 select",
+      "questionBlock": [
+        {
+          "questionNumber": 20,
+          "question": "Machines with the ability to make moral decisions may prevent us from promoting the interests of our communities.",
+          "answer": "NO"
+        },
+        {
+          "questionNumber": 21,
+          "question": "Silicon police would need to exist in large numbers in order to be effective.",
+          "answer": "NOT GIVEN"
+        },
+        {
+          "questionNumber": 22,
+          "question": "Many people are comfortable with the prospect of their independence being restricted by machines.",
+          "answer": "NO"
+        },
+        {
+          "questionNumber": 23,
+          "question": "If we want to ensure that machines act in our best interests, we all need to work together.",
+          "answer": "YES"
+        }
+      ]
+    },
+    {
+      "questionType": "choose-from",
+      "introInstruction": "Questions 24-26\nComplete the summary using the list of phrases, A–F, below.",
+      "formattingInstruction": "Write the correct letter, A-F, in boxes 24-26.",
+      "summaryTitle": "Using AI in the UK health system",
+      "summaryText": "AI currently has a limited role in the way **24** ________ are allocated in the health service. The positive aspect of AI having a bigger role is that it would be more efficient and lead to patient benefits. However, such a change would result, for example, in certain **25** ________ not having their current level of **26** ________ . It is therefore important that AI goals are appropriate so that discriminatory practices could be avoided.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "medical practitioners"
+        },
+        {
+          "letter": "B",
+          "text": "specialised tasks"
+        },
+        {
+          "letter": "C",
+          "text": "available resources"
+        },
+        {
+          "letter": "D",
+          "text": "reduced illness"
+        },
+        {
+          "letter": "E",
+          "text": "professional authority"
+        },
+        {
+          "letter": "F",
+          "text": "technology experts"
+        }
+      ],
+      "questionBlock": [
+        {
+          "questionNumber": 24,
+          "question": "AI currently has a limited role in the way **24** ________ are allocated in the health service.",
+          "answer": "C"
+        },
+        {
+          "questionNumber": 25,
+          "question": "However, such a change would result, for example, in certain **25** ________ not having their current level of **26** ________ .",
+          "answer": "A"
+        },
+        {
+          "questionNumber": 26,
+          "question": "However, such a change would result, for example, in certain **25** ________ not having their current level of **26** ________ .",
+          "answer": "E"
+        }
+      ],
+      "correctAnswers": {
+        "24": "C",
+        "25": "A",
+        "26": "E"
+      }
+    }
+  ]
+} 

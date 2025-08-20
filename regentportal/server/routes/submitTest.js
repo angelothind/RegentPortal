@@ -49,7 +49,7 @@ const loadCorrectAnswers = async (testId, testType, submittedAnswers = {}) => {
     
     for (const part of partsToLoad) {
       const testPath = test.title.replace(/\s+/g, ''); // "Test 1" -> "Test1"
-      const questionFilePath = `assets/Books/Book19/${testPath}/questions/${testType.charAt(0).toUpperCase() + testType.slice(1)}/part${part}.json`;
+      const questionFilePath = `assets/Books/${test.belongsTo}/${testPath}/questions/${testType.charAt(0).toUpperCase() + testType.slice(1)}/part${part}.json`;
       const absolutePath = path.join(__dirname, '..', questionFilePath);
       
       console.log(`🔍 Test title: "${test.title}"`);
@@ -82,6 +82,16 @@ const loadCorrectAnswers = async (testId, testType, submittedAnswers = {}) => {
                 correctAnswers[questionNumber] = group.correctAnswers;
               });
               console.log(`📝 Loaded grouped answers for questions ${group.questionNumbers.join(', ')}:`, group.correctAnswers);
+            } else if (template.questionType === 'table-completion' && template.tableData) {
+              // Table completion format - has tableData with cells containing answers
+              template.tableData.forEach(row => {
+                row.cells.forEach(cell => {
+                  if (cell.type === 'question' && cell.questionNumber && cell.answer) {
+                    correctAnswers[cell.questionNumber] = cell.answer;
+                    console.log(`📝 Loaded table completion answer for question ${cell.questionNumber}:`, cell.answer);
+                  }
+                });
+              });
             }
           });
         }
@@ -103,17 +113,22 @@ const loadCorrectAnswers = async (testId, testType, submittedAnswers = {}) => {
       
       // Get answers for the specific test type
       const testTypeAnswers = test.answers.get(testType.toLowerCase());
-      if (testTypeAnswers && Array.isArray(testTypeAnswers)) {
-        console.log(`📝 Found ${testTypeAnswers.length} ${testType} answers in database`);
-        
-        // Convert array to object with question numbers as keys
-        const dbAnswers = {};
-        testTypeAnswers.forEach((answer, index) => {
-          dbAnswers[(index + 1).toString()] = answer;
-        });
-        
-        console.log(`✅ Loaded ${Object.keys(dbAnswers).length} correct answers from database for ${testType}`);
-        return dbAnswers;
+      if (testTypeAnswers) {
+        if (Array.isArray(testTypeAnswers)) {
+          // Array format - convert to object with array indices as keys (matching Book 19 format)
+          console.log(`📝 Found ${testTypeAnswers.length} ${testType} answers in database (array format)`);
+          const dbAnswers = {};
+          testTypeAnswers.forEach((answer, index) => {
+            dbAnswers[index.toString()] = answer;
+          });
+          console.log(`✅ Converted ${Object.keys(dbAnswers).length} answers from array format`);
+          return dbAnswers;
+        } else if (typeof testTypeAnswers === 'object') {
+          // Object format - already has array indices as keys (Book 19 format)
+          console.log(`📝 Found ${Object.keys(testTypeAnswers).length} ${testType} answers in database (object format)`);
+          console.log(`✅ Loaded ${Object.keys(testTypeAnswers).length} correct answers from database for ${testType}`);
+          return testTypeAnswers;
+        }
       }
     }
     
@@ -222,18 +237,21 @@ router.post('/submit', async (req, res) => {
     Object.keys(normalizedAnswers).forEach(questionNumber => {
       const answer = normalizedAnswers[questionNumber];
       if (answer && typeof answer === 'string') {
-        // If it's a string, try to parse it as JSON (in case it was stringified)
-        try {
-          const parsed = JSON.parse(answer);
-          if (Array.isArray(parsed)) {
-            normalizedAnswers[questionNumber] = parsed;
-            console.log(`🔧 Fixed question ${questionNumber}: converted string "${answer}" to array:`, parsed);
+        // Only try to parse as JSON if it looks like it might be a MultipleChoiceTwo answer
+        // (contains brackets or looks like it was stringified)
+        if (answer.startsWith('[') && answer.endsWith(']')) {
+          try {
+            const parsed = JSON.parse(answer);
+            if (Array.isArray(parsed)) {
+              normalizedAnswers[questionNumber] = parsed;
+              console.log(`🔧 Fixed question ${questionNumber}: converted string "${answer}" to array:`, parsed);
+            }
+          } catch (e) {
+            // If parsing fails, keep as string
+            console.log(`🔧 Failed to parse "${answer}" as JSON, keeping as string`);
           }
-        } catch (e) {
-          // If parsing fails, treat as single answer
-          normalizedAnswers[questionNumber] = [answer];
-          console.log(`🔧 Fixed question ${questionNumber}: converted string "${answer}" to single-item array:`, [answer]);
         }
+        // If it doesn't look like a JSON array, keep it as a string (don't convert to array)
       }
     });
     
@@ -299,11 +317,23 @@ router.post('/submit', async (req, res) => {
         const normalizedUserAnswer = userAnswer ? userAnswer.toString().trim().toUpperCase() : '';
         const normalizedCorrectAnswer = correctAnswer ? correctAnswer.toString().trim().toUpperCase() : '';
         
-        isCorrect = normalizedUserAnswer !== '' && normalizedUserAnswer === normalizedCorrectAnswer;
+        // Debug empty answers
+        console.log(`🔍 Question ${questionNumber} answer analysis:`, {
+          originalUserAnswer: userAnswer,
+          normalizedUserAnswer,
+          isEmpty: normalizedUserAnswer === '',
+          correctAnswer: normalizedCorrectAnswer,
+          willBeMarkedCorrect: normalizedUserAnswer !== '' && normalizedUserAnswer === normalizedCorrectAnswer
+        });
+        
+        // Ensure empty/falsy answers are marked as incorrect
+        const hasValidAnswer = normalizedUserAnswer && normalizedUserAnswer.trim() !== '';
+        isCorrect = hasValidAnswer && normalizedUserAnswer === normalizedCorrectAnswer;
         
         console.log(`📝 Single answer question ${questionNumber} result:`, {
           userAnswer: normalizedUserAnswer,
           correctAnswer: normalizedCorrectAnswer,
+          hasValidAnswer,
           isCorrect: isCorrect
         });
       }

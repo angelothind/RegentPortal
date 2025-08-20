@@ -1,0 +1,122 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 1-5\nComplete the notes below.",
+      "formattingInstruction": "Write ONE WORD ONLY for each answer.",
+      "notesTitle": "Working at Milo's Restaurants",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Benefits"
+        },
+        {
+          "questionNumber": "1",
+          "question": "**1** ________ provided for all staff",
+          "answer": "uniforms",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "2",
+          "question": "**2** ________ during weekdays at all Milo's Restaurants",
+          "answer": "lunch",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "3",
+          "question": "**3** ________ provided after midnight",
+          "answer": "transport",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Person specification"
+        },
+        {
+          "questionNumber": "4",
+          "question": "must care about maintaining a high standard of **4** ________",
+          "answer": "service",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "5",
+          "question": "must have a qualification in **5** ________",
+          "answer": "cooking",
+          "bulletLevel": 0
+        }
+      ],
+      "correctAnswers": {
+        "1": "uniforms",
+        "2": "lunch",
+        "3": "transport",
+        "4": "service",
+        "5": "cooking"
+      }
+    },
+    {
+      "questionType": "table-completion",
+      "introInstruction": "Questions 6-10\nComplete the table below.",
+      "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
+      "tableTitle": "Job positions at Milo's Restaurants",
+      "tableStructure": {
+        "columns": 4,
+        "rows": 2,
+        "headers": ["Location", "Job title", "Responsibilities include", "Pay and conditions"]
+      },
+      "tableData": [
+        {
+          "row": 1,
+          "cells": [
+            {
+              "content": "**6** ________ Street",
+              "type": "question",
+              "questionNumber": 6,
+              "answer": "Park"
+            },
+            {
+              "content": "Breakfast supervisor",
+              "type": "text"
+            },
+            {
+              "content": "• Checking portions, etc. are correct\n• Making sure **7** ________ is clean",
+              "type": "question",
+              "questionNumber": 7,
+              "answer": "kitchen"
+            },
+            {
+              "content": "• Starting salary £**8** ________ per hour\n• Start work at 5.30 a.m.",
+              "type": "question",
+              "questionNumber": 8,
+              "answer": "12"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            {
+              "content": "City Road",
+              "type": "text"
+            },
+            {
+              "content": "Junior chef",
+              "type": "text"
+            },
+            {
+              "content": "• Supporting senior chefs\n• Maintaining stock and organising **9** ________",
+              "type": "question",
+              "questionNumber": 9,
+              "answer": "supplies"
+            },
+            {
+              "content": "• Annual salary £23,000\n• No work on a **10** ________ once a month",
+              "type": "question",
+              "questionNumber": 10,
+              "answer": "Sunday"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 1-3\nComplete the sentences below.",
+      "formattingInstruction": "Choose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer. \nWrite your answers in boxes 1-3.",
+      "notesTitle": "Urban farming in Paris",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "questionNumber": "1",
+          "question": "Vertical tubes are used to grow strawberries, **1** ________ and herbs.",
+          "answer": "lettuces",
+          "numbered": true,
+          "numberedIndex": 1
+        },
+        {
+          "questionNumber": "2",
+          "question": "There will eventually be a daily harvest of as much as **2** ________ in weight of fruit and vegetables.",
+          "answer": "1,000 kg",
+          "numbered": true,
+          "numberedIndex": 2
+        },
+        {
+          "questionNumber": "3",
+          "question": "It may be possible that the farm's produce will account for as much as 10% of the city's **3** ________ overall.",
+          "answer": "(food) consumption",
+          "numbered": true,
+          "numberedIndex": 3
+        }
+      ],
+      "correctAnswers": {
+        "1": "lettuces",
+        "2": "1,000 kg",
+        "3": "(food) consumption"
+      }
+    },
+    {
+      "questionType": "table-completion",
+      "introInstruction": "Questions 4-7\nComplete the table below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer. \nWrite your answers in boxes 4-7.",
+      "tableTitle": "Intensive farming versus aeroponic urban farming",
+      "tableStructure": {
+        "columns": 4,
+        "rows": 2,
+        "headers": ["", "Growth", "Selection", "Sale"]
+      },
+      "tableData": [
+        {
+          "row": 1,
+          "cells": [
+            { "content": "Intensive farming", "type": "row-header" },
+            { "content": "• wide range of **4** ________ used\n• techniques pollute air", "type": "question", "questionNumber": 4, "answer": "pesticides" },
+            { "content": "• quality not good\n• varieties of fruit and vegetables chosen that can survive long **5** ________", "type": "question", "questionNumber": 5, "answer": "journeys" },
+            { "content": "**6** ________ receive very little of overall income", "type": "question", "questionNumber": 6, "answer": "farmers" }
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            { "content": "Aeroponic urban farming", "type": "row-header" },
+            { "content": "• no soil used\n• nutrients added to water, which is recycled", "type": "text" },
+            { "content": "• produce chosen because of its **7** ________", "type": "question", "questionNumber": 7, "answer": "taste" },
+            { "content": "• local markets\n• higher prices", "type": "text" }
+          ]
+        }
+      ]
+    },
+    {
+      "questionType": "TFNG",
+      "introInstruction": "Questions 8-13\nDo the following statements agree with the information given in Reading Passage 1?",
+      "formattingInstruction": "For questions 8-13 select",
+      "questionBlock": [
+        {
+          "questionNumber": "8",
+          "question": "Urban farming can take place above or below ground."
+        },
+        {
+          "questionNumber": "9",
+          "question": "Some of the equipment used in aeroponic farming can be made by hand."
+        },
+        {
+          "questionNumber": "10",
+          "question": "Urban farming relies more on electricity than some other types of farming."
+        },
+        {
+          "questionNumber": "11",
+          "question": "Fruit and vegetables grown on an aeroponic urban farm are cheaper than traditionally grown organic produce."
+        },
+        {
+          "questionNumber": "12",
+          "question": "Most produce can be grown on an aeroponic urban farm at any time of the year."
+        },
+        {
+          "questionNumber": "13",
+          "question": "Beans take longer to grow on an urban farm than other vegetables."
+        }
+      ],
+      "correctAnswers": {
+        "8": "TRUE",
+        "9": "FALSE",
+        "10": "NOT GIVEN",
+        "11": "FALSE",
+        "12": "TRUE",
+        "13": "NOT GIVEN"
+      }
+    }
+  ]
+} 

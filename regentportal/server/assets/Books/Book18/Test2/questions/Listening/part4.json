@@ -1,0 +1,103 @@
+{
+  "partNumber": 4,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 31-40\nComplete the notes below.",
+      "formattingInstruction": "Write ONE WORD ONLY for each answer.",
+      "notesTitle": "Pockets",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Reason for choice of subject"
+        },
+        {
+          "questionNumber": "31",
+          "question": "They are **31** ________ but can be overlooked by consumers and designers.",
+          "answer": "common",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Pockets in men's clothes"
+        },
+        {
+          "questionNumber": "32",
+          "question": "Men started to wear **32** ________ in the 18th century.",
+          "answer": "pockets",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "33",
+          "question": "A **33** ________ sewed pockets into the lining of the garments.",
+          "answer": "tailor",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "34",
+          "question": "Bigger pockets might be made for men who belonged to a certain type of **34** ________.",
+          "answer": "profession",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "The wearer could use the pockets for small items.",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Pockets in women's clothes"
+        },
+        {
+          "questionNumber": "35",
+          "question": "Women's pockets were less **35** ________ than men's.",
+          "answer": "convenient",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "36",
+          "question": "Pockets were produced in pairs using **36** ________ to link them together.",
+          "answer": "ribbon",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "37",
+          "question": "Pockets hung from the women's **37** ________ under skirts and petticoats.",
+          "answer": "waist",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "38",
+          "question": "Items such as **38** ________ could be reached through a gap in the material.",
+          "answer": "keys",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "39",
+          "question": "When dresses changed shape, hidden pockets had a negative effect on the **39** ________ of women.",
+          "answer": "freedom",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "40",
+          "question": "Bags called 'pouches' became popular, before women carried a **40** ________.",
+          "answer": "handbag",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "Pockets, of various sizes, stayed inside clothing for many decades.",
+          "bulletLevel": 0
+        }
+      ],
+      "correctAnswers": {
+        "31": "common",
+        "32": "pockets",
+        "33": "tailor",
+        "34": "profession",
+        "35": "convenient",
+        "36": "ribbon",
+        "37": "waist",
+        "38": "keys",
+        "39": "freedom",
+        "40": "handbag"
+      }
+    }
+  ]
+} 

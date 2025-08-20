@@ -39,10 +39,21 @@ router.get('/:id/reading', async (req, res) => {
     const readingAnswers = test.answers?.get('reading') || [];
     const correctAnswers = {};
     
-    // Map the flat array of answers to question numbers (1-40)
-    readingAnswers.forEach((answer, index) => {
-      correctAnswers[index + 1] = answer;
-    });
+    // Handle both array format and MongoDB array-as-object format
+    if (Array.isArray(readingAnswers)) {
+      // Standard array format
+      readingAnswers.forEach((answer, index) => {
+        correctAnswers[index + 1] = answer;
+      });
+    } else if (typeof readingAnswers === 'object' && readingAnswers !== null) {
+      // MongoDB array-as-object format (keys are numeric strings)
+      Object.keys(readingAnswers).forEach(indexStr => {
+        const index = parseInt(indexStr);
+        if (!isNaN(index)) {
+          correctAnswers[index + 1] = readingAnswers[indexStr];
+        }
+      });
+    }
 
     res.json({
       testId: test._id,
@@ -72,10 +83,21 @@ router.get('/:id/listening', async (req, res) => {
     const listeningAnswers = test.answers?.get('listening') || [];
     const correctAnswers = {};
     
-    // Map the flat array of answers to question numbers (1-40)
-    listeningAnswers.forEach((answer, index) => {
-      correctAnswers[index + 1] = answer;
-    });
+    // Handle both array format and MongoDB array-as-object format
+    if (Array.isArray(listeningAnswers)) {
+      // Standard array format
+      listeningAnswers.forEach((answer, index) => {
+        correctAnswers[index + 1] = answer;
+      });
+    } else if (typeof listeningAnswers === 'object' && listeningAnswers !== null) {
+      // MongoDB array-as-object format (keys are numeric strings)
+      Object.keys(listeningAnswers).forEach(indexStr => {
+        const index = parseInt(indexStr);
+        if (!isNaN(index)) {
+          correctAnswers[index + 1] = listeningAnswers[indexStr];
+        }
+      });
+    }
 
     res.json({
       testId: test._id,
@@ -105,21 +127,30 @@ router.get('/:id/questions/:part', async (req, res) => {
       return res.status(400).json({ error: 'Test type is required' });
     }
 
-    // Construct the path to the question file based on user's selection
+    // Construct the path to the question file based on test's book and title
     const testPath = test.title.replace(/\s+/g, ''); // "Test 1" -> "Test1"
     
     // Extract just the number from the part parameter (e.g., "part1" -> "1")
     const partNumber = part.replace(/^part/i, '');
-    const questionFilePath = `assets/Books/Book19/${testPath}/questions/${testType.charAt(0).toUpperCase() + testType.slice(1)}/part${partNumber}.json`;
+    const questionFilePath = `assets/Books/${test.belongsTo}/${testPath}/questions/${testType.charAt(0).toUpperCase() + testType.slice(1)}/part${partNumber}.json`;
     const absolutePath = path.join(__dirname, '..', questionFilePath);
     
     console.log(`🔍 Looking for question file: ${absolutePath}`);
     console.log(`📋 User selected test type: ${testType}`);
+    console.log(`📚 Test belongs to: ${test.belongsTo}`);
+    console.log(`🧪 Test title: ${test.title}`);
     
     // Check if file exists
     if (!fs.existsSync(absolutePath)) {
       console.error(`❌ Question file not found: ${absolutePath}`);
-      return res.status(404).json({ error: 'Question file not found' });
+      return res.status(404).json({ 
+        error: 'No questions available for this test',
+        details: `Question file not found: ${questionFilePath}`,
+        testBook: test.belongsTo,
+        testTitle: test.title,
+        testType: testType,
+        part: part
+      });
     }
     
     // Read and parse the JSON file

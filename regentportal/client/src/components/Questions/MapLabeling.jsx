@@ -64,9 +64,16 @@ const MapLabeling = ({ template, onAnswerChange, testResults, testSubmitted, com
       <div className="map-section">
         <div className="map-image-container">
           <img 
-            src={`/assets/Books/Book19/Test1/questions/Listening/${template.mapImage}`} 
+            src={`/assets/Books/Book18/Test2/maps/${template.mapImage}`} 
             alt={template.mapTitle}
             className="map-image"
+            onError={(e) => {
+              console.error('❌ Failed to load map image:', e.target.src);
+              // Try alternative paths if the first one fails
+              if (e.target.src.includes('Book18/Test2/maps/')) {
+                e.target.src = `/assets/Books/Book19/Test1/questions/Listening/${template.mapImage}`;
+              }
+            }}
           />
         </div>
       

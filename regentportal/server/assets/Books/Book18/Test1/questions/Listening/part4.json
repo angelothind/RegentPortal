@@ -1,0 +1,108 @@
+{
+  "partNumber": 4,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 31-40",
+      "formattingInstruction": "Complete the notes below.\nWrite ONE WORD ONLY for each answer.",
+      "notesTitle": "Elephant translocation",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Reasons for overpopulation at Majete National Park"
+        },
+        {
+          "descriptiveText": "Strict enforcement of anti-poaching laws",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "Successful breeding",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Problems caused by elephant overpopulation"
+        },
+        {
+          "descriptiveText": "Greater competition, causing hunger for elephants",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 31,
+          "question": "Damage to **31** ________ in the park",
+          "answer": "fences"
+        },
+        {
+          "sectionHeading": "The translocation process"
+        },
+        {
+          "questionNumber": 32,
+          "question": "A suitable group of elephants from the same **32** ________ was selected",
+          "answer": "family"
+        },
+        {
+          "questionNumber": 33,
+          "question": "Vets and park staff made use of **33** ________ to help guide the elephants into an open plain",
+          "answer": "helicopters"
+        },
+        {
+          "descriptiveText": "Elephants were immobilised with tranquilisers:",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 34,
+          "question": "This process had to be completed quickly to reduce **34** ________",
+          "answer": "stress",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 35,
+          "question": "Elephants had to be turned on their **35** ________ to avoid damage to their lungs",
+          "answer": "sides",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 36,
+          "question": "Elephants' **36** ________ had to be monitored constantly",
+          "answer": "breathing",
+          "bulletLevel": 1
+        },
+        {
+          "descriptiveText": "Tracking devices were fitted to the matriarchs",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 37,
+          "question": "Data including the size of their tusks and **37** ________ was taken",
+          "answer": "feet",
+          "bulletLevel": 1
+        },
+        {
+          "descriptiveText": "Elephants were taken by truck to their new reserve",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Advantages of translocation at Nkhotakota Wildlife Park"
+        },
+        {
+          "questionNumber": 38,
+          "question": "**38** ________ opportunities",
+          "answer": "employment"
+        },
+        {
+          "questionNumber": 39,
+          "question": "A reduction in the number of poachers and **39** ________",
+          "answer": "weapons"
+        },
+        {
+          "descriptiveText": "An example of conservation that other parks can follow",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 40,
+          "question": "An increase in **40** ________ as a contributor to GDP",
+          "answer": "tourism"
+        }
+      ]
+    }
+  ]
+} 
