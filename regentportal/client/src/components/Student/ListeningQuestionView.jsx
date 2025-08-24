@@ -6,6 +6,7 @@ import Matching from '../Questions/Matching';
 import MapLabeling from '../Questions/MapLabeling';
 import TableCompletion from '../Questions/TableCompletion';
 import FlowchartCompletion from '../Questions/FlowchartCompletion';
+import TFNG from '../Questions/TFNG';
 import { calculateIELTSBand, formatBandScore, getBandScoreDescription } from '../../utils/bandScoreCalculator';
 
 const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null }) => {
@@ -50,8 +51,30 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
             return;
           }
           
-          setAnswers(parsedAnswers);
-          console.log('📝 Loaded saved answers from localStorage:', parsedAnswers);
+          // Remove the timestamp from the answers object before setting state
+          const { _timestamp, _currentPart, _testSubmitted, _testResults, _testStarted, ...answersWithoutTimestamp } = parsedAnswers;
+          setAnswers(answersWithoutTimestamp);
+          
+          // Restore the current part if it was saved
+          if (_currentPart && typeof _currentPart === 'number') {
+            setCurrentPart(_currentPart);
+            console.log('📝 Restored current part from localStorage:', _currentPart);
+          }
+          
+          // Restore testSubmitted and testResults if they were saved
+          if (_testSubmitted && _testResults) {
+            setTestSubmitted(true);
+            setTestResults(_testResults);
+            console.log('📝 Restored testSubmitted and testResults from localStorage');
+          }
+          
+          // Restore testStarted if it was saved
+          if (_testStarted) {
+            setTestStarted(true);
+            console.log('📝 Restored testStarted from localStorage');
+          }
+          
+          console.log('📝 Loaded saved answers from localStorage:', answersWithoutTimestamp);
         } catch (error) {
           console.error('❌ Error parsing saved answers:', error);
         }
@@ -75,6 +98,22 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [testStarted, testSubmitted, answers]);
+
+  // Save test state to localStorage when part changes
+  useEffect(() => {
+    if (selectedTest && selectedTest.testId && testStarted) {
+      const answersWithTimestamp = {
+        ...answers,
+        _timestamp: Date.now(),
+        _currentPart: currentPart,
+        _testSubmitted: testSubmitted,
+        _testStarted: testStarted,
+        _testResults: testResults
+      };
+      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
+      console.log(`📝 Test state saved to localStorage for Part ${currentPart}`);
+    }
+  }, [currentPart, selectedTest, testStarted, testSubmitted, testResults, answers]);
 
 
 
@@ -100,10 +139,14 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     if (selectedTest && selectedTest.testId) {
       const answersWithTimestamp = {
         ...newAnswers,
-        _timestamp: Date.now()
+        _timestamp: Date.now(),
+        _currentPart: currentPart,
+        _testSubmitted: testSubmitted,
+        _testStarted: testStarted,
+        _testResults: testResults
       };
       localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
-      console.log('📝 Answers saved to localStorage with timestamp:', answersWithTimestamp);
+      console.log('📝 Answers and test state saved to localStorage with timestamp:', answersWithTimestamp);
     }
     
     console.log('📝 Answers updated:', newAnswers);
@@ -112,6 +155,20 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
   const handleStartTest = () => {
     setTestStarted(true);
     console.log('🚀 Test started');
+    
+    // Save test state to localStorage
+    if (selectedTest && selectedTest.testId) {
+      const answersWithTimestamp = {
+        ...answers,
+        _timestamp: Date.now(),
+        _currentPart: currentPart,
+        _testSubmitted: testSubmitted,
+        _testStarted: true,
+        _testResults: testResults
+      };
+      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
+      console.log('📝 Test started state saved to localStorage');
+    }
   };
 
   // Audio player event handlers
@@ -272,6 +329,28 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
         });
         setTestSubmitted(true);
         
+        // Save the submitted answers and current part state to localStorage
+        if (selectedTest && selectedTest.testId) {
+          const answersWithTimestamp = {
+            ...answers,
+            _timestamp: Date.now(),
+            _currentPart: currentPart,
+            _testSubmitted: true,
+            _testStarted: true,
+            _testResults: {
+              score: result.data.score,
+              totalQuestions: result.data.totalQuestions,
+              correctCount: result.data.correctCount,
+              answers: answers,
+              correctAnswers: correctAnswers,
+              results: result.data.results,
+              submittedAt: result.data.submittedAt
+            }
+          };
+          localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
+          console.log('📝 Submitted test state saved to localStorage');
+        }
+        
         alert(`Test submitted successfully!\nYour score: ${result.data.score}%`);
       } else {
         throw new Error(result.message || 'Failed to submit test');
@@ -291,7 +370,14 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     setTestResults(null);
     setAnswers({});
     setCurrentPart(1);
-    console.log('🔄 Test reset');
+    
+    // Clear saved test state from localStorage
+    if (selectedTest && selectedTest.testId) {
+      localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`);
+      console.log('📝 Cleared saved test state from localStorage after reset');
+    }
+    
+    console.log('🔄 Test reset - returned to Part 1 and cleared overlay');
   };
 
   useEffect(() => {
@@ -342,6 +428,21 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     console.log('🔄 Switching from Part', currentPart, 'to Part', partNumber);
     setCurrentPart(partNumber);
     setQuestionData(null); // Clear current data when switching parts
+    
+    // Save current part to localStorage
+    if (selectedTest && selectedTest.testId) {
+      const answersWithTimestamp = {
+        ...answers,
+        _timestamp: Date.now(),
+        _currentPart: partNumber,
+        _testSubmitted: testSubmitted,
+        _testStarted: testStarted,
+        _testResults: testResults
+      };
+      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
+      console.log(`📝 Part changed to ${partNumber}, saved to localStorage`);
+    }
+    
     // Note: Audio player state is preserved as it's in the header and doesn't depend on question data
   };
 
@@ -514,6 +615,19 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
               currentAnswers={answers}
             />
           );
+        case 'TFNG':
+          return (
+            <TFNG
+              key={componentId}
+              template={template}
+              onAnswerChange={handleAnswerChange}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
+              testType={selectedTest.type}
+              componentId={componentId}
+              currentAnswers={answers}
+            />
+          );
         default:
           return (
             <div key={componentId} className="unsupported-question-type">
@@ -615,6 +729,8 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
               >
                 {testSubmitted ? "Reset Test" : "Submit Test"}
               </button>
+              
+
             </div>
           )}
           

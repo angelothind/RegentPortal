@@ -1,0 +1,140 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 1-7\nComplete the notes below.",
+      "formattingInstruction": "Write ONE WORD ONLY for each answer.",
+      "notesTitle": "Opportunities for voluntary work in Southoe village",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Library"
+        },
+        {
+          "questionNumber": 1,
+          "question": "Help with **1** ________ books (times to be arranged)",
+          "answer": "sorting"
+        },
+        {
+          "questionNumber": 2,
+          "question": "Help needed to keep **2** ________ of books up to date",
+          "answer": "records"
+        },
+        {
+          "questionNumber": 3,
+          "question": "Library is in the **3** ________ Room in the village hall",
+          "answer": "meeting"
+        },
+        {
+          "sectionHeading": "Lunch club"
+        },
+        {
+          "questionNumber": 4,
+          "question": "Help by providing **4** ________",
+          "answer": "transport"
+        },
+        {
+          "questionNumber": 5,
+          "question": "Help with hobbies such as **5** ________",
+          "answer": "painting"
+        },
+        {
+          "sectionHeading": "Help for individuals needed next week"
+        },
+        {
+          "questionNumber": 6,
+          "question": "Taking Mrs Carroll to **6** ________",
+          "answer": "hospital"
+        },
+        {
+          "questionNumber": 7,
+          "question": "Work in the **7** ________ at Mr Selsbury's house",
+          "answer": "garden"
+        }
+      ]
+    },
+    {
+      "questionType": "table-completion",
+      "introInstruction": "Questions 8-10\nComplete the table below.",
+      "formattingInstruction": "Write ONE WORD ONLY for each answer.",
+      "tableTitle": "Village social events",
+      "tableStructure": {
+        "columns": 4,
+        "rows": 3,
+        "headers": ["Date", "Event", "Location", "Help needed"]
+      },
+      "tableData": [
+        {
+          "row": 1,
+          "cells": [
+            {
+              "content": "19 Oct",
+              "type": "text"
+            },
+            {
+              "content": "**8** ________",
+              "type": "question",
+              "questionNumber": 8,
+              "answer": "concert"
+            },
+            {
+              "content": "Village hall",
+              "type": "text"
+            },
+            {
+              "content": "providing refreshments",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            {
+              "content": "18 Nov",
+              "type": "text"
+            },
+            {
+              "content": "dance",
+              "type": "text"
+            },
+            {
+              "content": "Village hall",
+              "type": "text"
+            },
+            {
+              "content": "checking **9** ________",
+              "type": "question",
+              "questionNumber": 9,
+              "answer": "tickets"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "cells": [
+            {
+              "content": "31 Dec",
+              "type": "text"
+            },
+            {
+              "content": "New Year's Eve party",
+              "type": "text"
+            },
+            {
+              "content": "Mountfort Hotel",
+              "type": "text"
+            },
+            {
+              "content": "designing the **10** ________",
+              "type": "question",
+              "questionNumber": 10,
+              "answer": "decorations"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+} 

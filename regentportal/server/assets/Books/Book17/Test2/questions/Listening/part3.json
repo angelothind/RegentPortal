@@ -1,0 +1,101 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 21 and 22\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 21 and 22.",
+      "questionGroup": {
+        "questionNumbers": ["21", "22"],
+        "options": [
+          {
+            "letter": "A",
+            "text": "analysis of the text"
+          },
+          {
+            "letter": "B",
+            "text": "a summary of the plot"
+          },
+          {
+            "letter": "C",
+            "text": "a description of the theatre"
+          },
+          {
+            "letter": "D",
+            "text": "a personal reaction"
+          },
+          {
+            "letter": "E",
+            "text": "a reference to particular scenes"
+          }
+        ],
+        "correctAnswers": ["A", "D"],
+        "maxSelections": 2
+      }
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 28-30\nChoose the correct letter, A, B or C.",
+      "formattingInstruction": "Write the correct letter in boxes 28-30.",
+      "questionBlock": [
+        {
+          "questionNumber": 28,
+          "question": "The students think the story of Romeo and Juliet is still relevant for young people today because",
+          "options": [
+            {
+              "letter": "A",
+              "text": "it illustrates how easily conflict can start."
+            },
+            {
+              "letter": "B",
+              "text": "it deals with problems that families experience."
+            },
+            {
+              "letter": "C",
+              "text": "it teaches them about relationships."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 29,
+          "question": "The students found watching Romeo and Juliet in another language",
+          "options": [
+            {
+              "letter": "A",
+              "text": "frustrating."
+            },
+            {
+              "letter": "B",
+              "text": "demanding."
+            },
+            {
+              "letter": "C",
+              "text": "moving."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 30,
+          "question": "Why do the students think Shakespeare's plays have such international appeal?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "The stories are exciting."
+            },
+            {
+              "letter": "B",
+              "text": "There are recognisable characters."
+            },
+            {
+              "letter": "C",
+              "text": "They can be interpreted in many ways."
+            }
+          ],
+          "answer": "C"
+        }
+      ]
+    }
+  ]
+} 

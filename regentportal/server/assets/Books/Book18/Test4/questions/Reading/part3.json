@@ -1,0 +1,197 @@
+{
+  "passageNumber": 3,
+  "templates": [
+    {
+      "questionType": "TFNG",
+      "subType": "YSNG",
+      "introInstruction": "Questions 27-30\nDo the following statements agree with the claims of the writer in Reading Passage 3?",
+      "formattingInstruction": "In boxes 27-30 on your answer sheet, write",
+      "questionBlock": [
+        {
+          "questionNumber": 27,
+          "question": "Wegener's ideas about continental drift were widely disputed while he was alive.",
+          "answer": "YES"
+        },
+        {
+          "questionNumber": 28,
+          "question": "The idea that the continents remained fixed in place was defended in a number of respected scientific publications.",
+          "answer": "NO"
+        },
+        {
+          "questionNumber": 29,
+          "question": "Wegener relied on a limited range of scientific fields to support his theory of continental drift.",
+          "answer": "NOT GIVEN"
+        },
+        {
+          "questionNumber": 30,
+          "question": "The similarities between Wegener's theory of continental drift and modern-day plate tectonics are enormous.",
+          "answer": "YES"
+        }
+      ]
+    },
+    {
+      "questionType": "choose-from",
+      "introInstruction": "Questions 31-36\nComplete the summary using the list of phrases, A-J, below.",
+      "formattingInstruction": "Write the correct letter, A-J, in boxes 31-36.",
+      "mainQuestion": "Wegener's life and work",
+      "summaryText": "One of the remarkable things about Wegener from a **31** ________ is that although he proposed a theory of continental drift, he was not a geologist. His **32** ________ were limited to atmospheric physics. However, at the time he proposed his theory of continental drift in 1912, he was already a person of **33** ________. Six years previously, there had been his **34** ________ of 52 hours in a hot-air balloon, followed by his well-publicised but **35** ________ of Greenland's coast. With the publication of his textbook on thermodynamics, he had also come to the attention of a **36** ________ of German scientists.",
+      "questionBlock": [
+        { "questionNumber": "31" },
+        { "questionNumber": "32" },
+        { "questionNumber": "33" },
+        { "questionNumber": "34" },
+        { "questionNumber": "35" },
+        { "questionNumber": "36" }
+      ],
+      "options": [
+        {
+          "letter": "A",
+          "text": "modest fame"
+        },
+        {
+          "letter": "B",
+          "text": "vast range"
+        },
+        {
+          "letter": "C",
+          "text": "record-breaking achievement"
+        },
+        {
+          "letter": "D",
+          "text": "research methods"
+        },
+        {
+          "letter": "E",
+          "text": "select group"
+        },
+        {
+          "letter": "F",
+          "text": "professional interests"
+        },
+        {
+          "letter": "G",
+          "text": "scientific debate"
+        },
+        {
+          "letter": "H",
+          "text": "hazardous exploration"
+        },
+        {
+          "letter": "I",
+          "text": "biographer's perspective"
+        },
+        {
+          "letter": "J",
+          "text": "narrow investigation"
+        }
+      ],
+      "correctAnswers": {
+        "31": "I",
+        "32": "F",
+        "33": "A",
+        "34": "C",
+        "35": "H",
+        "36": "E"
+      }
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 37-40\nChoose the correct letter, A, B, C or D.",
+      "formattingInstruction": "Write the correct letter in boxes 37-40.",
+      "questionBlock": [
+        {
+          "questionNumber": 37,
+          "question": "What is Mott T Greene doing in the fifth paragraph?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "describing what motivated him to write the book"
+            },
+            {
+              "letter": "B",
+              "text": "explaining why it is desirable to read the whole book"
+            },
+            {
+              "letter": "C",
+              "text": "suggesting why Wegener pursued so many different careers"
+            },
+            {
+              "letter": "D",
+              "text": "indicating what aspects of Wegener's life interested him most"
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 38,
+          "question": "What is said about Wegener in the sixth paragraph?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "He was not a particularly ambitious person."
+            },
+            {
+              "letter": "B",
+              "text": "He kept a record of all his scientific observations."
+            },
+            {
+              "letter": "C",
+              "text": "He did not adopt many of the scientific practices of the time."
+            },
+            {
+              "letter": "D",
+              "text": "He enjoyed discussing new discoveries with other scientists."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 39,
+          "question": "What does Greene say about some other famous scientists?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Their published works had a greater impact than Wegener's did."
+            },
+            {
+              "letter": "B",
+              "text": "They had fewer doubts about their scientific ideas than Wegener did."
+            },
+            {
+              "letter": "C",
+              "text": "Their scientific ideas were more controversial than Wegener's."
+            },
+            {
+              "letter": "D",
+              "text": "They are easier subjects to write about than Wegener."
+            }
+          ],
+          "answer": "D"
+        },
+        {
+          "questionNumber": 40,
+          "question": "What is Greene's main point in the final paragraph?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It is not enough in life to have good intentions."
+            },
+            {
+              "letter": "B",
+              "text": "People need to plan carefully if they want to succeed."
+            },
+            {
+              "letter": "C",
+              "text": "People have little control over many aspects of their lives."
+            },
+            {
+              "letter": "D",
+              "text": "It is important that people ensure they have the freedom to act."
+            }
+          ],
+          "answer": "C"
+        }
+      ]
+    }
+  ]
+} 

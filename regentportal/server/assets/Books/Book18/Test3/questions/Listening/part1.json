@@ -1,0 +1,194 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "table-completion",
+      "introInstruction": "Questions 1-4\nComplete the form below. Write ONE WORD AND/OR A NUMBER for each answer.",
+      "formattingInstruction": "Write your answers in boxes 1-4",
+      "tableTitle": "Wayside Camera Club membership form",
+      "tableStructure": {
+        "columns": 2,
+        "rows": 6,
+        "headers": ["Information", "Details"]
+      },
+      "tableData": [
+        {
+          "row": 1,
+          "cells": [
+            {
+              "content": "Name:",
+              "type": "text"
+            },
+            {
+              "content": "Dan Green",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            {
+              "content": "Email address:",
+              "type": "text"
+            },
+            {
+              "content": "dan1068@market.com",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "cells": [
+            {
+              "content": "Home address:",
+              "type": "text"
+            },
+            {
+              "content": "52 **1** ________ Street, Peacetown",
+              "type": "question",
+              "questionNumber": 1,
+              "answer": "Oak"
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "cells": [
+            {
+              "content": "Heard about us:",
+              "type": "text"
+            },
+            {
+              "content": "from a **2** ________",
+              "type": "question",
+              "questionNumber": 2,
+              "answer": "friend"
+            }
+          ]
+        },
+        {
+          "row": 5,
+          "cells": [
+            {
+              "content": "Reasons for joining:",
+              "type": "text"
+            },
+            {
+              "content": " to enter competitions | to **3** ________",
+              "type": "question",
+              "questionNumber": 3,
+              "answer": "learn"
+            }
+          ]
+        },
+        {
+          "row": 6,
+          "cells": [
+            {
+              "content": "Type of membership:",
+              "type": "text"
+            },
+            {
+              "content": "**4** ________ membership (£30)",
+              "type": "question",
+              "questionNumber": 4,
+              "answer": "annual"
+            }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "1": "Oak",
+        "2": "friend",
+        "3": "learn",
+        "4": "annual"
+      }
+    },
+    {
+      "questionType": "table-completion",
+      "introInstruction": "Questions 5-10\nComplete the table below. Write NO MORE THAN TWO WORDS for each answer.",
+      "formattingInstruction": "Write your answers in boxes 5-10",
+      "tableTitle": "Photography competitions",
+      "tableStructure": {
+        "columns": 3,
+        "rows": 3,
+        "headers": ["Title of competition", "Instructions", "Feedback to Dan"]
+      },
+      "tableData": [
+        {
+          "row": 1,
+          "cells": [
+            {
+              "content": "**5** ________",
+              "type": "question",
+              "questionNumber": 5,
+              "answer": "Home Life"
+            },
+            {
+              "content": "A scene in the home",
+              "type": "text"
+            },
+            {
+              "content": "The picture's composition was not good.",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            {
+              "content": "'Beautiful Sunsets'",
+              "type": "text"
+            },
+            {
+              "content": "Scene must show some **6** ________",
+              "type": "question",
+              "questionNumber": 6,
+              "answer": "water"
+            },
+            {
+              "content": "The **7** ________ was wrong.",
+              "type": "question",
+              "questionNumber": 7,
+              "answer": "lighting"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "cells": [
+            {
+              "content": "**8** ________",
+              "type": "question",
+              "questionNumber": 8,
+              "answer": "Street Life"
+            },
+            {
+              "content": "Scene must show **9** ________",
+              "type": "question",
+              "questionNumber": 9,
+              "answer": "people"
+            },
+            {
+              "content": "The photograph was too **10** ________.",
+              "type": "question",
+              "questionNumber": 10,
+              "answer": "dark"
+            }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "5": "Home Life",
+        "6": "water",
+        "7": "lighting",
+        "8": "Street Life",
+        "9": "people",
+        "10": "dark"
+      }
+    }
+  ]
+} 

@@ -13,7 +13,7 @@ const populateTest1And2Answers = async () => {
     const test1ReadingAnswers = [
       // Reading Passage 1, Questions 1-13
       "FALSE", "FALSE", "NOT GIVEN", "FALSE", "NOT GIVEN", "TRUE", "TRUE", 
-      "paint", "topspin", "training", "intestines / gut", "weights", "grips",
+      "paint", "topspin", "training", ["food consumption", "consumption"], "weights", "grips",
 
       // Reading Passage 2, Questions 14-26
       "D", "G", "C", "A", "G", "B", 
@@ -42,7 +42,7 @@ const populateTest1And2Answers = async () => {
     // Test 2 Answers
     const test2ReadingAnswers = [
       // Reading Passage 1, Questions 1-13
-      "piston", "coal", "workshops", "labour / labor", "quality", "railway(s)", "sanitation",
+      ["deer antlers", "antlers"], "coal", "workshops", "labour / labor", "quality", ["timber posts", "posts"], "sanitation",
       "NOT GIVEN", "FALSE", "NOT GIVEN", "TRUE", "TRUE", "NOT GIVEN",
 
       // Reading Passage 2, Questions 14-26

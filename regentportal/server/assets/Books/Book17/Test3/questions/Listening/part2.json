@@ -1,0 +1,166 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 11 and 12\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 11 and 12.",
+      "questionGroup": {
+        "questionNumbers": ["11", "12"],
+        "options": [
+          {
+            "letter": "A",
+            "text": "It started recently."
+          },
+          {
+            "letter": "B",
+            "text": "More children attend after school than before school."
+          },
+          {
+            "letter": "C",
+            "text": "An average of 50 children attend in the mornings."
+          },
+          {
+            "letter": "D",
+            "text": "A child cannot attend both the before and after school sessions."
+          },
+          {
+            "letter": "E",
+            "text": "The maximum number of children who can attend is 70."
+          }
+        ],
+        "correctAnswers": ["B", "E"],
+        "maxSelections": 2
+      }
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 13-15\nChoose the correct letter, A, B or C.",
+      "formattingInstruction": "Write the correct letter in boxes 13-15.",
+      "questionBlock": [
+        {
+          "questionNumber": 13,
+          "question": "How much does childcare cost for a complete afternoon session per child?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "£3.50"
+            },
+            {
+              "letter": "B",
+              "text": "£5.70"
+            },
+            {
+              "letter": "C",
+              "text": "£7.20"
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 14,
+          "question": "What does the manager say about food?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Children with allergies should bring their own food."
+            },
+            {
+              "letter": "B",
+              "text": "Children may bring healthy snacks with them."
+            },
+            {
+              "letter": "C",
+              "text": "Children are given a proper meal at 5 p.m."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 15,
+          "question": "What is different about arrangements in the school holidays?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Children from other schools can attend."
+            },
+            {
+              "letter": "B",
+              "text": "Older children can attend."
+            },
+            {
+              "letter": "C",
+              "text": "A greater number of children can attend."
+            }
+          ],
+          "answer": "A"
+        }
+      ]
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 16-20\nWhat information is given about each of the following activities on offer?",
+      "formattingInstruction": "Choose FIVE answers from the box and write the correct letter, A-G, next to Questions 16-20.",
+      "opinionsBox": {
+        "title": "Information",
+        "options": [
+          {
+            "letter": "A",
+            "text": "has limited availability"
+          },
+          {
+            "letter": "B",
+            "text": "is no longer available"
+          },
+          {
+            "letter": "C",
+            "text": "is for over 8s only"
+          },
+          {
+            "letter": "D",
+            "text": "requires help from parents"
+          },
+          {
+            "letter": "E",
+            "text": "involves an additional fee"
+          },
+          {
+            "letter": "F",
+            "text": "is a new activity"
+          },
+          {
+            "letter": "G",
+            "text": "was requested by children"
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 16,
+          "question": "Spanish",
+          "answer": "F"
+        },
+        {
+          "questionNumber": 17,
+          "question": "Music",
+          "answer": "C"
+        },
+        {
+          "questionNumber": 18,
+          "question": "Painting",
+          "answer": "D"
+        },
+        {
+          "questionNumber": 19,
+          "question": "Yoga",
+          "answer": "E"
+        },
+        {
+          "questionNumber": 20,
+          "question": "Cooking",
+          "answer": "G"
+        }
+      ]
+    }
+  ]
+} 

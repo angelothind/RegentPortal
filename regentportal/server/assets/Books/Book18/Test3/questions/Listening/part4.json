@@ -1,0 +1,92 @@
+{
+  "partNumber": 4,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 31-40\nComplete the notes below. Write ONE WORD ONLY for each answer.",
+      "formattingInstruction": "Write your answers in boxes 31-40",
+      "notesTitle": "Space Traffic Management",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "A Space Traffic Management system"
+        },
+        {
+          "questionNumber": 31,
+          "question": "would aim to set up legal and **31** ________ ways of improving safety.",
+          "answer": "technical",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 32,
+          "question": "Satellites are now quite **32** ________ and therefore more widespread",
+          "answer": "small",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 33,
+          "question": "(e.g. there are constellations made up of **33** ________ of satellites).",
+          "answer": "hundreds",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 34,
+          "question": "At present, satellites are not required to transmit information to help with their **34** ________.",
+          "answer": "tracking",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 35,
+          "question": "There are few systems for **35** ________ satellites.",
+          "answer": "monitoring",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 36,
+          "question": "Operators may be unwilling to share details of satellites used for **36** ________ or commercial reasons.",
+          "answer": "military",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 37,
+          "question": "It may be hard to collect details of the object's **37** ________ at a given time.",
+          "answer": "position",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 38,
+          "question": "Scientists can only make a **38** ________ about where the satellite will go.",
+          "answer": "prediction",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Solutions"
+        },
+        {
+          "questionNumber": 39,
+          "question": "The information should be combined in one **39** ________.",
+          "answer": "database",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 40,
+          "question": "A coordinated system must be designed to create **40** ________ in its users.",
+          "answer": "confidence",
+          "bulletLevel": 0
+        }
+      ],
+      "correctAnswers": {
+        "31": "technical",
+        "32": "small",
+        "33": "hundreds",
+        "34": "tracking",
+        "35": "monitoring",
+        "36": "military",
+        "37": "position",
+        "38": "prediction",
+        "39": "database",
+        "40": "confidence"
+      }
+    }
+  ]
+} 

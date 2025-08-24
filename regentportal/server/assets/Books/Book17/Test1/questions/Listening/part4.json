@@ -1,0 +1,116 @@
+{
+  "partNumber": 4,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 31-40\nComplete the notes below.",
+      "formattingInstruction": "Write ONE WORD ONLY for each answer.",
+      "notesTitle": "Labyrinths",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Definition"
+        },
+        {
+          "descriptiveText": "a winding spiral path leading to a central area",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Labyrinths compared with mazes"
+        },
+        {
+          "questionNumber": 31,
+          "question": "Mazes are a type of **31** ________",
+          "answer": "puzzle"
+        },
+        {
+          "questionNumber": 32,
+          "question": "**32** ________ is needed to navigate through a maze",
+          "answer": "skill",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 33,
+          "question": "the word 'maze' is derived from a word meaning a feeling of **33** ________",
+          "answer": "confusion",
+          "bulletLevel": 1
+        },
+        {
+          "descriptiveText": "Labyrinths represent a journey through life",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 34,
+          "question": "they have frequently been used in **34** ________ and prayer",
+          "answer": "meditation",
+          "bulletLevel": 1
+        },
+        {
+          "sectionHeading": "Early examples of the labyrinth spiral"
+        },
+        {
+          "questionNumber": 35,
+          "question": "Ancient carvings on **35** ________ have been found across many cultures",
+          "answer": "rocks"
+        },
+        {
+          "descriptiveText": "The Pima, a Native American tribe, wove the symbol on baskets",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 36,
+          "question": "Ancient Greeks used the symbol on **36** ________",
+          "answer": "coins"
+        },
+        {
+          "sectionHeading": "Walking labyrinths"
+        },
+        {
+          "questionNumber": 37,
+          "question": "The largest surviving example of a turf labyrinth once had a big **37** ________ at its centre",
+          "answer": "tree"
+        },
+        {
+          "sectionHeading": "Labyrinths nowadays"
+        },
+        {
+          "questionNumber": 38,
+          "question": "Believed to have a beneficial impact on mental and physical health, e.g., walking a maze can reduce a person's **38** ________ rate",
+          "answer": "heart"
+        },
+        {
+          "descriptiveText": "Used in medical and health and fitness settings and also prisons",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "Popular with patients, visitors and staff in hospitals",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 39,
+          "question": "patients who can't walk can use 'finger labyrinths' made from **39** ________",
+          "answer": "paper",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 40,
+          "question": "research has shown that Alzheimer's sufferers experience less **40** ________",
+          "answer": "anxiety",
+          "bulletLevel": 1
+        }
+      ],
+      "correctAnswers": {
+        "31": "puzzle",
+        "32": "skill",
+        "33": "confusion",
+        "34": "meditation",
+        "35": "rocks",
+        "36": "coins",
+        "37": "tree",
+        "38": "heart",
+        "39": "paper",
+        "40": "anxiety"
+      }
+    }
+  ]
+} 

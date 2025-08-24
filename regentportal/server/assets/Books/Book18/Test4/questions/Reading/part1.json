@@ -1,0 +1,188 @@
+{
+  "passageNumber": 1,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 1-5\nReading Passage 1 has five paragraphs, A-E.\nWhich paragraph contains the following information?",
+      "formattingInstruction": "Write the correct letter, A-E, in boxes 1-5.",
+      "questionBlock": [
+        {
+          "questionNumber": 1,
+          "question": "mention of several challenges to be overcome before a green roof can be installed",
+          "answer": "A"
+        },
+        {
+          "questionNumber": 2,
+          "question": "reference to a city where green roofs have been promoted for many years",
+          "answer": "B"
+        },
+        {
+          "questionNumber": 3,
+          "question": "a belief that existing green roofs should be used as a model for new ones",
+          "answer": "C"
+        },
+        {
+          "questionNumber": 4,
+          "question": "examples of how green roofs can work in combination with other green urban initiatives",
+          "answer": "D"
+        },
+        {
+          "questionNumber": 5,
+          "question": "the need to make a persuasive argument for the financial benefits of green roofs",
+          "answer": "E"
+        }
+      ]
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 6-9\nComplete the summary below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 6-9.",
+      "notesTitle": "Advantages of green roofs",
+      "useBullets": false,
+      "questionBlock": [
+        {
+          "questionNumber": 6,
+          "question": "City rooftops covered with greenery have many advantages. These include lessening the likelihood that floods will occur, reducing how much money is spent on **6** ________ and creating environments that are suitable for wildlife.",
+          "answer": "energy"
+        },
+        {
+          "questionNumber": 7,
+          "question": "In many cases, they can also be used for producing **7** ________.",
+          "answer": "food"
+        },
+        {
+          "questionNumber": 8,
+          "question": "For example, the medical profession recommends **8** ________ as an activity to help people cope with mental health issues.",
+          "answer": "gardening"
+        },
+        {
+          "questionNumber": 9,
+          "question": "Studies have also shown that the availability of green spaces can prevent physical problems such as **9** ________.",
+          "answer": "obesity"
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 10 and 11\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 10 and 11.",
+      "questionBlock": [
+        {
+          "questionNumber": 10,
+          "question": "Which TWO advantages of using newer buildings for green roofs are mentioned in Paragraph C of the passage?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "a longer growing season for edible produce"
+            },
+            {
+              "letter": "B",
+              "text": "more economical use of water"
+            },
+            {
+              "letter": "C",
+              "text": "greater water-storage capacity"
+            },
+            {
+              "letter": "D",
+              "text": "ability to cultivate more plant types"
+            },
+            {
+              "letter": "E",
+              "text": "a large surface area for growing plants"
+            }
+          ],
+          "answer": ["A", "C"]
+        },
+        {
+          "questionNumber": 11,
+          "question": "Which TWO advantages of using newer buildings for green roofs are mentioned in Paragraph C of the passage?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "a longer growing season for edible produce"
+            },
+            {
+              "letter": "B",
+              "text": "more economical use of water"
+            },
+            {
+              "letter": "C",
+              "text": "greater water-storage capacity"
+            },
+            {
+              "letter": "D",
+              "text": "ability to cultivate more plant types"
+            },
+            {
+              "letter": "E",
+              "text": "a large surface area for growing plants"
+            }
+          ],
+          "answer": ["A", "C"]
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 12 and 13\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 12 and 13.",
+      "questionBlock": [
+        {
+          "questionNumber": 12,
+          "question": "Which TWO aims of new variations on the concept of green roofs are mentioned in Paragraph E of the passage?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "to provide habitats for a wide range of species"
+            },
+            {
+              "letter": "B",
+              "text": "to grow plants successfully even in the wettest climates"
+            },
+            {
+              "letter": "C",
+              "text": "to regulate the temperature of the immediate environment"
+            },
+            {
+              "letter": "D",
+              "text": "to generate power from a sustainable source"
+            },
+            {
+              "letter": "E",
+              "text": "to collect water to supply other buildings"
+            }
+          ],
+          "answer": ["C", "D"]
+        },
+        {
+          "questionNumber": 13,
+          "question": "Which TWO aims of new variations on the concept of green roofs are mentioned in Paragraph E of the passage?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "to provide habitats for a wide range of species"
+            },
+            {
+              "letter": "B",
+              "text": "to grow plants successfully even in the wettest climates"
+            },
+            {
+              "letter": "C",
+              "text": "to regulate the temperature of the immediate environment"
+            },
+            {
+              "letter": "D",
+              "text": "to generate power from a sustainable source"
+            },
+            {
+              "letter": "E",
+              "text": "to collect water to supply other buildings"
+            }
+          ],
+          "answer": ["C", "D"]
+        }
+      ]
+    }
+  ]
+} 

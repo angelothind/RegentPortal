@@ -1,0 +1,114 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 1-10\nComplete the notes below.",
+      "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
+      "notesTitle": "Buckworth Conservation Group",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Regular activities:"
+        },
+        {
+          "sectionHeading": "Beach"
+        },
+        {
+          "questionNumber": 1,
+          "question": "making sure the beach does not have **1** ________ on it",
+          "answer": "litter"
+        },
+        {
+          "questionNumber": 2,
+          "question": "no **2** ________",
+          "answer": "dogs"
+        },
+        {
+          "sectionHeading": "Nature reserve"
+        },
+        {
+          "descriptiveText": "maintaining paths",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "nesting boxes for birds installed",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 3,
+          "question": "next task is taking action to attract **3** ________ to the place",
+          "answer": "insects"
+        },
+        {
+          "questionNumber": 4,
+          "question": "identifying types of **4** ________",
+          "answer": "butterflies"
+        },
+        {
+          "questionNumber": 5,
+          "question": "building a new **5** ________",
+          "answer": "wall"
+        },
+        {
+          "sectionHeading": "Forthcoming events:"
+        },
+        {
+          "sectionHeading": "Saturday"
+        },
+        {
+          "descriptiveText": "meet at Dunsmore Beach car park",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 6,
+          "question": "walk across the sands and reach the **6** ________",
+          "answer": "island"
+        },
+        {
+          "descriptiveText": "take a picnic",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 7,
+          "question": "wear appropriate **7** ________",
+          "answer": "boots"
+        },
+        {
+          "sectionHeading": "Woodwork session"
+        },
+        {
+          "questionNumber": 8,
+          "question": "suitable for **8** ________ to participate in",
+          "answer": "beginners"
+        },
+        {
+          "questionNumber": 9,
+          "question": "making **9** ________ out of wood",
+          "answer": "spoons"
+        },
+        {
+          "descriptiveText": "17th, from 10 a.m. to 3 p.m.",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 10,
+          "question": "cost of session (no camping): 10 £ **10** ________",
+          "answer": "35"
+        }
+      ],
+      "correctAnswers": {
+        "1": "litter",
+        "2": "dogs",
+        "3": "insects",
+        "4": "butterflies",
+        "5": "wall",
+        "6": "island",
+        "7": "boots",
+        "8": "beginners",
+        "9": "spoons",
+        "10": "35"
+      }
+    }
+  ]
+} 

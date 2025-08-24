@@ -1,0 +1,198 @@
+{
+  "passageNumber": 2,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Reading Passage 2 has seven paragraphs, A-G.",
+      "formattingInstruction": "Choose the correct heading for each paragraph from the list of headings below.\nWrite the correct number, i-viii, in boxes 14-20.",
+      "opinionsBox": {
+        "title": "List of Headings",
+        "options": [
+          {
+            "letter": "1",
+            "text": "A period in cold conditions before the technology is assessed"
+          },
+          {
+            "letter": "2",
+            "text": "Marketing issues lead to failure"
+          },
+          {
+            "letter": "3",
+            "text": "Good and bad aspects of steam technology are passed on"
+          },
+          {
+            "letter": "4",
+            "text": "A possible solution to the issues of today"
+          },
+          {
+            "letter": "5",
+            "text": "Further improvements lead to commercial orders"
+          },
+          {
+            "letter": "6",
+            "text": "Positive publicity at last for this quiet, clean, fast vehicle"
+          },
+          {
+            "letter": "7",
+            "text": "A disappointing outcome for customers"
+          },
+          {
+            "letter": "8",
+            "text": "A better option than the steam car arises"
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 14,
+          "question": "Paragraph A",
+          "answer": "3"
+        },
+        {
+          "questionNumber": 15,
+          "question": "Paragraph B",
+          "answer": "8"
+        },
+        {
+          "questionNumber": 16,
+          "question": "Paragraph C",
+          "answer": "1"
+        },
+        {
+          "questionNumber": 17,
+          "question": "Paragraph D",
+          "answer": "5"
+        },
+        {
+          "questionNumber": 18,
+          "question": "Paragraph E",
+          "answer": "6"
+        },
+        {
+          "questionNumber": 19,
+          "question": "Paragraph F",
+            "answer": "7"
+        },
+        {
+          "questionNumber": 20,
+          "question": "Paragraph G",
+          "answer": "4"
+        }
+      ],
+      "correctAnswers": {
+        "14": "3",
+        "15": "8",
+        "16": "1",
+        "17": "5",
+        "18": "6",
+        "19": "7",
+        "20": "4"
+      }
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 21-23\nChoose the correct letter, A, B, C or D.",
+      "formattingInstruction": "Write the correct letter in boxes 21-23 on your answer sheet.",
+      "questionBlock": [
+        {
+          "questionNumber": 21,
+          "question": "What point does the writer make about the steam car in Paragraph B?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Its success was short-lived."
+            },
+            {
+              "letter": "B",
+              "text": "Not enough cars were made."
+            },
+            {
+              "letter": "C",
+              "text": "Car companies found them hard to sell."
+            },
+            {
+              "letter": "D",
+              "text": "People found them hard to drive."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 22,
+          "question": "When building their first steam car, the Doble brothers",
+          "options": [
+            {
+              "letter": "A",
+              "text": "constructed all the parts themselves."
+            },
+            {
+              "letter": "B",
+              "text": "made written notes at each stage of the construction."
+            },
+            {
+              "letter": "C",
+              "text": "needed several attempts to achieve a competitive model."
+            },
+            {
+              "letter": "D",
+              "text": "sought the advice of experienced people in the car industry."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 23,
+          "question": "In order to produce the Model C, the Doble brothers",
+          "options": [
+            {
+              "letter": "A",
+              "text": "moved production to a different city."
+            },
+            {
+              "letter": "B",
+              "text": "raised financial capital."
+            },
+            {
+              "letter": "C",
+              "text": "employed an additional worker."
+            },
+            {
+              "letter": "D",
+              "text": "abandoned their earlier designs."
+            }
+          ],
+          "answer": "B"
+        }
+      ]
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 24-26\nComplete the summary below.",
+      "formattingInstruction": "Choose ONE WORD AND/OR A NUMBER from the passage for each answer.\nWrite your answers in boxes 24-26 on your answer sheet.",
+      "notesTitle": "The Model E",
+      "useBullets": false,
+      "questionBlock": [
+        {
+          "questionNumber": 24,
+          "question": "A later version of the Model E raised its **24** ________, while keeping its emissions extremely low.",
+          "answer": "speed"
+        },
+        {
+          "questionNumber": 25,
+          "question": "Under **25** ________ cars were produced before the company went out of business.",
+          "answer": "pressure"
+        },
+        {
+          "questionNumber": 26,
+          "question": "They satisfy California's **26** ________ emissions laws.",
+          "answer": "strict"
+        }
+      ],
+      "correctAnswers": {
+        "24": "speed",
+        "25": "pressure",
+        "26": "strict"
+      }
+    }
+  ]
+} 

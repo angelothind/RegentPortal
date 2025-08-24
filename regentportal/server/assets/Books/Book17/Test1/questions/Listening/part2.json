@@ -1,0 +1,188 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 11-14",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "sectionTitle": "Boat trip round Tasmania",
+      "questionBlock": [
+        {
+          "questionNumber": 11,
+          "question": "What is the maximum number of people who can stand on each side of the boat?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "9"
+            },
+            {
+              "letter": "B",
+              "text": "15"
+            },
+            {
+              "letter": "C",
+              "text": "18"
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 12,
+          "question": "What colour are the tour boats?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "dark red"
+            },
+            {
+              "letter": "B",
+              "text": "jet black"
+            },
+            {
+              "letter": "C",
+              "text": "light green"
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 13,
+          "question": "Which lunchbox is suitable for someone who doesn't eat meat or fish?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Lunchbox 1"
+            },
+            {
+              "letter": "B",
+              "text": "Lunchbox 2"
+            },
+            {
+              "letter": "C",
+              "text": "Lunchbox 3"
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 14,
+          "question": "What should people do with their litter?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "take it home"
+            },
+            {
+              "letter": "B",
+              "text": "hand it to a member of staff"
+            },
+            {
+              "letter": "C",
+              "text": "put it in the bins provided on the boat"
+            }
+          ],
+          "answer": "A"
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 15 and 16\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 15 and 16.",
+      "mainQuestion": "Which TWO features of the lighthouse does Lou mention?",
+      "questionGroup": {
+        "questionNumbers": ["15", "16"],
+        "options": [
+          {
+            "letter": "A",
+            "text": "why it was built"
+          },
+          {
+            "letter": "B",
+            "text": "who built it"
+          },
+          {
+            "letter": "C",
+            "text": "how long it took to build"
+          },
+          {
+            "letter": "D",
+            "text": "who staffed it"
+          },
+          {
+            "letter": "E",
+            "text": "what it was built with"
+          }
+        ],
+        "correctAnswers": ["B", "E"],
+        "maxSelections": 2
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 17 and 18\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 17 and 18.",
+      "mainQuestion": "Which TWO types of creature might come close to the boat?",
+      "questionGroup": {
+        "questionNumbers": ["17", "18"],
+        "options": [
+          {
+            "letter": "A",
+            "text": "sea eagles"
+          },
+          {
+            "letter": "B",
+            "text": "fur seals"
+          },
+          {
+            "letter": "C",
+            "text": "dolphins"
+          },
+          {
+            "letter": "D",
+            "text": "whales"
+          },
+          {
+            "letter": "E",
+            "text": "penguins"
+          }
+        ],
+        "correctAnswers": ["B", "C"],
+        "maxSelections": 2
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 19 and 20\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 19 and 20.",
+      "mainQuestion": "Which TWO points does Lou make about the caves?",
+      "questionGroup": {
+        "questionNumbers": ["19", "20"],
+        "options": [
+          {
+            "letter": "A",
+            "text": "Only large tourist boats can visit them."
+          },
+          {
+            "letter": "B",
+            "text": "The entrances to them are often blocked."
+          },
+          {
+            "letter": "C",
+            "text": "It is too dangerous for individuals to go near them."
+          },
+          {
+            "letter": "D",
+            "text": "Someone will explain what is inside them."
+          },
+          {
+            "letter": "E",
+            "text": "They cannot be reached on foot."
+          }
+        ],
+        "correctAnswers": ["D", "E"],
+        "maxSelections": 2
+      }
+    }
+  ]
+} 

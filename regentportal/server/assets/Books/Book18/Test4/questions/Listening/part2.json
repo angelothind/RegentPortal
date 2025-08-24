@@ -1,0 +1,96 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 11-20\nChoose the correct letter, A, B or C.",
+      "formattingInstruction": "Write the correct letter in boxes 11-14.",
+      "questionBlock": [
+        {
+          "questionNumber": 11,
+          "question": "The museum building was originally",
+          "options": [
+            { "letter": "A", "text": "a factory." },
+            { "letter": "B", "text": "a private home." },
+            { "letter": "C", "text": "a hall of residence." }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 12,
+          "question": "The university uses part of the museum building as",
+          "options": [
+            { "letter": "A", "text": "teaching rooms." },
+            { "letter": "B", "text": "a research library." },
+            { "letter": "C", "text": "administration offices." }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 13,
+          "question": "What does the guide say about the entrance fee?",
+          "options": [
+            { "letter": "A", "text": "Visitors decide whether or not they wish to pay." },
+            { "letter": "B", "text": "Only children and students receive a discount." },
+            { "letter": "C", "text": "The museum charges extra for special exhibitions." }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 14,
+          "question": "What are visitors advised to leave in the cloakroom?",
+          "options": [
+            { "letter": "A", "text": "cameras" },
+            { "letter": "B", "text": "coats" },
+            { "letter": "C", "text": "bags" }
+          ],
+          "answer": "C"
+        }
+      ]
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 15-20\nWhat information does the speaker give about each of the following areas of the museum?",
+      "formattingInstruction": "Choose SIX answers from the box and write the correct letter, A-H, next to Questions 15-20.",
+      "opinionsBox": {
+        "title": "Information",
+        "options": [
+          { "letter": "A", "text": "Parents must supervise their children." },
+          { "letter": "B", "text": "There are new things to see." },
+          { "letter": "C", "text": "It is closed today." },
+          { "letter": "D", "text": "This is only for school groups." },
+          { "letter": "E", "text": "There is a quiz for visitors." },
+          { "letter": "F", "text": "It features something created by students." },
+          { "letter": "G", "text": "An expert is here today." },
+          { "letter": "H", "text": "There is a one-way system." }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 15,
+          "question": "Four Seasons"
+        },
+        {
+          "questionNumber": 16,
+          "question": "Farmhouse Kitchen"
+        },
+        {
+          "questionNumber": 17,
+          "question": "A Year on the Farm"
+        },
+        {
+          "questionNumber": 18,
+          "question": "Wagon Walk"
+        },
+        {
+          "questionNumber": 19,
+          "question": "Bees are Magic"
+        },
+        {
+          "questionNumber": 20,
+          "question": "The Pond"
+        }
+      ]
+    }
+  ]
+} 

@@ -17,8 +17,35 @@ const loadCorrectAnswers = async (testId, testType, submittedAnswers = {}) => {
 
     const correctAnswers = {};
     
-    // First, try to load answers from JSON files (prioritize these)
-    console.log(`📝 Loading correct answers from JSON files for ${testType}...`);
+    // First, try to load answers from database (prioritize these)
+    console.log(`📝 Loading correct answers from database for ${testType}...`);
+    
+    if (test.answers && test.answers.size > 0) {
+      console.log('✅ Found answers in database');
+      
+      // Get answers for the specific test type
+      const testTypeAnswers = test.answers.get(testType.toLowerCase());
+      if (testTypeAnswers) {
+        if (Array.isArray(testTypeAnswers)) {
+          // Array format - convert to object with array indices as keys (matching Book 19 format)
+          console.log(`📝 Found ${testTypeAnswers.length} ${testType} answers in database (array format)`);
+          const dbAnswers = {};
+          testTypeAnswers.forEach((answer, index) => {
+            dbAnswers[(index + 1).toString()] = answer; // Convert to 1-based question numbers
+          });
+          console.log(`✅ Converted ${Object.keys(dbAnswers).length} answers from array format`);
+          return dbAnswers;
+        } else if (typeof testTypeAnswers === 'object') {
+          // Object format - already has array indices as keys (Book 19 format)
+          console.log(`📝 Found ${Object.keys(testTypeAnswers).length} ${testType} answers in database (object format)`);
+          console.log(`✅ Loaded ${Object.keys(testTypeAnswers).length} correct answers from database for ${testType}`);
+          return testTypeAnswers;
+        }
+      }
+    }
+    
+    // Fallback to JSON files if no database answers found
+    console.log(`📝 No database answers found, checking JSON files for ${testType}...`);
     
     // Determine which parts to load based on submitted question numbers
     let partsToLoad = [];
@@ -102,37 +129,11 @@ const loadCorrectAnswers = async (testId, testType, submittedAnswers = {}) => {
     
     // If we found answers in JSON files, return them
     if (Object.keys(correctAnswers).length > 0) {
-      console.log(`✅ Loaded ${Object.keys(correctAnswers).length} correct answers from JSON files`);
+      console.log(`✅ Loaded ${Object.keys(correctAnswers).length} correct answers from JSON files (fallback)`);
       return correctAnswers;
     }
     
-    // Fallback to database answers if no JSON files found
-    console.log(`📝 No JSON files found, checking database for ${testType} answers...`);
-    if (test.answers && test.answers.size > 0) {
-      console.log('✅ Found answers in database');
-      
-      // Get answers for the specific test type
-      const testTypeAnswers = test.answers.get(testType.toLowerCase());
-      if (testTypeAnswers) {
-        if (Array.isArray(testTypeAnswers)) {
-          // Array format - convert to object with array indices as keys (matching Book 19 format)
-          console.log(`📝 Found ${testTypeAnswers.length} ${testType} answers in database (array format)`);
-          const dbAnswers = {};
-          testTypeAnswers.forEach((answer, index) => {
-            dbAnswers[index.toString()] = answer;
-          });
-          console.log(`✅ Converted ${Object.keys(dbAnswers).length} answers from array format`);
-          return dbAnswers;
-        } else if (typeof testTypeAnswers === 'object') {
-          // Object format - already has array indices as keys (Book 19 format)
-          console.log(`📝 Found ${Object.keys(testTypeAnswers).length} ${testType} answers in database (object format)`);
-          console.log(`✅ Loaded ${Object.keys(testTypeAnswers).length} correct answers from database for ${testType}`);
-          return testTypeAnswers;
-        }
-      }
-    }
-    
-    console.log(`❌ No correct answers found for ${testType} in JSON files or database`);
+    console.log(`❌ No correct answers found for ${testType} in database or JSON files`);
     return {};
     
   } catch (error) {
@@ -308,6 +309,28 @@ router.post('/submit', async (req, res) => {
             totalCorrect,
             isCorrect: isCorrect || correctSelections > 0 // Consider partially correct as "correct" for display
           });
+        } else if (userAnswer && !Array.isArray(userAnswer)) {
+          // Single student answer against array correct answer (optional answers)
+          // Check if the single answer matches any of the correct options
+          const normalizedUserAnswer = userAnswer.toString().trim();
+          const isAnswerCorrect = correctAnswer.some(correctOption => 
+            correctOption.toString().trim().toLowerCase() === normalizedUserAnswer.toLowerCase()
+          );
+          
+          if (isAnswerCorrect) {
+            isCorrect = true;
+            correctCount += 1; // Award 1 mark for correct optional answer (regardless of how many options exist)
+            console.log(`📝 Optional answer question ${questionNumber}: CORRECT! Student "${normalizedUserAnswer}" matches one of ${JSON.stringify(correctAnswer)}. Awarding 1 mark. Total: ${correctCount}`);
+          } else {
+            isCorrect = false;
+            console.log(`📝 Optional answer question ${questionNumber}: INCORRECT! Student "${normalizedUserAnswer}" does not match any of ${JSON.stringify(correctAnswer)}. No marks awarded. Total: ${correctCount}`);
+          }
+          
+          console.log(`📝 Optional answer question ${questionNumber} result:`, {
+            userAnswer: normalizedUserAnswer,
+            correctAnswer,
+            isCorrect
+          });
         } else {
           isCorrect = false;
           console.log(`📝 Multiple choice question ${questionNumber}: no valid user answer`);
@@ -353,7 +376,10 @@ router.post('/submit', async (req, res) => {
       });
 
       if (isCorrect) {
-        correctCount++;
+        // Only increment for single answer questions - array questions already incremented above
+        if (!Array.isArray(correctAnswer)) {
+          correctCount++;
+        }
         console.log(`📝 ✅ Question ${questionNumber} marked as CORRECT! Total correct: ${correctCount}`);
       } else {
         console.log(`📝 ❌ Question ${questionNumber} marked as INCORRECT! Total correct: ${correctCount}`);

@@ -1,0 +1,96 @@
+{
+  "partNumber": 4,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 31-40\nComplete the notes below.",
+      "formattingInstruction": "Write ONE WORD ONLY for each answer.",
+      "notesTitle": "Victor Hugo",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "His novel, Les Misérables"
+        },
+        {
+          "descriptiveText": "It has been adapted for theatre and cinema.",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 31,
+          "question": "We know more about its overall **31** ________ than about its author.",
+          "answer": "plot"
+        },
+        {
+          "sectionHeading": "His early career"
+        },
+        {
+          "descriptiveText": "In Paris, his career was successful and he led the Romantic movement.",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 32,
+          "question": "He spoke publicly about social issues, such as **32** ________ and education.",
+          "answer": "poverty"
+        },
+        {
+          "descriptiveText": "Napoleon III disliked his views and exiled him.",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "His exile from France"
+        },
+        {
+          "questionNumber": 33,
+          "question": "Victor Hugo had to live elsewhere in **33** ________",
+          "answer": "Europe"
+        },
+        {
+          "questionNumber": 34,
+          "question": "He used his income from the sale of some **34** ________ he had written to buy a house on Guernsey.",
+          "answer": "books"
+        },
+        {
+          "sectionHeading": "His house on Guernsey"
+        },
+        {
+          "descriptiveText": "Victor Hugo lived in this house until the end of the Empire in France.",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 35,
+          "question": "The ground floor contains portraits, **35** ________ and tapestries that he valued.",
+          "answer": "paintings"
+        },
+        {
+          "questionNumber": 36,
+          "question": "He bought cheap **36** ________ made of wood and turned this into beautiful wall carvings.",
+          "answer": "furniture"
+        },
+        {
+          "questionNumber": 37,
+          "question": "The first floor consists of furnished areas with wallpaper and **37** ________ that have a Chinese design.",
+          "answer": "curtains"
+        },
+        {
+          "descriptiveText": "The library still contains many of his favourite books.",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 38,
+          "question": "He wrote in a room at the top of the house that had a view of the **38** ________",
+          "answer": "sea"
+        },
+        {
+          "questionNumber": 39,
+          "question": "He entertained other writers as well as poor **39** ________ in his house.",
+          "answer": "children"
+        },
+        {
+          "questionNumber": 40,
+          "question": "Victor Hugo's **40** ________ gave ownership of the house to the city of Paris in 1927.",
+          "answer": "family"
+        }
+      ]
+    }
+  ]
+} 

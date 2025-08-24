@@ -1,0 +1,197 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 21-22\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Which TWO opinions about the Luddites do the students express?",
+      "questionBlock": [
+        {
+          "questionNumber": 21,
+          "question": "Which TWO opinions about the Luddites do the students express?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Their actions were ineffective."
+            },
+            {
+              "letter": "B",
+              "text": "They are still influential today."
+            },
+            {
+              "letter": "C",
+              "text": "They have received unfair criticism."
+            },
+            {
+              "letter": "D",
+              "text": "They were proved right."
+            },
+            {
+              "letter": "E",
+              "text": "Their attitude is understandable."
+            }
+          ],
+          "answer": ["C", "E"]
+        },
+        {
+          "questionNumber": 22,
+          "question": "Which TWO opinions about the Luddites do the students express?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Their actions were ineffective."
+            },
+            {
+              "letter": "B",
+              "text": "They are still influential today."
+            },
+            {
+              "letter": "C",
+              "text": "They have received unfair criticism."
+            },
+            {
+              "letter": "D",
+              "text": "They were proved right."
+            },
+            {
+              "letter": "E",
+              "text": "Their attitude is understandable."
+            }
+          ],
+          "answer": ["C", "E"]
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 23-24\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Which TWO predictions about the future of work are the students doubtful about?",
+      "questionBlock": [
+        {
+          "questionNumber": 23,
+          "question": "Which TWO predictions about the future of work are the students doubtful about?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Work will be more rewarding."
+            },
+            {
+              "letter": "B",
+              "text": "Unemployment will fall."
+            },
+            {
+              "letter": "C",
+              "text": "People will want to delay retiring."
+            },
+            {
+              "letter": "D",
+              "text": "Working hours will be shorter."
+            },
+            {
+              "letter": "E",
+              "text": "People will change jobs more frequently."
+            }
+          ],
+          "answer": ["A", "D"]
+        },
+        {
+          "questionNumber": 24,
+          "question": "Which TWO predictions about the future of work are the students doubtful about?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Work will be more rewarding."
+            },
+            {
+              "letter": "B",
+              "text": "Unemployment will fall."
+            },
+            {
+              "letter": "C",
+              "text": "People will want to delay retiring."
+            },
+            {
+              "letter": "D",
+              "text": "Working hours will be shorter."
+            },
+            {
+              "letter": "E",
+              "text": "People will change jobs more frequently."
+            }
+          ],
+          "answer": ["A", "D"]
+        }
+      ]
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 25-30\nWhat comment do the students make about each of the following jobs?",
+      "formattingInstruction": "Choose SIX answers from the box and write the correct letter, A-G, next to Questions 25-30.",
+      "opinionsBox": {
+        "title": "Comments",
+        "options": [
+          {
+            "letter": "A",
+            "text": "These jobs are likely to be at risk."
+          },
+          {
+            "letter": "B",
+            "text": "Their role has become more interesting in recent years."
+          },
+          {
+            "letter": "C",
+            "text": "The number of people working in this sector has fallen dramatically."
+          },
+          {
+            "letter": "D",
+            "text": "This job will require more qualifications."
+          },
+          {
+            "letter": "E",
+            "text": "Higher disposable income has led to a huge increase in jobs."
+          },
+          {
+            "letter": "F",
+            "text": "There is likely to be a significant rise in demand for this service."
+          },
+          {
+            "letter": "G",
+            "text": "Both employment and productivity have risen."
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 25,
+          "question": "Accountants",
+          "answer": "D"
+        },
+        {
+          "questionNumber": 26,
+          "question": "Hairdressers",
+          "answer": "E"
+        },
+        {
+          "questionNumber": 27,
+          "question": "Administrative staff",
+          "answer": "A"
+        },
+        {
+          "questionNumber": 28,
+          "question": "Agricultural workers",
+          "answer": "C"
+        },
+        {
+          "questionNumber": 29,
+          "question": "Care workers",
+          "answer": "F"
+        },
+        {
+          "questionNumber": 30,
+          "question": "Bank clerks",
+          "answer": "B"
+        }
+      ]
+    }
+  ]
+} 

@@ -1,0 +1,97 @@
+{
+  "partNumber": 4,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 31-40\nComplete the notes below.",
+      "formattingInstruction": "Write ONE WORD ONLY for each answer.",
+      "notesTitle": "Bird Migration Theory",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "descriptiveText": "Most birds are believed to migrate seasonally.",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Hibernation theory"
+        },
+        {
+          "questionNumber": 31,
+          "question": "It was believed that birds hibernated underwater or buried themselves in **31** ________.",
+          "answer": "mud"
+        },
+        {
+          "descriptiveText": "This theory was later disproved by experiments on caged birds.",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Transmutation theory"
+        },
+        {
+          "descriptiveText": "Aristotle believed birds changed from one species into another in summer and winter.",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 32,
+          "question": "In autumn he observed that redstarts experience the loss of **32** ________ and thought they then turned into robins.",
+          "answer": "feathers",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 33,
+          "question": "Aristotle's assumptions were logical because the two species of birds had a similar **33** ________.",
+          "answer": "appearance",
+          "bulletLevel": 1
+        },
+        {
+          "sectionHeading": "17th century"
+        },
+        {
+          "questionNumber": 34,
+          "question": "Charles Morton popularised the idea that birds fly to the **34** ________ in winter.",
+          "answer": "moon"
+        },
+        {
+          "sectionHeading": "Scientific developments"
+        },
+        {
+          "questionNumber": 35,
+          "question": "In 1822, a stork was killed in Germany which had an African spear in its **35** ________.",
+          "answer": "neck"
+        },
+        {
+          "questionNumber": 36,
+          "question": "previously there had been no **36** ________ that storks migrate to Africa",
+          "answer": "evidence",
+          "bulletLevel": 1
+        },
+        {
+          "descriptiveText": "Little was known about the **37** ________ and journeys of migrating birds until the practice of ringing was established.",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 37,
+          "question": "Little was known about the **37** ________ and journeys of migrating birds until the practice of ringing was established.",
+          "answer": "routes"
+        },
+        {
+          "questionNumber": 38,
+          "question": "It was thought large birds carried small birds on some journeys because they were considered incapable of travelling across huge **38** ________.",
+          "answer": "distances",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 39,
+          "question": "Ringing depended on what is called the **39** ________ of dead birds.",
+          "answer": "recovery",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 40,
+          "question": "In 1931, the first **40** ________ to show the migration of European birds was printed.",
+          "answer": "atlas"
+        }
+      ]
+    }
+  ]
+} 

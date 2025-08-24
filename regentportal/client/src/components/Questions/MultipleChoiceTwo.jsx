@@ -208,7 +208,11 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
                       }
                       
                       console.log(`🔍 Question ${questionNumber} - New selected options:`, newSelectedOptions);
-                      handleAnswerChange(questionNumber, newSelectedOptions);
+                      // Update the current answers for this question
+                      const updatedAnswers = { ...currentAnswers, [questionNumber]: newSelectedOptions };
+                      if (onAnswerChange) {
+                        onAnswerChange(updatedAnswers);
+                      }
                           });
                         }}
                       />

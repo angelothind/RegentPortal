@@ -1,0 +1,98 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 1-10\nComplete the notes below.",
+      "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
+      "notesTitle": "Advice on surfing holidays",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Jack's advice"
+        },
+        {
+          "questionNumber": 1,
+          "question": "Recommends surfing for **1** ________ holidays in the summer",
+          "answer": "family"
+        },
+        {
+          "questionNumber": 2,
+          "question": "Need to be quite **2** ________",
+          "answer": "fit"
+        },
+        {
+          "sectionHeading": "Irish surfing locations"
+        },
+        {
+          "descriptiveText": "County Clare",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 3,
+          "question": "Lahinch has some good quality **3** ________ and surf schools",
+          "answer": "waves",
+          "bulletLevel": 1
+        },
+        {
+          "descriptiveText": "There are famous cliffs nearby",
+          "bulletLevel": 1
+        },
+        {
+          "descriptiveText": "County Mayo",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 4,
+          "question": "Good surf school at **4** ________ beach",
+          "answer": "Keem",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 5,
+          "question": "Surf camp lasts for one **5** ________",
+          "answer": "week",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 6,
+          "question": "Can also explore the local **6** ________ by kayak",
+          "answer": "coastline",
+          "bulletLevel": 1
+        },
+        {
+          "sectionHeading": "Weather"
+        },
+        {
+          "questionNumber": 7,
+          "question": "Best month to go: **7** ________",
+          "answer": "August"
+        },
+        {
+          "questionNumber": 8,
+          "question": "Average temperature in summer: approx. **8** ________ degrees",
+          "answer": "18"
+        },
+        {
+          "sectionHeading": "Costs"
+        },
+        {
+          "descriptiveText": "Equipment",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 9,
+          "question": "Wetsuit and surfboard: **9** ________ euros per day",
+          "answer": "25",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 10,
+          "question": "Also advisable to hire **10** ________ for warmth",
+          "answer": "boots",
+          "bulletLevel": 1
+        }
+      ]
+    }
+  ]
+} 

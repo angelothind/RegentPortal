@@ -1,0 +1,162 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 21-24\nChoose the correct letter, A, B or C.",
+      "formattingInstruction": "Write the correct letter in boxes 21-24.",
+      "questionBlock": [
+        {
+          "questionNumber": 21,
+          "question": "Holly has chosen the Orion Stadium placement because",
+          "options": [
+            {
+              "letter": "A",
+              "text": "it involves children."
+            },
+            {
+              "letter": "B",
+              "text": "it is outdoors."
+            },
+            {
+              "letter": "C",
+              "text": "it sounds like fun."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 22,
+          "question": "Which aspect of safety does Dr Green emphasise most?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "ensuring children stay in the stadium"
+            },
+            {
+              "letter": "B",
+              "text": "checking the equipment children will use"
+            },
+            {
+              "letter": "C",
+              "text": "removing obstacles in changing rooms"
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 23,
+          "question": "What does Dr Green say about the spectators?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "They can be hard to manage."
+            },
+            {
+              "letter": "B",
+              "text": "They make useful volunteers."
+            },
+            {
+              "letter": "C",
+              "text": "They shouldn't take photographs."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 24,
+          "question": "What has affected the schedule in the past?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "bad weather"
+            },
+            {
+              "letter": "B",
+              "text": "an injury"
+            },
+            {
+              "letter": "C",
+              "text": "extra time"
+            }
+          ],
+          "answer": "A"
+        }
+      ]
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 25-30\nWhat do Holly and her tutor agree is an important aspect of each of the following events management skills?",
+      "formattingInstruction": "Choose SIX answers from the box and write the correct letter, A-H, next to Questions 25-30.",
+      "opinionsBox": {
+        "title": "Important aspects",
+        "options": [
+          {
+            "letter": "A",
+            "text": "being flexible"
+          },
+          {
+            "letter": "B",
+            "text": "focusing on details"
+          },
+          {
+            "letter": "C",
+            "text": "having a smart appearance"
+          },
+          {
+            "letter": "D",
+            "text": "hiding your emotions"
+          },
+          {
+            "letter": "E",
+            "text": "relying on experts"
+          },
+          {
+            "letter": "F",
+            "text": "trusting your own views"
+          },
+          {
+            "letter": "G",
+            "text": "doing one thing at a time"
+          },
+          {
+            "letter": "H",
+            "text": "thinking of the future"
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 25,
+          "question": "Communication",
+          "answer": "C"
+        },
+        {
+          "questionNumber": 26,
+          "question": "Organisation",
+          "answer": "B"
+        },
+        {
+          "questionNumber": 27,
+          "question": "Time management",
+          "answer": "G"
+        },
+        {
+          "questionNumber": 28,
+          "question": "Creativity",
+          "answer": "F"
+        },
+        {
+          "questionNumber": 29,
+          "question": "Leadership",
+          "answer": "A"
+        },
+        {
+          "questionNumber": 30,
+          "question": "Networking",
+          "answer": "H"
+        }
+      ]
+    }
+  ]
+} 

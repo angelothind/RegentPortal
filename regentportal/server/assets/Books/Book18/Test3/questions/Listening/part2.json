@@ -1,0 +1,247 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 11-12\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Which TWO warnings does Dan give about picking mushrooms?",
+      "questionBlock": [
+        {
+          "questionNumber": 11,
+          "question": "Which TWO warnings does Dan give about picking mushrooms?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Don't pick more than one variety of mushroom at a time."
+            },
+            {
+              "letter": "B",
+              "text": "Don't pick mushrooms near busy roads."
+            },
+            {
+              "letter": "C",
+              "text": "Don't eat mushrooms given to you."
+            },
+            {
+              "letter": "D",
+              "text": "Don't eat mushrooms while picking them."
+            },
+            {
+              "letter": "E",
+              "text": "Don't pick old mushrooms."
+            }
+          ],
+          "answer": ["B", "C"]
+        },
+        {
+          "questionNumber": 12,
+          "question": "Which TWO warnings does Dan give about picking mushrooms?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Don't pick more than one variety of mushroom at a time."
+            },
+            {
+              "letter": "B",
+              "text": "Don't pick mushrooms near busy roads."
+            },
+            {
+              "letter": "C",
+              "text": "Don't eat mushrooms given to you."
+            },
+            {
+              "letter": "D",
+              "text": "Don't eat mushrooms while picking them."
+            },
+            {
+              "letter": "E",
+              "text": "Don't pick old mushrooms."
+            }
+          ],
+          "answer": ["B", "C"]
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 13-14\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Which TWO ideas about wild mushrooms does Dan say are correct?",
+      "questionBlock": [
+        {
+          "questionNumber": 13,
+          "question": "Which TWO ideas about wild mushrooms does Dan say are correct?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Mushrooms should always be peeled before eating."
+            },
+            {
+              "letter": "B",
+              "text": "Mushrooms eaten by animals may be unsafe."
+            },
+            {
+              "letter": "C",
+              "text": "Cooking destroys toxins in mushrooms."
+            },
+            {
+              "letter": "D",
+              "text": "Brightly coloured mushrooms can be edible."
+            },
+            {
+              "letter": "E",
+              "text": "All poisonous mushrooms have a bad smell."
+            }
+          ],
+          "answer": ["D", "E"]
+        },
+        {
+          "questionNumber": 14,
+          "question": "Which TWO ideas about wild mushrooms does Dan say are correct?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Mushrooms should always be peeled before eating."
+            },
+            {
+              "letter": "B",
+              "text": "Mushrooms eaten by animals may be unsafe."
+            },
+            {
+              "letter": "C",
+              "text": "Cooking destroys toxins in mushrooms."
+            },
+            {
+              "letter": "D",
+              "text": "Brightly coloured mushrooms can be edible."
+            },
+            {
+              "letter": "E",
+              "text": "All poisonous mushrooms have a bad smell."
+            }
+          ],
+          "answer": ["D", "E"]
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 15-20\nChoose the correct letter, A, B or C.",
+      "questionBlock": [
+        {
+          "questionNumber": 15,
+          "question": "What advice does Dan give about picking mushrooms in parks?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Choose wooded areas."
+            },
+            {
+              "letter": "B",
+              "text": "Don't disturb wildlife."
+            },
+            {
+              "letter": "C",
+              "text": "Get there early."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 16,
+          "question": "Dan says it is a good idea for beginners to",
+          "options": [
+            {
+              "letter": "A",
+              "text": "use a mushroom app."
+            },
+            {
+              "letter": "B",
+              "text": "join a group."
+            },
+            {
+              "letter": "C",
+              "text": "take a reference book."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 17,
+          "question": "What does Dan say is important for conservation?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "selecting only fully grown mushrooms"
+            },
+            {
+              "letter": "B",
+              "text": "picking a limited amount of mushrooms"
+            },
+            {
+              "letter": "C",
+              "text": "avoiding areas where rare mushroom species grow"
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 18,
+          "question": "According to Dan, some varieties of wild mushrooms are in decline because there is",
+          "options": [
+            {
+              "letter": "A",
+              "text": "a huge demand for them from restaurants."
+            },
+            {
+              "letter": "B",
+              "text": "a lack of rain in this part of the country."
+            },
+            {
+              "letter": "C",
+              "text": "a rise in building developments locally."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 19,
+          "question": "Dan says that when storing mushrooms, people should",
+          "options": [
+            {
+              "letter": "A",
+              "text": "keep them in the fridge for no more than two days."
+            },
+            {
+              "letter": "B",
+              "text": "keep them in a brown bag in a dark room."
+            },
+            {
+              "letter": "C",
+              "text": "leave them for a period after washing them."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 20,
+          "question": "What does Dan say about trying new varieties of mushrooms?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Experiment with different recipes."
+            },
+            {
+              "letter": "B",
+              "text": "Expect some to have a strong taste."
+            },
+            {
+              "letter": "C",
+              "text": "Cook them for a long time."
+            }
+          ],
+          "answer": "B"
+        }
+      ]
+    }
+  ]
+} 

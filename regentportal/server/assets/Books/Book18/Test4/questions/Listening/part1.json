@@ -1,0 +1,91 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 1-10\nComplete the notes below.",
+      "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
+      "notesTitle": "Job details from employment agency",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Role"
+        },
+        {
+          "questionNumber": 1,
+          "question": "**1** ________",
+          "answer": "receptionist"
+        },
+        {
+          "sectionHeading": "Location"
+        },
+        {
+          "questionNumber": 2,
+          "question": "Fordham **2** ________ Centre",
+          "answer": "Business"
+        },
+        {
+          "questionNumber": 3,
+          "question": "**3** ________ Road, Fordham",
+          "answer": "Station"
+        },
+        {
+          "sectionHeading": "Work involves"
+        },
+        {
+          "descriptiveText": "dealing with enquiries",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 4,
+          "question": "making **4** ________ and reorganising them",
+          "answer": "appointments"
+        },
+        {
+          "questionNumber": 5,
+          "question": "maintaining the internal **5** ________",
+          "answer": "database"
+        },
+        {
+          "descriptiveText": "general administration",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Requirements"
+        },
+        {
+          "questionNumber": 6,
+          "question": "**6** ________ (essential)",
+          "answer": "experience"
+        },
+        {
+          "questionNumber": 7,
+          "question": "a calm and **7** ________ manner",
+          "answer": "patient"
+        },
+        {
+          "descriptiveText": "good IT skills",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Other information"
+        },
+        {
+          "questionNumber": 8,
+          "question": "a **8** ________ job – further opportunities may be available",
+          "answer": "permanent"
+        },
+        {
+          "questionNumber": 9,
+          "question": "hours: 7.45 a.m. to **9** ________ p.m. Monday to Friday",
+          "answer": "5.30"
+        },
+        {
+          "questionNumber": 10,
+          "question": "**10** ________ is available onsite",
+          "answer": "parking"
+        }
+      ]
+    }
+  ]
+} 

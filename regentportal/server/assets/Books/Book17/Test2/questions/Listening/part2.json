@@ -1,0 +1,162 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 11-14\nChoose the correct letter, A, B or C.",
+      "formattingInstruction": "Write the correct letter in boxes 11-14.",
+      "questionBlock": [
+        {
+          "questionNumber": 11,
+          "question": "Many past owners made changes to",
+          "options": [
+            {
+              "letter": "A",
+              "text": "the gardens."
+            },
+            {
+              "letter": "B",
+              "text": "the house."
+            },
+            {
+              "letter": "C",
+              "text": "the farm."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 12,
+          "question": "Sir Edward Downes built Oniton Hall because he wanted",
+          "options": [
+            {
+              "letter": "A",
+              "text": "a place for discussing politics."
+            },
+            {
+              "letter": "B",
+              "text": "a place to display his wealth."
+            },
+            {
+              "letter": "C",
+              "text": "a place for artists and writers."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 13,
+          "question": "Visitors can learn about the work of servants in the past from",
+          "options": [
+            {
+              "letter": "A",
+              "text": "audio guides."
+            },
+            {
+              "letter": "B",
+              "text": "photographs."
+            },
+            {
+              "letter": "C",
+              "text": "people in costume."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 14,
+          "question": "What is new for children at Oniton Hall?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "clothes for dressing up"
+            },
+            {
+              "letter": "B",
+              "text": "mini tractors"
+            },
+            {
+              "letter": "C",
+              "text": "the adventure playground"
+            }
+          ],
+          "answer": "B"
+        }
+      ]
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 15-20\nWhich activity is offered at each of the following locations on the farm?",
+      "formattingInstruction": "Choose SIX answers from the box and write the correct letter, A-H, next to Questions 15-20.",
+      "opinionsBox": {
+        "title": "Activities",
+        "options": [
+          {
+            "letter": "A",
+            "text": "shopping"
+          },
+          {
+            "letter": "B",
+            "text": "watching cows being milked"
+          },
+          {
+            "letter": "C",
+            "text": "seeing old farming equipment"
+          },
+          {
+            "letter": "D",
+            "text": "eating and drinking"
+          },
+          {
+            "letter": "E",
+            "text": "starting a trip"
+          },
+          {
+            "letter": "F",
+            "text": "seeing rare breeds of animals"
+          },
+          {
+            "letter": "G",
+            "text": "helping to look after animals"
+          },
+          {
+            "letter": "H",
+            "text": "using farming tools"
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 15,
+          "question": "dairy",
+          "answer": "B"
+        },
+        {
+          "questionNumber": 16,
+          "question": "large barn",
+          "answer": "C"
+        },
+        {
+          "questionNumber": 17,
+          "question": "small barn",
+          "answer": "F"
+        },
+        {
+          "questionNumber": 18,
+          "question": "stables",
+          "answer": "G"
+        },
+        {
+          "questionNumber": 19,
+          "question": "shed",
+          "answer": "H"
+        },
+        {
+          "questionNumber": 20,
+          "question": "parkland",
+          "answer": "E"
+        }
+      ]
+    }
+  ]
+} 

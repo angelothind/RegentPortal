@@ -1,0 +1,184 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 21-26",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "sectionTitle": "Work experience for veterinary science students",
+      "questionBlock": [
+        {
+          "questionNumber": 21,
+          "question": "What problem did both Diana and Tim have when arranging their work experience?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "making initial contact with suitable farms"
+            },
+            {
+              "letter": "B",
+              "text": "organising transport to and from the farm"
+            },
+            {
+              "letter": "C",
+              "text": "finding a placement for the required length of time"
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 22,
+          "question": "Tim was pleased to be able to help",
+          "options": [
+            {
+              "letter": "A",
+              "text": "a lamb that had a broken leg."
+            },
+            {
+              "letter": "B",
+              "text": "a sheep that was having difficulty giving birth."
+            },
+            {
+              "letter": "C",
+              "text": "a newly born lamb that was having trouble feeding."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 23,
+          "question": "Diana says the sheep on her farm",
+          "options": [
+            {
+              "letter": "A",
+              "text": "were of various different varieties."
+            },
+            {
+              "letter": "B",
+              "text": "were mainly reared for their meat."
+            },
+            {
+              "letter": "C",
+              "text": "had better quality wool than sheep on the hills."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 24,
+          "question": "What did the students learn about adding supplements to chicken feed?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "These should only be given if specially needed."
+            },
+            {
+              "letter": "B",
+              "text": "It is worth paying extra for the most effective ones."
+            },
+            {
+              "letter": "C",
+              "text": "The amount given at one time should be limited."
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 25,
+          "question": "What happened when Diana was working with dairy cows?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "She identified some cows incorrectly."
+            },
+            {
+              "letter": "B",
+              "text": "She accidentally threw some milk away."
+            },
+            {
+              "letter": "C",
+              "text": "She made a mistake when storing milk."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 26,
+          "question": "What did both farmers mention about vets and farming?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Vets are failing to cope with some aspects of animal health."
+            },
+            {
+              "letter": "B",
+              "text": "There needs to be a fundamental change in the training of vets."
+            },
+            {
+              "letter": "C",
+              "text": "Some jobs could be done by the farmer rather than by a vet."
+            }
+          ],
+          "answer": "C"
+        }
+      ]
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 27-30\nWhat opinion do the students give about each of the following modules on their veterinary science course?",
+      "formattingInstruction": "Choose FOUR answers from the box and write the correct letter, A-F, next to questions 27-30.",
+      "sectionTitle": "Modules on Veterinary Science course",
+      "questionBlock": [
+        {
+          "questionNumber": 27,
+          "question": "Medical terminology",
+          "answer": "A"
+        },
+        {
+          "questionNumber": 28,
+          "question": "Diet and nutrition",
+          "answer": "B"
+        },
+        {
+          "questionNumber": 29,
+          "question": "Animal disease",
+          "answer": "C"
+        },
+        {
+          "questionNumber": 30,
+          "question": "Wildlife medication",
+          "answer": "D"
+        }
+      ],
+      "opinionsBox": {
+        "title": "Opinions",
+        "options": [
+          {
+            "letter": "A",
+            "text": "Tim found this easier than expected."
+          },
+          {
+            "letter": "B",
+            "text": "Tim thought this was not very clearly organised."
+          },
+          {
+            "letter": "C",
+            "text": "Diana may do some further study on this."
+          },
+          {
+            "letter": "D",
+            "text": "They both found the reading required for this was difficult."
+          },
+          {
+            "letter": "E",
+            "text": "Tim was shocked at something he learned on this module."
+          },
+          {
+            "letter": "F",
+            "text": "They were both surprised how little is known about some aspects of this."
+          }
+        ]
+      }
+    }
+  ]
+} 

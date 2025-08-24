@@ -11,7 +11,7 @@ import SummaryCompletion from '../Questions/SummaryCompletion';
 import TableCompletion from '../Questions/TableCompletion';
 import { calculateIELTSBand, formatBandScore, getBandScoreDescription } from '../../utils/bandScoreCalculator';
 
-const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, testStarted, onTestReset, sharedPassage, onPassageChange }) => {
+const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onTestReset, sharedPassage, onPassageChange }) => {
   console.log('🚀 QuestionView component mounted with selectedTest:', selectedTest);
   console.log('🔍 QuestionView received user:', user);
   console.log('🔍 QuestionView received externalTestResults:', externalTestResults);
@@ -24,6 +24,11 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
   const [answers, setAnswers] = useState({});
   const [testSubmitted, setTestSubmitted] = useState(externalTestSubmitted || false);
   const [testResults, setTestResults] = useState(externalTestResults || null);
+  const [testStarted, setTestStarted] = useState(isTeacherMode); // Add testStarted state like ListeningQuestionView
+  
+  // Use external test results if provided (for teacher view) - same pattern as ListeningQuestionView
+  const finalTestResults = externalTestResults || testResults;
+  const finalTestSubmitted = externalTestSubmitted || testSubmitted;
 
   // Debug currentPassage changes
   useEffect(() => {
@@ -77,7 +82,11 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
             console.log('📝 Restored testSubmitted and testResults from localStorage');
           }
           
-          // Note: _testStarted is handled by the parent TestViewer component
+          // Restore testStarted if it was saved
+          if (_testStarted) {
+            setTestStarted(true);
+            console.log('📝 Restored testStarted from localStorage');
+          }
           
           console.log('📝 Loaded saved answers from localStorage:', answersWithoutTimestamp);
         } catch (error) {
@@ -208,7 +217,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         _timestamp: Date.now(),
         _currentPassage: sharedPassage,
         _testSubmitted: testSubmitted,
-        _testStarted: true,
+        _testStarted: testStarted,
         _testResults: testResults
       };
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
@@ -300,7 +309,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
             _timestamp: Date.now(),
             _currentPassage: sharedPassage,
             _testSubmitted: true,
-            _testStarted: true,
+            _testStarted: testStarted,
             _testResults: {
               score: result.data.score,
               totalQuestions: result.data.totalQuestions,
@@ -326,6 +335,12 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     }
   };
 
+  const handleStartTest = () => {
+    console.log('🚀 Starting test...');
+    setTestStarted(true);
+    console.log('✅ Test started');
+  };
+
   const handleResetTest = () => {
     // In teacher mode, don't allow test reset
     if (isTeacherMode) {
@@ -336,15 +351,30 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     const confirmed = window.confirm('Are you sure you want to reset the test? This will clear all your answers and return to the start.');
     if (!confirmed) return;
     
+    console.log('🔄 Starting test reset...');
+    console.log('🔄 Before reset - testStarted:', testStarted, 'testSubmitted:', testSubmitted);
+    
+    // Clear all state
     setTestSubmitted(false);
     setTestResults(null);
+    setTestStarted(false); // Reset testStarted to show start overlay again
     setAnswers({});
+    
+    // Reset passage back to 1
+    if (onPassageChange) {
+      onPassageChange(1);
+      console.log('🔄 Reset passage back to 1');
+    }
     
     // Clear localStorage for this test
     if (selectedTest && selectedTest.testId) {
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
       localStorage.removeItem(storageKey);
       console.log('🧹 Cleared localStorage for test reset:', storageKey);
+      
+      // Double-check localStorage is cleared
+      const checkStorage = localStorage.getItem(storageKey);
+      console.log('🧹 localStorage check after clear:', checkStorage ? 'STILL EXISTS' : 'CLEARED');
     }
     
     // Call the parent's reset callback
@@ -352,7 +382,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       onTestReset();
     }
     
-    console.log('🔄 Test reset');
+    console.log('🔄 After reset - testStarted:', false, 'testSubmitted:', false);
+    console.log('✅ Test reset complete - start overlay should now be visible');
   };
 
   console.log('🔍 QuestionView render state:', {
@@ -404,8 +435,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               template={template}
               onAnswerChange={handleAnswerChange}
               testType={selectedTest.type}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               currentAnswers={answers}
             />
           );
@@ -416,8 +447,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               template={template}
               onAnswerChange={handleAnswerChange}
               testType={selectedTest.type}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               currentAnswers={answers}
             />
           );
@@ -427,8 +458,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               currentAnswers={answers}
             />
           );
@@ -438,8 +469,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               currentAnswers={answers}
             />
           );
@@ -449,8 +480,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               currentAnswers={answers}
             />
           );
@@ -460,8 +491,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               currentAnswers={answers}
             />
           );
@@ -471,8 +502,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               currentAnswers={answers}
               testType={selectedTest.type}
             />
@@ -483,8 +514,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               currentAnswers={answers}
             />
           );
@@ -494,30 +525,30 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               currentAnswers={answers}
             />
           );
         case 'notes-completion':
-          return (
-            <ChooseXWords
-              key={index}
-              template={template}
-              onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
-              currentAnswers={answers}
-            />
-          );
+                  return (
+          <ChooseXWords
+            key={index}
+            template={template}
+            onAnswerChange={handleAnswerChange}
+            testResults={finalTestResults}
+            testSubmitted={finalTestSubmitted}
+            currentAnswers={answers}
+          />
+        );
         case 'flowchart-completion':
           return (
             <FlowchartCompletion
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               currentAnswers={answers}
             />
           );
@@ -527,8 +558,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               currentAnswers={answers}
               testType={selectedTest.type}
             />
@@ -539,8 +570,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               key={index}
               template={template}
               onAnswerChange={handleAnswerChange}
-              testResults={testResults}
-              testSubmitted={testSubmitted}
+              testResults={finalTestResults}
+              testSubmitted={finalTestSubmitted}
               currentAnswers={answers}
             />
           );
@@ -588,7 +619,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       </div>
       
       {/* Test Controls - Submit only on last passage, reset only after submission (not shown in teacher mode) */}
-      {!isTeacherMode && sharedPassage === 3 && !testSubmitted && (
+      {!isTeacherMode && sharedPassage === 3 && !finalTestSubmitted && (
         <div className="test-controls">
           <div className="submit-section">
             <button className="submit-button" onClick={handleSubmit}>
@@ -599,34 +630,47 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       )}
       
       {/* Results section - only show after submission on last passage (not shown in teacher mode) */}
-      {!isTeacherMode && testSubmitted && sharedPassage === 3 && (
+      {!isTeacherMode && finalTestSubmitted && sharedPassage === 3 && finalTestResults && (
         <div className="test-controls">
           <div className="results-section">
             <h3>Test Results</h3>
             <div className="score-details compact">
               <div className="score-item">
                 <span className="score-label">Score:</span>
-                <span className="score-value">{testResults?.score}%</span>
+                <span className="score-value">{finalTestResults.score}%</span>
               </div>
               <div className="score-item">
                 <span className="score-label">Correct:</span>
-                <span className="score-value">{testResults?.correctCount} / {testResults?.totalQuestions}</span>
+                <span className="score-value">{finalTestResults.correctCount} / {finalTestResults.totalQuestions}</span>
               </div>
               <div className="score-item">
                 <span className="score-label">Band:</span>
                 <span className="score-value">
-                  {formatBandScore(calculateIELTSBand(testResults?.correctCount, selectedTest?.type))}
+                  {formatBandScore(calculateIELTSBand(finalTestResults.correctCount, selectedTest?.type))}
                 </span>
               </div>
               <div className="score-item">
                 <span className="score-label">Level:</span>
                 <span className="score-value">
-                  {getBandScoreDescription(calculateIELTSBand(testResults?.correctCount, selectedTest?.type))}
+                  {getBandScoreDescription(calculateIELTSBand(finalTestResults.correctCount, selectedTest?.type))}
                 </span>
               </div>
             </div>
             <button className="reset-button" onClick={handleResetTest}>
               Take Test Again
+            </button>
+          </div>
+        </div>
+      )}
+      
+      {/* Start Test Overlay - Only show for students, not teachers */}
+      {!testStarted && !isTeacherMode && (
+        <div className="test-overlay">
+          <div className="overlay-content">
+            <h2>Ready to Start?</h2>
+            <p>You're about to begin the Reading Test. Make sure you're in a quiet environment and ready to focus.</p>
+            <button className="start-test-button" onClick={handleStartTest}>
+              Start Test Now
             </button>
           </div>
         </div>

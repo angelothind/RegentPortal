@@ -1,0 +1,112 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 21 and 22\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Which TWO educational skills were shown in the video of children doing origami?",
+      "questionBlock": [
+        {
+          "questionNumber": 21,
+          "question": "Which TWO educational skills were shown in the video of children doing origami?",
+          "options": [
+            { "letter": "A", "text": "solving problems" },
+            { "letter": "B", "text": "following instructions" },
+            { "letter": "C", "text": "working cooperatively" },
+            { "letter": "D", "text": "learning through play" },
+            { "letter": "E", "text": "developing hand-eye coordination" }
+          ],
+          "answer": ["B", "E"]
+        },
+        {
+          "questionNumber": 22,
+          "question": "Which TWO educational skills were shown in the video of children doing origami?",
+          "options": [
+            { "letter": "A", "text": "solving problems" },
+            { "letter": "B", "text": "following instructions" },
+            { "letter": "C", "text": "working cooperatively" },
+            { "letter": "D", "text": "learning through play" },
+            { "letter": "E", "text": "developing hand-eye coordination" }
+          ],
+          "answer": ["B", "E"]
+        }
+      ]
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 23-27\nWhich comment do the students make about each of the following children in the video?",
+      "formattingInstruction": "Choose FIVE answers from the box and write the correct letter, A-G, next to Questions 23-27.",
+      "opinionsBox": {
+        "title": "Comments",
+        "options": [
+          { "letter": "A", "text": "demonstrated independence" },
+          { "letter": "B", "text": "asked for teacher support" },
+          { "letter": "C", "text": "developed a competitive attitude" },
+          { "letter": "D", "text": "seemed to find the activity calming" },
+          { "letter": "E", "text": "seemed pleased with the results" },
+          { "letter": "F", "text": "seemed confused" },
+          { "letter": "G", "text": "seemed to find the activity easy" }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 23,
+          "question": "Sid"
+        },
+        {
+          "questionNumber": 24,
+          "question": "Jack"
+        },
+        {
+          "questionNumber": 25,
+          "question": "Naomi"
+        },
+        {
+          "questionNumber": 26,
+          "question": "Anya"
+        },
+        {
+          "questionNumber": 27,
+          "question": "Zara"
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 28-30\nChoose the correct letter, A, B or C.",
+      "formattingInstruction": "Write the correct letter in boxes 28-30.",
+      "questionBlock": [
+        {
+          "questionNumber": 28,
+          "question": "Before starting an origami activity in class, the students think it is important for the teacher to",
+          "options": [
+            { "letter": "A", "text": "make models that demonstrate the different stages." },
+            { "letter": "B", "text": "check children understand the terminology involved." },
+            { "letter": "C", "text": "tell children not to worry if they find the activity difficult." }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 29,
+          "question": "The students agree that some teachers might be unwilling to use origami in class because",
+          "options": [
+            { "letter": "A", "text": "they may not think that crafts are important." },
+            { "letter": "B", "text": "they may not have the necessary skills." },
+            { "letter": "C", "text": "they may worry that it will take up too much time." }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 30,
+          "question": "Why do the students decide to use origami in their maths teaching practice?",
+          "options": [
+            { "letter": "A", "text": "to correct a particular misunderstanding" },
+            { "letter": "B", "text": "to set a challenge" },
+            { "letter": "C", "text": "to introduce a new concept" }
+          ],
+          "answer": "C"
+        }
+      ]
+    }
+  ]
+} 

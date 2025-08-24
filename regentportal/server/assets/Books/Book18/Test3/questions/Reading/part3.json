@@ -1,0 +1,196 @@
+{
+  "passageNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 27-30\nChoose the correct letter, A, B, C or D.",
+      "formattingInstruction": "Write the correct letter in boxes 27-30.",
+      "questionBlock": [
+        {
+          "questionNumber": 27,
+          "question": "The writer describes the Romeo and Juliet lesson in order to demonstrate",
+          "options": [
+            {
+              "letter": "A",
+              "text": "how few students are interested in literature."
+            },
+            {
+              "letter": "B",
+              "text": "how a teacher handles a range of learning needs."
+            },
+            {
+              "letter": "C",
+              "text": "how unsuitable Shakespeare is for most teenagers."
+            },
+            {
+              "letter": "D",
+              "text": "how weaker students can disrupt their classmates' learning."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 28,
+          "question": "What does the writer say about streaming in the third paragraph?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "It has a very broad appeal."
+            },
+            {
+              "letter": "B",
+              "text": "It favours cleverer students."
+            },
+            {
+              "letter": "C",
+              "text": "It is relatively simple to implement."
+            },
+            {
+              "letter": "D",
+              "text": "It works better in some schools than others."
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 29,
+          "question": "What idea is suggested by the reference to Mount Qomolangma in the fifth paragraph?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "students following unsuitable paths"
+            },
+            {
+              "letter": "B",
+              "text": "students attempting interesting tasks"
+            },
+            {
+              "letter": "C",
+              "text": "students not achieving their full potential"
+            },
+            {
+              "letter": "D",
+              "text": "students not being aware of their limitations"
+            }
+          ],
+          "answer": "C"
+        },
+        {
+          "questionNumber": 30,
+          "question": "What does the word 'scaffolding' in the sixth paragraph refer to?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "the factors which prevent a student from learning effectively"
+            },
+            {
+              "letter": "B",
+              "text": "the environment where most of a student's learning takes place"
+            },
+            {
+              "letter": "C",
+              "text": "the assistance given to a student in their initial stages of learning"
+            },
+            {
+              "letter": "D",
+              "text": "the setting of appropriate learning targets for a student's aptitude"
+            }
+          ],
+          "answer": "C"
+        }
+      ]
+    },
+    {
+      "questionType": "choose-from",
+      "introInstruction": "Questions 31-35\nComplete the summary using the list of phrases, A-I, below.",
+      "formattingInstruction": "Write the correct letter, A-I, in boxes 31-35.",
+      "mainQuestion": "Is streaming effective?",
+      "summaryText": "According to Professor John Hattie of the Melbourne Education Research Institute, there is very little indication that streaming leads to **31** ________. He points out that, in schools which use streaming, the most significant impact is on those students placed in the **32** ________, especially where a large proportion of them have **33** ________. Meanwhile, for the **34** ________, there appears to be only minimal advantage. A further issue is that teachers tend to have **35** ________ of students in streamed groups.",
+      "questionBlock": [
+        { "questionNumber": "31" },
+        { "questionNumber": "32" },
+        { "questionNumber": "33" },
+        { "questionNumber": "34" },
+        { "questionNumber": "35" }
+      ],
+      "options": [
+        {
+          "letter": "A",
+          "text": "wrong classes"
+        },
+        {
+          "letter": "B",
+          "text": "lower expectations"
+        },
+        {
+          "letter": "C",
+          "text": "average learners"
+        },
+        {
+          "letter": "D",
+          "text": "bottom sets"
+        },
+        {
+          "letter": "E",
+          "text": "brightest pupils"
+        },
+        {
+          "letter": "F",
+          "text": "disadvantaged backgrounds"
+        },
+        {
+          "letter": "G",
+          "text": "weaker students"
+        },
+        {
+          "letter": "H",
+          "text": "higher achievements"
+        },
+        {
+          "letter": "I",
+          "text": "positive impressions"
+        }
+      ],
+      "correctAnswers": {
+        "31": "H",
+        "32": "D",
+        "33": "F",
+        "34": "E",
+        "35": "B"
+      }
+    },
+    {
+      "questionType": "TFNG",
+      "subType": "YSNG",
+      "introInstruction": "Questions 36-40\nDo the following statements agree with the views of the writer in Reading Passage 3?",
+      "formattingInstruction": "For questions 36-40 select",
+      "questionBlock": [
+        {
+          "questionNumber": 36,
+          "question": "The Vygotsky model of education supports the concept of a mixed-ability class.",
+          "answer": "YES"
+        },
+        {
+          "questionNumber": 37,
+          "question": "Some teachers are uncertain about allowing students to take on MKO roles in the classroom.",
+          "answer": "NOT GIVEN"
+        },
+        {
+          "questionNumber": 38,
+          "question": "It can be rewarding to teach knowledge which you have only recently acquired.",
+          "answer": "YES"
+        },
+        {
+          "questionNumber": 39,
+          "question": "The priority should be to ensure that the highest-achieving students attain their goals.",
+          "answer": "NO"
+        },
+        {
+          "questionNumber": 40,
+          "question": "Taking part in collaborative outdoor activities with teachers and classmates can improve student outcomes in the classroom.",
+          "answer": "NOT GIVEN"
+        }
+      ]
+    }
+  ]
+} 

@@ -1,0 +1,88 @@
+{
+  "partNumber": 4,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 31-40\nComplete the notes below.",
+      "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
+      "notesTitle": "The impact of digital technology on the Icelandic language",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "The Icelandic language"
+        },
+        {
+          "questionNumber": 31,
+          "question": "has approximately **31** ________ speakers",
+          "answer": "350000"
+        },
+        {
+          "questionNumber": 32,
+          "question": "has a **32** ________ that is still growing",
+          "answer": "vocabulary"
+        },
+        {
+          "descriptiveText": "has not changed a lot over the last thousand years",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 33,
+          "question": "has its own words for computer-based concepts, such as web browser and **33** ________",
+          "answer": "email"
+        },
+        {
+          "sectionHeading": "Young speakers"
+        },
+        {
+          "questionNumber": 34,
+          "question": "are big users of digital technology, such as **34** ________",
+          "answer": "smartphones"
+        },
+        {
+          "questionNumber": 35,
+          "question": "are becoming **35** ________ very quickly",
+          "answer": "bilingual"
+        },
+        {
+          "questionNumber": 36,
+          "question": "are having discussions using only English while they are in the **36** ________ at school",
+          "answer": "playground"
+        },
+        {
+          "questionNumber": 37,
+          "question": "are better able to identify the content of a **37** ________ in English than Icelandic",
+          "answer": "website"
+        },
+        {
+          "sectionHeading": "Technology and internet companies"
+        },
+        {
+          "questionNumber": 38,
+          "question": "write very little in Icelandic because of the small number of speakers and because of how complicated its **38** ________ is",
+          "answer": "grammar"
+        },
+        {
+          "sectionHeading": "The Icelandic government"
+        },
+        {
+          "descriptiveText": "has set up a fund to support the production of more digital content in the language",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "believes that Icelandic has a secure future",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 39,
+          "question": "is worried that young Icelanders may lose their **39** ________ as Icelanders",
+          "answer": "identity"
+        },
+        {
+          "questionNumber": 40,
+          "question": "is worried about the consequences of children not being **40** ________ in either Icelandic or English",
+          "answer": "fluent"
+        }
+      ]
+    }
+  ]
+} 
