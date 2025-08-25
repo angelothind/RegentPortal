@@ -12,6 +12,7 @@
   overflow-y: auto;
   font-family: 'Roboto', sans-serif;
   transition: width 0.3s ease;
+  z-index: 1000;
 }
 
 /* Shrunk state */

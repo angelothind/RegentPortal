@@ -11,7 +11,7 @@ import SummaryCompletion from '../Questions/SummaryCompletion';
 import TableCompletion from '../Questions/TableCompletion';
 import { calculateIELTSBand, formatBandScore, getBandScoreDescription } from '../../utils/bandScoreCalculator';
 
-const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onTestReset, sharedPassage, onPassageChange }) => {
+const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onTestReset, sharedPassage, onPassageChange, testData }) => {
   console.log('🚀 QuestionView component mounted with selectedTest:', selectedTest);
   console.log('🔍 QuestionView received user:', user);
   console.log('🔍 QuestionView received externalTestResults:', externalTestResults);
@@ -25,6 +25,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
   const [testSubmitted, setTestSubmitted] = useState(externalTestSubmitted || false);
   const [testResults, setTestResults] = useState(externalTestResults || null);
   const [testStarted, setTestStarted] = useState(isTeacherMode); // Add testStarted state like ListeningQuestionView
+  const [currentPassage, setCurrentPassage] = useState(sharedPassage || 1); // Track current passage
   
   // Use external test results if provided (for teacher view) - same pattern as ListeningQuestionView
   const finalTestResults = externalTestResults || testResults;
@@ -32,8 +33,40 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
 
   // Debug currentPassage changes
   useEffect(() => {
-    console.log('🔄 currentPassage state changed to:', sharedPassage);
-  }, [sharedPassage]);
+    console.log('🔄 currentPassage state changed to:', currentPassage);
+  }, [currentPassage]);
+
+  // Update currentPassage when sharedPassage prop changes
+  useEffect(() => {
+    if (sharedPassage && sharedPassage !== currentPassage) {
+      console.log('🔄 QuestionView: Updating currentPassage from prop:', sharedPassage);
+      setCurrentPassage(sharedPassage);
+    }
+  }, [sharedPassage, currentPassage]);
+
+  // In teacher mode, fetch questions when testData becomes available
+  useEffect(() => {
+    if (isTeacherMode && testData && currentPassage) {
+      console.log('👨‍🏫 Teacher mode: Initial question data fetch for passage:', currentPassage);
+      fetchQuestionData();
+    }
+  }, [testData, isTeacherMode, currentPassage]);
+
+  // In teacher mode, fetch question data when passage changes and testData is available
+  useEffect(() => {
+    if (isTeacherMode) {
+      if (testData) {
+        console.log('👨‍🏫 Teacher mode: Fetching question data for passage:', currentPassage);
+        fetchQuestionData();
+      } else {
+        console.log('👨‍🏫 Teacher mode: No testData available yet');
+      }
+      return;
+    }
+    
+    console.log('👨‍🎓 Student mode: Fetching question data for passage:', currentPassage);
+    fetchQuestionData();
+  }, [selectedTest, currentPassage, isTeacherMode, testData]);
 
   // Load saved answers from localStorage on component mount (only for students, not teachers)
   useEffect(() => {
@@ -145,44 +178,50 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     };
   }, [testSubmitted, answers, isTeacherMode]);
 
+  const fetchQuestionData = async () => {
+    if (!selectedTest) {
+      console.log('❌ No selectedTest provided to QuestionView');
+      setQuestionData(null);
+      return;
+    }
+
+    console.log('🔍 QuestionView: Fetching questions for passage:', currentPassage);
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Fetch question data for current passage with test type
+      const endpoint = `/api/tests/${selectedTest.testId._id}/questions/part${currentPassage}?testType=${selectedTest.type}`;
+      console.log('📡 Fetching from endpoint:', endpoint);
+      
+      const response = await fetch(endpoint);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('📋 Question data loaded:', data);
+      console.log('📋 Question templates:', data.questionData?.templates);
+      setQuestionData(data);
+    } catch (error) {
+      console.error('❌ Failed to fetch question data:', error);
+      setError('Failed to load questions');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Fetch question data when passage changes
   useEffect(() => {
-    const fetchQuestionData = async () => {
-      if (!selectedTest) {
-        console.log('❌ No selectedTest provided to QuestionView');
-        setQuestionData(null);
-        return;
-      }
-
-      console.log('🔍 QuestionView: Fetching questions for passage:', sharedPassage);
-      setLoading(true);
-      setError(null);
-
-      try {
-        // Fetch question data for current passage with test type
-        const endpoint = `/api/tests/${selectedTest.testId._id}/questions/part${sharedPassage}?testType=${selectedTest.type}`;
-        console.log('📡 Fetching from endpoint:', endpoint);
-        
-        const response = await fetch(endpoint);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        console.log('📋 Question data loaded:', data);
-        console.log('📋 Question templates:', data.questionData?.templates);
-        setQuestionData(data);
-      } catch (error) {
-        console.error('❌ Failed to fetch question data:', error);
-        setError('Failed to load questions');
-      } finally {
-        setLoading(false);
-      }
-    };
-
+    if (isTeacherMode) {
+      console.log('👨‍🏫 Teacher mode: Parent component handles question data fetching');
+      return;
+    }
+    
+    console.log('👨‍🎓 Student mode: Fetching question data for passage:', currentPassage);
     fetchQuestionData();
-  }, [selectedTest, sharedPassage]);
+  }, [selectedTest, currentPassage, isTeacherMode]);
 
   const handleAnswerChange = (questionNumberOrNewAnswers, value) => {
     // In teacher mode, don't allow answer changes
@@ -215,7 +254,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       const answersWithTimestamp = {
         ...newAnswers,
         _timestamp: Date.now(),
-        _currentPassage: sharedPassage,
+        _currentPassage: currentPassage,
         _testSubmitted: testSubmitted,
         _testStarted: testStarted,
         _testResults: testResults
@@ -307,7 +346,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
           const answersWithTimestamp = {
             ...answers,
             _timestamp: Date.now(),
-            _currentPassage: sharedPassage,
+            _currentPassage: currentPassage,
             _testSubmitted: true,
             _testStarted: testStarted,
             _testResults: {
@@ -593,24 +632,16 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
           <h3>Questions</h3>
         </div>
         <div className="passage-toggle">
-          <button 
-            className={`passage-button ${sharedPassage === 1 ? 'active' : ''}`}
-            onClick={() => onPassageChange(1)}
-          >
-            Passage 1
-          </button>
-          <button 
-            className={`passage-button ${sharedPassage === 2 ? 'active' : ''}`}
-            onClick={() => onPassageChange(2)}
-          >
-            Passage 2
-          </button>
-          <button 
-            className={`passage-button ${sharedPassage === 3 ? 'active' : ''}`}
-            onClick={() => onPassageChange(3)}
-          >
-            Passage 3
-          </button>
+          {/* Limit to exactly 3 passages for reading tests */}
+          {[1, 2, 3].map((passageNumber) => (
+            <button 
+              key={passageNumber}
+              className={`passage-button ${currentPassage === passageNumber ? 'active' : ''}`}
+              onClick={() => onPassageChange(passageNumber)}
+            >
+              Passage {passageNumber}
+            </button>
+          ))}
         </div>
       </div>
       
@@ -619,7 +650,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       </div>
       
       {/* Test Controls - Submit only on last passage, reset only after submission (not shown in teacher mode) */}
-      {!isTeacherMode && sharedPassage === 3 && !finalTestSubmitted && (
+      {!isTeacherMode && currentPassage === 3 && !finalTestSubmitted && (
         <div className="test-controls">
           <div className="submit-section">
             <button className="submit-button" onClick={handleSubmit}>
@@ -630,7 +661,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       )}
       
       {/* Results section - only show after submission on last passage (not shown in teacher mode) */}
-      {!isTeacherMode && finalTestSubmitted && sharedPassage === 3 && finalTestResults && (
+      {!isTeacherMode && finalTestSubmitted && currentPassage === 3 && finalTestResults && (
         <div className="test-controls">
           <div className="results-section">
             <h3>Test Results</h3>

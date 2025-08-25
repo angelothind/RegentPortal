@@ -104,6 +104,11 @@
   font-weight: 600;
 }
 
+/* Ensure text content after bullet points has consistent color */
+.question-text span:not(.bullet-point):not(.numbered-bullet) {
+  color: #333;
+}
+
 /* Bullet level styling */
 .bullet-point[style*="margin-left: 20px"] {
   color: #666;
@@ -367,6 +372,11 @@
   display: block;
   word-wrap: break-word;
   overflow-wrap: break-word;
+}
+
+/* Ensure text content after bullet points has consistent color for listening too */
+.listening-question-text span:not(.bullet-point):not(.numbered-bullet) {
+  color: #333;
 }
 
 .listening-answer-input {

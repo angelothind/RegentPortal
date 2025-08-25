@@ -1,0 +1,123 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 1-5\nComplete the notes below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 1-5 on your answer sheet.",
+      "notesTitle": "The Dead Sea Scrolls",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Discovery"
+        },
+        {
+          "descriptiveText": "Qumran, 1946/7",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "three Bedouin shepherds in their teens were near an opening on side of cliff",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "1",
+          "question": "heard a noise of breaking when one teenager threw a **1** ________",
+          "answer": "stone",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "2-3",
+          "question": "teenagers went into the **2** ________ and found a number of containers made of **3** ________",
+          "answer": "cave",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "3",
+          "question": "teenagers went into the cave and found a number of containers made of **3** ________",
+          "answer": "clay",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "The scrolls"
+        },
+        {
+          "descriptiveText": "date from between 150 BCE and 70 CE",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "4",
+          "question": "thought to have been written by group of people known as the **4** ________",
+          "answer": "Essenes",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "5",
+          "question": "written mainly in the **5** ________ language",
+          "answer": "Hebrew",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "most are on religious topics, written using ink on parchment or papyrus",
+          "bulletLevel": 0
+        }
+      ],
+      "correctAnswers": {
+        "1": "stone",
+        "2": "cave",
+        "3": "clay",
+        "4": "Essenes",
+        "5": "Hebrew"
+      }
+    },
+    {
+      "questionType": "TFNG",
+      "subType": "TFNG",
+      "introInstruction": "Questions 6-13\nDo the following statements agree with the information given in Reading Passage 1?",
+      "formattingInstruction": "For questions 6-13 select",
+      "questionBlock": [
+        {
+          "questionNumber": "6",
+          "question": "The Bedouin teenagers who found the scrolls were disappointed by how little money they received for them."
+        },
+        {
+          "questionNumber": "7",
+          "question": "There is agreement among academics about the origin of the Dead Sea Scrolls."
+        },
+        {
+          "questionNumber": "8",
+          "question": "Most of the books of the Bible written on the scrolls are incomplete."
+        },
+        {
+          "questionNumber": "9",
+          "question": "The information on the Copper Scroll is written in an unusual way."
+        },
+        {
+          "questionNumber": "10",
+          "question": "Mar Samuel was given some of the scrolls as a gift."
+        },
+        {
+          "questionNumber": "11",
+          "question": "In the early 1950s, a number of educational establishments in the US were keen to buy scrolls from Mar Samuel."
+        },
+        {
+          "questionNumber": "12",
+          "question": "The scroll that was pieced together in 2017 contains information about annual occasions in the Qumran area 2,000 years ago."
+        },
+        {
+          "questionNumber": "13",
+          "question": "Academics at the University of Haifa are currently researching how to decipher the final scroll."
+        }
+      ],
+      "correctAnswers": {
+        "6": "NOT GIVEN",
+        "7": "NOT GIVEN",
+        "8": "NOT GIVEN",
+        "9": "NOT GIVEN",
+        "10": "NOT GIVEN",
+        "11": "NOT GIVEN",
+        "12": "NOT GIVEN",
+        "13": "NOT GIVEN"
+      }
+    }
+  ]
+} 

@@ -39,7 +39,8 @@ const ReadingTest = ({ testId, testData, onStartTest, onPassageChange, currentPa
         // No need to filter again on frontend
         if (testData.sources.length > 0) {
           // Convert 1-based passage number to 0-based array index
-          const passageIndex = currentPassage - 1;
+          // Only allow passages 1, 2, and 3
+          const passageIndex = Math.min(currentPassage - 1, 2); // Max index is 2 (for passage 3)
           const currentSource = testData.sources[passageIndex];
           
           // Backend already sent the parsed JSON content
@@ -89,13 +90,14 @@ const ReadingTest = ({ testId, testData, onStartTest, onPassageChange, currentPa
       <div className="passage-section">
         <div className="passage-header">
           <div className="passage-controls">
-            {testData.sources.map((_, index) => (
+            {/* Limit to exactly 3 passages for reading tests */}
+            {[1, 2, 3].map((passageNumber) => (
               <button 
-                key={index}
-                onClick={() => handlePassageChange(index + 1)}
-                className={currentPassage === (index + 1) ? 'active' : ''}
+                key={passageNumber}
+                onClick={() => handlePassageChange(passageNumber)}
+                className={currentPassage === passageNumber ? 'active' : ''}
               >
-                Passage {index + 1}
+                Passage {passageNumber}
               </button>
             ))}
           </div>

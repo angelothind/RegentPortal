@@ -1,0 +1,104 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 1-10\nComplete the notes below.",
+      "formattingInstruction": "Write ONE WORD for each answer.",
+      "notesTitle": "Easy Life Cleaning Services",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Basic cleaning package offered"
+        },
+        {
+          "descriptiveText": "Cleaning all surfaces",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 1,
+          "question": "Cleaning the **1** ________ throughout the apartment",
+          "answer": "floors"
+        },
+        {
+          "descriptiveText": "Cleaning shower, sinks, toilet etc.",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Additional services agreed"
+        },
+        {
+          "descriptiveText": "Every week",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 2,
+          "question": "Cleaning the **2** ________",
+          "answer": "windows",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 3,
+          "question": "Ironing clothes – **3** ________ only",
+          "answer": "shirts",
+          "bulletLevel": 1
+        },
+        {
+          "descriptiveText": "Every month",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 4,
+          "question": "Cleaning all the **4** ________ from the inside",
+          "answer": "cupboards",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 5,
+          "question": "Washing down the **5** ________",
+          "answer": "walls",
+          "bulletLevel": 1
+        },
+        {
+          "sectionHeading": "Other possibilities"
+        },
+        {
+          "questionNumber": 6,
+          "question": "They can organise a plumber or an **6** ________ if necessary.",
+          "answer": "electrician"
+        },
+        {
+          "questionNumber": 7,
+          "question": "A special cleaning service is available for customers who are allergic to **7** ________",
+          "answer": "chemicals"
+        },
+        {
+          "sectionHeading": "Information on the cleaners"
+        },
+        {
+          "questionNumber": 8,
+          "question": "Before being hired, all cleaners have a background check carried out by the **8** ________",
+          "answer": "police"
+        },
+        {
+          "descriptiveText": "References are required.",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 9,
+          "question": "All cleaners are given **9** ________ for two weeks.",
+          "answer": "training"
+        },
+        {
+          "questionNumber": 10,
+          "question": "Customers send a **10** ________ after each visit.",
+          "answer": "report"
+        },
+        {
+          "descriptiveText": "Usually, each customer has one regular cleaner.",
+          "bulletLevel": 0
+        }
+      ]
+    }
+  ]
+} 

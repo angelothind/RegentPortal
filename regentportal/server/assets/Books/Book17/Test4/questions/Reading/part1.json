@@ -1,0 +1,143 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "TFNG",
+      "introInstruction": "Questions 1-6\nDo the following statements agree with the information given in Reading Passage 1?",
+      "formattingInstruction": "In boxes 1-6 on your answer sheet, write\nTRUE if the statement agrees with the information\nFALSE if the statement contradicts the information\nNOT GIVEN if there is no information on this",
+      "questionBlock": [
+        {
+          "questionNumber": 1,
+          "question": "Many Madagascan forests are being destroyed by attacks from insects."
+        },
+        {
+          "questionNumber": 2,
+          "question": "Loss of habitat has badly affected insectivorous bats in Madagascar."
+        },
+        {
+          "questionNumber": 3,
+          "question": "Ricardo Rocha has carried out studies of bats in different parts of the world."
+        },
+        {
+          "questionNumber": 4,
+          "question": "Habitat modification has resulted in indigenous bats in Madagascar becoming useful to farmers."
+        },
+        {
+          "questionNumber": 5,
+          "question": "The Malagasy mouse-eared bat is more common than other indigenous bat species in Madagascar."
+        },
+        {
+          "questionNumber": 6,
+          "question": "Bats may feed on paddy swarming caterpillars and grass webworms."
+        }
+      ],
+      "correctAnswers": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "6": ""
+      }
+    },
+    {
+      "questionType": "table-completion",
+      "introInstruction": "Questions 7-13\nComplete the table below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 7-13 on your answer sheet.",
+      "tableTitle": "The study carried out by Rocha's team",
+      "tableStructure": {
+        "columns": 2,
+        "rows": 5,
+        "headers": ["Category", "Details"]
+      },
+      "tableData": [
+        {
+          "row": 1,
+          "cells": [
+            {
+              "content": "Aim",
+              "type": "text"
+            },
+            {
+              "content": "to investigate the feeding habits of bats in farmland near the Ranomafana National Park",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            {
+              "content": "Method",
+              "type": "text"
+            },
+            {
+              "content": "ultrasonic recording to identify favourite feeding spots",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "cells": [
+            {
+              "content": "Method",
+              "type": "text"
+            },
+            {
+              "content": "DNA analysis of bat **7** ________",
+              "type": "question",
+              "questionNumber": 7,
+              "answer": ""
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "cells": [
+            {
+              "content": "Findings",
+              "type": "text"
+            },
+            {
+              "content": "the bats were most active in rice fields located on hills; ate pests of rice, **8** ________, sugarcane, nuts and fruit; prevent the spread of disease by eating **9** ________ and blackflies",
+              "type": "question",
+              "questionNumber": "8-9",
+              "answer": ""
+            }
+          ]
+        },
+        {
+          "row": 5,
+          "cells": [
+            {
+              "content": "Findings",
+              "type": "text"
+            },
+            {
+              "content": "local attitudes to bats are mixed: they provide food rich in **10** ________; the buildings where they roost become **11** ________; they play an important role in local **12** ________",
+              "type": "question",
+              "questionNumber": "10-12",
+              "answer": ""
+            }
+          ]
+        },
+        {
+          "row": 10,
+          "cells": [
+            {
+              "content": "Recommendation",
+              "type": "text"
+            },
+            {
+              "content": "farmers should provide special **13** ________ to support the bat population",
+              "type": "question",
+              "questionNumber": 13,
+              "answer": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+} 

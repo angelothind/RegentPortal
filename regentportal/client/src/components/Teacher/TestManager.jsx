@@ -19,7 +19,7 @@ const TestManager = ({ selectedTest, user }) => {
       setLoading(true);
       try {
         // Fetch test data for current test
-        const endpoint = `/api/tests/${selectedTest.testId._id}`;
+        const endpoint = `/api/test/${selectedTest.testId._id}`;
         console.log('📡 TestManager: Calling endpoint:', endpoint);
         
         const response = await fetch(endpoint);

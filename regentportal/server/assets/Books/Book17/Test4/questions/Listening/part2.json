@@ -1,0 +1,142 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 11-14\nChoose the correct letter, A, B or C.",
+      "formattingInstruction": "Write the correct letter in boxes 11-14.",
+      "questionBlock": [
+        {
+          "questionNumber": 11,
+          "question": "Many hotel managers are unaware that their staff often leave because of",
+          "options": [
+            {
+              "letter": "A",
+              "text": "a lack of training."
+            },
+            {
+              "letter": "B",
+              "text": "long hours."
+            },
+            {
+              "letter": "C",
+              "text": "low pay."
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 12,
+          "question": "What is the impact of high staff turnover on managers?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "an increased workload"
+            },
+            {
+              "letter": "B",
+              "text": "low morale"
+            },
+            {
+              "letter": "C",
+              "text": "an inability to meet targets"
+            }
+          ],
+          "answer": "A"
+        },
+        {
+          "questionNumber": 13,
+          "question": "What mistake should managers always avoid?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "failing to treat staff equally"
+            },
+            {
+              "letter": "B",
+              "text": "reorganising shifts without warning"
+            },
+            {
+              "letter": "C",
+              "text": "neglecting to have enough staff during busy periods"
+            }
+          ],
+          "answer": "B"
+        },
+        {
+          "questionNumber": 14,
+          "question": "What unexpected benefit did Dunwich Hotel notice after improving staff retention rates?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "a fall in customer complaints"
+            },
+            {
+              "letter": "B",
+              "text": "an increase in loyalty club membership"
+            },
+            {
+              "letter": "C",
+              "text": "a rise in spending per customer"
+            }
+          ],
+          "answer": "A"
+        }
+      ]
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 15-20\nWhich way of reducing staff turnover was used in each of the following hotels?",
+      "formattingInstruction": "Write the correct letter, A, B or C, next to Questions 15-20.",
+      "opinionsBox": {
+        "title": "Ways of reducing staff turnover",
+        "options": [
+          {
+            "letter": "A",
+            "text": "improving relationships and teamwork"
+          },
+          {
+            "letter": "B",
+            "text": "offering incentives and financial benefits"
+          },
+          {
+            "letter": "C",
+            "text": "providing career opportunities"
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 15,
+          "question": "The Sun Club",
+          "answer": "A"
+        },
+        {
+          "questionNumber": 16,
+          "question": "The Portland",
+          "answer": "B"
+        },
+        {
+          "questionNumber": 17,
+          "question": "Bluewater Hotels",
+          "answer": "C"
+        },
+        {
+          "questionNumber": 18,
+          "question": "Pentlow Hotels",
+          "answer": "A"
+        },
+        {
+          "questionNumber": 19,
+          "question": "Green Planet",
+          "answer": "B"
+        },
+        {
+          "questionNumber": 20,
+          "question": "The Amesbury",
+          "answer": "C"
+        }
+      ]
+    }
+  ]
+} 

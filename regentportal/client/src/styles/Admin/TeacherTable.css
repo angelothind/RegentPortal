@@ -1,9 +1,39 @@
+.teacher-table-container {
+  padding: 20px;
+  position: relative;
+  z-index: 10;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  /* Ensure proper stacking context */
+  isolation: isolate;
+  /* Force table to be visible */
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* Ensure proper width expansion */
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  /* Prevent overflow */
+  box-sizing: border-box !important;
+}
+
 .teacher-table {
-  width: 100%;
+  width: 100% !important;
+  min-width: 100% !important;
   border-collapse: collapse;
   margin-top: 16px;
   position: relative;
-  z-index: 1;
+  z-index: 10;
+  background-color: white;
+  /* Ensure table is visible */
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* Ensure proper table layout */
+  table-layout: auto !important;
 }
 
 .teacher-table th,
@@ -16,12 +46,6 @@
 
 .teacher-table th {
   background-color: #f4f4f4;
-}
-
-.teacher-table-container {
-  padding: 20px;
-  position: relative;
-  z-index: 1;
 }
 
 .teacher-header {

@@ -1,0 +1,133 @@
+{
+  "partNumber": 4,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 31-40\nComplete the notes below.",
+      "formattingInstruction": "Write ONE WORD ONLY for each answer.",
+      "notesTitle": "Maple syrup",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "What is maple syrup?"
+        },
+        {
+          "descriptiveText": "made from the sap of the maple tree",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "added to food or used in cooking",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 31,
+          "question": "colour described as **31** ________",
+          "answer": "golden"
+        },
+        {
+          "questionNumber": 32,
+          "question": "very **32** ________ compared to refined sugar",
+          "answer": "sweet"
+        },
+        {
+          "sectionHeading": "The maple tree"
+        },
+        {
+          "descriptiveText": "has many species",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "needs sunny days and cool nights",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "maple leaf has been on the Canadian flag since 1964",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "needs moist soil but does not need fertiliser as well",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 33,
+          "question": "best growing conditions and **33** ________ are in Canada and North America",
+          "answer": "climate"
+        },
+        {
+          "sectionHeading": "Early maple sugar producers"
+        },
+        {
+          "descriptiveText": "made holes in the tree trunks",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 34,
+          "question": "used hot **34** ________ to heat the sap",
+          "answer": "stones"
+        },
+        {
+          "descriptiveText": "used tree bark to make containers for collection",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "sweetened food and drink with sugar",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Today's maple syrup"
+        },
+        {
+          "descriptiveText": "The trees",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 35,
+          "question": "Tree trunks may not have the correct **35** ________ until they have been growing for 40 years.",
+          "answer": "diameter",
+          "bulletLevel": 1
+        },
+        {
+          "descriptiveText": "The changing temperature and movement of water within the tree produces the sap.",
+          "bulletLevel": 1
+        },
+        {
+          "descriptiveText": "The production",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 36,
+          "question": "A tap is drilled into the trunk and a **36** ________ carries the sap into a bucket.",
+          "answer": "tube",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 37,
+          "question": "Large pans of sap called evaporators are heated by means of a **37** ________",
+          "answer": "fire",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 38,
+          "question": "A lot of **38** ________ is produced during the evaporation process.",
+          "answer": "steam",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 39,
+          "question": "'Sugar sand' is removed because it makes the syrup look **39** ________ and affects the taste.",
+          "answer": "cloudy",
+          "bulletLevel": 1
+        },
+        {
+          "descriptiveText": "The syrup is ready for use.",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 40,
+          "question": "A huge quantity of sap is needed to make a **40** ________ of maple syrup.",
+          "answer": "litre"
+        }
+      ]
+    }
+  ]
+} 

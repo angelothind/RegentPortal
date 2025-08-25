@@ -22,14 +22,19 @@ const AdminDashboard = () => {
   };
 
   const renderContent = () => {
+    console.log('Rendering content for view:', selectedView);
     switch (selectedView) {
       case 'students':
+        console.log('Rendering StudentTable');
         return <StudentTable />;
       case 'teachers':
+        console.log('Rendering TeacherTable');
         return <TeacherTable />;
       case 'admin':
+        console.log('Rendering AdminInfo');
         return <AdminInfo />;
       default:
+        console.log('Rendering invalid view');
         return <p>Invalid view</p>;
     }
   };

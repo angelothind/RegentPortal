@@ -1,0 +1,122 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 14-17\nReading Passage 2 has seven sections, A-G.",
+      "formattingInstruction": "Which section contains the following information?\nWrite the correct letter, A-G, in boxes 14-17 on your answer sheet.\nNB You may use any letter more than once.",
+      "questionBlock": [
+        {
+          "questionNumber": 14,
+          "question": "a mention of negative attitudes towards stadium building projects",
+          "answer": "A"
+        },
+        {
+          "questionNumber": 15,
+          "question": "figures demonstrating the environmental benefits of a certain stadium",
+          "answer": "C"
+        },
+        {
+          "questionNumber": 16,
+          "question": "examples of the wide range of facilities available at some new stadiums",
+          "answer": "E"
+        },
+        {
+          "questionNumber": 17,
+          "question": "reference to the disadvantages of the stadiums built during a certain era",
+          "answer": "D"
+        }
+      ]
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 18-22\nComplete the summary below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 18-22 on your answer sheet.",
+      "notesTitle": "Roman amphitheatres",
+      "questionBlock": [
+        {
+          "questionNumber": "18-22",
+          "text": "The Roman stadiums of Europe have proved very versatile. The amphitheatre of Arles, for example, was converted first into a **18** ________, then into a residential area and finally into an arena where spectators could watch **19** ________. Meanwhile, the arena in Verona, one of the oldest Roman amphitheatres, is famous today as a venue where **20** ________ is performed. The site of Lucca's amphitheatre has also been used for many purposes over the centuries, including the storage of **21** ________. It is now a market square with **22** ________ and homes incorporated into the remains of the Roman amphitheatre.",
+          "blanks": [
+            { "number": "18", "answer": "fortress" },
+            { "number": "19", "answer": "bullfights" },
+            { "number": "20", "answer": "opera" },
+            { "number": "21", "answer": "salt" },
+            { "number": "22", "answer": "shops" }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "18": "fortress",
+        "19": "bullfights",
+        "20": "opera",
+        "21": "salt",
+        "22": "shops"
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 23 and 24\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 23 and 24 on your answer sheet.",
+      "questionGroup": {
+        "questionNumbers": ["23", "24"],
+        "options": [
+          {
+            "letter": "A",
+            "text": "They are less imaginatively designed."
+          },
+          {
+            "letter": "B",
+            "text": "They are less spacious."
+          },
+          {
+            "letter": "C",
+            "text": "They are in less convenient locations."
+          },
+          {
+            "letter": "D",
+            "text": "They are less versatile."
+          },
+          {
+            "letter": "E",
+            "text": "They are made of less durable materials."
+          }
+        ],
+        "correctAnswers": ["A", "D"],
+        "maxSelections": 2
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 25 and 26\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 25 and 26 on your answer sheet.",
+      "questionGroup": {
+        "questionNumbers": ["25", "26"],
+        "options": [
+          {
+            "letter": "A",
+            "text": "offering improved amenities for the enjoyment of sports events"
+          },
+          {
+            "letter": "B",
+            "text": "bringing community life back into the city environment"
+          },
+          {
+            "letter": "C",
+            "text": "facilitating research into solar and wind energy solutions"
+          },
+          {
+            "letter": "D",
+            "text": "enabling local residents to reduce their consumption of electricity"
+          },
+          {
+            "letter": "E",
+            "text": "providing a suitable site for the installation of renewable power generators"
+          }
+        ],
+        "correctAnswers": ["B", "E"],
+        "maxSelections": 2
+      }
+    }
+  ]
+}

@@ -1,14 +1,38 @@
 .student-table-container {
   padding: 20px;
   position: relative;
-  z-index: 1;
+  z-index: 10;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  /* Ensure proper stacking context */
+  isolation: isolate;
+  /* Force table to be visible */
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* Ensure proper width expansion */
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  /* Prevent overflow */
+  box-sizing: border-box !important;
 }
 
 .student-table {
-  width: 100%;
+  width: 100% !important;
+  min-width: 100% !important;
   border-collapse: collapse;
   position: relative;
-  z-index: 1;
+  z-index: 10;
+  background-color: white;
+  /* Ensure table is visible */
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* Ensure proper table layout */
+  table-layout: auto !important;
 }
 
 .student-table th,
@@ -480,4 +504,62 @@
   .answer-detail .detail-label {
     min-width: auto;
   }
+}
+
+/* Test View Layout */
+.test-view {
+  width: 100%;
+  height: 100%;
+}
+
+.test-view-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.test-view-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.back-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #5a6268;
+}
+
+.student-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.student-header h2 {
+  margin: 0;
+  color: #333;
+}
+
+.student-header p {
+  margin: 5px 0 0 0;
+  color: #666;
 }

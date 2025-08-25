@@ -1,0 +1,119 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 1-5\nComplete the notes below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 1-5 on your answer sheet.",
+      "notesTitle": "The thylacine",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Appearance and behaviour"
+        },
+        {
+          "descriptiveText": "looked rather like a dog",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "had a series of stripes along its body and tail",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "1",
+          "question": "ate an entirely **1** ________ diet",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "2",
+          "question": "probably depended mainly on **2** ________ when hunting",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "3",
+          "question": "young spent first months of life inside its mother's **3** ________",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Decline and extinction"
+        },
+        {
+          "questionNumber": "4",
+          "question": "last evidence in mainland Australia is a 3,100-year-old **4** ________",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "probably went extinct in mainland Australia due to animals known as dingoes",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "5",
+          "question": "reduction in **5** ________ and available sources of food were partly responsible for decline in Tasmania",
+          "answer": "",
+          "bulletLevel": 0
+        }
+      ],
+      "correctAnswers": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": ""
+      }
+    },
+    {
+      "questionType": "TFNG",
+      "subType": "TFNG",
+      "introInstruction": "Questions 6-13\nDo the following statements agree with the information given in Reading Passage 1?",
+      "formattingInstruction": "In boxes 6-13 on your answer sheet, write",
+      "questionBlock": [
+        {
+          "questionNumber": "6",
+          "question": "Significant numbers of thylacines were killed by humans from the 1830s onwards."
+        },
+        {
+          "questionNumber": "7",
+          "question": "Several thylacines were born in zoos during the late 1800s."
+        },
+        {
+          "questionNumber": "8",
+          "question": "John Gould's prediction about the thylacine surprised some biologists."
+        },
+        {
+          "questionNumber": "9",
+          "question": "In the early 1900s, many scientists became worried about the possible extinction of the thylacine."
+        },
+        {
+          "questionNumber": "10",
+          "question": "T. T. Flynn's proposal to rehome captive thylacines on an island proved to be impractical."
+        },
+        {
+          "questionNumber": "11",
+          "question": "There were still reasonable numbers of thylacines in existence when a piece of legislation protecting the species during their breeding season was passed."
+        },
+        {
+          "questionNumber": "12",
+          "question": "From 1930 to 1936, the only known living thylacines were all in captivity."
+        },
+        {
+          "questionNumber": "13",
+          "question": "Attempts to find living thylacines are now rarely made."
+        }
+      ],
+      "correctAnswers": {
+        "6": "",
+        "7": "",
+        "8": "",
+        "9": "",
+        "10": "",
+        "11": "",
+        "12": "",
+        "13": ""
+      }
+    }
+  ]
+} 

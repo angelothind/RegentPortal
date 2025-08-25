@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TeacherTestAnalysis from './TeacherTestAnalysis';
+import StudentSubmissions from './StudentSubmissions';
 import '../../styles/Admin/StudentTable.css';
 
 const StudentDetails = ({ student, onBack }) => {
@@ -122,16 +123,25 @@ const StudentDetails = ({ student, onBack }) => {
 
   return (
     <div className="student-details-container">
-      {/* Student Info and Back Button */}
-      <div className="student-info-header">
-        <div className="student-info">
-          <h2>{student.name}</h2>
-          <p className="student-username">Username: {student.username}</p>
+      {selectedTest ? (
+        <div className="test-view">
+          <div className="test-view-header">
+            <button className="back-button" onClick={handleCloseTestView}>
+              ← Back to Tests
+            </button>
+            <h3>Test Analysis: {selectedTest.testTitle}</h3>
+          </div>
+          <StudentSubmissions selectedTest={selectedTest} />
         </div>
-        <button className="back-button-small" onClick={onBack}>
-          ← Back
-        </button>
-      </div>
+      ) : (
+        <>
+          <div className="student-header">
+            <button className="back-button" onClick={onBack}>
+              ← Back to Students
+            </button>
+            <h2>{student.name}</h2>
+            <p>Username: {student.username}</p>
+          </div>
 
       {/* Overview Stats Section */}
       <div className="overview-section">
@@ -279,6 +289,8 @@ const StudentDetails = ({ student, onBack }) => {
           )}
         </div>
       </div>
+    </>
+      )}
     </div>
   );
 };

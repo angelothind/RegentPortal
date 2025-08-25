@@ -1,0 +1,128 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 1-6\nComplete the notes below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 1-6 on your answer sheet.",
+      "notesTitle": "The London underground railway",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "The problem"
+        },
+        {
+          "questionNumber": "1",
+          "question": "The **1** ________ of London increased rapidly between 1800 and 1850",
+          "answer": "population",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "The streets were full of horse-drawn vehicles",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "The proposed solution"
+        },
+        {
+          "descriptiveText": "Charles Pearson, a solicitor, suggested building an underground railway",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "2",
+          "question": "Building the railway would make it possible to move people to better housing in the **2** ________",
+          "answer": "suburbs",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "3",
+          "question": "A number of **3** ________ agreed with Pearson's idea",
+          "answer": "businessmen",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "4",
+          "question": "The company initially had problems getting the **4** ________ needed for the project",
+          "answer": "money",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "5",
+          "question": "Negative articles about the project appeared in the **5** ________",
+          "answer": "newspapers",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "The construction"
+        },
+        {
+          "descriptiveText": "The chosen route did not require many buildings to be pulled down",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "The 'cut and cover' method was used to construct the tunnels",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "6",
+          "question": "With the completion of the brick arch, the tunnel was covered with **6** ________",
+          "answer": "soil",
+          "bulletLevel": 0
+        }
+      ],
+      "correctAnswers": {
+        "1": "population",
+        "2": "suburbs",
+        "3": "businessmen",
+        "4": "money",
+        "5": "newspapers",
+        "6": "soil"
+      }
+    },
+    {
+      "questionType": "TFNG",
+      "subType": "TFNG",
+      "introInstruction": "Questions 7-13\nDo the following statements agree with the information given in Reading Passage 1?",
+      "formattingInstruction": "In boxes 7-13 on your answer sheet, write",
+      "questionBlock": [
+        {
+          "questionNumber": "7",
+          "question": "Other countries had built underground railways before the Metropolitan line opened."
+        },
+        {
+          "questionNumber": "8",
+          "question": "More people than predicted travelled on the Metropolitan line on the first day."
+        },
+        {
+          "questionNumber": "9",
+          "question": "The use of ventilation shafts failed to prevent pollution in the tunnels."
+        },
+        {
+          "questionNumber": "10",
+          "question": "A different approach from the 'cut and cover' technique was required in London's central area."
+        },
+        {
+          "questionNumber": "11",
+          "question": "The windows on City & South London trains were at eye level."
+        },
+        {
+          "questionNumber": "12",
+          "question": "The City & South London Railway was a financial success."
+        },
+        {
+          "questionNumber": "13",
+          "question": "Trains on the 'Tuppenny Tube' nearly always ran on time."
+        }
+      ],
+      "correctAnswers": {
+        "7": "TRUE",
+        "8": "NOT GIVEN",
+        "9": "TRUE",
+        "10": "TRUE",
+        "11": "FALSE",
+        "12": "FALSE",
+        "13": "NOT GIVEN"
+      }
+    }
+  ]
+} 

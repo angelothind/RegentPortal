@@ -1,0 +1,139 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "ysng",
+      "introInstruction": "Questions 32-35\nDo the following statements agree with the claims of the writer in Reading Passage 3?",
+      "formattingInstruction": "In boxes 32-35 on your answer sheet, write",
+      "questionBlock": [
+        {
+          "questionNumber": 32,
+          "question": "The description in the first chapter of how New York probably looked from the air in the early 1600s lacks interest."
+        },
+        {
+          "questionNumber": 33,
+          "question": "Chapters two and three prepare the reader well for material yet to come."
+        },
+        {
+          "questionNumber": 34,
+          "question": "The biggest problem for many nineteenth-century New York immigrant neighbourhoods was a lack of amenities."
+        },
+        {
+          "questionNumber": 35,
+          "question": "In the nineteenth century, New York's immigrant neighbourhoods tended to concentrate around the harbour."
+        }
+      ],
+      "correctAnswers": {
+        "32": "",
+        "33": "",
+        "34": "",
+        "35": ""
+      }
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 36-40\nComplete the summary using the list of phrases, A-J, below.",
+      "formattingInstruction": "Write the correct letter, A-J, in boxes 36-40 on your answer sheet.",
+      "notesTitle": "The bedrock myth",
+      "questionBlock": [
+        {
+          "questionNumber": "36-40",
+          "text": "In chapter seven, Barr indicates how the lack of bedrock close to the surface does not explain why skyscrapers are absent from **36** ________. He points out that although the cost of foundations increases when bedrock is deep below the surface, this cannot be regarded as **37** ________, especially when compared to **38** ________.\n\nA particularly enjoyable part of the chapter was Barr's account of how **39** ________ are made possible by the use of caissons, but he also discusses their **40** ________. The chapter is well researched but relatively easy to understand.",
+          "blanks": [
+            { "number": "36", "answer": "" },
+            { "number": "37", "answer": "" },
+            { "number": "38", "answer": "" },
+            { "number": "39", "answer": "" },
+            { "number": "40", "answer": "" }
+          ]
+        }
+      ],
+      "wordBank": {
+        "title": "List of Phrases",
+        "options": [
+          { "letter": "A", "text": "development plans" },
+          { "letter": "B", "text": "deep excavations" },
+          { "letter": "C", "text": "great distance" },
+          { "letter": "D", "text": "excessive expense" },
+          { "letter": "E", "text": "impossible tasks" },
+          { "letter": "F", "text": "associated risks" },
+          { "letter": "G", "text": "water level" },
+          { "letter": "H", "text": "specific areas" },
+          { "letter": "I", "text": "total expenditure" },
+          { "letter": "J", "text": "construction guidelines" }
+        ]
+      },
+      "correctAnswers": {
+        "36": "",
+        "37": "",
+        "38": "",
+        "39": "",
+        "40": ""
+      }
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 27-31\nChoose the correct letter, A, B, C or D.",
+      "formattingInstruction": "Write the correct letter in boxes 27-31 on your answer sheet.",
+      "questionBlock": [
+        {
+          "questionNumber": 27,
+          "question": "What point does Shester make about Barr's book in the first paragraph?",
+          "options": [
+            { "letter": "A", "text": "It gives a highly original explanation for urban development." },
+            { "letter": "B", "text": "Elements of Barr's research papers are incorporated throughout the book." },
+            { "letter": "C", "text": "Other books that are available on the subject have taken a different approach." },
+            { "letter": "D", "text": "It covers a range of factors that affected the development of New York." }
+          ]
+        },
+        {
+          "questionNumber": 28,
+          "question": "How does Shester respond to the information in the book about tenements?",
+          "options": [
+            { "letter": "A", "text": "She describes the reasons for Barr's interest." },
+            { "letter": "B", "text": "She indicates a potential problem with Barr's analysis." },
+            { "letter": "C", "text": "She compares Barr's conclusion with that of other writers." },
+            { "letter": "D", "text": "She provides details about the sources Barr used for his research." }
+          ]
+        },
+        {
+          "questionNumber": 29,
+          "question": "What does Shester say about chapter six of the book?",
+          "options": [
+            { "letter": "A", "text": "It contains conflicting data." },
+            { "letter": "B", "text": "It focuses too much on possible trends." },
+            { "letter": "C", "text": "It is too specialised for most readers." },
+            { "letter": "D", "text": "It draws on research that is out of date." }
+          ]
+        },
+        {
+          "questionNumber": 30,
+          "question": "What does Shester suggest about the chapters focusing on the 1920s building boom?",
+          "options": [
+            { "letter": "A", "text": "The information should have been organised differently." },
+            { "letter": "B", "text": "More facts are needed about the way construction was financed." },
+            { "letter": "C", "text": "The explanation that is given for the building boom is unlikely." },
+            { "letter": "D", "text": "Some parts will have limited appeal to certain people." }
+          ]
+        },
+        {
+          "questionNumber": 31,
+          "question": "What impresses Shester the most about the chapter on land values?",
+          "options": [
+            { "letter": "A", "text": "the broad time period that is covered" },
+            { "letter": "B", "text": "the interesting questions that Barr asks" },
+            { "letter": "C", "text": "the nature of the research into the topic" },
+            { "letter": "D", "text": "the recommendations Barr makes for the future" }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "27": "",
+        "28": "",
+        "29": "",
+        "30": "",
+        "31": ""
+      }
+    }
+  ]
+} 

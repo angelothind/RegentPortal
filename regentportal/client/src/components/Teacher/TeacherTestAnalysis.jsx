@@ -6,8 +6,8 @@ import ListeningQuestionView from '../Student/ListeningQuestionView';
 
 const TeacherTestAnalysis = ({ submission, onBack }) => {
   const [testData, setTestData] = useState(null);
-  const [questionData, setQuestionData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [sharedPassage, setSharedPassage] = useState(1); // Use sharedPassage like student version
 
   console.log('🎯 TeacherTestAnalysis - Received submission:', submission);
   console.log('🎯 TeacherTestAnalysis - submission.answers:', submission?.answers);
@@ -47,7 +47,7 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
         console.log('🔍 API calls - completeSubmission.testId:', completeSubmission.testId);
 
         // Fetch test data
-        const testEndpoint = `/api/tests/${testIdForAPI}`;
+        const testEndpoint = `/api/test/${testIdForAPI}`;
         const testResponse = await fetch(testEndpoint);
         if (!testResponse.ok) {
           throw new Error(`HTTP error! status: ${testResponse.status}`);
@@ -55,15 +55,7 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
         const testDataResult = await testResponse.json();
         setTestData(testDataResult);
 
-        // Fetch question data
-        const questionEndpoint = `/api/tests/${testIdForAPI}/questions/part1?testType=${completeSubmission.testType}`;
-        const questionResponse = await fetch(questionEndpoint);
-        if (!questionResponse.ok) {
-          throw new Error(`HTTP error! status: ${questionResponse.status}`);
-        }
-        const questionDataResult = await questionResponse.json();
-        setQuestionData(questionDataResult);
-
+        // Remove question data fetching since QuestionView handles it
       } catch (error) {
         console.error('Failed to fetch test data:', error);
       } finally {
@@ -73,6 +65,11 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
 
     fetchTestData();
   }, [submission]);
+
+  const handlePassageChange = (newPassage) => {
+    console.log('🔄 TeacherTestAnalysis: Changing passage from', sharedPassage, 'to', newPassage);
+    setSharedPassage(newPassage);
+  };
 
   // Format submission data to match the structure expected by question components
   const formatTestResults = () => {
@@ -208,7 +205,13 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
       {submission.testType.toLowerCase() === 'reading' ? (
         <div className="test-viewer-container">
           <div className="test-content-area">
-            <ReadingTest testId={{ _id: testIdValue }} testData={testData} isTeacherMode={true} />
+            <ReadingTest 
+              testId={{ _id: testIdValue }} 
+              testData={testData} 
+              isTeacherMode={true}
+              currentPassage={sharedPassage}
+              onPassageChange={handlePassageChange}
+            />
           </div>
           <div className="question-area">
             <QuestionView 
@@ -217,6 +220,9 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
               testResults={testResults}
               testSubmitted={true}
               isTeacherMode={true}
+              sharedPassage={sharedPassage}
+              onPassageChange={handlePassageChange}
+              testData={testData} // Pass testData so QuestionView can fetch questions
             />
           </div>
         </div>

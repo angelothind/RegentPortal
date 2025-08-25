@@ -1,0 +1,139 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 27-31\nComplete the summary using the list of phrases, A-J, below.",
+      "formattingInstruction": "Write the correct letter, A-J, in boxes 27-31 on your answer sheet.",
+      "notesTitle": "The story behind the hunt for Charles II",
+      "questionBlock": [
+        {
+          "questionNumber": "27-31",
+          "text": "Charles II's father was executed by the Parliamentarian forces in 1649. Charles II then formed a **27** ________ with the Scots, and in order to become King of Scots, he abandoned an important **28** ________ that was held by his father and had contributed to his father's death. The opposing sides then met outside Worcester in 1651. The battle led to a **29** ________ for the Parliamentarians and Charles had to flee for his life. A **30** ________ was offered for Charles's capture, but after six weeks spent in hiding, he eventually managed to reach the **31** ________ of continental Europe.",
+          "blanks": [
+            { "number": "27", "answer": "" },
+            { "number": "28", "answer": "" },
+            { "number": "29", "answer": "" },
+            { "number": "30", "answer": "" },
+            { "number": "31", "answer": "" }
+          ]
+        }
+      ],
+      "wordBank": {
+        "title": "List of Phrases",
+        "options": [
+          { "letter": "A", "text": "military innovation" },
+          { "letter": "B", "text": "large reward" },
+          { "letter": "C", "text": "widespread conspiracy" },
+          { "letter": "D", "text": "relative safety" },
+          { "letter": "E", "text": "new government" },
+          { "letter": "F", "text": "decisive victory" },
+          { "letter": "G", "text": "political debate" },
+          { "letter": "H", "text": "strategic alliance" },
+          { "letter": "I", "text": "popular solution" },
+          { "letter": "J", "text": "religious conviction" }
+        ]
+      },
+      "correctAnswers": {
+        "27": "",
+        "28": "",
+        "29": "",
+        "30": "",
+        "31": ""
+      }
+    },
+    {
+      "questionType": "ysng",
+      "introInstruction": "Questions 32-35\nDo the following statements agree with the claims of the writer in Reading Passage 3?",
+      "formattingInstruction": "In boxes 32-35 on your answer sheet, write",
+      "questionBlock": [
+        {
+          "questionNumber": 32,
+          "question": "Charles chose Pepys for the task because he considered him to be trustworthy."
+        },
+        {
+          "questionNumber": 33,
+          "question": "Charles's personal recollection of the escape lacked sufficient detail."
+        },
+        {
+          "questionNumber": 34,
+          "question": "Charles indicated to Pepys that he had planned his escape before the battle."
+        },
+        {
+          "questionNumber": 35,
+          "question": "The inclusion of Charles's account is a positive aspect of the book."
+        }
+      ],
+      "correctAnswers": {
+        "32": "",
+        "33": "",
+        "34": "",
+        "35": ""
+      }
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 36-40\nChoose the correct letter, A, B, C or D.",
+      "formattingInstruction": "Write the correct letter in boxes 36-40 on your answer sheet.",
+      "questionBlock": [
+        {
+          "questionNumber": 36,
+          "question": "What is the reviewer's main purpose in the first paragraph?",
+          "options": [
+            { "letter": "A", "text": "to describe what happened during the Battle of Worcester" },
+            { "letter": "B", "text": "to give an account of the circumstances leading to Charles II's escape" },
+            { "letter": "C", "text": "to provide details of the Parliamentarians' political views" },
+            { "letter": "D", "text": "to compare Charles II's beliefs with those of his father" }
+          ]
+        },
+        {
+          "questionNumber": 37,
+          "question": "Why does the reviewer include examples of the fugitives' behaviour in the third paragraph?",
+          "options": [
+            { "letter": "A", "text": "to explain how close Charles II came to losing his life" },
+            { "letter": "B", "text": "to suggest that Charles II's supporters were badly prepared" },
+            { "letter": "C", "text": "to illustrate how the events of the six weeks are brought to life" },
+            { "letter": "D", "text": "to argue that certain aspects are not as well known as they should be" }
+          ]
+        },
+        {
+          "questionNumber": 38,
+          "question": "What point does the reviewer make about Charles II in the fourth paragraph?",
+          "options": [
+            { "letter": "A", "text": "He chose to celebrate what was essentially a defeat." },
+            { "letter": "B", "text": "He misunderstood the motives of his opponents." },
+            { "letter": "C", "text": "He aimed to restore people's faith in the monarchy." },
+            { "letter": "D", "text": "He was driven by a desire to be popular." }
+          ]
+        },
+        {
+          "questionNumber": 39,
+          "question": "What does the reviewer say about Charles Spencer in the fifth paragraph?",
+          "options": [
+            { "letter": "A", "text": "His decision to write the book comes as a surprise." },
+            { "letter": "B", "text": "He takes an unbiased approach to the subject matter." },
+            { "letter": "C", "text": "His descriptions of events would be better if they included more detail." },
+            { "letter": "D", "text": "He chooses language that is suitable for a twenty-first-century audience." }
+          ]
+        },
+        {
+          "questionNumber": 40,
+          "question": "When the reviewer says the book 'doesn't quite hit the mark', she is making the point that",
+          "options": [
+            { "letter": "A", "text": "it overlooks the impact of events on ordinary people." },
+            { "letter": "B", "text": "it lacks an analysis of prevalent views on monarchy." },
+            { "letter": "C", "text": "it omits any references to the deceit practised by Charles II during his time in hiding." },
+            { "letter": "D", "text": "it fails to address whether Charles II's experiences had a lasting influence on him." }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "36": "",
+        "37": "",
+        "38": "",
+        "39": "",
+        "40": ""
+      }
+    }
+  ]
+} 

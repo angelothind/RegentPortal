@@ -1,0 +1,143 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 21-22\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 21 and 22.",
+      "questionGroup": {
+        "questionNumbers": ["21", "22"],
+        "options": [
+          {
+            "letter": "A",
+            "text": "He should have felt more positive about them."
+          },
+          {
+            "letter": "B",
+            "text": "The training was too challenging for him."
+          },
+          {
+            "letter": "C",
+            "text": "He could have worked harder at them."
+          },
+          {
+            "letter": "D",
+            "text": "His parents were disappointed in him."
+          },
+          {
+            "letter": "E",
+            "text": "His fellow students admired him."
+          }
+        ],
+        "correctAnswers": ["A", "C"],
+        "maxSelections": 2
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 23 and 24\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 23 and 24.",
+      "questionGroup": {
+        "questionNumbers": ["23", "24"],
+        "options": [
+          {
+            "letter": "A",
+            "text": "disbelief"
+          },
+          {
+            "letter": "B",
+            "text": "relief"
+          },
+          {
+            "letter": "C",
+            "text": "stress"
+          },
+          {
+            "letter": "D",
+            "text": "gratitude"
+          },
+          {
+            "letter": "E",
+            "text": "homesickness"
+          }
+        ],
+        "correctAnswers": ["B", "D"],
+        "maxSelections": 2
+      }
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 25-30\nWhat comment do the students make about the development of each of the following items of sporting equipment?",
+      "formattingInstruction": "Choose SIX answers from the box and write the correct letter, A-H, next to Questions 25-30.",
+      "opinionsBox": {
+        "title": "Comments about the development of the equipment",
+        "options": [
+          {
+            "letter": "A",
+            "text": "It could cause excessive sweating."
+          },
+          {
+            "letter": "B",
+            "text": "The material was being mass produced for another purpose."
+          },
+          {
+            "letter": "C",
+            "text": "People often needed to make their own."
+          },
+          {
+            "letter": "D",
+            "text": "It often had to be replaced."
+          },
+          {
+            "letter": "E",
+            "text": "The material was expensive."
+          },
+          {
+            "letter": "F",
+            "text": "It was unpopular among spectators."
+          },
+          {
+            "letter": "G",
+            "text": "It caused injuries."
+          },
+          {
+            "letter": "H",
+            "text": "No one using it liked it at first."
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 25,
+          "question": "the table tennis bat",
+          "answer": "C"
+        },
+        {
+          "questionNumber": 26,
+          "question": "the cricket helmet",
+          "answer": "G"
+        },
+        {
+          "questionNumber": 27,
+          "question": "the cycle helmet",
+          "answer": "H"
+        },
+        {
+          "questionNumber": 28,
+          "question": "the golf club",
+          "answer": "E"
+        },
+        {
+          "questionNumber": 29,
+          "question": "the hockey stick",
+          "answer": "D"
+        },
+        {
+          "questionNumber": 30,
+          "question": "the football",
+          "answer": "B"
+        }
+      ]
+    }
+  ]
+} 

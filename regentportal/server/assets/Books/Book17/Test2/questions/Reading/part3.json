@@ -1,0 +1,139 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 27-31\nChoose the correct letter, A, B, C or D.",
+      "formattingInstruction": "Write the correct letter in boxes 27-31 on your answer sheet.",
+      "questionBlock": [
+        {
+          "questionNumber": 27,
+          "question": "The purpose of the first paragraph is to",
+          "options": [
+            { "letter": "A", "text": "defend particular ideas." },
+            { "letter": "B", "text": "compare certain beliefs." },
+            { "letter": "C", "text": "disprove a widely held view." },
+            { "letter": "D", "text": "outline a common assumption." }
+          ]
+        },
+        {
+          "questionNumber": 28,
+          "question": "What are the writers doing in the second paragraph?",
+          "options": [
+            { "letter": "A", "text": "criticising an opinion" },
+            { "letter": "B", "text": "justifying a standpoint" },
+            { "letter": "C", "text": "explaining an approach" },
+            { "letter": "D", "text": "supporting an argument" }
+          ]
+        },
+        {
+          "questionNumber": 29,
+          "question": "In the third paragraph, what do the writers suggest about Darwin and Einstein?",
+          "options": [
+            { "letter": "A", "text": "They represent an exception to a general rule." },
+            { "letter": "B", "text": "Their way of working has been misunderstood." },
+            { "letter": "C", "text": "They are an ideal which others should aspire to." },
+            { "letter": "D", "text": "Their achievements deserve greater recognition." }
+          ]
+        },
+        {
+          "questionNumber": 30,
+          "question": "John Nicholson is an example of a person whose idea",
+          "options": [
+            { "letter": "A", "text": "established his reputation as an influential scientist." },
+            { "letter": "B", "text": "was only fully understood at a later point in history." },
+            { "letter": "C", "text": "laid the foundations for someone else's breakthrough." },
+            { "letter": "D", "text": "initially met with scepticism from the scientific community." }
+          ]
+        },
+        {
+          "questionNumber": 31,
+          "question": "What is the key point of interest about the 'acey-deucy' stirrup placement?",
+          "options": [
+            { "letter": "A", "text": "the simple reason why it was invented" },
+            { "letter": "B", "text": "the enthusiasm with which it was adopted" },
+            { "letter": "C", "text": "the research that went into its development" },
+            { "letter": "D", "text": "the cleverness of the person who first used it" }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "27": "",
+        "28": "",
+        "29": "",
+        "30": "",
+        "31": ""
+      }
+    },
+    {
+      "questionType": "ysng",
+      "introInstruction": "Questions 32-36\nDo the following statements agree with the claims of the writer in Reading Passage 3?",
+      "formattingInstruction": "For questions 32-36 select",
+      "questionBlock": [
+        {
+          "questionNumber": 32,
+          "question": "Acknowledging people such as Plato or da Vinci as geniuses will help us understand the process by which great minds create new ideas."
+        },
+        {
+          "questionNumber": 33,
+          "question": "The Law of Effect was discovered at a time when psychologists were seeking a scientific reason why creativity occurs."
+        },
+        {
+          "questionNumber": 34,
+          "question": "The Law of Effect states that no planning is involved in the behaviour of organisms."
+        },
+        {
+          "questionNumber": 35,
+          "question": "The Law of Effect sets out clear explanations about the sources of new ideas and behaviours."
+        },
+        {
+          "questionNumber": 36,
+          "question": "Many scientists are now turning away from the notion of intelligent design and genius."
+        }
+      ],
+      "correctAnswers": {
+        "32": "",
+        "33": "",
+        "34": "",
+        "35": "",
+        "36": ""
+      }
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 37-40\nComplete the summary using the list of words, A-G, below.",
+      "formattingInstruction": "Write the correct letter, A-G, in boxes 37-40 on your answer sheet.",
+      "notesTitle": "The origins of creative behaviour",
+      "questionBlock": [
+        {
+          "questionNumber": "37-40",
+          "text": "The traditional view of scientific discovery is that breakthroughs happen when a single great mind has sudden **37** ________. Although this can occur, it is not often the case. Advances are more likely to be the result of a longer process. In some cases, this process involves **38** ________, such as Nicholson's theory about proto-elements. In others, simple necessity may provoke innovation, as with Westrope's decision to modify the position of his riding stirrups. There is also often an element of **39** ________, for example, the coincidence of ideas that led to the invention of the Post-It note. With both the Law of Natural Selection and the Law of Effect, there may be no clear **40** ________ involved, but merely a process of variation and selection.",
+          "blanks": [
+            { "number": "37", "answer": "" },
+            { "number": "38", "answer": "" },
+            { "number": "39", "answer": "" },
+            { "number": "40", "answer": "" }
+          ]
+        }
+      ],
+      "wordBank": {
+        "title": "List of Words",
+        "options": [
+          { "letter": "A", "text": "invention" },
+          { "letter": "B", "text": "goals" },
+          { "letter": "C", "text": "compromise" },
+          { "letter": "D", "text": "mistakes" },
+          { "letter": "E", "text": "luck" },
+          { "letter": "F", "text": "inspiration" },
+          { "letter": "G", "text": "experiments" }
+        ]
+      },
+      "correctAnswers": {
+        "37": "",
+        "38": "",
+        "39": "",
+        "40": ""
+      }
+    }
+  ]
+} 

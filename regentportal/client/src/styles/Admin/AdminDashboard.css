@@ -2,14 +2,39 @@
 .admin-dashboard {
   display: flex;
   height: 100vh;
-  width: 100%;
+  width: 100vw;
   border: none;
   outline: none;
+  position: relative;
+  overflow: hidden; /* Prevent horizontal scrollbar */
+  /* Debug: ensure visibility */
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Reset any Bootstrap interference */
+.admin-dashboard * {
+  box-sizing: border-box;
+}
+
+/* Ensure proper stacking context */
+.admin-dashboard {
+  isolation: isolate;
+}
+
+/* Override Bootstrap container styles */
+.admin-dashboard .container,
+.admin-dashboard .container-fluid {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .sidebar-container {
   width: 234px; /* Match the sidebar width exactly */
   min-width: 234px;
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
   background-color: #25245D; /* Match sidebar background */
   color: white;
   position: fixed;
@@ -21,18 +46,31 @@
   border: none; /* Remove any potential borders */
   outline: none;
   box-shadow: none;
+  /* Debug: ensure visibility */
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .main-content {
-  flex: 1;
-  margin-left: 234px; /* Match sidebar width exactly */
+  position: absolute;
+  left: 234px; /* Position to the right of sidebar */
+  top: 0;
+  right: 0; /* Extend to right edge of viewport */
+  bottom: 0; /* Extend to bottom edge of viewport */
   padding: 20px;
   background-color: #f8f9fa;
-  min-height: 100vh;
   overflow-y: auto;
-  border: none; /* Remove any potential borders */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  border: none;
   outline: none;
   box-shadow: none;
+  z-index: 1;
+  background-clip: padding-box;
+  /* Ensure proper stacking context */
+  isolation: isolate;
+  /* Debug: ensure visibility */
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* Override any Bootstrap or global styles that might cause borders */
@@ -55,6 +93,102 @@
   border-bottom: none !important;
 }
 
+/* Ensure tables are visible above sidebar */
+.main-content > div {
+  position: relative;
+  z-index: 10;
+  background-color: #f8f9fa;
+  /* Force new stacking context */
+  isolation: isolate;
+  /* Debug: ensure visibility */
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* Ensure proper width */
+  width: 100% !important;
+  min-width: 100% !important;
+}
+
+/* Content wrapper for additional positioning control */
+.content-wrapper {
+  position: relative;
+  z-index: 10;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  width: 100% !important;
+  min-width: 100% !important;
+  /* Force new stacking context */
+  isolation: isolate;
+  /* Debug: ensure visibility */
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* Ensure proper flex behavior */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Override Bootstrap table styles that might interfere */
+.main-content table {
+  position: relative !important;
+  z-index: 10 !important;
+  background-color: white !important;
+  /* Debug: ensure visibility */
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* Ensure proper table dimensions */
+  width: 100% !important;
+  min-width: 100% !important;
+  table-layout: auto !important;
+  /* Ensure proper positioning */
+  left: 0 !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.main-content .table {
+  position: relative !important;
+  z-index: 10 !important;
+  background-color: white !important;
+  /* Debug: ensure visibility */
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* Ensure proper table dimensions */
+  width: 100% !important;
+  min-width: 100% !important;
+  table-layout: auto !important;
+}
+
+/* Override Bootstrap row and col classes */
+.main-content .row {
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+.main-content .col,
+.main-content .col-* {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Ensure table containers expand properly */
+.main-content .admin-table-container,
+.main-content .student-table-container,
+.main-content .teacher-table-container {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  position: relative !important;
+  /* Prevent overflow */
+  overflow: visible !important;
+  /* Ensure proper width constraints */
+  box-sizing: border-box !important;
+  /* Ensure proper left positioning */
+  left: 0 !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .sidebar-container {
@@ -64,6 +198,7 @@
   
   .main-content {
     margin-left: 200px;
+    width: calc(100% - 200px);
   }
 }
 
@@ -75,5 +210,6 @@
   
   .main-content {
     margin-left: 180px;
+    width: calc(100% - 180px);
   }
 } 

@@ -1,0 +1,97 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 27-32\nReading Passage 3 has eight paragraphs, A-H.",
+      "formattingInstruction": "Which paragraph contains the following information?\nWrite the correct letter, A-H, in boxes 27-32 on your answer sheet.\nNB You may use any letter more than once.",
+      "questionBlock": [
+        {
+          "questionNumber": 27,
+          "question": "a reference to earlier examples of blindfold chess"
+        },
+        {
+          "questionNumber": 28,
+          "question": "an outline of what blindfold chess involves"
+        },
+        {
+          "questionNumber": 29,
+          "question": "a claim that Gareyev's skill is limited to chess"
+        },
+        {
+          "questionNumber": 30,
+          "question": "why Gareyev's skill is of interest to scientists"
+        },
+        {
+          "questionNumber": 31,
+          "question": "an outline of Gareyev's priorities"
+        },
+        {
+          "questionNumber": 32,
+          "question": "a reason why the last part of a game may be difficult"
+        }
+      ],
+      "correctAnswers": {
+        "27": "",
+        "28": "",
+        "29": "",
+        "30": "",
+        "31": "",
+        "32": ""
+      }
+    },
+    {
+      "questionType": "TFNG",
+      "introInstruction": "Questions 33-36\nDo the following statements agree with the information given in Reading Passage 3?",
+      "formattingInstruction": "In boxes 33-36 on your answer sheet, write TRUE if the statement agrees with the information, FALSE if the statement contradicts the information, NOT GIVEN if there is no information about this",
+      "questionBlock": [
+        {
+          "questionNumber": 33,
+          "question": "In the forthcoming games, all the participants will be blindfolded."
+        },
+        {
+          "questionNumber": 34,
+          "question": "Gareyev has won competitions in BASE jumping."
+        },
+        {
+          "questionNumber": 35,
+          "question": "UCLA is the first university to carry out research into blindfold chess players."
+        },
+        {
+          "questionNumber": 36,
+          "question": "Good chess players are likely to be able to play blindfold chess."
+        }
+      ],
+      "correctAnswers": {
+        "33": "",
+        "34": "",
+        "35": "",
+        "36": ""
+      }
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 37-40\nComplete the summary below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 37-40 on your answer sheet.",
+      "notesTitle": "How the research was carried out",
+      "questionBlock": [
+        {
+          "questionNumber": "37-40",
+          "text": "The researchers started by testing Gareyev's **37** ________; for example, he was required to recall a string of **38** ________ in order and also in reverse order. Although his performance was normal, scans showed an unusual amount of **39** ________ within the areas of Gareyev's brain that are concerned with directing attention. In addition, the scans raised the possibility of unusual strength in the parts of his brain that deal with **40** ________ input.",
+          "blanks": [
+            { "number": "37", "answer": "" },
+            { "number": "38", "answer": "" },
+            { "number": "39", "answer": "" },
+            { "number": "40", "answer": "" }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "37": "",
+        "38": "",
+        "39": "",
+        "40": ""
+      }
+    }
+  ]
+} 

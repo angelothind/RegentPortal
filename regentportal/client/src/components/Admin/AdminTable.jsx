@@ -72,6 +72,8 @@ const AdminTable = () => {
 
   if (loading) return <p>Loading admins...</p>;
 
+  console.log('Rendering AdminTable with admins:', admins);
+
   return (
     <div className="admin-table-container">
       <div className="admin-header">

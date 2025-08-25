@@ -1,0 +1,103 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 14-18\nReading Passage 2 has five sections, A-E.",
+      "formattingInstruction": "Which section contains the following information?\nWrite the correct letter, A-E, in boxes 14-18 on your answer sheet.\nNB You may use any letter more than once.",
+      "questionBlock": [
+        {
+          "questionNumber": "14",
+          "question": "a reference to a type of tomato that can resist a dangerous infection"
+        },
+        {
+          "questionNumber": "15",
+          "question": "an explanation of how problems can arise from focusing only on a certain type of tomato plant"
+        },
+        {
+          "questionNumber": "16",
+          "question": "a number of examples of plants that are not cultivated at present but could be useful as food sources"
+        },
+        {
+          "questionNumber": "17",
+          "question": "a comparison between the early domestication of the tomato and more recent research"
+        },
+        {
+          "questionNumber": "18",
+          "question": "a personal reaction to the flavour of a tomato that has been genetically edited"
+        }
+      ],
+      "correctAnswers": {
+        "14": "A",
+        "15": "B",
+        "16": "C",
+        "17": "D",
+        "18": "E"
+      }
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 19-23\nLook at the following statements (Questions 19-23) and the list of researchers below.",
+      "formattingInstruction": "Match each statement with the correct researcher, A-D.\nWrite the correct letter, A-D, in boxes 19-23 on your answer sheet.\nNB You may use any letter more than once.",
+      "opinionsBox": {
+        "title": "Researchers",
+        "options": [
+          { "letter": "A", "text": "Jorg Kudla" },
+          { "letter": "B", "text": "Caixia Gao" },
+          { "letter": "C", "text": "Joyce Van Eck" },
+          { "letter": "D", "text": "Jonathan Jones" }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": "19",
+          "question": "Domestication of certain plants could allow them to adapt to future environmental challenges."
+        },
+        {
+          "questionNumber": "20",
+          "question": "The idea of growing and eating unusual plants may not be accepted on a large scale."
+        },
+        {
+          "questionNumber": "21",
+          "question": "It is not advisable for the future direction of certain research to be made public."
+        },
+        {
+          "questionNumber": "22",
+          "question": "Present efforts to domesticate one wild fruit are limited by the costs involved."
+        },
+        {
+          "questionNumber": "23",
+          "question": "Humans only make use of a small proportion of the plant food available on Earth."
+        }
+      ],
+      "correctAnswers": {
+        "19": "A",
+        "20": "B",
+        "21": "C",
+        "22": "D",
+        "23": "A"
+      }
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 24-26\nComplete the sentences below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 24-26 on your answer sheet.",
+      "questionBlock": [
+        {
+          "questionNumber": "24-26",
+          "text": "An undesirable trait such as loss of **24** ________ may be caused by a mutation in a tomato gene. By modifying one gene in a tomato plant, researchers made the tomato three times its original **25** ________. A type of tomato which was not badly affected by **26** ________, and was rich in vitamin C, was produced by a team of researchers in China.",
+          "blanks": [
+            { "number": "24", "answer": "" },
+            { "number": "25", "answer": "" },
+            { "number": "26", "answer": "" }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "24": "",
+        "25": "",
+        "26": ""
+      }
+    }
+  ]
+} 
