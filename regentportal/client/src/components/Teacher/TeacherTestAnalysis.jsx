@@ -185,7 +185,6 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
           ← Back to Student Details
         </button>
         <div className="test-info">
-          <h2>{submission.testTitle}</h2>
           <div className="test-meta">
             <span className="book-name">{submission.bookTitle}</span>
             <span className="test-name">{submission.testName}</span>
