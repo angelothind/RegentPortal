@@ -186,7 +186,6 @@ const TestViewer = ({ selectedTest, user }) => {
             <ReadingTest 
               testId={selectedTest.testId} 
               testData={testData} 
-              onStartTest={handleStartTest}
               onPassageChange={handlePassageChange}
               currentPassage={sharedPassage}
             />

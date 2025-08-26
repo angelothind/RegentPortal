@@ -109,28 +109,12 @@
   color: #333;
 }
 
-/* Bullet level styling */
-.bullet-point[style*="margin-left: 20px"] {
-  color: #666;
-  font-size: 0.9em;
-  font-weight: 500;
-}
-
-.bullet-point[style*="margin-left: 40px"] {
-  color: #999;
-  font-size: 0.85em;
-  font-weight: 400;
-}
-
-.bullet-point[style*="margin-left: 60px"] {
-  color: #bbb;
-  font-size: 0.8em;
-  font-weight: 400;
-}
-
+/* Bullet point styling - consistent across all levels */
 .bullet-point {
   margin-right: 8px;
   font-size: 1.1rem;
+  color: #25245D;
+  font-weight: 600;
 }
 
 .answer-input {

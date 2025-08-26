@@ -170,3 +170,15 @@
   background-color: rgba(255, 255, 255, 0.1);
   color: #fff;
 }
+
+.logout.logging-out {
+  background-color: rgba(232, 151, 62, 0.7);
+  color: #fff;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.logout.logging-out:hover {
+  background-color: rgba(232, 151, 62, 0.7);
+  color: #fff;
+}

@@ -78,9 +78,6 @@
 }
 
 .question-line {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
   margin-bottom: 0;
 }
 
@@ -88,7 +85,6 @@
   font-weight: 600;
   color: #333;
   font-size: 0.95rem;
-  flex-shrink: 0;
 }
 
 .question-text {

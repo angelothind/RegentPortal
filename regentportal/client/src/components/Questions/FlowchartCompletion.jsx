@@ -84,7 +84,7 @@ const FlowchartCompletion = ({ template, onAnswerChange, testResults, testSubmit
       </div>
       
       {/* Main Content - Flowchart and Options Side by Side */}
-      <div className="main-content">
+      <div className="flowchart-main-content">
         {/* Flowchart Section */}
         <div className="flowchart-section">
           <div className="flowchart-container">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import StudentSidebar from '../components/Student/StudentSidebar';
-import TestViewer from '../components/Student/Testviewer';
+import TestViewer from '../components/Student/TestViewer';
 import '../styles/UserLayout/StudentDashboard.css';
 
 const StudentDashboard = () => {
@@ -44,14 +44,65 @@ const StudentDashboard = () => {
     console.log('🔍 StudentDashboard: selectedTest state changed to:', selectedTest);
   }, [selectedTest]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('user');
-    navigate('/'); // or '/login' depending on your setup
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const handleLogout = async () => {
+    console.log('🚪 Logout initiated...');
+    setIsLoggingOut(true);
+    
+    try {
+      // Remove beforeunload listeners to prevent navigation blocking
+      console.log('🔒 Removing beforeunload listeners...');
+      window.removeEventListener('beforeunload', () => {});
+      
+      console.log('🧹 Clearing user data...');
+      localStorage.removeItem('user');
+      
+      // Clear any test-related data that might be causing delays
+      console.log('🧹 Clearing test data...');
+      if (selectedTest && selectedTest.testId) {
+        const testKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+        localStorage.removeItem(testKey);
+        console.log('🧹 Removed test data:', testKey);
+      }
+      
+      // Clear all test-related localStorage items
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('test-answers-')) {
+          localStorage.removeItem(key);
+          console.log('🧹 Removed test data:', key);
+        }
+      });
+      
+      console.log('🧹 All test data cleared');
+      console.log('🚪 Navigating to home page...');
+      
+      // Small delay to ensure cleanup is visible
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      navigate('/');
+      console.log('✅ Logout completed successfully');
+    } catch (error) {
+      console.error('❌ Logout error:', error);
+      setIsLoggingOut(false);
+    }
   };
 
   return (
     <div className="student-dashboard">
-      <StudentSidebar onSelectTest={handleSelectTest} onLogout={handleLogout} />
+      <StudentSidebar onSelectTest={handleSelectTest} onLogout={handleLogout} isLoggingOut={isLoggingOut} />
+      
+      {/* Logout Progress Indicator */}
+      {isLoggingOut && (
+        <div className="logout-overlay">
+          <div className="logout-progress">
+            <div className="logout-spinner"></div>
+            <p>Logging out...</p>
+            <p className="logout-details">Clearing test data and user session</p>
+          </div>
+        </div>
+      )}
+      
       <div className="main-content-area">
         {selectedTest && (
           <>

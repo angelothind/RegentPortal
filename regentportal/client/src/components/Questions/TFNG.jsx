@@ -93,8 +93,10 @@ const TFNG = ({ template, onAnswerChange, testResults, testSubmitted, componentI
         {template.questionBlock.map((question) => (
           <div key={question.questionNumber} className="tfng-question-item">
             <div className="question-line">
-              <span className="question-number">{question.questionNumber}.</span>
-              <span className="question-text">{question.question}</span>
+              <span className="question-text">
+                <span className="question-number">{question.questionNumber}.</span>
+                {question.question}
+              </span>
             </div>
             <div className="answer-options">
               {answerOptions.map((option) => {

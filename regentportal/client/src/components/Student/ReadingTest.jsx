@@ -2,21 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import '../../styles/UserLayout/ReadingTest.css';
 
-const ReadingTest = ({ testId, testData, onStartTest, onPassageChange, currentPassage, isTeacherMode = false }) => {
+const ReadingTest = ({ testId, testData, onPassageChange, currentPassage, isTeacherMode = false }) => {
   const [passageContent, setPassageContent] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [testStarted, setTestStarted] = useState(isTeacherMode);
-  
-  console.log('🎯 ReadingTest: testStarted state:', testStarted);
   console.log('🎯 ReadingTest: isTeacherMode:', isTeacherMode);
 
-  const handleStartTest = () => {
-    setTestStarted(true);
-    if (onStartTest) {
-      onStartTest();
-    }
-    console.log('🚀 Reading test started');
-  };
+
 
   const handlePassageChange = (passageNumber) => {
     if (onPassageChange) {
@@ -121,18 +112,7 @@ const ReadingTest = ({ testId, testData, onStartTest, onPassageChange, currentPa
       
 
       
-      {/* Start Test Overlay - Only show for students, not teachers */}
-      {!testStarted && !isTeacherMode && (
-        <div className="test-overlay">
-          <div className="overlay-content">
-            <h2>Ready to Start?</h2>
-            <p>You're about to begin the Reading Test. Make sure you're in a comfortable environment and ready to focus.</p>
-            <button className="start-test-button" onClick={handleStartTest}>
-              Start Test Now
-            </button>
-          </div>
-        </div>
-      )}
+
     </div>
   );
 };

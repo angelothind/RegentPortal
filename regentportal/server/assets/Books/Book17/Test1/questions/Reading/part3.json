@@ -21,7 +21,7 @@
       ],
       "wordBank": {
         "title": "List of Phrases",
-        "options": [
+          "options": [
           { "letter": "A", "text": "military innovation" },
           { "letter": "B", "text": "large reward" },
           { "letter": "C", "text": "widespread conspiracy" },
@@ -32,7 +32,7 @@
           { "letter": "H", "text": "strategic alliance" },
           { "letter": "I", "text": "popular solution" },
           { "letter": "J", "text": "religious conviction" }
-        ]
+          ]
       },
       "correctAnswers": {
         "27": "",

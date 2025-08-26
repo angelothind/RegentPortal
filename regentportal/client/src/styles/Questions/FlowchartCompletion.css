@@ -35,7 +35,7 @@
 }
 
 /* Main Content - Side by Side Layout */
-.main-content {
+.flowchart-main-content {
   display: flex;
   gap: 15px;
   align-items: flex-start;
@@ -237,7 +237,7 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .main-content {
+  .flowchart-main-content {
     flex-direction: column;
     gap: 20px;
   }

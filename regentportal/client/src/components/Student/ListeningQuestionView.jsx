@@ -68,10 +68,17 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
             console.log('📝 Restored testSubmitted and testResults from localStorage');
           }
           
-          // Restore testStarted if it was saved
-          if (_testStarted) {
+          // Restore testStarted if it was saved AND there are actual answers
+          // If no answers, don't restore testStarted (so overlay can show)
+          if (_testStarted && Object.keys(answersWithoutTimestamp).length > 0) {
             setTestStarted(true);
-            console.log('📝 Restored testStarted from localStorage');
+            console.log('📝 Restored testStarted from localStorage (has answers)');
+          } else if (_testStarted && Object.keys(answersWithoutTimestamp).length === 0) {
+            // If test was started but no answers, reset to show overlay
+            setTestStarted(false);
+            // Also immediately reset to part 1 when no answers
+            setCurrentPart(1);
+            console.log('📝 Reset testStarted to false and currentPart to 1 (no answers, overlay should show)');
           }
           
           console.log('📝 Loaded saved answers from localStorage:', answersWithoutTimestamp);
@@ -81,6 +88,25 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
       }
     }
   }, [selectedTest]);
+
+  // Reset to part 1 when overlay shows (test not started)
+  useEffect(() => {
+    if (!testStarted && currentPart !== 1) {
+      console.log('🔄 Test not started - resetting to part 1');
+      setCurrentPart(1);
+    }
+  }, [testStarted, currentPart]);
+
+  // Additional safety: ensure part 1 when overlay should show
+  useEffect(() => {
+    // Show overlay when: not started (and not teacher mode)
+    const shouldShowOverlay = !testStarted && !isTeacherMode;
+    
+    if (shouldShowOverlay && currentPart !== 1) {
+      console.log('🔄 Overlay should show - forcing reset to part 1');
+      setCurrentPart(1);
+    }
+  }, [testStarted, currentPart, isTeacherMode]);
 
   // Add refresh confirmation warning
   useEffect(() => {
@@ -99,9 +125,9 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     };
   }, [testStarted, testSubmitted, answers]);
 
-  // Save test state to localStorage when part changes
+  // Save test state to localStorage when part changes (only if there are answers)
   useEffect(() => {
-    if (selectedTest && selectedTest.testId && testStarted) {
+    if (selectedTest && selectedTest.testId && testStarted && Object.keys(answers).length > 0) {
       const answersWithTimestamp = {
         ...answers,
         _timestamp: Date.now(),
@@ -111,7 +137,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
         _testResults: testResults
       };
       localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
-      console.log(`📝 Test state saved to localStorage for Part ${currentPart}`);
+      console.log(`📝 Test state saved to localStorage for Part ${currentPart} (has answers)`);
     }
   }, [currentPart, selectedTest, testStarted, testSubmitted, testResults, answers]);
 
@@ -135,8 +161,8 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     
     setAnswers(newAnswers);
     
-    // Save answers to localStorage with timestamp
-    if (selectedTest && selectedTest.testId) {
+    // Save answers to localStorage with timestamp (only if there are answers)
+    if (selectedTest && selectedTest.testId && Object.keys(newAnswers).length > 0) {
       const answersWithTimestamp = {
         ...newAnswers,
         _timestamp: Date.now(),
@@ -156,8 +182,8 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     setTestStarted(true);
     console.log('🚀 Test started');
     
-    // Save test state to localStorage
-    if (selectedTest && selectedTest.testId) {
+    // Save test state to localStorage (only if there are answers)
+    if (selectedTest && selectedTest.testId && Object.keys(answers).length > 0) {
       const answersWithTimestamp = {
         ...answers,
         _timestamp: Date.now(),
@@ -167,7 +193,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
         _testResults: testResults
       };
       localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
-      console.log('📝 Test started state saved to localStorage');
+      console.log('📝 Test started state saved to localStorage (has answers)');
     }
   };
 
@@ -784,6 +810,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
           )}
         </div>
         
+        {/* Start Test Overlay - Only show for students, not teachers */}
         {/* Start Test Overlay - Only show for students, not teachers */}
         {!testStarted && !isTeacherMode && (
           <div className="test-overlay">

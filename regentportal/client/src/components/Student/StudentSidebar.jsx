@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/UserLayout/SideBar.css';
 
-const StudentSidebar = ({ onSelectTest, onLogout }) => {
+const StudentSidebar = ({ onSelectTest, onLogout, isLoggingOut = false }) => {
   const [books, setBooks] = useState([]);
   const [openBook, setOpenBook] = useState(null);
   const [openTest, setOpenTest] = useState(null);
@@ -101,7 +101,13 @@ const StudentSidebar = ({ onSelectTest, onLogout }) => {
             ))}
 
             <li>
-              <button className="logout" onClick={onLogout}>Logout</button>
+              <button 
+          className={`logout ${isLoggingOut ? 'logging-out' : ''}`} 
+          onClick={onLogout}
+          disabled={isLoggingOut}
+        >
+          {isLoggingOut ? 'Logging out...' : 'Logout'}
+        </button>
             </li>
           </ul>
         </>

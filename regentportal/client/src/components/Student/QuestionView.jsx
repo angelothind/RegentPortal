@@ -115,10 +115,15 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
             console.log('📝 Restored testSubmitted and testResults from localStorage');
           }
           
-          // Restore testStarted if it was saved
-          if (_testStarted) {
+          // Restore testStarted if it was saved AND there are actual answers
+          // If no answers, don't restore testStarted (so overlay can show)
+          if (_testStarted && Object.keys(answersWithoutTimestamp).length > 0) {
             setTestStarted(true);
-            console.log('📝 Restored testStarted from localStorage');
+            console.log('📝 Restored testStarted from localStorage (has answers)');
+          } else if (_testStarted && Object.keys(answersWithoutTimestamp).length === 0) {
+            // If test was started but no answers, reset to show overlay
+            setTestStarted(false);
+            console.log('📝 Reset testStarted to false (no answers, overlay should show)');
           }
           
           console.log('📝 Loaded saved answers from localStorage:', answersWithoutTimestamp);
@@ -165,9 +170,14 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
 
     const handleBeforeUnload = (e) => {
       if (!testSubmitted && Object.keys(answers).length > 0) {
+        console.log('⚠️ Beforeunload triggered - preventing navigation due to unsaved answers');
+        console.log('📝 Current answers:', answers);
+        console.log('📝 Test submitted:', testSubmitted);
         e.preventDefault();
         e.returnValue = '⚠️ WARNING: You have unsaved test answers! Your progress will be lost if you leave this page. Are you sure you want to continue?';
         return '⚠️ WARNING: You have unsaved test answers! Your progress will be lost if you leave this page. Are you sure you want to continue?';
+      } else {
+        console.log('✅ Beforeunload triggered - allowing navigation (no unsaved answers)');
       }
     };
 
