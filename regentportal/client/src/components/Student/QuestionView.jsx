@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ChooseXWords from '../Questions/ChooseXWords';
 import ChooseFrom from '../Questions/ChooseFrom';
 import TFNG from '../Questions/TFNG';
@@ -44,13 +44,48 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     }
   }, [sharedPassage, currentPassage]);
 
+  // Wrap fetchQuestionData in useCallback to prevent infinite re-renders
+  const fetchQuestionData = useCallback(async () => {
+    if (!selectedTest) {
+      console.log('❌ No selectedTest provided to QuestionView');
+      setQuestionData(null);
+      return;
+    }
+
+    console.log('🔍 QuestionView: Fetching questions for passage:', currentPassage);
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Fetch question data for current passage with test type
+      const endpoint = `/api/tests/${selectedTest.testId._id}/questions/part${currentPassage}?testType=${selectedTest.type}`;
+      console.log('📡 Fetching from endpoint:', endpoint);
+      
+      const response = await fetch(endpoint);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('📋 Question data loaded:', data);
+      console.log('📋 Question templates:', data.questionData?.templates);
+      setQuestionData(data);
+    } catch (error) {
+      console.error('❌ Failed to fetch question data:', error);
+      setError('Failed to load questions');
+    } finally {
+      setLoading(false);
+    }
+  }, [selectedTest, currentPassage]);
+
   // In teacher mode, fetch questions when testData becomes available
   useEffect(() => {
     if (isTeacherMode && testData && currentPassage) {
       console.log('👨‍🏫 Teacher mode: Initial question data fetch for passage:', currentPassage);
       fetchQuestionData();
     }
-  }, [testData, isTeacherMode, currentPassage]);
+  }, [isTeacherMode, testData, currentPassage, fetchQuestionData]);
 
   // In teacher mode, fetch question data when passage changes and testData is available
   useEffect(() => {
@@ -66,7 +101,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     
     console.log('👨‍🎓 Student mode: Fetching question data for passage:', currentPassage);
     fetchQuestionData();
-  }, [selectedTest, currentPassage, isTeacherMode, testData]);
+  }, [selectedTest, currentPassage, isTeacherMode, testData, fetchQuestionData]);
 
   // Load saved answers from localStorage on component mount (only for students, not teachers)
   useEffect(() => {
@@ -187,51 +222,6 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [testSubmitted, answers, isTeacherMode]);
-
-  const fetchQuestionData = async () => {
-    if (!selectedTest) {
-      console.log('❌ No selectedTest provided to QuestionView');
-      setQuestionData(null);
-      return;
-    }
-
-    console.log('🔍 QuestionView: Fetching questions for passage:', currentPassage);
-    setLoading(true);
-    setError(null);
-
-    try {
-      // Fetch question data for current passage with test type
-      const endpoint = `/api/tests/${selectedTest.testId._id}/questions/part${currentPassage}?testType=${selectedTest.type}`;
-      console.log('📡 Fetching from endpoint:', endpoint);
-      
-      const response = await fetch(endpoint);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      console.log('📋 Question data loaded:', data);
-      console.log('📋 Question templates:', data.questionData?.templates);
-      setQuestionData(data);
-    } catch (error) {
-      console.error('❌ Failed to fetch question data:', error);
-      setError('Failed to load questions');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Fetch question data when passage changes
-  useEffect(() => {
-    if (isTeacherMode) {
-      console.log('👨‍🏫 Teacher mode: Parent component handles question data fetching');
-      return;
-    }
-    
-    console.log('👨‍🎓 Student mode: Fetching question data for passage:', currentPassage);
-    fetchQuestionData();
-  }, [selectedTest, currentPassage, isTeacherMode]);
 
   const handleAnswerChange = (questionNumberOrNewAnswers, value) => {
     // In teacher mode, don't allow answer changes

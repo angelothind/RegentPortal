@@ -126,123 +126,63 @@
       "questionType": "multiple-choice-two",
       "introInstruction": "Questions 17-18\nChoose TWO letters, A-E.",
       "formattingInstruction": "Which TWO things does David say about the lifeboat volunteer training?",
-      "questionBlock": [
-        {
-          "questionNumber": 17,
-          "question": "Which TWO things does David say about the lifeboat volunteer training?",
-          "options": [
-            {
-              "letter": "A",
-              "text": "The residential course developed his leadership skills."
-            },
-            {
-              "letter": "B",
-              "text": "The training in use of ropes and knots was quite brief."
-            },
-            {
-              "letter": "C",
-              "text": "The training exercises have built up his mental strength."
-            },
-            {
-              "letter": "D",
-              "text": "The casualty care activities were particularly challenging for him."
-            },
-            {
-              "letter": "E",
-              "text": "The wave tank activities provided practice in survival techniques."
-            }
-          ],
-          "answer": ["C", "E"]
-        },
-        {
-          "questionNumber": 18,
-          "question": "Which TWO things does David find most motivating about the work he does?",
-          "options": [
-            {
-              "letter": "A",
-              "text": "working as part of a team"
-            },
-            {
-              "letter": "B",
-              "text": "experiences when working in winter"
-            },
-            {
-              "letter": "C",
-              "text": "being thanked by those he has helped"
-            },
-            {
-              "letter": "D",
-              "text": "the fact that it keeps him fit"
-            },
-            {
-              "letter": "E",
-              "text": "the chance to develop new equipment"
-            }
-          ],
-          "answer": ["A", "C"]
-        }
-      ]
+      "questionGroup": {
+        "questionNumbers": [17, 18],
+        "options": [
+          {
+            "letter": "A",
+            "text": "The residential course developed his leadership skills."
+          },
+          {
+            "letter": "B",
+            "text": "The training in use of ropes and knots was quite brief."
+          },
+          {
+            "letter": "C",
+            "text": "The training exercises have built up his mental strength."
+          },
+          {
+            "letter": "D",
+            "text": "The casualty care activities were particularly challenging for him."
+          },
+          {
+            "letter": "E",
+            "text": "The wave tank activities provided practice in survival techniques."
+          }
+        ],
+        "correctAnswers": ["C", "E"]
+      }
     },
     {
       "questionType": "multiple-choice-two",
       "introInstruction": "Questions 19-20\nChoose TWO letters, A-E.",
       "formattingInstruction": "Which TWO things does David find most motivating about the work he does?",
-      "questionBlock": [
-        {
-          "questionNumber": 19,
-          "question": "Which TWO things does David find most motivating about the work he does?",
-          "options": [
-            {
-              "letter": "A",
-              "text": "working as part of a team"
-            },
-            {
-              "letter": "B",
-              "text": "experiences when working in winter"
-            },
-            {
-              "letter": "C",
-              "text": "being thanked by those he has helped"
-            },
-            {
-              "letter": "D",
-              "text": "the fact that it keeps him fit"
-            },
-            {
-              "letter": "E",
-              "text": "the chance to develop new equipment"
-            }
-          ],
-          "answer": ["A", "C"]
-        },
-        {
-          "questionNumber": 20,
-          "question": "Which TWO things does David find most motivating about the work he does?",
-          "options": [
-            {
-              "letter": "A",
-              "text": "working as part of a team"
-            },
-            {
-              "letter": "B",
-              "text": "experiences when working in winter"
-            },
-            {
-              "letter": "C",
-              "text": "being thanked by those he has helped"
-            },
-            {
-              "letter": "D",
-              "text": "the fact that it keeps him fit"
-            },
-            {
-              "letter": "E",
-              "text": "the chance to develop new equipment"
-            }
-          ],
-          "answer": ["A", "C"]
-        }
-      ]
+      "questionGroup": {
+        "questionNumbers": [19, 20],
+        "options": [
+          {
+            "letter": "A",
+            "text": "working as part of a team"
+          },
+          {
+            "letter": "B",
+            "text": "experiences when working in winter"
+          },
+          {
+            "letter": "C",
+            "text": "being thanked by those he has helped"
+          },
+          {
+            "letter": "D",
+            "text": "the fact that it keeps him fit"
+          },
+          {
+            "letter": "E",
+            "text": "the chance to develop new equipment"
+          }
+        ],
+        "correctAnswers": ["A", "C"]
+      }
     }
   ]
 } 

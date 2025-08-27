@@ -25,6 +25,7 @@ const loadCorrectAnswers = async (testId, testType, submittedAnswers = {}) => {
       
       // Get answers for the specific test type
       const testTypeAnswers = test.answers.get(testType.toLowerCase());
+      
       if (testTypeAnswers) {
         if (Array.isArray(testTypeAnswers)) {
           // Array format - convert to object with array indices as keys (matching Book 19 format)
@@ -38,7 +39,6 @@ const loadCorrectAnswers = async (testId, testType, submittedAnswers = {}) => {
         } else if (typeof testTypeAnswers === 'object') {
           // Object format - already has array indices as keys (Book 19 format)
           console.log(`📝 Found ${Object.keys(testTypeAnswers).length} ${testType} answers in database (object format)`);
-          console.log(`✅ Loaded ${Object.keys(testTypeAnswers).length} correct answers from database for ${testType}`);
           return testTypeAnswers;
         }
       }
@@ -95,20 +95,18 @@ const loadCorrectAnswers = async (testId, testType, submittedAnswers = {}) => {
             if (template.correctAnswers) {
               // Reading test format - has correctAnswers object
               Object.assign(correctAnswers, template.correctAnswers);
-            } else if (template.questionBlock) {
-              // Listening test format - has answer fields in questionBlock
-              template.questionBlock.forEach(question => {
-                if (question.questionNumber && question.answer) {
-                  correctAnswers[question.questionNumber] = question.answer;
-                }
-              });
             } else if (template.questionGroup && template.questionType === 'multiple-choice-two') {
-              // New MultipleChoiceTwo format with questionGroup
+              // MultipleChoiceTwo format with questionGroup (both Reading AND Listening tests now use this)
+              // For Multiple Choice 2, keep the correct answers as arrays for proper marking
               const group = template.questionGroup;
-              group.questionNumbers.forEach(questionNumber => {
-                correctAnswers[questionNumber] = group.correctAnswers;
+              console.log(`🔍 Loading Multiple Choice 2 questions ${group.questionNumbers.join(', ')} with correct answers:`, group.correctAnswers);
+              
+              group.questionNumbers.forEach((questionNumber) => {
+                // Each question gets a COPY of the correct answers array (not the same reference)
+                correctAnswers[questionNumber] = [...group.correctAnswers];
+                console.log(`🔍 Set question ${questionNumber} correct answer to:`, correctAnswers[questionNumber]);
               });
-              console.log(`📝 Loaded grouped answers for questions ${group.questionNumbers.join(', ')}:`, group.correctAnswers);
+              console.log(`📝 Loaded array answers for Multiple Choice 2 questions ${group.questionNumbers.join(', ')}:`, group.correctAnswers);
             } else if (template.questionType === 'table-completion' && template.tableData) {
               // Table completion format - has tableData with cells containing answers
               template.tableData.forEach(row => {
@@ -233,30 +231,19 @@ router.post('/submit', async (req, res) => {
       });
     });
     
-    // Fix: Ensure MultipleChoiceTwo answers are properly formatted as arrays
-    const normalizedAnswers = { ...answers };
-    Object.keys(normalizedAnswers).forEach(questionNumber => {
-      const answer = normalizedAnswers[questionNumber];
-      if (answer && typeof answer === 'string') {
-        // Only try to parse as JSON if it looks like it might be a MultipleChoiceTwo answer
-        // (contains brackets or looks like it was stringified)
-        if (answer.startsWith('[') && answer.endsWith(']')) {
-          try {
-            const parsed = JSON.parse(answer);
-            if (Array.isArray(parsed)) {
-              normalizedAnswers[questionNumber] = parsed;
-              console.log(`🔧 Fixed question ${questionNumber}: converted string "${answer}" to array:`, parsed);
-            }
-          } catch (e) {
-            // If parsing fails, keep as string
-            console.log(`🔧 Failed to parse "${answer}" as JSON, keeping as string`);
-          }
-        }
-        // If it doesn't look like a JSON array, keep it as a string (don't convert to array)
-      }
+    // Debug: Show the structure of correct answers
+    Object.keys(correctAnswers).forEach(questionNumber => {
+      console.log(`🔍 Correct answer for question ${questionNumber}:`, {
+        answer: correctAnswers[questionNumber],
+        type: typeof correctAnswers[questionNumber],
+        isArray: Array.isArray(correctAnswers[questionNumber]),
+        length: Array.isArray(correctAnswers[questionNumber]) ? correctAnswers[questionNumber].length : 'N/A'
+      });
     });
     
-    console.log('🔧 Normalized answers:', normalizedAnswers);
+    // Use answers directly - no normalization needed for our new approach
+    const normalizedAnswers = { ...answers };
+    console.log('📝 Using answers directly:', normalizedAnswers);
 
     // Calculate score and results - grade ALL questions individually
     let correctCount = 0;
@@ -273,10 +260,15 @@ router.post('/submit', async (req, res) => {
       const correctAnswer = correctAnswers[questionNumber];
       let isCorrect = false;
 
-      console.log(`📝 Grading question ${questionNumber}:`, { userAnswer, correctAnswer });
-
       // Handle different answer types
       if (Array.isArray(correctAnswer)) {
+        console.log(`🔍 Multiple Choice 2 Question ${questionNumber}:`, {
+          userAnswer,
+          correctAnswer,
+          userAnswerIsArray: Array.isArray(userAnswer),
+          userAnswerType: typeof userAnswer
+        });
+        
         // Multiple choice with multiple answers (including MultipleChoiceTwo)
         if (Array.isArray(userAnswer) && userAnswer.length > 0) {
           // Count how many correct answers the user selected
@@ -310,7 +302,13 @@ router.post('/submit', async (req, res) => {
             isCorrect: isCorrect || correctSelections > 0 // Consider partially correct as "correct" for display
           });
         } else if (userAnswer && !Array.isArray(userAnswer)) {
-          // Single student answer against array correct answer (optional answers)
+          console.log(`🔍 Multiple Choice 2 Question ${questionNumber} - Single answer against array:`, {
+            userAnswer,
+            correctAnswer,
+            userAnswerType: typeof userAnswer
+          });
+          
+          // Single student answer against array correct answer (Multiple Choice 2)
           // Check if the single answer matches any of the correct options
           const normalizedUserAnswer = userAnswer.toString().trim();
           const isAnswerCorrect = correctAnswer.some(correctOption => 
@@ -319,14 +317,14 @@ router.post('/submit', async (req, res) => {
           
           if (isAnswerCorrect) {
             isCorrect = true;
-            correctCount += 1; // Award 1 mark for correct optional answer (regardless of how many options exist)
-            console.log(`📝 Optional answer question ${questionNumber}: CORRECT! Student "${normalizedUserAnswer}" matches one of ${JSON.stringify(correctAnswer)}. Awarding 1 mark. Total: ${correctCount}`);
+            correctCount += 1; // Award 1 mark for correct answer
+            console.log(`📝 Multiple Choice 2 question ${questionNumber}: CORRECT! Student "${normalizedUserAnswer}" matches one of ${JSON.stringify(correctAnswer)}. Awarding 1 mark. Total: ${correctCount}`);
           } else {
             isCorrect = false;
-            console.log(`📝 Optional answer question ${questionNumber}: INCORRECT! Student "${normalizedUserAnswer}" does not match any of ${JSON.stringify(correctAnswer)}. No marks awarded. Total: ${correctCount}`);
+            console.log(`📝 Multiple Choice 2 question ${questionNumber}: INCORRECT! Student "${normalizedUserAnswer}" does not match any of ${JSON.stringify(correctAnswer)}. No marks awarded. Total: ${correctCount}`);
           }
           
-          console.log(`📝 Optional answer question ${questionNumber} result:`, {
+          console.log(`📝 Multiple Choice 2 question ${questionNumber} result:`, {
             userAnswer: normalizedUserAnswer,
             correctAnswer,
             isCorrect
@@ -336,7 +334,7 @@ router.post('/submit', async (req, res) => {
           console.log(`📝 Multiple choice question ${questionNumber}: no valid user answer`);
         }
       } else {
-        // Single answer questions
+        // Single answer questions (including Multiple Choice 2 individual questions)
         const normalizedUserAnswer = userAnswer ? userAnswer.toString().trim().toUpperCase() : '';
         const normalizedCorrectAnswer = correctAnswer ? correctAnswer.toString().trim().toUpperCase() : '';
         
@@ -353,11 +351,18 @@ router.post('/submit', async (req, res) => {
         const hasValidAnswer = normalizedUserAnswer && normalizedUserAnswer.trim() !== '';
         isCorrect = hasValidAnswer && normalizedUserAnswer === normalizedCorrectAnswer;
         
+        if (isCorrect) {
+          correctCount += 1; // Award 1 mark for correct answer
+          console.log(`📝 Single answer question ${questionNumber}: CORRECT! Awarding 1 mark. Total: ${correctCount}`);
+        } else {
+          console.log(`📝 Single answer question ${questionNumber}: INCORRECT! No marks awarded. Total: ${correctCount}`);
+        }
+        
         console.log(`📝 Single answer question ${questionNumber} result:`, {
           userAnswer: normalizedUserAnswer,
           correctAnswer: normalizedCorrectAnswer,
           hasValidAnswer,
-          isCorrect: isCorrect
+          isCorrect
         });
       }
 
@@ -374,16 +379,6 @@ router.post('/submit', async (req, res) => {
         correctAnswerType: typeof correctAnswer,
         userAnswerType: typeof userAnswer
       });
-
-      if (isCorrect) {
-        // Only increment for single answer questions - array questions already incremented above
-        if (!Array.isArray(correctAnswer)) {
-          correctCount++;
-        }
-        console.log(`📝 ✅ Question ${questionNumber} marked as CORRECT! Total correct: ${correctCount}`);
-      } else {
-        console.log(`📝 ❌ Question ${questionNumber} marked as INCORRECT! Total correct: ${correctCount}`);
-      }
     }
 
     const score = Math.round((correctCount / totalQuestions) * 100);

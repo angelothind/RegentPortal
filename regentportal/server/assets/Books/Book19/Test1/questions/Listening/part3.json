@@ -5,123 +5,63 @@
       "questionType": "multiple-choice-two",
       "introInstruction": "Questions 21 and 22",
       "formattingInstruction": "Which TWO things did Colin find most satisfying about his bread reuse project?",
-      "questionBlock": [
-        {
-          "questionNumber": 21,
-          "question": "Which TWO things did Colin find most satisfying about his bread reuse project?",
-          "options": [
-            {
-              "letter": "A",
-              "text": "receiving support from local restaurants"
-            },
-            {
-              "letter": "B",
-              "text": "finding a good way to prevent waste"
-            },
-            {
-              "letter": "C",
-              "text": "overcoming problems in a basic process"
-            },
-            {
-              "letter": "D",
-              "text": "experimenting with designs and colours"
-            },
-            {
-              "letter": "E",
-              "text": "learning how to apply 3-D printing"
-            }
-          ],
-          "answer": ["B", "C"]
-        },
-        {
-          "questionNumber": 22,
-          "question": "Which TWO things did Colin find most satisfying about his bread reuse project?",
-          "options": [
-            {
-              "letter": "A",
-              "text": "receiving support from local restaurants"
-            },
-            {
-              "letter": "B",
-              "text": "finding a good way to prevent waste"
-            },
-            {
-              "letter": "C",
-              "text": "overcoming problems in a basic process"
-            },
-            {
-              "letter": "D",
-              "text": "experimenting with designs and colours"
-            },
-            {
-              "letter": "E",
-              "text": "learning how to apply 3-D printing"
-            }
-          ],
-          "answer": ["B", "C"]
-        }
-      ]
+      "questionGroup": {
+        "questionNumbers": [21, 22],
+        "options": [
+          {
+            "letter": "A",
+            "text": "receiving support from local restaurants"
+          },
+          {
+            "letter": "B",
+            "text": "finding a good way to prevent waste"
+          },
+          {
+            "letter": "C",
+            "text": "overcoming problems in a basic process"
+          },
+          {
+            "letter": "D",
+            "text": "experimenting with designs and colours"
+          },
+          {
+            "letter": "E",
+            "text": "learning how to apply 3-D printing"
+          }
+        ],
+        "correctAnswers": ["B", "C"]
+      }
     },
     {
       "questionType": "multiple-choice-two",
       "introInstruction": "Questions 23 and 24",
       "formattingInstruction": "Which TWO ways do the students agree that touch-sensitive sensors for food labels could be developed in future?",
-      "questionBlock": [
-        {
-          "questionNumber": 23,
-          "question": "Which TWO ways do the students agree that touch-sensitive sensors for food labels could be developed in future?",
-          "options": [
-            {
-              "letter": "A",
-              "text": "for use on medical products"
-            },
-            {
-              "letter": "B",
-              "text": "to show that food is no longer fit to eat"
-            },
-            {
-              "letter": "C",
-              "text": "for use with drinks as well as foods"
-            },
-            {
-              "letter": "D",
-              "text": "to provide applications for blind people"
-            },
-            {
-              "letter": "E",
-              "text": "to indicate the weight of certain foods"
-            }
-          ],
-          "answer": ["B", "C"]
-        },
-        {
-          "questionNumber": 24,
-          "question": "Which TWO ways do the students agree that touch-sensitive sensors for food labels could be developed in future?",
-          "options": [
-            {
-              "letter": "A",
-              "text": "for use on medical products"
-            },
-            {
-              "letter": "B",
-              "text": "to show that food is no longer fit to eat"
-            },
-            {
-              "letter": "C",
-              "text": "for use with drinks as well as foods"
-            },
-            {
-              "letter": "D",
-              "text": "to provide applications for blind people"
-            },
-            {
-              "letter": "E",
-              "text": "to indicate the weight of certain foods"
-            }
-          ],
-          "answer": ["B", "C"]
-        }
-      ]
+      "questionGroup": {
+        "questionNumbers": [23, 24],
+        "options": [
+          {
+            "letter": "A",
+            "text": "for use on medical products"
+          },
+          {
+            "letter": "B",
+            "text": "to show that food is no longer fit to eat"
+          },
+          {
+            "letter": "C",
+            "text": "for use with drinks as well as foods"
+          },
+          {
+            "letter": "D",
+            "text": "to provide applications for blind people"
+          },
+          {
+            "letter": "E",
+            "text": "to indicate the weight of certain foods"
+          }
+        ],
+        "correctAnswers": ["B", "C"]
+      }
     },
     {
       "questionType": "matching",

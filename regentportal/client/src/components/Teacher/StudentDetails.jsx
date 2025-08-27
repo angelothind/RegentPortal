@@ -138,10 +138,10 @@ const StudentDetails = ({ student, onBack }) => {
           <div className="student-header">
             <button className="back-button" onClick={onBack}>
               ← Back to Students
-            </button>
+        </button>
             <h2>{student.name}</h2>
             <p>Username: {student.username}</p>
-          </div>
+      </div>
 
       {/* Overview Stats Section */}
       <div className="overview-section">
