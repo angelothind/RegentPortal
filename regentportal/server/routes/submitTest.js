@@ -44,96 +44,9 @@ const loadCorrectAnswers = async (testId, testType, submittedAnswers = {}) => {
       }
     }
     
-    // Fallback to JSON files if no database answers found
-    console.log(`📝 No database answers found, checking JSON files for ${testType}...`);
-    
-    // Determine which parts to load based on submitted question numbers
-    let partsToLoad = [];
-    
-    if (testType.toLowerCase() === 'reading') {
-      // For reading tests, determine parts based on question numbers
-      const questionNumbers = Object.keys(submittedAnswers).map(q => parseInt(q)).filter(q => !isNaN(q));
-      
-      if (questionNumbers.length > 0) {
-        const maxQuestion = Math.max(...questionNumbers);
-        if (maxQuestion <= 13) {
-          partsToLoad = [1];
-        } else if (maxQuestion <= 26) {
-          partsToLoad = [1, 2];
-        } else {
-          partsToLoad = [1, 2, 3];
-        }
-      } else {
-        // Fallback: load all parts if no questions submitted
-        partsToLoad = [1, 2, 3];
-      }
-    } else {
-      // For listening tests, load all parts
-      partsToLoad = [1, 2, 3, 4];
-    }
-    
-    console.log(`📝 Loading parts for ${testType} test:`, partsToLoad);
-    
-    for (const part of partsToLoad) {
-      const testPath = test.title.replace(/\s+/g, ''); // "Test 1" -> "Test1"
-      const questionFilePath = `assets/Books/${test.belongsTo}/${testPath}/questions/${testType.charAt(0).toUpperCase() + testType.slice(1)}/part${part}.json`;
-      const absolutePath = path.join(__dirname, '..', questionFilePath);
-      
-      console.log(`🔍 Test title: "${test.title}"`);
-      console.log(`🔍 Test path: "${testPath}"`);
-      console.log(`🔍 Question file path: "${questionFilePath}"`);
-      console.log(`🔍 Absolute path: "${absolutePath}"`);
-      console.log(`🔍 File exists: ${fs.existsSync(absolutePath)}`);
-      
-      if (fs.existsSync(absolutePath)) {
-        const rawContent = fs.readFileSync(absolutePath, 'utf-8');
-        const questionData = JSON.parse(rawContent);
-        
-        // Extract correct answers from each template
-        if (questionData.templates) {
-          questionData.templates.forEach(template => {
-            if (template.correctAnswers) {
-              // Reading test format - has correctAnswers object
-              Object.assign(correctAnswers, template.correctAnswers);
-            } else if (template.questionGroup && template.questionType === 'multiple-choice-two') {
-              // MultipleChoiceTwo format with questionGroup (both Reading AND Listening tests now use this)
-              // For Multiple Choice 2, keep the correct answers as arrays for proper marking
-              const group = template.questionGroup;
-              console.log(`🔍 Loading Multiple Choice 2 questions ${group.questionNumbers.join(', ')} with correct answers:`, group.correctAnswers);
-              
-              group.questionNumbers.forEach((questionNumber) => {
-                // Each question gets a COPY of the correct answers array (not the same reference)
-                correctAnswers[questionNumber] = [...group.correctAnswers];
-                console.log(`🔍 Set question ${questionNumber} correct answer to:`, correctAnswers[questionNumber]);
-              });
-              console.log(`📝 Loaded array answers for Multiple Choice 2 questions ${group.questionNumbers.join(', ')}:`, group.correctAnswers);
-            } else if (template.questionType === 'table-completion' && template.tableData) {
-              // Table completion format - has tableData with cells containing answers
-              template.tableData.forEach(row => {
-                row.cells.forEach(cell => {
-                  if (cell.type === 'question' && cell.questionNumber && cell.answer) {
-                    correctAnswers[cell.questionNumber] = cell.answer;
-                    console.log(`📝 Loaded table completion answer for question ${cell.questionNumber}:`, cell.answer);
-                  }
-                });
-              });
-            }
-          });
-        }
-      } else {
-        console.warn(`⚠️ Question file not found: ${absolutePath}`);
-      }
-    }
-    
-    // If we found answers in JSON files, return them
-    if (Object.keys(correctAnswers).length > 0) {
-      console.log(`✅ Loaded ${Object.keys(correctAnswers).length} correct answers from JSON files (fallback)`);
-      return correctAnswers;
-    }
-    
-    console.log(`❌ No correct answers found for ${testType} in database or JSON files`);
-    return {};
-    
+    // No database answers found - throw error instead of falling back to JSON
+    console.log(`❌ No database answers found for ${testType} test`);
+    throw new Error(`No database answers found for ${testType} test. Database must contain all correct answers.`);
   } catch (error) {
     console.error('❌ Error loading correct answers:', error);
     throw error;

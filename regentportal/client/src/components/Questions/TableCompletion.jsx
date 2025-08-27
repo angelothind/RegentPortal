@@ -19,6 +19,52 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
     return text.replace(/\n/g, '<br>');
   };
 
+  // Function to transform backend data for range questions
+  const transformBackendData = (originalResults, template) => {
+    if (!originalResults || !template?.tableData) return originalResults;
+    
+    const transformedResults = { ...originalResults };
+    
+    console.log('🎯 Template structure for transformation:', template.tableData);
+    
+    // Look for range questions in the template
+    template.tableData.forEach((rowData, rowIndex) => {
+      rowData.cells.forEach((cell, cellIndex) => {
+        console.log(`🎯 Cell ${rowIndex}-${cellIndex}:`, {
+          type: cell.type,
+          questionNumber: cell.questionNumber,
+          questionNumberType: typeof cell.questionNumber,
+          answer: cell.answer
+        });
+        
+        if (cell.type === 'question' && cell.questionNumber && typeof cell.questionNumber === 'string' && cell.questionNumber.includes('-')) {
+          console.log('🎯 Found range question:', cell.questionNumber);
+          const [startNum, endNum] = cell.questionNumber.split('-').map(Number);
+          const answers = Array.isArray(cell.answer) ? cell.answer : [cell.answer];
+          
+          // Transform the backend data to split range questions
+          for (let i = 0; i < answers.length; i++) {
+            const questionNumber = startNum + i;
+            const correctAnswer = answers[i];
+            
+            // Create individual question results
+            transformedResults[questionNumber] = {
+              correctAnswer: correctAnswer,
+              isCorrect: false, // Will be set by backend marking
+              userAnswer: originalResults[questionNumber]?.userAnswer || ''
+            };
+          }
+        }
+      });
+    });
+    
+    console.log('🎯 Transformed backend data:', transformedResults);
+    return transformedResults;
+  };
+
+  // Transform the backend data for rendering
+  const transformedResults = transformBackendData(testResults?.results, template);
+
   const handleAnswerChange = (questionNumber, value) => {
     const newAnswers = { ...currentAnswers, [questionNumber]: value };
     if (onAnswerChange) {
@@ -27,9 +73,9 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
   };
 
   const getAnswerClass = (questionNumber) => {
-    if (!testSubmitted || !testResults) return '';
+    if (!testSubmitted || !transformedResults) return '';
     
-    const result = testResults.results?.[questionNumber];
+    const result = transformedResults[questionNumber];
     console.log(`🎯 getAnswerClass for question ${questionNumber}:`, result);
     if (!result) return '';
     
@@ -37,8 +83,8 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
   };
 
   const getAnswerValue = (questionNumber) => {
-    if (testSubmitted && testResults) {
-      return testResults.answers?.[questionNumber] || '';
+    if (testSubmitted && transformedResults) {
+      return transformedResults[questionNumber]?.userAnswer || '';
     }
     return currentAnswers[questionNumber] || '';
   };
@@ -136,29 +182,36 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                             if (questionMatch) {
                               const questionNumber = questionMatch[1];
                               return (
-                                <input
-                                  key={partIndex}
-                                  type="text"
-                                  className={`listening-table-answer-input ${getAnswerClass(questionNumber)}`}
-                                  style={{
-                                    border: '2px solid #ddd',
-                                    borderRadius: '4px',
-                                    padding: '8px 12px',
-                                    fontSize: '0.9rem',
-                                    minWidth: '120px',
-                                    backgroundColor: 'white',
-                                    color: '#333',
-                                    transition: 'border-color 0.2s ease'
-                                  }}
-                                  placeholder="Answer"
-                                  value={getAnswerValue(questionNumber)}
-                                  onChange={(e) => handleAnswerChange(questionNumber, e.target.value)}
-                                  disabled={testSubmitted}
-                                  autoComplete="off"
-                                  data-form-type="other"
-                                  data-lpignore="true"
-                                  data-1p-ignore="true"
-                                />
+                                <React.Fragment key={partIndex}>
+                                  <input
+                                    type="text"
+                                    className={`listening-table-answer-input ${getAnswerClass(questionNumber)}`}
+                                    style={{
+                                      border: '2px solid #ddd',
+                                      borderRadius: '4px',
+                                      padding: '8px 12px',
+                                      fontSize: '0.9rem',
+                                      minWidth: '120px',
+                                      backgroundColor: 'white',
+                                      color: '#333',
+                                      transition: 'border-color 0.2s ease'
+                                    }}
+                                    placeholder="Answer"
+                                    value={getAnswerValue(questionNumber)}
+                                    onChange={(e) => handleAnswerChange(questionNumber, e.target.value)}
+                                    disabled={testSubmitted}
+                                    autoComplete="off"
+                                    data-form-type="other"
+                                    data-lpignore="true"
+                                    data-1p-ignore="true"
+                                  />
+                                  {/* Show correct answer inline for each input field */}
+                                  {testSubmitted && transformedResults && (
+                                    <span className="inline-correction">
+                                      Correct: {String(transformedResults[questionNumber]?.correctAnswer || '')}
+                                    </span>
+                                  )}
+                                </React.Fragment>
                               );
                             }
                             // Regular text content
@@ -166,13 +219,7 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                               <span key={partIndex} dangerouslySetInnerHTML={{ __html: part }} />
                             );
                           })}
-                          {testSubmitted && testResults && (
-                            <div className="answer-feedback">
-                              <span className="correct-answer">
-                                Correct: {String(testResults.correctAnswers?.[cell.questionNumber] || '')}
-                              </span>
-                            </div>
-                          )}
+                          {/* Remove the old cell-level feedback since we now show it inline */}
                         </div>
                       ) : (
                         <div className="text-cell">
@@ -238,28 +285,30 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                             <span key={partIndex}>
                               <span dangerouslySetInnerHTML={{ __html: part }} />
                               {partIndex < array.length - 1 && (
-                                <input
-                                  type="text"
-                                  className={`table-answer-input ${getAnswerClass(cell.questionNumber)}`}
-                                  placeholder="Answer"
-                                  value={getAnswerValue(cell.questionNumber)}
-                                  onChange={(e) => handleAnswerChange(cell.questionNumber, e.target.value)}
-                                  disabled={testSubmitted}
-                                  autoComplete="off"
-                                  data-form-type="other"
-                                  data-lpignore="true"
-                                  data-1p-ignore="true"
-                                />
+                                <>
+                                  <input
+                                    type="text"
+                                    className={`table-answer-input ${getAnswerClass(`${cell.questionNumber}_${partIndex}`)}`}
+                                    placeholder="Answer"
+                                    value={getAnswerValue(`${cell.questionNumber}_${partIndex}`)}
+                                    onChange={(e) => handleAnswerChange(`${cell.questionNumber}_${partIndex}`, e.target.value)}
+                                    disabled={testSubmitted}
+                                    autoComplete="off"
+                                    data-form-type="other"
+                                    data-lpignore="true"
+                                    data-1p-ignore="true"
+                                  />
+                                  {/* Show correct answer inline for each input field */}
+                                  {testSubmitted && testResults && (
+                                    <span className="inline-correction">
+                                      Correct: {String(testResults.results?.[`${cell.questionNumber}_${partIndex}`]?.correctAnswer || '')}
+                                    </span>
+                                  )}
+                                </>
                               )}
                             </span>
                           ))}
-                          {testSubmitted && testResults && (
-                            <div className="answer-feedback">
-                              <span className="correct-answer">
-                                Correct: {String(testResults.correctAnswers?.[cell.questionNumber] || '')}
-                              </span>
-                            </div>
-                          )}
+                          {/* Remove the cell-level feedback since we now show it inline */}
                         </div>
                       ) : (
                         <div className="text-cell">

@@ -22,8 +22,8 @@ const reseedBook19Test2Listening = async () => {
       // Part 1 (Questions 1-10): 10 answers
       "Mathieson",                     // Q1
       "beginners",                      // Q2
-      "college",                        // Q3
-      "New",                            // Q4
+      "community",                      // Q3 - Fixed: was "college", should be "community" from JSON template
+      "Main",                           // Q4 - Fixed: should be "Main" from JSON template (was missing)
       ["11", "eleven"],                // Q5 - Two acceptable forms
       "instrument",                     // Q6
       "ear",                            // Q7
