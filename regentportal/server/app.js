@@ -50,7 +50,7 @@ app.use('/api/teachers', require('./routes/teacherRoutes'));
 
 app.use('/api/submissions', require('./routes/submissions'));
 
-// Catch-all route to serve React app
+// Serve React app for all non-API routes (must be last)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
