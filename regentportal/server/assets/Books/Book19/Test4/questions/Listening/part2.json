@@ -7,30 +7,30 @@
       "formattingInstruction": "Choose TWO letters, A-E.",
       "questionGroup": {
         "questionNumbers": [11, 12],
-        "options": [
-          {
-            "letter": "A",
-            "text": "There is a risk of serious injury."
-          },
-          {
-            "letter": "B",
-            "text": "They are unsuitable for certain age groups."
-          },
-          {
-            "letter": "C",
-            "text": "They are unsuitable for people with health issues."
-          },
-          {
-            "letter": "D",
-            "text": "It is difficult to stay motivated."
-          },
-          {
-            "letter": "E",
-            "text": "There is a lack of individual support."
-          }
-        ],
+          "options": [
+            {
+              "letter": "A",
+              "text": "There is a risk of serious injury."
+            },
+            {
+              "letter": "B",
+              "text": "They are unsuitable for certain age groups."
+            },
+            {
+              "letter": "C",
+              "text": "They are unsuitable for people with health issues."
+            },
+            {
+              "letter": "D",
+              "text": "It is difficult to stay motivated."
+            },
+            {
+              "letter": "E",
+              "text": "There is a lack of individual support."
+            }
+          ],
         "correctAnswers": ["A", "D"]
-      }
+        }
     },
     {
       "questionType": "multiple-choice-two",
@@ -38,30 +38,30 @@
       "formattingInstruction": "Choose TWO letters, A-E.",
       "questionGroup": {
         "questionNumbers": [13, 14],
-        "options": [
-          {
-            "letter": "A",
-            "text": "doing two runs a week"
-          },
-          {
-            "letter": "B",
-            "text": "running in the evening"
-          },
-          {
-            "letter": "C",
-            "text": "going on runs with a friend"
-          },
-          {
-            "letter": "D",
-            "text": "listening to music during runs"
-          },
-          {
-            "letter": "E",
-            "text": "running very slowly"
-          }
-        ],
+          "options": [
+            {
+              "letter": "A",
+              "text": "doing two runs a week"
+            },
+            {
+              "letter": "B",
+              "text": "running in the evening"
+            },
+            {
+              "letter": "C",
+              "text": "going on runs with a friend"
+            },
+            {
+              "letter": "D",
+              "text": "listening to music during runs"
+            },
+            {
+              "letter": "E",
+              "text": "running very slowly"
+            }
+          ],
         "correctAnswers": ["A", "E"]
-      }
+        }
     },
     {
       "questionType": "matching",

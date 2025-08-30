@@ -24,6 +24,9 @@ app.use((req, res, next) => {
 // Serve static files from assets directory
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
+// Serve built frontend files for preview/testing
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
 console.log('✅ Routes loaded');
 // Routes
 
@@ -49,6 +52,16 @@ app.use('/api/submissions', require('./routes/submissions'));
 
 app.get('/', (req, res) => {
   res.send('Root route works!');
+});
+
+// Health check endpoint for Render
+app.get('/api/test', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    message: 'Regent Portal API is running',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
 });
 
 app.use((req, res, next) => {

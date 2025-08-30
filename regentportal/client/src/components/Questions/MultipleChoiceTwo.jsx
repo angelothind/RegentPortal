@@ -18,7 +18,7 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
       return {
         questionNumbers: template.questionGroup.questionNumbers,
         options: template.questionGroup.options,
-        correctAnswers: template.questionGroup.correctAnswers,
+        correctAnswers: template.questionGroup.correctAnswers, // This is just for display, not for marking
         maxSelections: template.questionGroup.maxSelections || 2
       };
     } else if (template.questionBlock) {
@@ -32,19 +32,19 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
         const result = {
           questionNumbers: template.questionBlock.map(q => q.questionNumber),
           options: firstQuestion.options,
-          correctAnswers: firstQuestion.answer || [],
+          correctAnswers: [], // Don't use JSON answers for marking
           maxSelections: 2
         };
         console.log('✅ Converted result:', result);
         return result;
       } else {
-        console.log('❌ First question missing or no options:', firstQuestion);
+        console.log('❌ Invalid questionBlock format');
+        return null;
       }
     } else {
-      console.log('❌ Neither questionGroup nor questionBlock found');
-      console.log('❌ Template keys:', Object.keys(template));
+      console.log('❌ No valid question format found');
+      return null;
     }
-    return null;
   };
 
   const questionData = getQuestionData();
@@ -79,9 +79,9 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
       const isCorrect = questionGroup.correctAnswers.includes(option.letter);
       console.log(`🔍 Option ${option.letter}: selected=${isSelectedInAnyQuestion}, correct=${isCorrect}, correctAnswers=${JSON.stringify(questionGroup.correctAnswers)}`);
       if (isCorrect) {
-        return 'option-correct';
+      return 'option-correct';
       } else {
-        return 'option-incorrect';
+      return 'option-incorrect';
       }
     }
     
@@ -222,18 +222,18 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
               }
             }
                   
-            return (
-              <label 
-                key={option.letter} 
+                  return (
+                    <label 
+                      key={option.letter} 
                 className={`option-label ${isSelectedInAnyQuestion ? 'selected' : ''} ${combinedOptionClass}`}
-              >
-                <input
-                  type="checkbox"
-                  value={option.letter}
+                    >
+                      <input
+                        type="checkbox"
+                        value={option.letter}
                   checked={isSelectedInAnyQuestion}
-                  className="option-checkbox"
-                  disabled={testSubmitted}
-                  onChange={(e) => {
+                        className="option-checkbox"
+                        disabled={testSubmitted}
+                        onChange={(e) => {
                     console.log(`🔍 Option clicked:`, option.letter, 'Checked:', e.target.checked);
                     
                     // Handle selection for all questions in the group
@@ -241,8 +241,8 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
                     
                     // For Multiple Choice 2: assign first choice to first question, second choice to second question
                     const questionNumbers = questionGroup.questionNumbers;
-                    
-                    if (e.target.checked) {
+                          
+                          if (e.target.checked) {
                       // Add option to the first empty question, or replace if both are filled
                       const firstEmptyIndex = questionNumbers.findIndex(qNum => !finalUpdatedAnswers[qNum]);
                       if (firstEmptyIndex !== -1) {
@@ -267,27 +267,27 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
                     console.log(`🔍 Final answers:`, finalUpdatedAnswers);
                     
                     // Call onAnswerChange ONCE with the complete updated answers
-                    if (onAnswerChange) {
+                      if (onAnswerChange) {
                       onAnswerChange(finalUpdatedAnswers);
-                    }
-                  }}
-                />
-                <span className="option-letter">{option.letter}.</span>
-                <span className="option-text">{option.text}</span>
-              </label>
-            );
-          })}
-        </div>
-        
+                      }
+                        }}
+                      />
+                      <span className="option-letter">{option.letter}.</span>
+                      <span className="option-text">{option.text}</span>
+                    </label>
+                  );
+                })}
+              </div>
+              
         {/* Show selection info for individual questions */}
-        <div className="selection-info">
+              <div className="selection-info">
           Selected: {questionNumbers.filter(qNum => currentAnswers[qNum]).length} / {maxSelections}
         </div>
-        
+          
         {/* Show correct answers only after test is submitted using backend data */}
         {testSubmitted && testResults && (
-          <div className="answer-feedback">
-            <span className="correct-answer">
+                  <div className="answer-feedback">
+                        <span className="correct-answer">
               Correct answers for Questions {questionNumbers.join(' & ')}: {
                 // Get the correct answers from the first question (they should be the same for all questions in the group)
                 (() => {
@@ -305,9 +305,9 @@ const MultipleChoiceTwo = ({ template, onAnswerChange, testResults, testSubmitte
                   return '';
                 })()
               }
-            </span>
+                        </span>
           </div>
-        )}
+                )}
       </div>
     </div>
   );

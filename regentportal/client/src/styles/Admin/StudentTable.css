@@ -195,6 +195,8 @@
   font-size: 0.8rem;
   transition: background-color 0.2s ease;
   margin-top: 5px;
+  width: fit-content;
+  max-width: 200px;
 }
 
 .back-button-small:hover {

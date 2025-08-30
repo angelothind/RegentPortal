@@ -34,25 +34,30 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
           type: cell.type,
           questionNumber: cell.questionNumber,
           questionNumberType: typeof cell.questionNumber,
-          answer: cell.answer
+          // Don't use JSON answers for marking
         });
         
         if (cell.type === 'question' && cell.questionNumber && typeof cell.questionNumber === 'string' && cell.questionNumber.includes('-')) {
           console.log('🎯 Found range question:', cell.questionNumber);
           const [startNum, endNum] = cell.questionNumber.split('-').map(Number);
-          const answers = Array.isArray(cell.answer) ? cell.answer : [cell.answer];
+          // Don't use JSON answers - only use database answers
           
           // Transform the backend data to split range questions
-          for (let i = 0; i < answers.length; i++) {
+          for (let i = 0; i < 2; i++) { // Assume 2 answers for range questions
             const questionNumber = startNum + i;
-            const correctAnswer = answers[i];
             
-            // Create individual question results
-            transformedResults[questionNumber] = {
-              correctAnswer: correctAnswer,
-              isCorrect: false, // Will be set by backend marking
-              userAnswer: originalResults[questionNumber]?.userAnswer || ''
-            };
+            // Create individual question results using database data only
+            if (transformedResults[questionNumber]) {
+              // Keep existing database data
+              console.log(`🎯 Keeping database data for question ${questionNumber}:`, transformedResults[questionNumber]);
+            } else {
+              // Create placeholder for missing questions
+              transformedResults[questionNumber] = {
+                correctAnswer: '', // Will be filled from database
+                isCorrect: false,
+                userAnswer: ''
+              };
+            }
           }
         }
       });
@@ -183,28 +188,28 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                               const questionNumber = questionMatch[1];
                               return (
                                 <React.Fragment key={partIndex}>
-                                  <input
-                                    type="text"
-                                    className={`listening-table-answer-input ${getAnswerClass(questionNumber)}`}
-                                    style={{
-                                      border: '2px solid #ddd',
-                                      borderRadius: '4px',
-                                      padding: '8px 12px',
-                                      fontSize: '0.9rem',
-                                      minWidth: '120px',
-                                      backgroundColor: 'white',
-                                      color: '#333',
-                                      transition: 'border-color 0.2s ease'
-                                    }}
-                                    placeholder="Answer"
-                                    value={getAnswerValue(questionNumber)}
-                                    onChange={(e) => handleAnswerChange(questionNumber, e.target.value)}
-                                    disabled={testSubmitted}
-                                    autoComplete="off"
-                                    data-form-type="other"
-                                    data-lpignore="true"
-                                    data-1p-ignore="true"
-                                  />
+                                <input
+                                  type="text"
+                                  className={`listening-table-answer-input ${getAnswerClass(questionNumber)}`}
+                                  style={{
+                                    border: '2px solid #ddd',
+                                    borderRadius: '4px',
+                                    padding: '8px 12px',
+                                    fontSize: '0.9rem',
+                                    minWidth: '120px',
+                                    backgroundColor: 'white',
+                                    color: '#333',
+                                    transition: 'border-color 0.2s ease'
+                                  }}
+                                  placeholder="Answer"
+                                  value={getAnswerValue(questionNumber)}
+                                  onChange={(e) => handleAnswerChange(questionNumber, e.target.value)}
+                                  disabled={testSubmitted}
+                                  autoComplete="off"
+                                  data-form-type="other"
+                                  data-lpignore="true"
+                                  data-1p-ignore="true"
+                                />
                                   {/* Show correct answer inline for each input field */}
                                   {testSubmitted && transformedResults && (
                                     <span className="inline-correction">
@@ -286,18 +291,18 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                               <span dangerouslySetInnerHTML={{ __html: part }} />
                               {partIndex < array.length - 1 && (
                                 <>
-                                  <input
-                                    type="text"
+                                <input
+                                  type="text"
                                     className={`table-answer-input ${getAnswerClass(`${cell.questionNumber}_${partIndex}`)}`}
-                                    placeholder="Answer"
+                                  placeholder="Answer"
                                     value={getAnswerValue(`${cell.questionNumber}_${partIndex}`)}
                                     onChange={(e) => handleAnswerChange(`${cell.questionNumber}_${partIndex}`, e.target.value)}
-                                    disabled={testSubmitted}
-                                    autoComplete="off"
-                                    data-form-type="other"
-                                    data-lpignore="true"
-                                    data-1p-ignore="true"
-                                  />
+                                  disabled={testSubmitted}
+                                  autoComplete="off"
+                                  data-form-type="other"
+                                  data-lpignore="true"
+                                  data-1p-ignore="true"
+                                />
                                   {/* Show correct answer inline for each input field */}
                                   {testSubmitted && testResults && (
                                     <span className="inline-correction">

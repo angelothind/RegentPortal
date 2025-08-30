@@ -634,13 +634,13 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         <div className="passage-toggle">
           {/* Limit to exactly 3 passages for reading tests */}
           {[1, 2, 3].map((passageNumber) => (
-            <button 
+          <button 
               key={passageNumber}
               className={`passage-button ${currentPassage === passageNumber ? 'active' : ''}`}
               onClick={() => onPassageChange(passageNumber)}
-            >
+          >
               Passage {passageNumber}
-            </button>
+          </button>
           ))}
         </div>
       </div>

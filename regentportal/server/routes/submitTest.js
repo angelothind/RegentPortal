@@ -30,11 +30,25 @@ const loadCorrectAnswers = async (testId, testType, submittedAnswers = {}) => {
         if (Array.isArray(testTypeAnswers)) {
           // Array format - convert to object with array indices as keys (matching Book 19 format)
           console.log(`📝 Found ${testTypeAnswers.length} ${testType} answers in database (array format)`);
+          console.log(`📝 First few answers:`, testTypeAnswers.slice(0, 5));
+          
           const dbAnswers = {};
           testTypeAnswers.forEach((answer, index) => {
-            dbAnswers[(index + 1).toString()] = answer; // Convert to 1-based question numbers
+            const questionNumber = (index + 1).toString();
+            dbAnswers[questionNumber] = answer;
+            console.log(`📝 Mapping index ${index} → question ${questionNumber}: ${answer}`);
           });
+          
           console.log(`✅ Converted ${Object.keys(dbAnswers).length} answers from array format`);
+          console.log(`📝 Sample mapped answers:`, {
+            '1': dbAnswers['1'],
+            '15': dbAnswers['15'],
+            '16': dbAnswers['16'],
+            '17': dbAnswers['17'],
+            '18': dbAnswers['18'],
+            '28': dbAnswers['28'],
+            '31': dbAnswers['31']
+          });
           return dbAnswers;
         } else if (typeof testTypeAnswers === 'object') {
           // Object format - already has array indices as keys (Book 19 format)
