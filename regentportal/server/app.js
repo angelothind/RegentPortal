@@ -42,7 +42,7 @@ app.use('/api/books', require('./routes/lookupBooks'))
 
 app.use('/api/tests', require('./routes/getTestContent'));
 
-app.use('/api/test', require('./routes/getTestById'));
+app.use('/api/test', require('./routes/getTestByID'));
 
 app.use('/api/submit', require('./routes/submitTest'));
 
