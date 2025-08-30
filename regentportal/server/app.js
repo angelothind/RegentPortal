@@ -50,8 +50,11 @@ app.use('/api/teachers', require('./routes/teacherRoutes'));
 
 app.use('/api/submissions', require('./routes/submissions'));
 
-// Serve React app for all non-API routes (must be last)
+// Serve React app for all non-API routes
 app.get('*', (req, res) => {
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: 'API route not found' });
+  }
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
