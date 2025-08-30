@@ -9,14 +9,14 @@ const addBook17Test1ListeningMarkscheme = async () => {
     await connectDB();
     console.log('✅ Connected to MongoDB');
 
-    // Find Test 1 Book 17
-    const test1 = await Test.findOne({ title: 'Test 1', belongsTo: 'Book 17' });
+    // Find Test 1 Book17
+    const test1 = await Test.findOne({ title: 'Test 1', belongsTo: 'Book17' });
     if (!test1) {
-      console.log('❌ Test 1 Book 17 not found');
+      console.log('❌ Test 1 Book17 not found');
       return;
     }
 
-    console.log('📝 Found Test 1 Book 17, adding listening markscheme...');
+    console.log('📝 Found Test 1 Book17, adding listening markscheme...');
 
     // Listening Test 1 Answers (Questions 1-40) from the markscheme
     const test1ListeningAnswers = [
@@ -37,9 +37,12 @@ const addBook17Test1ListeningMarkscheme = async () => {
       "C",                // Q12
       "B",                // Q13
       "B",                // Q14
-      ["A", "D"],         // Q15&16 IN EITHER ORDER
-      ["B", "C"],         // Q17&18 IN EITHER ORDER
-      ["D", "E"],         // Q19&20 IN EITHER ORDER
+      ["A", "D"],         // Q15: MC2 (either order)
+      ["A", "D"],         // Q16: MC2 (either order)
+      ["B", "C"],         // Q17: MC2 (either order)
+      ["B", "C"],         // Q18: MC2 (either order)
+      ["D", "E"],         // Q19: MC2 (either order)
+      ["D", "E"],         // Q20: MC2 (either order)
 
       // Part 3 (Questions 21-30): 10 answers
       "A",                // Q21
@@ -85,7 +88,7 @@ const addBook17Test1ListeningMarkscheme = async () => {
     console.log(`🎵 Listening: ${test1ListeningAnswers.length} answers`);
 
     // Verify the update
-    const updatedTest = await Test.findOne({ title: 'Test 1', belongsTo: 'Book 17' });
+    const updatedTest = await Test.findOne({ title: 'Test 1', belongsTo: 'Book17' });
     if (updatedTest && updatedTest.answers) {
       const listeningAnswers = updatedTest.answers.get('listening') || [];
       console.log('\n📊 Verification:');

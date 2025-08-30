@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': 'http://localhost:3000', // your backend server
-      '/assets': 'http://localhost:3000', // proxy assets to backend
+      '^/assets/Books': 'http://localhost:3000', // proxy only backend book assets (audio files)
     },
   },
 })

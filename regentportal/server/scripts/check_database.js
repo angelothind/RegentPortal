@@ -1,9 +1,21 @@
 const mongoose = require('mongoose');
-const Test = require('./models/Test');
+const Test = require('../models/Test');
+require('dotenv').config({ path: __dirname + '/../.env' });
 
-mongoose.connect('mongodb://localhost:27017/regentportal')
-  .then(async () => {
-    console.log('📝 Connected to database');
+// Use the same connection logic as the main app
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('✅ MongoDB connected');
+  } catch (err) {
+    console.error('❌ MongoDB connection error:', err.message);
+    process.exit(1);
+  }
+};
+
+const checkDatabase = async () => {
+  try {
+    await connectDB();
     
     const tests = await Test.find({});
     console.log(`📝 Found ${tests.length} tests in database`);
@@ -24,8 +36,10 @@ mongoose.connect('mongodb://localhost:27017/regentportal')
     });
     
     mongoose.connection.close();
-  })
-  .catch(err => {
+  } catch (err) {
     console.error('❌ Error:', err);
     mongoose.connection.close();
-  }); 
+  }
+};
+
+checkDatabase(); 
