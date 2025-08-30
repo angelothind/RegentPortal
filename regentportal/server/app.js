@@ -50,10 +50,7 @@ app.use('/api/teachers', require('./routes/teacherRoutes'));
 
 app.use('/api/submissions', require('./routes/submissions'));
 
-// Serve React app for root route only
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-});
+// Backend only - no frontend serving needed
 
 // Health check endpoint for Render
 app.get('/api/test', (req, res) => {
