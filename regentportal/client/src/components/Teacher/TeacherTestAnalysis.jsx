@@ -228,7 +228,10 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
       ) : (
         <div className="listening-layout">
           <div className="audio-section">
-            <ListeningTest testId={{ _id: submission.testId }} testData={testData} />
+            <ListeningTest 
+              testId={{ _id: testIdValue }} 
+              testData={testData} 
+            />
           </div>
           <div className="questions-section">
             <ListeningQuestionView 
@@ -238,6 +241,9 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
               testSubmitted={true}
               isTeacherMode={true}
               onBackToStudent={onBack}
+              testData={testData}
+              sharedPassage={sharedPassage}
+              onPassageChange={handlePassageChange}
             />
           </div>
         </div>

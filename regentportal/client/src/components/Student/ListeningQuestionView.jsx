@@ -9,7 +9,7 @@ import FlowchartCompletion from '../Questions/FlowchartCompletion';
 import TFNG from '../Questions/TFNG';
 import { calculateIELTSBand, formatBandScore, getBandScoreDescription } from '../../utils/bandScoreCalculator';
 
-const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null }) => {
+const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null, testData, sharedPassage, onPassageChange }) => {
   console.log('🔍 ListeningQuestionView received user:', user);
   console.log('🔍 ListeningQuestionView received selectedTest:', selectedTest);
   const [questionData, setQuestionData] = useState(null);
@@ -96,6 +96,26 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
       setCurrentPart(1);
     }
   }, [testStarted, currentPart]);
+
+  // In teacher mode, fetch questions when testData becomes available
+  useEffect(() => {
+    if (isTeacherMode && testData && currentPart) {
+      console.log('👨‍🏫 Teacher mode: Initial question data fetch for part:', currentPart);
+      fetchQuestionData();
+    }
+  }, [isTeacherMode, testData, currentPart]);
+
+  // In teacher mode, fetch question data when part changes and testData is available
+  useEffect(() => {
+    if (isTeacherMode) {
+      if (testData) {
+        console.log('👨‍🏫 Teacher mode: Fetching question data for part:', currentPart);
+        fetchQuestionData();
+      } else {
+        console.log('👨‍🏫 Teacher mode: No testData available yet');
+      }
+      return;
+    }
 
   // Additional safety: ensure part 1 when overlay should show
   useEffect(() => {
@@ -441,8 +461,11 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
       }
     };
 
-    fetchQuestionData();
-  }, [selectedTest, currentPart]);
+    // Only fetch automatically if not in teacher mode
+    if (!isTeacherMode) {
+      fetchQuestionData();
+    }
+  }, [selectedTest, currentPart, isTeacherMode]);
 
   const handlePartChange = (partNumber) => {
     // Prevent unnecessary re-renders if user is already on this part
@@ -836,7 +859,6 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
         )}
       </div>
     );
-
-};
+  };
 
 export default ListeningQuestionView; 
