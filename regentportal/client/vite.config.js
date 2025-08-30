@@ -10,4 +10,10 @@ export default defineConfig({
       '^/assets/Books': 'http://localhost:3000', // proxy only backend book assets (audio files)
     },
   },
+  define: {
+    // Set API base URL for production
+    __API_BASE_URL__: JSON.stringify(process.env.NODE_ENV === 'production' 
+      ? 'https://regentportal.onrender.com' 
+      : 'http://localhost:3000'),
+  },
 })
