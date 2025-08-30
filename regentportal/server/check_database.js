@@ -1,9 +1,14 @@
 const mongoose = require('mongoose');
 const Test = require('./models/Test');
+require('dotenv').config();
 
-mongoose.connect('mongodb://localhost:27017/regentportal')
+// Use environment variable with fallback for local development
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/regentportal';
+
+mongoose.connect(mongoURI)
   .then(async () => {
     console.log('📝 Connected to database');
+    console.log(`📝 Using MongoDB URI: ${mongoURI.includes('localhost') ? 'Local MongoDB' : 'MongoDB Atlas'}`);
     
     const tests = await Test.find({});
     console.log(`📝 Found ${tests.length} tests in database`);
