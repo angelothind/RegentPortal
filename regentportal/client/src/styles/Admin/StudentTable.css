@@ -33,6 +33,10 @@
   opacity: 1 !important;
   /* Ensure proper table layout */
   table-layout: auto !important;
+  /* Force table to expand properly */
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
 }
 
 .student-table th,

@@ -47,7 +47,18 @@ const TeacherTable = ({ onBack }) => {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Failed to create teacher');
 
-      setTeachers([...teachers, { _id: data._id, username: data.username }]);
+      console.log('✅ Teacher created successfully:', data);
+      console.log('📝 Backend response data:', data);
+      
+      // Create complete user object with all fields
+      const newUser = {
+        _id: data._id,
+        name: newTeacher.name,
+        username: newTeacher.username
+      };
+      
+      console.log('📝 Adding new teacher to state:', newUser);
+      setTeachers([...teachers, newUser]);
       setShowModal(false);
       setNewTeacher({ name: '', username: '', password: '' });
     } catch (err) {
@@ -86,12 +97,12 @@ const TeacherTable = ({ onBack }) => {
             <th>Username</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody key={teachers.length}>
           {teachers.length === 0 ? (
             <tr><td>No teachers found.</td></tr>
           ) : (
             teachers.map((teacher, index) => (
-              <tr key={index} className="table-row">
+              <tr key={teacher._id || index} className="table-row">
                 <td className="username-cell">
                   <span className="username-text">{teacher.username}</span>
                   <button className="delete-button" onClick={() => handleDelete(teacher._id)}>Delete</button>

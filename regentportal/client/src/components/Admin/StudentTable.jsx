@@ -47,7 +47,18 @@ const StudentTable = ({ onBack }) => {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Failed to create student');
 
-      setStudents([...students, { _id: data._id, username: data.username }]);
+      console.log('✅ Student created successfully:', data);
+      console.log('📝 Backend response data:', data);
+      
+      // Create complete user object with all fields
+      const newUser = {
+        _id: data._id,
+        name: newStudent.name,
+        username: newStudent.username
+      };
+      
+      console.log('📝 Adding new user to state:', newUser);
+      setStudents([...students, newUser]);
       setShowModal(false);
       setNewStudent({ name: '', username: '', password: '' });
     } catch (err) {
@@ -86,12 +97,12 @@ const StudentTable = ({ onBack }) => {
             <th>Username</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody key={students.length}>
           {students.length === 0 ? (
             <tr><td>No students found.</td></tr>
           ) : (
             students.map((student, index) => (
-              <tr key={index} className="table-row">
+              <tr key={student._id || index} className="table-row">
                 <td className="username-cell">
                   <span className="username-text">{student.username}</span>
                   <button className="delete-button" onClick={() => handleDelete(student._id)}>Delete</button>
