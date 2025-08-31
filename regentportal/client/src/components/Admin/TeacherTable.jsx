@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../styles/Admin/TeacherTable.css';
+import API_BASE from '../../utils/api';
 
-const TeacherTable = () => {
+const TeacherTable = ({ onBack }) => {
   const [teachers, setTeachers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [newTeacher, setNewTeacher] = useState({ username: '', password: '' });
   const [showModal, setShowModal] = useState(false);
-  const [newTeacher, setNewTeacher] = useState({ name: '', username: '', password: '' });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchTeachers();
@@ -13,7 +14,7 @@ const TeacherTable = () => {
 
   const fetchTeachers = async () => {
     try {
-      const response = await fetch('/api/lookup/lookupteachers');
+      const response = await fetch(`${API_BASE}/api/lookup/lookupteachers`);
       const data = await response.json();
       setTeachers(data.teachers || []);
       setLoading(false);
@@ -33,12 +34,11 @@ const TeacherTable = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, username, password } = newTeacher;
-
-    if (!name || !username || !password) return alert('All fields required');
+    const { username, password } = newTeacher;
+    if (!username || !password) return alert('Username and password required');
 
     try {
-      const response = await fetch('/api/create/createteacher', {
+      const response = await fetch(`${API_BASE}/api/create/createteacher`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newTeacher),
@@ -47,9 +47,9 @@ const TeacherTable = () => {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Failed to create teacher');
 
-      setTeachers([...teachers, { _id: data._id, name, username }]);
+      setTeachers([...teachers, { _id: data._id, username: data.username }]);
       setShowModal(false);
-      setNewTeacher({ name: '', username: '', password: '' });
+      setNewTeacher({ username: '', password: '' });
     } catch (err) {
       console.error('Error creating teacher:', err);
       alert('❌ Failed to create teacher');
@@ -57,10 +57,10 @@ const TeacherTable = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this teacher?')) return;
+    if (!window.confirm('Delete this teacher?')) return;
 
     try {
-      const res = await fetch(`/api/delete/deleteteacher/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE}/api/delete/deleteteacher/${id}`, { method: 'DELETE' });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to delete');
 
@@ -83,19 +83,15 @@ const TeacherTable = () => {
       <table className="teacher-table">
         <thead>
           <tr>
-            <th>Name</th>
             <th>Username</th>
           </tr>
         </thead>
         <tbody>
           {teachers.length === 0 ? (
-            <tr><td colSpan="2">No teachers found.</td></tr>
+            <tr><td>No teachers found.</td></tr>
           ) : (
-            teachers.map((teacher) => (
-              <tr key={teacher._id} className="table-row">
-                <td className="name-cell">
-                  <span className="name-text">{teacher.name}</span>
-                </td>
+            teachers.map((teacher, index) => (
+              <tr key={index} className="table-row">
                 <td className="username-cell">
                   <span className="username-text">{teacher.username}</span>
                   <button className="delete-button" onClick={() => handleDelete(teacher._id)}>Delete</button>
@@ -111,9 +107,22 @@ const TeacherTable = () => {
           <div className="modal-content">
             <h3>Create New Teacher</h3>
             <form onSubmit={handleSubmit}>
-              <input type="text" name="name" placeholder="Name" value={newTeacher.name} onChange={handleInputChange} required />
-              <input type="text" name="username" placeholder="Username" value={newTeacher.username} onChange={handleInputChange} required />
-              <input type="password" name="password" placeholder="Password" value={newTeacher.password} onChange={handleInputChange} required />
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                value={newTeacher.username}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={newTeacher.password}
+                onChange={handleInputChange}
+                required
+              />
               <div className="modal-buttons">
                 <button type="submit">Create</button>
                 <button type="button" onClick={() => setShowModal(false)}>Cancel</button>

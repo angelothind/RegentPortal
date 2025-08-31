@@ -1,6 +1,7 @@
 // ReadingTest.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../styles/UserLayout/ReadingTest.css';
+import API_BASE from '../../utils/api';
 
 const ReadingTest = ({ testId, testData, onPassageChange, currentPassage, isTeacherMode = false }) => {
   const [passageContent, setPassageContent] = useState(null);
@@ -39,7 +40,7 @@ const ReadingTest = ({ testId, testData, onPassageChange, currentPassage, isTeac
             setPassageContent(currentSource.content);
           } else {
             // Fallback: fetch JSON content if not provided by backend
-            const fetchUrl = `/assets/${currentSource.contentPath}`;
+            const fetchUrl = `${API_BASE}/assets/${currentSource.contentPath}`;
             const response = await fetch(fetchUrl);
             
             if (!response.ok) {

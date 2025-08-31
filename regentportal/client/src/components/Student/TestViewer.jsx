@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReadingTest from './ReadingTest';
-import ListeningTest from './ListeningTest';
 import QuestionView from './QuestionView';
 import ListeningQuestionView from './ListeningQuestionView';
 import DraggableDivider from './DraggableDivider';
+import API_BASE from '../../utils/api';
 
 const TestViewer = ({ selectedTest, user }) => {
   const [testData, setTestData] = useState(null);
@@ -117,12 +117,12 @@ const TestViewer = ({ selectedTest, user }) => {
         // 🔒 SECURE: Use specific endpoints based on test type from sidebar selection
         let endpoint;
         if (selectedTest.type === 'Reading') {
-          endpoint = `/api/tests/${selectedTest.testId._id}/reading`;
+          endpoint = `${API_BASE}/api/tests/${selectedTest.testId._id}/reading`;
         } else if (selectedTest.type === 'Listening') {
-          endpoint = `/api/tests/${selectedTest.testId._id}/listening`;
+          endpoint = `${API_BASE}/api/tests/${selectedTest.testId._id}/listening`;
         } else {
           // Fallback to generic endpoint with test type parameter
-          endpoint = `/api/tests/${selectedTest.testId._id}?testType=${selectedTest.type}`;
+          endpoint = `${API_BASE}/api/tests/${selectedTest.testId._id}?testType=${selectedTest.type}`;
         }
 
         console.log('📡 TestViewer: Calling endpoint:', endpoint);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../styles/UserLayout/TeacherDashboard.css';
 import { processTextFormatting } from '../../utils/textFormatting';
 import FlowchartCompletion from '../Questions/FlowchartCompletion';
+import API_BASE from '../../utils/api';
 
 const TestContentViewer = ({ selectedTest, testData }) => {
   const [currentPassage, setCurrentPassage] = useState(1);
@@ -25,7 +26,7 @@ const TestContentViewer = ({ selectedTest, testData }) => {
           if (currentSource && currentSource.content) {
             setPassageContent(currentSource.content);
           } else {
-            const fetchUrl = `/assets/${currentSource.contentPath}`;
+            const fetchUrl = `${API_BASE}/assets/${currentSource.contentPath}`;
             const response = await fetch(fetchUrl);
             
             if (!response.ok) {
@@ -56,7 +57,7 @@ const TestContentViewer = ({ selectedTest, testData }) => {
       console.log('🔍 TestContentViewer: Fetching questions for passage:', currentPassage);
       setLoading(true);
       try {
-        const endpoint = `/api/tests/${selectedTest.testId._id}/questions/part${currentPassage}?testType=${selectedTest.type}`;
+        const endpoint = `${API_BASE}/api/tests/${selectedTest.testId._id}/questions/part${currentPassage}?testType=${selectedTest.type}`;
         console.log('📡 TestContentViewer: Calling endpoint:', endpoint);
         
         const response = await fetch(endpoint);

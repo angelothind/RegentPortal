@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../styles/Admin/StudentTable.css';
+import API_BASE from '../../utils/api';
 
-const StudentTable = () => {
+const StudentTable = ({ onBack }) => {
   const [students, setStudents] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [newStudent, setNewStudent] = useState({ username: '', password: '' });
   const [showModal, setShowModal] = useState(false);
-  const [newStudent, setNewStudent] = useState({ name: '', username: '', password: '' });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchStudents();
@@ -13,7 +14,7 @@ const StudentTable = () => {
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch('/api/lookup/lookupstudents');
+      const response = await fetch(`${API_BASE}/api/lookup/lookupstudents`);
       const data = await response.json();
       setStudents(data.students || []);
       setLoading(false);
@@ -33,12 +34,11 @@ const StudentTable = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, username, password } = newStudent;
-
-    if (!name || !username || !password) return alert('All fields are required');
+    const { username, password } = newStudent;
+    if (!username || !password) return alert('Username and password required');
 
     try {
-      const response = await fetch('/api/create/createstudent', {
+      const response = await fetch(`${API_BASE}/api/create/createstudent`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newStudent),
@@ -47,9 +47,9 @@ const StudentTable = () => {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Failed to create student');
 
-      setStudents([...students, { _id: data._id, name, username }]);
+      setStudents([...students, { _id: data._id, username: data.username }]);
       setShowModal(false);
-      setNewStudent({ name: '', username: '', password: '' });
+      setNewStudent({ username: '', password: '' });
     } catch (err) {
       console.error('Error creating student:', err);
       alert('❌ Failed to create student');
@@ -60,14 +60,11 @@ const StudentTable = () => {
     if (!window.confirm('Delete this student?')) return;
 
     try {
-      const res = await fetch(`/api/delete/deletestudent/${id}`, {
-        method: 'DELETE',
-      });
-
+      const res = await fetch(`${API_BASE}/api/delete/deletestudent/${id}`, { method: 'DELETE' });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to delete');
 
-      setStudents(students.filter((s) => s._id !== id));
+      setStudents(students.filter((student) => student._id !== id));
     } catch (err) {
       console.error('Error deleting student:', err);
       alert('❌ Could not delete student');
@@ -80,34 +77,24 @@ const StudentTable = () => {
     <div className="student-table-container">
       <div className="student-header">
         <h2>Students</h2>
-        <button className="create-button" onClick={handleCreateStudent}>
-          Create Student
-        </button>
+        <button className="create-button" onClick={handleCreateStudent}>Create Student</button>
       </div>
 
       <table className="student-table">
         <thead>
           <tr>
-            <th>Name</th>
             <th>Username</th>
           </tr>
         </thead>
         <tbody>
           {students.length === 0 ? (
-            <tr>
-              <td colSpan="3">No students found.</td>
-            </tr>
+            <tr><td>No students found.</td></tr>
           ) : (
             students.map((student, index) => (
               <tr key={index} className="table-row">
-                <td className="name-cell">
-                  <span className="name-text">{student.name}</span>
-                </td>
                 <td className="username-cell">
                   <span className="username-text">{student.username}</span>
-                  <button className="delete-button" onClick={() => handleDelete(student._id)}>
-                    Delete
-                  </button>
+                  <button className="delete-button" onClick={() => handleDelete(student._id)}>Delete</button>
                 </td>
               </tr>
             ))
@@ -120,14 +107,6 @@ const StudentTable = () => {
           <div className="modal-content">
             <h3>Create New Student</h3>
             <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                value={newStudent.name}
-                onChange={handleInputChange}
-                required
-              />
               <input
                 type="text"
                 name="username"

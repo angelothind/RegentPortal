@@ -1,27 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../styles/Admin/AdminTable.css';
+import API_BASE from '../../utils/api';
 
-const AdminTable = () => {
+const AdminTable = ({ onBack }) => {
   const [admins, setAdmins] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
   const [newAdmin, setNewAdmin] = useState({ username: '', password: '' });
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchAdmins = async () => {
-      try {
-        const response = await fetch('/api/lookup/lookupadmins');
-        const data = await response.json();
-        setAdmins(data.admins || []);
-        setLoading(false);
-      } catch (err) {
-        console.error('Failed to fetch admins:', err);
-        setLoading(false);
-      }
-    };
-
     fetchAdmins();
   }, []);
+
+  const fetchAdmins = async () => {
+    try {
+      const response = await fetch(`${API_BASE}/api/lookup/lookupadmins`);
+      const data = await response.json();
+      setAdmins(data.admins || []);
+      setLoading(false);
+    } catch (err) {
+      console.error('Failed to fetch admins:', err);
+      setLoading(false);
+    }
+  };
 
   const handleCreateAdmin = () => {
     setShowModal(true);
@@ -37,7 +38,7 @@ const AdminTable = () => {
     if (!username || !password) return alert('Username and password required');
 
     try {
-      const response = await fetch('/api/create/createadmin', {
+      const response = await fetch(`${API_BASE}/api/create/createadmin`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newAdmin),
@@ -59,7 +60,7 @@ const AdminTable = () => {
     if (!window.confirm('Delete this admin?')) return;
 
     try {
-      const res = await fetch(`/api/delete/deleteadmin/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE}/api/delete/deleteadmin/${id}`, { method: 'DELETE' });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to delete');
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TestContentViewer from './TestContentViewer';
 import StudentSubmissions from './StudentSubmissions';
 import '../../styles/UserLayout/TeacherDashboard.css';
+import API_BASE from '../../utils/api';
 
 const TestManager = ({ selectedTest, user }) => {
   const [activeTab, setActiveTab] = useState('content');
@@ -19,7 +20,7 @@ const TestManager = ({ selectedTest, user }) => {
       setLoading(true);
       try {
         // Fetch test data for current test
-        const endpoint = `/api/test/${selectedTest.testId._id}`;
+        const endpoint = `${API_BASE}/api/test/${selectedTest.testId._id}`;
         console.log('📡 TestManager: Calling endpoint:', endpoint);
         
         const response = await fetch(endpoint);

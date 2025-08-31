@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../styles/Admin/StudentTable.css';
+import API_BASE from '../../utils/api';
 
 const TeacherStudentTable = ({ onStudentSelect, user: propUser }) => {
   const [students, setStudents] = useState([]);
@@ -42,7 +43,7 @@ const TeacherStudentTable = ({ onStudentSelect, user: propUser }) => {
   const fetchStudents = async () => {
     try {
       console.log('🔍 TeacherStudentTable: Fetching students...');
-      const response = await fetch('/api/lookup/lookupstudents');
+      const response = await fetch(`${API_BASE}/api/lookup/lookupstudents`);
       const data = await response.json();
       console.log('🔍 TeacherStudentTable: Received students data:', data);
       setStudents(data.students || []);
@@ -62,7 +63,7 @@ const TeacherStudentTable = ({ onStudentSelect, user: propUser }) => {
     console.log('🔍 Fetching favorited students for user:', user._id);
     
     try {
-      const response = await fetch(`/api/teachers/${user._id}/favorites`);
+      const response = await fetch(`${API_BASE}/api/teachers/${user._id}/favorites`);
       console.log('🔍 Favorites response status:', response.status);
       
       if (response.ok) {
@@ -88,7 +89,7 @@ const TeacherStudentTable = ({ onStudentSelect, user: propUser }) => {
     console.log('🔍 User ID:', user._id);
 
     try {
-      const response = await fetch(`/api/teachers/${user._id}/favorites`, {
+      const response = await fetch(`${API_BASE}/api/teachers/${user._id}/favorites`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ studentId }),

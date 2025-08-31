@@ -1,43 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import '../../styles/UserLayout/TeacherDashboard.css';
+import '../../styles/Admin/StudentTable.css';
+import API_BASE from '../../utils/api';
 
-const StudentSubmissions = ({ selectedTest }) => {
+const StudentSubmissions = ({ selectedTest, onSubmissionSelect }) => {
   const [submissions, setSubmissions] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectedSubmission, setSelectedSubmission] = useState(null);
 
   useEffect(() => {
-    const fetchSubmissions = async () => {
-      if (!selectedTest) {
-        setSubmissions([]);
-        return;
-      }
-
-      console.log('🔍 StudentSubmissions: Fetching submissions for test:', selectedTest.testId._id);
-      setLoading(true);
-      try {
-        const response = await fetch(`/api/submissions/${selectedTest.testId._id}`);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        console.log('📋 StudentSubmissions: Received submissions:', data);
-        setSubmissions(data.submissions || []);
-      } catch (error) {
-        console.error('❌ Failed to fetch submissions:', error);
-        setSubmissions([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSubmissions();
+    if (selectedTest && selectedTest.testId) {
+      fetchSubmissions();
+    }
   }, [selectedTest]);
+
+  const fetchSubmissions = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${API_BASE}/api/submissions/${selectedTest.testId._id}`);
+      const data = await response.json();
+      setSubmissions(data.submissions || []);
+    } catch (error) {
+      console.error('Error fetching submissions:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmissionSelect = (submission) => {
     setSelectedSubmission(submission);
+    if (onSubmissionSelect) {
+      onSubmissionSelect(submission);
+    }
   };
 
   const formatDate = (dateString) => {
