@@ -120,7 +120,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
 
     try {
       // Fetch question data for current part with test type
-      const endpoint = `/api/tests/${selectedTest.testId._id}/questions/part${currentPart}?testType=${selectedTest.type}`;
+      const endpoint = `${API_BASE}/api/tests/${selectedTest.testId._id}/questions/part${currentPart}?testType=${selectedTest.type}`;
       console.log('📡 Fetching from endpoint:', endpoint);
       
       const response = await fetch(endpoint);

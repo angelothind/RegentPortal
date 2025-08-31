@@ -59,7 +59,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
 
     try {
       // Fetch question data for current passage with test type
-      const endpoint = `/api/tests/${selectedTest.testId._id}/questions/part${currentPassage}?testType=${selectedTest.type}`;
+      const endpoint = `${API_BASE}/api/tests/${selectedTest.testId._id}/questions/part${currentPassage}?testType=${selectedTest.type}`;
       console.log('📡 Fetching from endpoint:', endpoint);
       
       const response = await fetch(endpoint);
