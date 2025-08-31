@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/UserLayout/SideBar.css';
+import API_BASE from '../../utils/api';
 
 const StudentSidebar = ({ onSelectTest, onLogout, isLoggingOut = false }) => {
   const [books, setBooks] = useState([]);
@@ -14,7 +15,7 @@ const StudentSidebar = ({ onSelectTest, onLogout, isLoggingOut = false }) => {
     
     const fetchBooks = async () => {
       try {
-        const response = await fetch('/api/books');
+        const response = await fetch(`${API_BASE}/api/books`);
         const data = await response.json();
         setBooks(data);
       } catch (err) {

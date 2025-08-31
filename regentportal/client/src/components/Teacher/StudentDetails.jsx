@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TeacherTestAnalysis from './TeacherTestAnalysis';
 import StudentSubmissions from './StudentSubmissions';
 import '../../styles/Admin/StudentTable.css';
+import API_BASE from '../../utils/api';
 
 const StudentDetails = ({ student, onBack }) => {
   const [testSubmissions, setTestSubmissions] = useState([]);
@@ -22,7 +23,7 @@ const StudentDetails = ({ student, onBack }) => {
     if (!student) return;
 
     try {
-      const response = await fetch(`/api/teachers/submissions/student/${student._id}`);
+      const response = await fetch(`${API_BASE}/api/teachers/submissions/student/${student._id}`);
       const data = await response.json();
       setTestSubmissions(data.submissions || []);
       setLoading(false);

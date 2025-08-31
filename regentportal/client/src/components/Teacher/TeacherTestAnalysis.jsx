@@ -4,6 +4,7 @@ import ListeningTest from '../Student/ListeningTest';
 import QuestionView from '../Student/QuestionView';
 import ListeningQuestionView from '../Student/ListeningQuestionView';
 import DraggableDivider from '../Student/DraggableDivider';
+import API_BASE from '../../utils/api';
 
 const TeacherTestAnalysis = ({ submission, onBack }) => {
   const [testData, setTestData] = useState(null);
@@ -29,7 +30,7 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
         let completeSubmission = submission;
         if (!submission.answers || !submission.results || !submission.correctAnswers) {
           console.log('🔍 Fetching complete submission data...');
-          const submissionResponse = await fetch(`/api/submissions/submission/${submission._id}`);
+          const submissionResponse = await fetch(`${API_BASE}/api/submissions/submission/${submission._id}`);
           if (submissionResponse.ok) {
             completeSubmission = await submissionResponse.json();
             console.log('✅ Complete submission data fetched:', completeSubmission);
@@ -52,7 +53,7 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
         console.log('🔍 API calls - completeSubmission.testId:', completeSubmission.testId);
 
         // Fetch test data
-        const testEndpoint = `/api/test/${testIdForAPI}`;
+        const testEndpoint = `${API_BASE}/api/test/${testIdForAPI}`;
         const testResponse = await fetch(testEndpoint);
         if (!testResponse.ok) {
           throw new Error(`HTTP error! status: ${testResponse.status}`);

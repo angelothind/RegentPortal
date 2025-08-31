@@ -11,9 +11,7 @@ export default defineConfig({
     },
   },
   define: {
-    // Set API base URL for production
-    __API_BASE_URL__: JSON.stringify(process.env.NODE_ENV === 'production' 
-      ? 'https://regentportal.onrender.com' 
-      : 'http://localhost:3000'),
+    // Expose REACT_APP_API_URL for the client to match Render environment variable
+    'import.meta.env.REACT_APP_API_URL': JSON.stringify(process.env.REACT_APP_API_URL || 'http://localhost:3000'),
   },
 })

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Login/LoginForm.css';
+import API_BASE from '../../utils/api';
 
 const LoginForm = ({ onBack, userType }) => {
   const [username, setUsername] = useState('');
@@ -10,14 +11,15 @@ const LoginForm = ({ onBack, userType }) => {
   const handleLogin = async (e) => {
     e.preventDefault(); // prevent page reload
     console.log('Login submitted');
+
     try {
-      const response = await fetch(`/api/user/login`, {
+      const response = await fetch(`${API_BASE}/api/user/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password, userType })
       });
 
-            const data = await response.json();
+      const data = await response.json();
       if (response.ok) {
         console.log('✅ Login successful', data);
         console.log('🔍 User data from server:', data.user);
@@ -33,7 +35,7 @@ const LoginForm = ({ onBack, userType }) => {
           // Store user data in localStorage as backup
           localStorage.setItem('user', JSON.stringify(data.user));
           navigate('/student', { state: { user: data.user  } });
-    }
+        }
         // TODO: Redirect or update app state here
       } else {
         console.error('❌ Login failed:', data.error);
@@ -45,7 +47,7 @@ const LoginForm = ({ onBack, userType }) => {
 
   return (
     <div className="login-form-container">
-      <h2>Login</h2>
+      <h2>Login as {userType}</h2>
       <form className="login-form" onSubmit={handleLogin}>
         <input
           type="text"

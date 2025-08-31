@@ -8,6 +8,7 @@ import TableCompletion from '../Questions/TableCompletion';
 import FlowchartCompletion from '../Questions/FlowchartCompletion';
 import TFNG from '../Questions/TFNG';
 import { calculateIELTSBand, formatBandScore, getBandScoreDescription } from '../../utils/bandScoreCalculator';
+import API_BASE from '../../utils/api';
 
 const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null, testData, sharedPassage, onPassageChange }) => {
   console.log('🔍 ListeningQuestionView received user:', user);
@@ -379,7 +380,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     console.log('📝 User data:', user);
     
     try {
-      const response = await fetch('/api/submit/submit', {
+      const response = await fetch(`${API_BASE}/api/submit/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -10,6 +10,7 @@ import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
 import SummaryCompletion from '../Questions/SummaryCompletion';
 import TableCompletion from '../Questions/TableCompletion';
 import { calculateIELTSBand, formatBandScore, getBandScoreDescription } from '../../utils/bandScoreCalculator';
+import API_BASE from '../../utils/api';
 
 const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onTestReset, sharedPassage, onPassageChange, testData }) => {
   console.log('🚀 QuestionView component mounted with selectedTest:', selectedTest);
@@ -291,7 +292,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     console.log('📝 Selected test before submission:', selectedTest);
     
     try {
-      const response = await fetch('/api/submit/submit', {
+      const response = await fetch(`${API_BASE}/api/submit/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
