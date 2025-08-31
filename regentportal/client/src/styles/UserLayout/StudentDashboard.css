@@ -567,14 +567,15 @@
 
 /* Score Details Styles */
 .score-details {
-  display: flex;
-  flex-direction: column;
-  gap: 7.5px; /* Reduced from 15px */
-  margin: 10px 0; /* Reduced from 20px */
-  padding: 10px; /* Reduced from 20px */
-  background-color: #f8f9fa;
-  border-radius: 6px; /* Reduced from 8px */
-  border: 1px solid #e9ecef;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 7.5px !important;
+  margin: 10px 0 !important;
+  padding: 10px !important;
+  background-color: #ffffff !important;
+  border-radius: 6px !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
 }
 
 .score-item {
@@ -590,15 +591,19 @@
 }
 
 .score-label {
-  font-weight: 500;
-  font-size: 0.9rem; /* Reduced from 1rem */
-  color: #495057;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  color: #000000 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
 }
 
 .score-value {
-  font-weight: 600;
-  font-size: 1rem; /* Reduced from 1.1rem */
-  color: #25245D;
+  font-weight: 800 !important;
+  font-size: 1rem !important;
+  color: #000000 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
 }
 
 /* Compact variant for reading tests */
@@ -614,11 +619,19 @@
 }
 
 .score-details.compact .score-label {
-  font-size: 0.8rem; /* Smaller label font */
+  font-size: 0.8rem !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
 }
 
 .score-details.compact .score-value {
-  font-size: 0.9rem; /* Smaller value font */
+  font-size: 0.9rem !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
 }
 
 /* Responsive design */

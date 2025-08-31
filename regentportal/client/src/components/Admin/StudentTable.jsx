@@ -4,7 +4,7 @@ import API_BASE from '../../utils/api';
 
 const StudentTable = ({ onBack }) => {
   const [students, setStudents] = useState([]);
-  const [newStudent, setNewStudent] = useState({ username: '', password: '' });
+  const [newStudent, setNewStudent] = useState({ name: '', username: '', password: '' });
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -49,7 +49,7 @@ const StudentTable = ({ onBack }) => {
 
       setStudents([...students, { _id: data._id, username: data.username }]);
       setShowModal(false);
-      setNewStudent({ username: '', password: '' });
+      setNewStudent({ name: '', username: '', password: '' });
     } catch (err) {
       console.error('Error creating student:', err);
       alert('❌ Failed to create student');
@@ -107,6 +107,14 @@ const StudentTable = ({ onBack }) => {
           <div className="modal-content">
             <h3>Create New Student</h3>
             <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={newStudent.name}
+                onChange={handleInputChange}
+                required
+              />
               <input
                 type="text"
                 name="username"
