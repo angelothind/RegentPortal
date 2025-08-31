@@ -24,6 +24,9 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
     const fetchTestData = async () => {
       if (!submission) return;
 
+      console.log('🔄 TeacherTestAnalysis: Fetching test data for submission:', submission._id);
+      console.log('🔄 TeacherTestAnalysis: Current submission:', submission);
+      
       setLoading(true);
       try {
         // Fetch complete submission data if we only have basic info
@@ -70,7 +73,7 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
     };
 
     fetchTestData();
-  }, [submission]);
+  }, [submission, submission?._id]);
 
   const handlePassageChange = (newPassage) => {
     console.log('🔄 TeacherTestAnalysis: Changing passage from', sharedPassage, 'to', newPassage);

@@ -34,6 +34,71 @@
       }
     },
     {
+      "questionType": "matching",
+      "introInstruction": "Questions 23-27\nWhich opinion do the speakers give about each of the following aspects of The Emporium's production of Romeo and Juliet?",
+      "formattingInstruction": "Choose FIVE answers from the box and write the correct letter, A-G, next to Questions 23-27.",
+      "opinionsBox": {
+        "title": "Opinions",
+        "options": [
+          {
+            "letter": "A",
+            "text": "They both expected this to be more traditional."
+          },
+          {
+            "letter": "B",
+            "text": "They both thought this was original."
+          },
+          {
+            "letter": "C",
+            "text": "They agree this created the right atmosphere."
+          },
+          {
+            "letter": "D",
+            "text": "They agree this was a major strength."
+          },
+          {
+            "letter": "E",
+            "text": "They were both disappointed by this."
+          },
+          {
+            "letter": "F",
+            "text": "They disagree about why this was an issue."
+          },
+          {
+            "letter": "G",
+            "text": "They disagree about how this could be improved."
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": 23,
+          "question": "the set",
+          "answer": "B"
+        },
+        {
+          "questionNumber": 24,
+          "question": "the lighting",
+          "answer": "C"
+        },
+        {
+          "questionNumber": 25,
+          "question": "the costume design",
+          "answer": "A"
+        },
+        {
+          "questionNumber": 26,
+          "question": "the music",
+          "answer": "D"
+        },
+        {
+          "questionNumber": 27,
+          "question": "the actors' delivery",
+          "answer": "E"
+        }
+      ]
+    },
+    {
       "questionType": "multiple-choice",
       "introInstruction": "Questions 28-30\nChoose the correct letter, A, B or C.",
       "formattingInstruction": "Write the correct letter in boxes 28-30.",
