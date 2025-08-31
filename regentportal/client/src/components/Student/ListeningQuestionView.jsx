@@ -97,6 +97,41 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     }
   }, [testStarted, currentPart]);
 
+  // Define fetchQuestionData function
+  const fetchQuestionData = async () => {
+    if (!selectedTest) {
+      console.log('❌ No selectedTest provided to ListeningQuestionView');
+      setQuestionData(null);
+      return;
+    }
+
+    console.log('🔍 ListeningQuestionView: Fetching questions for:', selectedTest);
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Fetch question data for current part with test type
+      const endpoint = `/api/tests/${selectedTest.testId._id}/questions/part${currentPart}?testType=${selectedTest.type}`;
+      console.log('📡 Fetching from endpoint:', endpoint);
+      
+      const response = await fetch(endpoint);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('📋 Question data loaded:', data);
+      console.log('📋 Question templates:', data.questionData?.templates);
+      setQuestionData(data);
+    } catch (error) {
+      console.error('❌ Failed to fetch question data:', error);
+      setError('Failed to load questions');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // In teacher mode, fetch questions when testData becomes available
   useEffect(() => {
     if (isTeacherMode && testData && currentPart) {
@@ -114,8 +149,8 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
       } else {
         console.log('👨‍🏫 Teacher mode: No testData available yet');
       }
-      return;
     }
+  }, [isTeacherMode, testData, currentPart]);
 
   // Additional safety: ensure part 1 when overlay should show
   useEffect(() => {
@@ -160,8 +195,6 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
       console.log(`📝 Test state saved to localStorage for Part ${currentPart} (has answers)`);
     }
   }, [currentPart, selectedTest, testStarted, testSubmitted, testResults, answers]);
-
-
 
   const handleAnswerChange = (questionNumberOrNewAnswers, value) => {
     let newAnswers;
@@ -426,41 +459,8 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     console.log('🔄 Test reset - returned to Part 1 and cleared overlay');
   };
 
+  // Fetch questions when not in teacher mode
   useEffect(() => {
-    const fetchQuestionData = async () => {
-      if (!selectedTest) {
-        console.log('❌ No selectedTest provided to ListeningQuestionView');
-        setQuestionData(null);
-        return;
-      }
-
-      console.log('🔍 ListeningQuestionView: Fetching questions for:', selectedTest);
-      setLoading(true);
-      setError(null);
-
-      try {
-        // Fetch question data for current part with test type
-        const endpoint = `/api/tests/${selectedTest.testId._id}/questions/part${currentPart}?testType=${selectedTest.type}`;
-        console.log('📡 Fetching from endpoint:', endpoint);
-        
-        const response = await fetch(endpoint);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        console.log('📋 Question data loaded:', data);
-        console.log('📋 Question templates:', data.questionData?.templates);
-        setQuestionData(data);
-      } catch (error) {
-        console.error('❌ Failed to fetch question data:', error);
-        setError('Failed to load questions');
-      } finally {
-        setLoading(false);
-      }
-    };
-
     // Only fetch automatically if not in teacher mode
     if (!isTeacherMode) {
       fetchQuestionData();
@@ -540,7 +540,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
       return <div>No question templates found</div>;
     }
 
-        // All parts now use the same component system
+    // All parts now use the same component system
     return templates.map((template, index) => {
       console.log('🎯 Rendering template:', template.questionType);
       
@@ -687,178 +687,171 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     });
   };
 
-
-    
-    return (
-      <div className="listening-question-view-container">
-        <div className="question-content">
-          <div className="question-header">
-            <div className="header-left">
-              <div className="header-top-row">
-                {selectedTest && selectedTest.audioSrc ? (
-                  <div className="compact-audio-player">
-                    <div className="audio-info">
-                      <span className="audio-title">Listening Audio</span>
-                      <span className="audio-time">{formatTime(audioCurrentTime)} / {formatTime(audioDuration)}</span>
-                    </div>
+  return (
+    <div className="listening-question-view-container">
+      <div className="question-content">
+        <div className="question-header">
+          <div className="header-left">
+            <div className="header-top-row">
+              {selectedTest && selectedTest.audioSrc ? (
+                <div className="compact-audio-player">
+                  <div className="audio-info">
+                    <span className="audio-title">Listening Audio</span>
+                    <span className="audio-time">{formatTime(audioCurrentTime)} / {formatTime(audioDuration)}</span>
+                  </div>
+                  
+                  <div className="audio-controls">
+                    <button 
+                      className={`play-pause-btn ${audioIsPlaying ? 'playing' : ''}`}
+                      onClick={handleAudioPlayPause}
+                      title={audioIsPlaying ? 'Pause' : 'Play'}
+                    >
+                      {audioIsPlaying ? (
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                          <path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zm4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
+                        </svg>
+                      ) : (
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                          <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                        </svg>
+                      )}
+                    </button>
                     
-                    <div className="audio-controls">
-                      <button 
-                        className={`play-pause-btn ${audioIsPlaying ? 'playing' : ''}`}
-                        onClick={handleAudioPlayPause}
-                        title={audioIsPlaying ? 'Pause' : 'Play'}
-                      >
-                        {audioIsPlaying ? (
-                          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zm4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
-                          </svg>
-                        ) : (
-                          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
-                          </svg>
-                        )}
-                      </button>
-                      
-                      <div className="progress-container">
-                        <div className="progress-bar" onClick={handleAudioSeek}>
-                          <div 
-                            className="progress-fill" 
-                            style={{ width: `${(audioCurrentTime / audioDuration) * 100}%` }}
-                          ></div>
-                        </div>
+                    <div className="progress-container">
+                      <div className="progress-bar" onClick={handleAudioSeek}>
+                        <div 
+                          className="progress-fill" 
+                          style={{ width: `${(audioCurrentTime / audioDuration) * 100}%` }}
+                        ></div>
                       </div>
                     </div>
                   </div>
-                ) : null}
-                <h3>Questions</h3>
-              </div>
-            </div>
-            <div className="part-toggle">
-              <button 
-                className={`part-button ${currentPart === 1 ? 'active' : ''}`}
-                onClick={() => handlePartChange(1)}
-                disabled={!testStarted}
-              >
-                Part 1
-              </button>
-              <button 
-                className={`part-button ${currentPart === 2 ? 'active' : ''}`}
-                onClick={() => handlePartChange(2)}
-                disabled={!testStarted}
-              >
-                Part 2
-              </button>
-              <button 
-                className={`part-button ${currentPart === 3 ? 'active' : ''}`}
-                onClick={() => handlePartChange(3)}
-                disabled={!testStarted}
-              >
-                Part 3
-              </button>
-              <button 
-                className={`part-button ${currentPart === 4 ? 'active' : ''}`}
-                onClick={() => handlePartChange(4)}
-                disabled={!testStarted}
-              >
-                Part 4
-              </button>
+                </div>
+              ) : null}
+              <h3>Questions</h3>
             </div>
           </div>
-          
-
-          
-          {renderQuestionComponent()}
-          
-          {/* Submit button - Only show for students, not teachers */}
-          {currentPart === 4 && testStarted && !isTeacherMode && (
-            <div className="submit-section">
-              <button 
-                className={testSubmitted ? "reset-button" : "submit-button"}
-                onClick={testSubmitted ? handleResetTest : handleSubmit}
-              >
-                {testSubmitted ? "Reset Test" : "Submit Test"}
-              </button>
-              
-
-            </div>
-          )}
-          
-          {/* Back to Student Info button - Only show for teachers */}
-          {isTeacherMode && onBackToStudent && (
-            <div className="submit-section">
-              <button 
-                className="back-to-student-button"
-                onClick={onBackToStudent}
-              >
-                ← Back to Student Info
-              </button>
-            </div>
-          )}
-          
-          {/* Score Display - Only show on Part 4 after submission */}
-          {currentPart === 4 && finalTestSubmitted && finalTestResults && (
-            <div className="score-display">
-              <div className="score-card">
-                <h3>Test Results</h3>
-                <div className="score-details">
-                  <div className="score-item">
-                    <span className="score-label">Score:</span>
-                    <span className="score-value">{finalTestResults.score}%</span>
-                  </div>
-                  <div className="score-item">
-                    <span className="score-label">Correct Answers:</span>
-                    <span className="score-value">{finalTestResults.correctCount} / {finalTestResults.totalQuestions}</span>
-                  </div>
-                  <div className="score-item">
-                    <span className="score-label">IELTS Band:</span>
-                    <span className="score-value">
-                      {formatBandScore(calculateIELTSBand(finalTestResults.correctCount, selectedTest.type))}
-                    </span>
-                  </div>
-                  <div className="score-item">
-                    <span className="score-label">Band Description:</span>
-                    <span className="score-value">
-                      {getBandScoreDescription(calculateIELTSBand(finalTestResults.correctCount, selectedTest.type))}
-                    </span>
-                  </div>
-                  <div className="score-item">
-                    <span className="score-label">Submitted:</span>
-                    <span className="score-value">
-                      {new Date(finalTestResults.submittedAt).toLocaleString()}
-                    </span>
-                  </div>
+          <div className="part-toggle">
+            <button 
+              className={`part-button ${currentPart === 1 ? 'active' : ''}`}
+              onClick={() => handlePartChange(1)}
+              disabled={!testStarted}
+            >
+              Part 1
+            </button>
+            <button 
+              className={`part-button ${currentPart === 2 ? 'active' : ''}`}
+              onClick={() => handlePartChange(2)}
+              disabled={!testStarted}
+            >
+              Part 2
+            </button>
+            <button 
+              className={`part-button ${currentPart === 3 ? 'active' : ''}`}
+              onClick={() => handlePartChange(3)}
+              disabled={!testStarted}
+            >
+              Part 3
+            </button>
+            <button 
+              className={`part-button ${currentPart === 4 ? 'active' : ''}`}
+              onClick={() => handlePartChange(4)}
+              disabled={!testStarted}
+            >
+              Part 4
+            </button>
+          </div>
+        </div>
+        
+        {renderQuestionComponent()}
+        
+        {/* Submit button - Only show for students, not teachers */}
+        {currentPart === 4 && testStarted && !isTeacherMode && (
+          <div className="submit-section">
+            <button 
+              className={testSubmitted ? "reset-button" : "submit-button"}
+              onClick={testSubmitted ? handleResetTest : handleSubmit}
+            >
+              {testSubmitted ? "Reset Test" : "Submit Test"}
+            </button>
+          </div>
+        )}
+        
+        {/* Back to Student Info button - Only show for teachers */}
+        {isTeacherMode && onBackToStudent && (
+          <div className="submit-section">
+            <button 
+              className="back-to-student-button"
+              onClick={onBackToStudent}
+            >
+              ← Back to Student Info
+            </button>
+          </div>
+        )}
+        
+        {/* Score Display - Only show on Part 4 after submission */}
+        {currentPart === 4 && finalTestSubmitted && finalTestResults && (
+          <div className="score-display">
+            <div className="score-card">
+              <h3>Test Results</h3>
+              <div className="score-details">
+                <div className="score-item">
+                  <span className="score-label">Score:</span>
+                  <span className="score-value">{finalTestResults.score}%</span>
+                </div>
+                <div className="score-item">
+                  <span className="score-label">Correct Answers:</span>
+                  <span className="score-value">{finalTestResults.correctCount} / {finalTestResults.totalQuestions}</span>
+                </div>
+                <div className="score-item">
+                  <span className="score-label">IELTS Band:</span>
+                  <span className="score-value">
+                    {formatBandScore(calculateIELTSBand(finalTestResults.correctCount, selectedTest.type))}
+                  </span>
+                </div>
+                <div className="score-item">
+                  <span className="score-label">Band Description:</span>
+                  <span className="score-value">
+                    {getBandScoreDescription(calculateIELTSBand(finalTestResults.correctCount, selectedTest.type))}
+                  </span>
+                </div>
+                <div className="score-item">
+                  <span className="score-label">Submitted:</span>
+                  <span className="score-value">
+                    {new Date(finalTestResults.submittedAt).toLocaleString()}
+                  </span>
                 </div>
               </div>
             </div>
-          )}
-        </div>
-        
-        {/* Start Test Overlay - Only show for students, not teachers */}
-        {/* Start Test Overlay - Only show for students, not teachers */}
-        {!testStarted && !isTeacherMode && (
-          <div className="test-overlay">
-            <div className="overlay-content">
-              <h2>Ready to Start?</h2>
-              <p>You're about to begin the Listening Test. Make sure you're in a quiet environment and have your audio ready.</p>
-              <button className="start-test-button" onClick={handleStartTest}>
-                Start Test Now
-              </button>
-            </div>
           </div>
         )}
-        
-        {/* Hidden audio element - state managed by parent component */}
-        {selectedTest && selectedTest.audioSrc && (
-          <audio
-            ref={audioRef}
-            src={selectedTest.audioSrc}
-            onTimeUpdate={handleAudioTimeUpdate}
-            onLoadedMetadata={handleAudioLoadedMetadata}
-            onEnded={handleAudioEnded}
-          />
-        )}
       </div>
-    );
-  };
+      
+      {/* Start Test Overlay - Only show for students, not teachers */}
+      {!testStarted && !isTeacherMode && (
+        <div className="test-overlay">
+          <div className="overlay-content">
+            <h2>Ready to Start?</h2>
+            <p>You're about to begin the Listening Test. Make sure you're in a quiet environment and have your audio ready.</p>
+            <button className="start-test-button" onClick={handleStartTest}>
+              Start Test Now
+            </button>
+          </div>
+        </div>
+      )}
+      
+      {/* Hidden audio element - state managed by parent component */}
+      {selectedTest && selectedTest.audioSrc && (
+        <audio
+          ref={audioRef}
+          src={selectedTest.audioSrc}
+          onTimeUpdate={handleAudioTimeUpdate}
+          onLoadedMetadata={handleAudioLoadedMetadata}
+          onEnded={handleAudioEnded}
+        />
+      )}
+    </div>
+  );
+};
 
 export default ListeningQuestionView; 
