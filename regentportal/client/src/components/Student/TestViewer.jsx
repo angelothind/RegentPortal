@@ -216,7 +216,7 @@ const TestViewer = ({ selectedTest, user }) => {
               selectedTest={{
                 ...selectedTest,
                 audioSrc: testData.sources && testData.sources.length > 0 
-                  ? `/assets/${testData.sources[0].contentPath}` 
+                  ? `${API_BASE}/assets/${testData.sources[0].contentPath}` 
                   : null
               }} 
               user={user} 

@@ -87,53 +87,129 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
   const formatTestResults = () => {
     if (!submission) return null;
 
+    console.log('🔍 formatTestResults - Raw submission data:', submission);
+    console.log('🔍 formatTestResults - submission.answers type:', typeof submission.answers);
+    console.log('🔍 formatTestResults - submission.results type:', typeof submission.results);
+    console.log('🔍 formatTestResults - submission.correctAnswers type:', typeof submission.correctAnswers);
+
     // Create answers object with question numbers as keys
     const answers = {};
     const correctAnswers = {};
     const results = {};
 
-    // Process answers from submission.answers (Map structure)
+    // Process answers from submission.answers
     if (submission.answers) {
-      // Convert Map to object if needed
-      const answersMap = submission.answers instanceof Map ? submission.answers : new Map(Object.entries(submission.answers));
-      answersMap.forEach((value, key) => {
-        const questionNumber = key.toString();
-        answers[questionNumber] = value || '';
-      });
+      if (submission.answers instanceof Map) {
+        // Handle Map structure
+        submission.answers.forEach((value, key) => {
+          const questionNumber = key.toString();
+          answers[questionNumber] = value || '';
+        });
+      } else if (Array.isArray(submission.answers)) {
+        // Handle array structure
+        submission.answers.forEach((item, index) => {
+          if (item && item.questionNumber) {
+            answers[item.questionNumber] = item.answer || '';
+          }
+        });
+      } else if (typeof submission.answers === 'object') {
+        // Handle object structure
+        Object.keys(submission.answers).forEach(key => {
+          answers[key] = submission.answers[key] || '';
+        });
+      }
     }
 
-    // Process results from submission.results (Map structure)
+    // Process results from submission.results
     if (submission.results) {
-      // Convert Map to object if needed
-      const resultsMap = submission.results instanceof Map ? submission.results : new Map(Object.entries(submission.results));
-      resultsMap.forEach((value, key) => {
-        const questionNumber = key.toString();
-        results[questionNumber] = {
-          isCorrect: value.isCorrect || false,
-          studentAnswer: value.userAnswer || '',
-          correctAnswer: value.correctAnswer || ''
-        };
-      });
+      if (submission.results instanceof Map) {
+        // Handle Map structure
+        submission.results.forEach((value, key) => {
+          const questionNumber = key.toString();
+          results[questionNumber] = {
+            isCorrect: value.isCorrect || false,
+            studentAnswer: value.userAnswer || value.studentAnswer || '',
+            correctAnswer: value.correctAnswer || ''
+          };
+        });
+      } else if (Array.isArray(submission.results)) {
+        // Handle array structure
+        submission.results.forEach((item, index) => {
+          if (item && item.questionNumber) {
+            results[item.questionNumber] = {
+              isCorrect: item.isCorrect || false,
+              studentAnswer: item.userAnswer || item.studentAnswer || '',
+              correctAnswer: item.correctAnswer || ''
+            };
+          }
+        });
+      } else if (typeof submission.results === 'object') {
+        // Handle object structure
+        Object.keys(submission.results).forEach(key => {
+          const value = submission.results[key];
+          results[key] = {
+            isCorrect: value.isCorrect || false,
+            studentAnswer: value.userAnswer || value.studentAnswer || '',
+            correctAnswer: value.correctAnswer || ''
+          };
+        });
+      }
     }
 
-    // Process correctAnswers from submission.correctAnswers (Map structure)
+    // Process correctAnswers from submission.correctAnswers
     if (submission.correctAnswers) {
-      // Convert Map to object if needed
-      const correctAnswersMap = submission.correctAnswers instanceof Map ? submission.correctAnswers : new Map(Object.entries(submission.correctAnswers));
-      correctAnswersMap.forEach((value, key) => {
-        const questionNumber = key.toString();
-        correctAnswers[questionNumber] = value;
-        
-        // Create results for unanswered questions if not already present
-        if (!results[questionNumber]) {
-          results[questionNumber] = {
-            isCorrect: false,
-            studentAnswer: '',
-            correctAnswer: value
-          };
-        }
-      });
+      if (submission.correctAnswers instanceof Map) {
+        // Handle Map structure
+        submission.correctAnswers.forEach((value, key) => {
+          const questionNumber = key.toString();
+          correctAnswers[questionNumber] = value;
+          
+          // Create results for unanswered questions if not already present
+          if (!results[questionNumber]) {
+            results[questionNumber] = {
+              isCorrect: false,
+              studentAnswer: answers[questionNumber] || '',
+              correctAnswer: value
+            };
+          }
+        });
+      } else if (Array.isArray(submission.correctAnswers)) {
+        // Handle array structure
+        submission.correctAnswers.forEach((item, index) => {
+          if (item && item.questionNumber) {
+            correctAnswers[item.questionNumber] = item.correctAnswer || item.answer || '';
+            
+            // Create results for unanswered questions if not already present
+            if (!results[item.questionNumber]) {
+              results[item.questionNumber] = {
+                isCorrect: false,
+                studentAnswer: answers[item.questionNumber] || '',
+                correctAnswer: item.correctAnswer || item.answer || ''
+              };
+            }
+          }
+        });
+      } else if (typeof submission.correctAnswers === 'object') {
+        // Handle object structure
+        Object.keys(submission.correctAnswers).forEach(key => {
+          const value = submission.correctAnswers[key];
+          correctAnswers[key] = value;
+          
+          // Create results for unanswered questions if not already present
+          if (!results[key]) {
+            results[key] = {
+              isCorrect: false,
+              studentAnswer: answers[key] || '',
+              correctAnswer: value
+            };
+          }
+        });
+      }
     }
+
+    console.log('🔍 formatTestResults - Processed answers:', answers);
+    console.log('🔍 formatTestResults - Processed correctAnswers:', correctAnswers);
+    console.log('🔍 formatTestResults - Processed results:', results);
 
     return {
       score: submission.score,
@@ -275,7 +351,7 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
                   const audioSource = testData.sources.find(source => 
                     source.contentPath && source.contentPath.endsWith('.mp3')
                   );
-                  return audioSource ? `/assets/${audioSource.contentPath}` : null;
+                  return audioSource ? `${API_BASE}/assets/${audioSource.contentPath}` : null;
                 })()
               }}
               user={null}

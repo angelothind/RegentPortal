@@ -88,8 +88,17 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
   };
 
   const getAnswerValue = (questionNumber) => {
-    if (testSubmitted && transformedResults) {
-      return transformedResults[questionNumber]?.userAnswer || '';
+    if (testSubmitted && testResults) {
+      // First try to get from testResults.answers (teacher view)
+      if (testResults.answers && testResults.answers[questionNumber] !== undefined) {
+        return testResults.answers[questionNumber];
+      }
+      // Then try from transformedResults (student view)
+      if (transformedResults && transformedResults[questionNumber]?.userAnswer !== undefined) {
+        return transformedResults[questionNumber].userAnswer;
+      }
+      // Finally fall back to currentAnswers
+      return currentAnswers[questionNumber] || '';
     }
     return currentAnswers[questionNumber] || '';
   };
