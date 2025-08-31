@@ -34,8 +34,8 @@ const TeacherTable = ({ onBack }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { username, password } = newTeacher;
-    if (!username || !password) return alert('Username and password required');
+    const { name, username, password } = newTeacher;
+    if (!name || !username || !password) return alert('Name, username and password required');
 
     try {
       const response = await fetch(`${API_BASE}/api/create/createteacher`, {
