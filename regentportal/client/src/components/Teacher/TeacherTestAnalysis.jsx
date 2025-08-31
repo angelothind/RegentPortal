@@ -3,11 +3,16 @@ import ReadingTest from '../Student/ReadingTest';
 import ListeningTest from '../Student/ListeningTest';
 import QuestionView from '../Student/QuestionView';
 import ListeningQuestionView from '../Student/ListeningQuestionView';
+import DraggableDivider from '../Student/DraggableDivider';
 
 const TeacherTestAnalysis = ({ submission, onBack }) => {
   const [testData, setTestData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sharedPassage, setSharedPassage] = useState(1); // Use sharedPassage like student version
+  
+  // Add resizable layout state like student view
+  const [passageWidth, setPassageWidth] = useState(56);
+  const [questionWidth, setQuestionWidth] = useState(44);
 
   console.log('🎯 TeacherTestAnalysis - Received submission:', submission);
   console.log('🎯 TeacherTestAnalysis - submission.answers:', submission?.answers);
@@ -69,6 +74,12 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
   const handlePassageChange = (newPassage) => {
     console.log('🔄 TeacherTestAnalysis: Changing passage from', sharedPassage, 'to', newPassage);
     setSharedPassage(newPassage);
+  };
+
+  // Add resize handler like student view
+  const handleResize = (newPassageWidth, newQuestionWidth) => {
+    setPassageWidth(newPassageWidth);
+    setQuestionWidth(newQuestionWidth);
   };
 
   // Format submission data to match the structure expected by question components
@@ -134,6 +145,16 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
     };
   };
 
+  // Extract testId value for use in components
+  let testIdValue;
+  if (typeof submission.testId === 'object' && submission.testId._id) {
+    // If testId is populated (has _id property)
+    testIdValue = submission.testId._id;
+  } else {
+    // If testId is just the string ID
+    testIdValue = submission.testId;
+  }
+
   const formatSelectedTest = () => {
     if (!submission) return null;
 
@@ -143,6 +164,16 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
       title: submission.testTitle
     };
   };
+
+  const testResults = formatTestResults();
+  const selectedTest = formatSelectedTest();
+  
+  console.log('🎯 TeacherTestAnalysis - testResults:', testResults);
+  console.log('🎯 TeacherTestAnalysis - selectedTest:', selectedTest);
+  console.log('🎯 TeacherTestAnalysis - testIdValue:', testIdValue);
+  console.log('🎯 TeacherTestAnalysis - testData:', testData);
+  console.log('🎯 TeacherTestAnalysis - testData.sources:', testData?.sources);
+  console.log('🎯 TeacherTestAnalysis - submission.testType:', submission.testType);
 
   if (loading) {
     return (
@@ -159,23 +190,6 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
       </div>
     );
   }
-
-  // Extract testId value for use in components
-  let testIdValue;
-  if (typeof submission.testId === 'object' && submission.testId._id) {
-    // If testId is populated (has _id property)
-    testIdValue = submission.testId._id;
-  } else {
-    // If testId is just the string ID
-    testIdValue = submission.testId;
-  }
-
-  const testResults = formatTestResults();
-  const selectedTest = formatSelectedTest();
-  
-  console.log('🎯 TeacherTestAnalysis - testResults:', testResults);
-  console.log('🎯 TeacherTestAnalysis - selectedTest:', selectedTest);
-  console.log('🎯 TeacherTestAnalysis - testIdValue:', testIdValue);
 
   return (
     <div className="teacher-test-analysis">
@@ -201,9 +215,13 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
       </div>
 
       {/* Test Content and Questions */}
+      {console.log('🎯 About to render test type:', submission.testType.toLowerCase())}
       {submission.testType.toLowerCase() === 'reading' ? (
         <div className="test-viewer-container">
-          <div className="test-content-area">
+          <div 
+            className="test-content-area"
+            style={{ width: `${passageWidth}%` }}
+          >
             <ReadingTest 
               testId={{ _id: testIdValue }} 
               testData={testData} 
@@ -212,7 +230,11 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
               onPassageChange={handlePassageChange}
             />
           </div>
-          <div className="question-area">
+          <DraggableDivider onResize={handleResize} />
+          <div 
+            className="question-area"
+            style={{ width: `${questionWidth}%` }}
+          >
             <QuestionView 
               selectedTest={selectedTest} 
               user={null}
@@ -226,16 +248,35 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
           </div>
         </div>
       ) : (
-        <div className="listening-layout">
+        <div className="listening-layout" style={{ 
+          position: 'relative',
+          minHeight: 'auto',
+          height: 'auto',
+          overflow: 'visible'
+        }}>
           <div className="audio-section">
             <ListeningTest 
               testId={{ _id: testIdValue }} 
               testData={testData} 
             />
           </div>
-          <div className="questions-section">
+          <div className="questions-section" style={{ 
+            position: 'relative',
+            minHeight: '800px',
+            height: 'auto',
+            overflow: 'visible'
+          }}>
             <ListeningQuestionView 
-              selectedTest={selectedTest}
+              selectedTest={{
+                ...selectedTest,
+                audioSrc: (() => {
+                  if (!testData.sources || testData.sources.length === 0) return null;
+                  const audioSource = testData.sources.find(source => 
+                    source.contentPath && source.contentPath.endsWith('.mp3')
+                  );
+                  return audioSource ? `/assets/${audioSource.contentPath}` : null;
+                })()
+              }}
               user={null}
               testResults={testResults}
               testSubmitted={true}
