@@ -9,13 +9,13 @@ environment:
   REACT_APP_API_URL: https://p01--regegentportalapi--9lbdlr4dyhwr.code.run
 build:
   dockerfile: Dockerfile.frontend
-  context: regentportal
+  context: .
 resources:
   cpu: 0.25
   memory: 256Mi
 healthCheck:
   path: /
-  port: 80
+  port: 8080
   initialDelaySeconds: 10
   periodSeconds: 30
   timeoutSeconds: 5
