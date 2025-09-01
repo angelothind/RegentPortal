@@ -1,17 +1,14 @@
-version: '3.8'
-
 services:
   backend:
     build:
       context: .
       dockerfile: Dockerfile.backend
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       - NODE_ENV=production
       - PORT=3000
-    env_file:
-      - .env
+      # MONGO_URI and JWT_SECRET should be set in Northflank dashboard
     volumes:
       - ./assets:/app/assets
 
@@ -20,8 +17,8 @@ services:
       context: .
       dockerfile: Dockerfile.frontend
     ports:
-      - "80:80"
+      - "8080:80"
     environment:
-      - REACT_APP_API_URL=http://localhost:3000
+      - REACT_APP_API_URL=http://localhost:3001
     depends_on:
       - backend 

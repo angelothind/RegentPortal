@@ -1,138 +1,119 @@
-# 🐳 Regent Portal - Docker Deployment Guide
+# Docker Deployment Guide for Northflank
 
-## 📋 Prerequisites
-- Docker installed locally
-- Northflank account
-- GitHub repository with your code
+## 🚀 **Deploy to Northflank (Multi-Service Setup)**
 
-## 🔧 **Local Testing with Docker**
+### **Step 1: Create Backend Service**
 
-### **Step 1: Test Locally**
-```bash
-# Build and run both services
-docker-compose up --build
+1. **Go to Northflank Dashboard**
+   - Navigate to your project
+   - Click "Add Service" → "Docker"
 
-# Or build individually
-docker build -f Dockerfile.backend -t regent-portal-backend .
-docker build -f Dockerfile.frontend -t regent-portal-frontend .
-```
+2. **Configure Backend Service**
+   - **Name**: `regentportal-backend`
+   - **Repository**: Your GitHub repo
+   - **Branch**: `main` (or your deployment branch)
+   - **Build Context**: `/` (root directory)
+   - **Dockerfile**: `Dockerfile.backend`
 
-### **Step 2: Test Services**
-- **Backend**: http://localhost:3000
-- **Frontend**: http://localhost:80
-
-## 🚀 **Northflank Docker Deployment**
-
-### **Backend Service Setup:**
-1. **Create new service** → "Web Service"
-2. **Connect GitHub** repository
-3. **Build Configuration**:
-   - **Build Context**: `/` (root)
-   - **Dockerfile Path**: `Dockerfile.backend`
-   - **Port**: `3000`
-
-4. **Environment Variables**:
-   ```bash
-   MONGO_URI=your_mongodb_connection_string
+3. **Environment Variables**
+   ```
    NODE_ENV=production
    PORT=3000
+   MONGO_URI=mongodb+srv://angelothind:Ch1angmai%21@regentportal.77lx7vr.mongodb.net/regentportal?retryWrites=true&w=majority&appName=regentportal
+   JWT_SECRET=your_jwt_secret_key_here
    ```
 
-### **Frontend Service Setup:**
-1. **Create new service** → "Web Service"
-2. **Connect GitHub** repository
-3. **Build Configuration**:
-   - **Build Context**: `/` (root)
-   - **Dockerfile Path**: `Dockerfile.frontend`
+4. **Port Configuration**
+   - **Port**: `3000`
+   - **Protocol**: `HTTP`
+   - **Public**: `false` (internal service)
+
+5. **Resources**
+   - **CPU**: 0.5 cores
+   - **Memory**: 512MB
+
+### **Step 2: Create Frontend Service**
+
+1. **Add Another Service**
+   - Click "Add Service" → "Docker"
+
+2. **Configure Frontend Service**
+   - **Name**: `regentportal-frontend`
+   - **Repository**: Same GitHub repo
+   - **Branch**: `main` (or your deployment branch)
+   - **Build Context**: `/` (root directory)
+   - **Dockerfile**: `Dockerfile.frontend`
+
+3. **Environment Variables**
+   ```
+   REACT_APP_API_URL=https://regentportal-backend--your-project-id.code.run
+   ```
+   **⚠️ Important**: Replace `your-project-id` with your actual Northflank project ID
+
+4. **Port Configuration**
    - **Port**: `80`
+   - **Protocol**: `HTTP`
+   - **Public**: `true` (publicly accessible)
 
-4. **Environment Variables**:
-   ```bash
-   REACT_APP_API_URL=https://your-backend-service-url
-   NODE_ENV=production
-   ```
+5. **Resources**
+   - **CPU**: 0.25 cores
+   - **Memory**: 256MB
 
-## 📁 **Docker Files Created**
+### **Step 3: Deploy Services**
 
-### **Frontend Service** (`Dockerfile.frontend`)
-- Multi-stage build (Node.js → Nginx)
-- Builds React app in Node.js container
-- Serves static files with Nginx
-- Optimized for production
+1. **Deploy Backend First**
+   - Deploy the backend service
+   - Wait for it to be fully running
+   - Copy the backend URL
 
-### **Backend Service** (`Dockerfile.backend`)
-- Single-stage Node.js build
-- Installs production dependencies only
-- Runs server.js directly
-- Includes assets folder
+2. **Update Frontend API URL**
+   - Go to frontend service settings
+   - Update `REACT_APP_API_URL` with the actual backend URL
+   - Redeploy frontend
 
-### **Local Testing** (`docker-compose.yml`)
-- Runs both services locally
-- Maps ports correctly
-- Sets up environment variables
-- Easy testing before deployment
+### **Step 4: Verify Deployment**
 
-## 🎯 **Benefits of Docker Approach**
+1. **Check Backend**
+   - Visit: `https://regentportal-backend--your-project-id.code.run`
+   - Should show API is running
 
-### **Consistency:**
-- ✅ **Same environment** everywhere
-- ✅ **No buildpack issues**
-- ✅ **Predictable builds**
+2. **Check Frontend**
+   - Visit: `https://regentportal-frontend--your-project-id.code.run`
+   - Should load your React app
 
-### **Debugging:**
-- ✅ **Test locally first**
-- ✅ **Clear build process**
-- ✅ **Easy to troubleshoot**
+## 🔧 **Alternative: Using YAML Files**
 
-### **Control:**
-- ✅ **Explicit dependencies**
-- ✅ **Custom configurations**
-- ✅ **Version control**
+You can also use the provided YAML files:
 
-## 🛠️ **Troubleshooting**
+1. **Backend**: Use `northflank-backend.yaml`
+2. **Frontend**: Use `northflank-frontend.yaml`
 
-### **Build Issues:**
-```bash
-# Test locally first
-docker build -f Dockerfile.frontend -t test-frontend .
-docker build -f Dockerfile.backend -t test-backend .
+**⚠️ Remember to update the `REACT_APP_API_URL` in the frontend YAML with your actual backend URL!**
 
-# Check logs
-docker logs <container-id>
-```
+## 🎯 **Key Points**
 
-### **Runtime Issues:**
-```bash
-# Check container status
-docker ps
+- **Backend**: Internal service (not publicly accessible)
+- **Frontend**: Public service (accessible to users)
+- **Communication**: Frontend calls backend via internal Northflank network
+- **Environment Variables**: Set securely in Northflank dashboard
+- **Deploy Order**: Backend first, then frontend
 
-# Access container shell
-docker exec -it <container-id> sh
-```
+## 🚀 **Your App Will Be Available At**
 
-## 📊 **Docker vs Buildpacks**
-
-### **Docker Advantages:**
-- ✅ **Consistent builds**
-- ✅ **Local testing**
-- ✅ **Clear process**
-- ✅ **Easy debugging**
-
-### **Buildpacks Disadvantages:**
-- ❌ **Platform-specific issues**
-- ❌ **Cache problems**
-- ❌ **Hard to debug**
-- ❌ **Inconsistent behavior**
-
-## 🚀 **Deployment Steps**
-
-1. **Test locally** with docker-compose
-2. **Deploy backend** to Northflank
-3. **Get backend URL**
-4. **Update frontend** environment variable
-5. **Deploy frontend** to Northflank
-6. **Test integration**
+- **Frontend**: `https://regentportal-frontend--your-project-id.code.run`
+- **Backend**: `https://regentportal-backend--your-project-id.code.run` (internal)
 
 ---
 
-**🐳 Docker deployment will be much more reliable than buildpacks!** 
+## 📝 **Local Testing (Optional)**
+
+To test the production setup locally:
+
+```bash
+# Build and run with production settings
+docker-compose up --build
+
+# Access your app
+# Frontend: http://localhost:8080
+# Backend: http://localhost:3001
+``` 

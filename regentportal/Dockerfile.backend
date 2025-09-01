@@ -11,7 +11,6 @@ RUN npm ci --only=production
 
 # Copy source code
 COPY server/ ./
-COPY assets/ ./assets/
 
 # Create production .env file
 RUN echo "NODE_ENV=production" > .env
