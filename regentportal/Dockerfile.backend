@@ -4,22 +4,20 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
-COPY server/package*.json ./server/
+COPY server/package*.json ./
 
 # Install dependencies
 RUN npm ci --only=production
-RUN cd server && npm ci --only=production
 
 # Copy source code
-COPY server/ ./server/
+COPY server/ ./
 COPY assets/ ./assets/
 
 # Create production .env file
-RUN echo "NODE_ENV=production" > server/.env
+RUN echo "NODE_ENV=production" > .env
 
 # Expose port
 EXPOSE 3000
 
 # Start the application
-CMD ["node", "server/server.js"] 
+CMD ["node", "server.js"] 

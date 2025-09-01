@@ -7,9 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "start": "npm run build && npx serve -s dist -p $PORT",
-    "postinstall": "npm run build"
+    "preview": "vite preview"
   },
   "dependencies": {
     "bootstrap": "^5.3.7",
@@ -17,8 +15,7 @@
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.3",
     "react-scripts": "^5.0.1",
-    "typeface-roboto": "^1.1.13",
-    "serve": "^14.2.1"
+    "typeface-roboto": "^1.1.13"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
