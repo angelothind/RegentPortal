@@ -1,7 +1,10 @@
 # Build stage
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
+
+# Set build-time environment variable
+ENV REACT_APP_API_URL=http://localhost:3000
 
 # Copy package files
 COPY client/package*.json ./
@@ -13,7 +16,12 @@ RUN npm ci --verbose
 COPY client/ ./
 
 # Debug: Check what files we have
-RUN ls -la
+RUN echo "=== Checking files before build ===" && \
+    ls -la && \
+    echo "=== Checking src directory ===" && \
+    ls -la src/ && \
+    echo "=== Checking if index.html exists ===" && \
+    ls -la index.html
 
 # Build the application with detailed output
 RUN echo "Starting React build..." && \

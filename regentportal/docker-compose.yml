@@ -8,7 +8,8 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      # MONGO_URI and JWT_SECRET should be set in Northflank dashboard
+      - MONGO_URI=mongodb+srv://angelothind:Ch1angmai%21@regentportal.77lx7vr.mongodb.net/regentportal?retryWrites=true&w=majority&appName=regentportal
+      - JWT_SECRET=your_jwt_secret_key_here
     volumes:
       - ./assets:/app/assets
 
