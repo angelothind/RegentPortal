@@ -6,7 +6,7 @@ ports:
     protocol: http
     public: true
 environment:
-  REACT_APP_API_URL: https://regentportal-backend--your-project-id.code.run
+  REACT_APP_API_URL: https://p01--regegentportalapi--9lbdlr4dyhwr.code.run
 build:
   dockerfile: Dockerfile.frontend
   context: regentportal

@@ -4,7 +4,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Set build-time environment variable
-ENV REACT_APP_API_URL=http://localhost:3000
+ENV REACT_APP_API_URL=https://p01--regegentportalapi--9lbdlr4dyhwr.code.run
 
 # Copy package files
 COPY client/package*.json ./
