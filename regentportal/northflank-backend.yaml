@@ -1,7 +1,7 @@
 name: regentportal-backend
 image: regentportal-backend:latest
 ports:
-  - port: 3000
+  - port: 8080
     protocol: http
     public: false
 environment:
@@ -10,7 +10,7 @@ environment:
   # MONGO_URI and JWT_SECRET should be set in Northflank dashboard
 build:
   dockerfile: Dockerfile.backend
-  context: .
+  context: regentportal
 resources:
   cpu: 0.5
   memory: 512Mi 
