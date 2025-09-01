@@ -13,4 +13,11 @@ build:
   context: .
 resources:
   cpu: 0.5
-  memory: 512Mi 
+  memory: 512Mi
+healthCheck:
+  path: /
+  port: 3000
+  initialDelaySeconds: 15
+  periodSeconds: 30
+  timeoutSeconds: 10
+  failureThreshold: 3 
