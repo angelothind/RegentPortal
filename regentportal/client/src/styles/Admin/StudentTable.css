@@ -3,7 +3,9 @@
   position: relative;
   z-index: 10;
   background-color: #f8f9fa;
-  min-height: 100vh;
+  height: 100%;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
   /* Ensure proper stacking context */
   isolation: isolate;
   /* Force table to be visible */
@@ -534,21 +536,6 @@
   color: #333;
 }
 
-.back-button {
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s ease;
-}
-
-.back-button:hover {
-  background-color: #5a6268;
-}
-
 .student-header {
   display: flex;
   justify-content: space-between;
@@ -568,4 +555,18 @@
 .student-header p {
   margin: 5px 0 0 0;
   color: #666;
+}
+
+.student-details-container .back-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.2s ease;
+  margin-top: 5px;
+  width: fit-content;
+  max-width: 200px;
 }
