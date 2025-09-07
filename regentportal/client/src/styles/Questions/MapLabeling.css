@@ -212,7 +212,7 @@
 }
 
 /* Tablet responsive design - ONLY for map questions */
-@media (max-width: 1024px) and (min-width: 769px) {
+@media (max-width: 1370px) and (min-width: 769px) {
   .map-labeling-container {
     margin: 15px;
     padding: 15px;
@@ -222,23 +222,26 @@
   .map-labeling-container .map-section {
     gap: 20px;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
   }
   
   .map-labeling-container .map-image-container {
-    width: 100%;
-    max-width: 600px;
+    width: 100% !important;
+    max-width: none !important;
+    display: block !important;
   }
   
   .map-labeling-container .map-image {
-    max-width: 100%;
-    width: 100%;
+    max-width: none !important; /* Override the base 800px max-width */
+    width: 100% !important;
     height: auto;
+    object-fit: contain;
+    display: block;
   }
   
   .map-labeling-container .questions-section {
     width: 100%;
-    max-width: 600px;
+    max-width: 100%;
     min-width: auto;
   }
   
@@ -264,20 +267,26 @@
   .map-labeling-container .map-section {
     gap: 15px;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
   }
   
   .map-labeling-container .map-image-container {
-    width: 100%;
+    width: 100% !important;
+    max-width: none !important;
+    display: block !important;
   }
   
   .map-labeling-container .map-image {
-    max-width: 100%;
-    width: 100%;
+    max-width: none !important; /* Override the base 800px max-width */
+    width: 100% !important;
+    height: auto;
+    object-fit: contain;
+    display: block;
   }
   
   .map-labeling-container .questions-section {
     width: 100%;
+    max-width: 100%;
   }
   
   .map-labeling-container .question-item {
