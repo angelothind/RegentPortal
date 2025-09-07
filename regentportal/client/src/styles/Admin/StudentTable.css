@@ -88,57 +88,24 @@
 }
 
 .name-cell,
-.username-cell {
+.username-cell,
+.nickname-cell {
   position: relative;
   padding-right: 80px; /* Make room for delete button */
 }
 
 .name-text,
-.username-text {
+.username-text,
+.nickname-text {
   transition: color 0.2s, text-decoration 0.2s;
 }
 
+/* Admin table hover effect - keep red strikethrough */
 .table-row:hover .name-text,
-.table-row:hover .username-text {
+.table-row:hover .username-text,
+.table-row:hover .nickname-text {
   text-decoration: line-through;
   color: #c0392b;
-}
-
-.delete-button {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  padding: 4px 8px;
-  font-size: 0.75rem;
-  border-radius: 4px;
-  cursor: pointer;
-  opacity: 0;
-  transition: all 0.3s ease;
-  z-index: 100;
-}
-
-.table-row:hover .delete-button {
-  opacity: 1;
-}
-
-/* Ensure delete button is clickable */
-.delete-button:hover {
-  background-color: #c0392b;
-  opacity: 1 !important;
-}
-
-/* Make sure table cells don't interfere with button clicks */
-.name-cell,
-.username-cell {
-  pointer-events: auto;
-}
-
-.delete-button {
-  pointer-events: auto;
 }
 
 /* Teacher Student Table Styles */
@@ -161,6 +128,18 @@
 
 .table-row.favorited:hover {
   background-color: #ffeaa7;
+}
+
+/* Teacher table hover effect - golden highlight instead of red strikethrough */
+.teacher-student-table .table-row:hover {
+  background-color: #fff3cd !important; /* Golden background like favorited */
+}
+
+.teacher-student-table .table-row:hover .name-text,
+.teacher-student-table .table-row:hover .username-text,
+.teacher-student-table .table-row:hover .nickname-text {
+  text-decoration: none !important; /* Remove strikethrough */
+  color: #856404 !important; /* Darker golden text */
 }
 
 /* Student Details Styles */

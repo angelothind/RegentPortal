@@ -156,7 +156,7 @@ const TeacherStudentTable = ({ onStudentSelect, user: propUser }) => {
   console.log('🔍 TeacherStudentTable render - loading:', loading);
 
   return (
-    <div className="student-table-container">
+    <div className="student-table-container teacher-student-table">
       <div className="student-header">
         <h2>Students</h2>
       </div>
