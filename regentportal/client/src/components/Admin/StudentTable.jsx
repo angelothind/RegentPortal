@@ -4,6 +4,8 @@ import API_BASE from '../../utils/api';
 
 const StudentTable = ({ onBack }) => {
   const [students, setStudents] = useState([]);
+  const [filteredStudents, setFilteredStudents] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [newStudent, setNewStudent] = useState({ name: '', nickname: '', username: '', password: '' });
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -11,6 +13,20 @@ const StudentTable = ({ onBack }) => {
   useEffect(() => {
     fetchStudents();
   }, []);
+
+  // Filter students based on search term
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setFilteredStudents(students);
+    } else {
+      const filtered = students.filter(student => 
+        student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        student.nickname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        student.username.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredStudents(filtered);
+    }
+  }, [students, searchTerm]);
 
   const fetchStudents = async () => {
     try {
@@ -30,6 +46,10 @@ const StudentTable = ({ onBack }) => {
 
   const handleInputChange = (e) => {
     setNewStudent({ ...newStudent, [e.target.name]: e.target.value });
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   const handleSubmit = async (e) => {
@@ -94,6 +114,22 @@ const StudentTable = ({ onBack }) => {
         <button className="create-button" onClick={handleCreateStudent}>Create Student</button>
       </div>
 
+      {/* Search Bar */}
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search students by name, nickname, or username..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="search-input"
+        />
+        {searchTerm && (
+          <span className="search-results-count">
+            {filteredStudents.length} of {students.length} students
+          </span>
+        )}
+      </div>
+
       <table className="student-table">
         <thead>
           <tr>
@@ -102,11 +138,15 @@ const StudentTable = ({ onBack }) => {
             <th>Username</th>
           </tr>
         </thead>
-        <tbody key={students.length}>
-          {students.length === 0 ? (
-            <tr><td colSpan="3">No students found.</td></tr>
+        <tbody key={filteredStudents.length}>
+          {filteredStudents.length === 0 ? (
+            <tr>
+              <td colSpan="3">
+                {searchTerm ? `No students found matching "${searchTerm}"` : 'No students found.'}
+              </td>
+            </tr>
           ) : (
-            students.map((student, index) => (
+            filteredStudents.map((student, index) => (
               <tr key={student._id || index} className="table-row">
                 <td className="name-cell">
                   <span className="name-text">{student.name}</span>

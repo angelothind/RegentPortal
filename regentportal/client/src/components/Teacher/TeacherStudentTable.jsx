@@ -4,6 +4,8 @@ import API_BASE from '../../utils/api';
 
 const TeacherStudentTable = ({ onStudentSelect, user: propUser }) => {
   const [students, setStudents] = useState([]);
+  const [filteredStudents, setFilteredStudents] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [favoritedStudents, setFavoritedStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(propUser);
@@ -39,6 +41,20 @@ const TeacherStudentTable = ({ onStudentSelect, user: propUser }) => {
       fetchFavoritedStudents();
     }
   }, [user]);
+
+  // Filter students based on search term
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setFilteredStudents(students);
+    } else {
+      const filtered = students.filter(student => 
+        student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (student.nickname && student.nickname.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        student.username.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredStudents(filtered);
+    }
+  }, [students, searchTerm]);
 
   const fetchStudents = async () => {
     try {
@@ -119,8 +135,12 @@ const TeacherStudentTable = ({ onStudentSelect, user: propUser }) => {
     onStudentSelect(student);
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
   // Sort students: favorited first, then alphabetically
-  const sortedStudents = [...students].sort((a, b) => {
+  const sortedStudents = [...filteredStudents].sort((a, b) => {
     const aFavorited = favoritedStudents.includes(a._id);
     const bFavorited = favoritedStudents.includes(b._id);
     
@@ -139,13 +159,29 @@ const TeacherStudentTable = ({ onStudentSelect, user: propUser }) => {
     <div className="student-table-container">
       <div className="student-header">
         <h2>Students</h2>
-        <p>Debug: Component is rendering</p>
+      </div>
+
+      {/* Search Bar */}
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search students by name, nickname, or username..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="search-input"
+        />
+        {searchTerm && (
+          <span className="search-results-count">
+            {filteredStudents.length} of {students.length} students
+          </span>
+        )}
       </div>
 
       <table className="student-table">
         <thead>
           <tr>
             <th>Name</th>
+            <th>Nickname</th>
             <th>Username</th>
             <th>Favorites</th>
           </tr>
@@ -153,7 +189,9 @@ const TeacherStudentTable = ({ onStudentSelect, user: propUser }) => {
         <tbody>
           {sortedStudents.length === 0 ? (
             <tr>
-              <td colSpan="3">No students found.</td>
+              <td colSpan="4">
+                {searchTerm ? `No students found matching "${searchTerm}"` : 'No students found.'}
+              </td>
             </tr>
           ) : (
             sortedStudents.map((student, index) => (
@@ -168,6 +206,9 @@ const TeacherStudentTable = ({ onStudentSelect, user: propUser }) => {
                     {favoritedStudents.includes(student._id) && '⭐ '}
                     {student.name}
                   </span>
+                </td>
+                <td className="nickname-cell">
+                  <span className="nickname-text">{student.nickname || 'N/A'}</span>
                 </td>
                 <td className="username-cell">
                   <span className="username-text">{student.username}</span>
