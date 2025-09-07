@@ -17,7 +17,7 @@
 
 /* Shrunk state */
 .sidebar.shrunk {
-  width: 60px;
+  width: 60px !important;
   padding: 20px 10px;
 }
 
@@ -181,4 +181,143 @@
 .logout.logging-out:hover {
   background-color: rgba(232, 151, 62, 0.7);
   color: #fff;
+}
+
+.test-overlay {
+  position: fixed;
+  top: 0;
+  left: 234px; /* Account for sidebar width */
+  width: calc(100% - 234px);
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tablet responsive design for sidebar */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .sidebar {
+    width: 200px !important; /* Force override with !important */
+    padding: 15px;
+  }
+  
+  .sidebar.shrunk {
+    width: 60px !important; /* Ensure collapsed state overrides responsive width */
+    padding: 20px 10px;
+  }
+  
+  .sidebar-toggle {
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
+    top: 15px;
+    right: 8px;
+  }
+  
+  .sidebar-title {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    margin-top: 15px;
+  }
+  
+  .current-selection {
+    padding: 12px;
+    margin-bottom: 15px;
+  }
+  
+  .current-selection h3 {
+    font-size: 1rem;
+  }
+  
+  .current-selection p {
+    font-size: 0.85rem;
+  }
+  
+  .sidebar-nav > li > button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .dropdown button {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+  
+  .logout {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+}
+
+/* Mobile responsive design for sidebar */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 180px !important; /* Force override with !important */
+    padding: 12px;
+  }
+  
+  .sidebar.shrunk {
+    width: 60px !important; /* Ensure collapsed state overrides responsive width */
+    padding: 20px 10px;
+  }
+  
+  .sidebar-toggle {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    top: 12px;
+    right: 6px;
+  }
+  
+  .sidebar-title {
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+    margin-top: 12px;
+  }
+  
+  .current-selection {
+    padding: 10px;
+    margin-bottom: 12px;
+  }
+  
+  .current-selection h3 {
+    font-size: 0.9rem;
+  }
+  
+  .current-selection p {
+    font-size: 0.8rem;
+  }
+  
+  .sidebar-nav > li > button {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+  
+  .dropdown button {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+  
+  .logout {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+  }
+}
+
+/* Tablet responsive design for test overlay */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .test-overlay {
+    left: 200px !important; /* Account for smaller sidebar width */
+    width: calc(100% - 200px) !important;
+  }
+}
+
+/* Mobile responsive design for test overlay */
+@media (max-width: 768px) {
+  .test-overlay {
+    left: 180px !important; /* Account for smaller sidebar width */
+    width: calc(100% - 180px) !important;
+  }
 }

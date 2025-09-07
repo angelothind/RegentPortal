@@ -17,6 +17,28 @@
   margin-left: 60px;
 }
 
+/* Tablet responsive design for main content area */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .main-content-area {
+    margin-left: 200px; /* Match the effective visual width of the smaller sidebar */
+  }
+  
+  .sidebar.shrunk ~ .main-content-area {
+    margin-left: 60px; /* Keep collapsed state the same */
+  }
+}
+
+/* Mobile responsive design for main content area */
+@media (max-width: 768px) {
+  .main-content-area {
+    margin-left: 180px; /* Match the effective visual width of the smaller sidebar */
+  }
+  
+  .sidebar.shrunk ~ .main-content-area {
+    margin-left: 60px; /* Keep collapsed state the same */
+  }
+}
+
 .test-viewer-container {
   display: flex;
   height: 100vh;
@@ -324,6 +346,41 @@
   font-style: italic;
 }
 
+/* Tablet responsive design for question header */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .question-header {
+    flex-direction: column; /* Stack vertically on tablets */
+    align-items: flex-start;
+    gap: 15px; /* Add space between title and buttons */
+  }
+  
+  .header-left {
+    flex: none; /* Remove flex to prevent stretching */
+  }
+  
+  .passage-controls {
+    align-self: flex-start; /* Align buttons to the left */
+  }
+}
+
+/* Mobile responsive design for question header */
+@media (max-width: 768px) {
+  .question-header {
+    flex-direction: column; /* Stack vertically on mobile too */
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px;
+  }
+  
+  .header-left {
+    flex: none;
+  }
+  
+  .passage-controls {
+    align-self: flex-start;
+  }
+}
+
 .formatting-instruction {
   font-size: 1rem !important;
   font-weight: 600 !important;
@@ -369,6 +426,33 @@
   border-color: #25245D;
 }
 
+/* Tablet responsive design for passage buttons */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .passage-toggle {
+    gap: 6px;
+  }
+  
+  .passage-button {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    border-radius: 3px;
+  }
+}
+
+/* Mobile responsive design for passage buttons */
+@media (max-width: 768px) {
+  .passage-toggle {
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  
+  .passage-button {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    border-radius: 3px;
+  }
+}
+
 .part-toggle {
   display: flex;
   gap: 8px;
@@ -399,6 +483,33 @@
 .part-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Tablet responsive design for part buttons */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .part-toggle {
+    gap: 6px;
+  }
+  
+  .part-button {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    border-radius: 3px;
+  }
+}
+
+/* Mobile responsive design for part buttons */
+@media (max-width: 768px) {
+  .part-toggle {
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  
+  .part-button {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    border-radius: 3px;
+  }
 }
 
 .question-content {
@@ -637,7 +748,7 @@
 /* Responsive design */
 @media (max-width: 768px) {
   .main-content-area {
-    margin-left: 0;
+    margin-left: 180px; /* Use the smaller sidebar width instead of 0 */
   }
   
   .test-viewer-container {

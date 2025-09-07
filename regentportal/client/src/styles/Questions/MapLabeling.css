@@ -66,6 +66,7 @@
 
 .map-image {
   max-width: 800px;
+  width: 100%;
   height: auto;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -77,6 +78,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  min-width: 300px;
 }
 
 /* Questions section now flexes to fill remaining space */
@@ -209,20 +211,82 @@
   border-left: 3px solid #dc3545;
 }
 
-/* Responsive design */
+/* Tablet responsive design - ONLY for map questions */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .map-labeling-container {
+    margin: 15px;
+    padding: 15px;
+    min-width: auto;
+  }
+  
+  .map-labeling-container .map-section {
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .map-labeling-container .map-image-container {
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .map-labeling-container .map-image {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+  }
+  
+  .map-labeling-container .questions-section {
+    width: 100%;
+    max-width: 600px;
+    min-width: auto;
+  }
+  
+  .map-labeling-container .question-item {
+    gap: 12px;
+    padding: 12px;
+  }
+  
+  .map-labeling-container .map-answer-input {
+    width: 65px;
+    height: 42px;
+  }
+}
+
+/* Mobile responsive design - ONLY for map questions */
 @media (max-width: 768px) {
   .map-labeling-container {
     margin: 10px;
     padding: 15px;
+    min-width: auto;
   }
   
-  .question-item {
+  .map-labeling-container .map-section {
+    gap: 15px;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .map-labeling-container .map-image-container {
+    width: 100%;
+  }
+  
+  .map-labeling-container .map-image {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .map-labeling-container .questions-section {
+    width: 100%;
+  }
+  
+  .map-labeling-container .question-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
   
-  .map-answer-input {
+  .map-labeling-container .map-answer-input {
     width: 80px;
     height: 45px;
   }

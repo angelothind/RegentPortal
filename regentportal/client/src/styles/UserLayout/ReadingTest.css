@@ -114,6 +114,36 @@
   font-weight: 600;
 }
 
+/* Tablet responsive design for reading test content */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .paragraph p {
+    text-align: left; /* Left-justify content for tablet devices */
+  }
+  
+  .passage-content .passage-title-section h2 {
+    text-align: left; /* Left-justify titles for tablet devices */
+  }
+  
+  .passage-content .passage-subtitle {
+    text-align: left; /* Left-justify subtitles for tablet devices */
+  }
+}
+
+/* Mobile responsive design for reading test content */
+@media (max-width: 768px) {
+  .paragraph p {
+    text-align: left; /* Left-justify content for mobile devices */
+  }
+  
+  .passage-content .passage-title-section h2 {
+    text-align: left; /* Left-justify titles for mobile devices */
+  }
+  
+  .passage-content .passage-subtitle {
+    text-align: left; /* Left-justify subtitles for mobile devices */
+  }
+}
+
 .loading, .error {
   display: flex;
   justify-content: center;

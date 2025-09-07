@@ -247,6 +247,34 @@
   box-shadow: 0 0 0 2px rgba(37, 36, 93, 0.2);
 }
 
+/* Tablet responsive design for part buttons */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .part-toggle {
+    gap: 8px;
+  }
+  
+  .part-button {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+  }
+}
+
+/* Mobile responsive design for part buttons */
+@media (max-width: 768px) {
+  .part-toggle {
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .part-button {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+  }
+}
+
 /* Header styling */
 .question-header {
   display: flex;
@@ -477,6 +505,32 @@
 .sidebar.shrunk ~ .main-content-area .test-overlay {
   left: 60px;
   width: calc(100% - 60px);
+}
+
+/* Tablet responsive design for test overlay */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .test-overlay {
+    left: 200px !important; /* Account for smaller sidebar width */
+    width: calc(100% - 200px) !important;
+  }
+  
+  .sidebar.shrunk ~ .main-content-area .test-overlay {
+    left: 60px !important;
+    width: calc(100% - 60px) !important;
+  }
+}
+
+/* Mobile responsive design for test overlay */
+@media (max-width: 768px) {
+  .test-overlay {
+    left: 180px !important; /* Account for smaller sidebar width */
+    width: calc(100% - 180px) !important;
+  }
+  
+  .sidebar.shrunk ~ .main-content-area .test-overlay {
+    left: 60px !important;
+    width: calc(100% - 60px) !important;
+  }
 }
 
 .overlay-content {
