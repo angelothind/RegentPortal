@@ -2,76 +2,6 @@
   "partNumber": 3,
   "templates": [
     {
-      "questionType": "ysng",
-      "introInstruction": "Questions 32-35\nDo the following statements agree with the claims of the writer in Reading Passage 3?",
-      "formattingInstruction": "In boxes 32-35 on your answer sheet, write",
-      "questionBlock": [
-        {
-          "questionNumber": 32,
-          "question": "The description in the first chapter of how New York probably looked from the air in the early 1600s lacks interest."
-        },
-        {
-          "questionNumber": 33,
-          "question": "Chapters two and three prepare the reader well for material yet to come."
-        },
-        {
-          "questionNumber": 34,
-          "question": "The biggest problem for many nineteenth-century New York immigrant neighbourhoods was a lack of amenities."
-        },
-        {
-          "questionNumber": 35,
-          "question": "In the nineteenth century, New York's immigrant neighbourhoods tended to concentrate around the harbour."
-        }
-      ],
-      "correctAnswers": {
-        "32": "",
-        "33": "",
-        "34": "",
-        "35": ""
-      }
-    },
-    {
-      "questionType": "choose-x-word",
-      "introInstruction": "Questions 36-40\nComplete the summary using the list of phrases, A-J, below.",
-      "formattingInstruction": "Write the correct letter, A-J, in boxes 36-40 on your answer sheet.",
-      "notesTitle": "The bedrock myth",
-      "questionBlock": [
-        {
-          "questionNumber": "36-40",
-          "text": "In chapter seven, Barr indicates how the lack of bedrock close to the surface does not explain why skyscrapers are absent from **36** ________. He points out that although the cost of foundations increases when bedrock is deep below the surface, this cannot be regarded as **37** ________, especially when compared to **38** ________.\n\nA particularly enjoyable part of the chapter was Barr's account of how **39** ________ are made possible by the use of caissons, but he also discusses their **40** ________. The chapter is well researched but relatively easy to understand.",
-          "blanks": [
-            { "number": "36", "answer": "" },
-            { "number": "37", "answer": "" },
-            { "number": "38", "answer": "" },
-            { "number": "39", "answer": "" },
-            { "number": "40", "answer": "" }
-          ]
-        }
-      ],
-      "wordBank": {
-        "title": "List of Phrases",
-        "options": [
-          { "letter": "A", "text": "development plans" },
-          { "letter": "B", "text": "deep excavations" },
-          { "letter": "C", "text": "great distance" },
-          { "letter": "D", "text": "excessive expense" },
-          { "letter": "E", "text": "impossible tasks" },
-          { "letter": "F", "text": "associated risks" },
-          { "letter": "G", "text": "water level" },
-          { "letter": "H", "text": "specific areas" },
-          { "letter": "I", "text": "total expenditure" },
-          { "letter": "J", "text": "construction guidelines" }
-        ]
-      },
-      "correctAnswers": {
-        "36": "",
-        "37": "",
-        "38": "",
-        "39": "",
-        "40": ""
-      }
-    },
-    {
       "questionType": "multiple-choice",
       "introInstruction": "Questions 27-31\nChoose the correct letter, A, B, C or D.",
       "formattingInstruction": "Write the correct letter in boxes 27-31 on your answer sheet.",
@@ -134,6 +64,68 @@
         "30": "",
         "31": ""
       }
+    },
+    {
+      "questionType": "ysng",
+      "introInstruction": "Questions 32-35\nDo the following statements agree with the claims of the writer in Reading Passage 3?",
+      "formattingInstruction": "In boxes 32-35 on your answer sheet, write",
+      "questionBlock": [
+        {
+          "questionNumber": 32,
+          "question": "The description in the first chapter of how New York probably looked from the air in the early 1600s lacks interest."
+        },
+        {
+          "questionNumber": 33,
+          "question": "Chapters two and three prepare the reader well for material yet to come."
+        },
+        {
+          "questionNumber": 34,
+          "question": "The biggest problem for many nineteenth-century New York immigrant neighbourhoods was a lack of amenities."
+        },
+        {
+          "questionNumber": 35,
+          "question": "In the nineteenth century, New York's immigrant neighbourhoods tended to concentrate around the harbour."
+        }
+      ],
+      "correctAnswers": {
+        "32": "",
+        "33": "",
+        "34": "",
+        "35": ""
+      }
+    },
+    {
+      "questionType": "choose-from",
+      "introInstruction": "Questions 36-40\nComplete the summary using the list of phrases, A-J, below.",
+      "formattingInstruction": "Write the correct letter, A-J, in boxes 36-40 on your answer sheet.",
+      "mainQuestion": "The bedrock myth",
+      "summaryText": "In chapter seven, Barr indicates how the lack of bedrock close to the surface does not explain why skyscrapers are absent from **36** ________. He points out that although the cost of foundations increases when bedrock is deep below the surface, this cannot be regarded as **37** ________, especially when compared to **38** ________.\n\nA particularly enjoyable part of the chapter was Barr's account of how foundations are built. He describes not only how **39** ________ are made possible by the use of caissons, but he also discusses their **40** ________. The chapter is well researched but relatively easy to understand.",
+      "questionBlock": [
+        { "questionNumber": "36" },
+        { "questionNumber": "37" },
+        { "questionNumber": "38" },
+        { "questionNumber": "39" },
+        { "questionNumber": "40" }
+      ],
+      "options": [
+        { "letter": "A", "text": "development plans" },
+        { "letter": "B", "text": "deep excavations" },
+        { "letter": "C", "text": "great distance" },
+        { "letter": "D", "text": "excessive expense" },
+        { "letter": "E", "text": "impossible tasks" },
+        { "letter": "F", "text": "associated risks" },
+        { "letter": "G", "text": "water level" },
+        { "letter": "H", "text": "specific areas" },
+        { "letter": "I", "text": "total expenditure" },
+        { "letter": "J", "text": "construction guidelines" }
+      ],
+      "correctAnswers": {
+        "36": "",
+        "37": "",
+        "38": "",
+        "39": "",
+        "40": ""
+      }
     }
   ]
-} 
+}
