@@ -15,10 +15,8 @@
   width: 100% !important;
   min-width: 100% !important;
   max-width: 100% !important;
-  flex: 1 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: stretch !important;
+  /* Remove flex behavior that causes table to stretch */
+  display: block !important;
   /* Prevent overflow */
   box-sizing: border-box !important;
 }
@@ -33,13 +31,14 @@
   /* Ensure table is visible */
   visibility: visible !important;
   opacity: 1 !important;
-  /* Ensure proper table layout */
-  table-layout: auto !important;
-  /* Force table to expand properly */
+  /* Use fixed table layout to maintain consistent cell sizes */
+  table-layout: fixed !important;
+  /* Remove flex behavior - let table size naturally */
   height: auto !important;
   min-height: auto !important;
   max-height: none !important;
-  flex: 1; /* Take remaining space */
+  /* Remove flex: 1 that causes stretching */
+  flex: none !important;
   overflow-y: auto; /* Make table itself scrollable if needed */
 }
 
@@ -49,10 +48,41 @@
   border: 1px solid #ccc;
   text-align: left;
   position: relative;
+  /* Prevent cells from expanding based on content */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Set specific column widths for consistent sizing */
+.student-table th:nth-child(1),
+.student-table td:nth-child(1) {
+  width: 35%; /* Name column */
+}
+
+.student-table th:nth-child(2),
+.student-table td:nth-child(2) {
+  width: 25%; /* Nickname column */
+}
+
+.student-table th:nth-child(3),
+.student-table td:nth-child(3) {
+  width: 25%; /* Username column */
+}
+
+.student-table th:nth-child(4),
+.student-table td:nth-child(4) {
+  width: 15%; /* Favorites/Delete column */
 }
 
 .student-table th {
   background-color: #f5f5f5;
+}
+
+/* Allow text to wrap in cells for better readability */
+.student-table td {
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .student-header {
