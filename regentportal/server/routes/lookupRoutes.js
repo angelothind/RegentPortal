@@ -8,7 +8,7 @@ const Admin = require('../models/Admin');
 router.get('/lookupstudents', async (req, res) => {
     console.log('In lookupstudents route');
     try {
-        const students = await Student.find({}, 'name username'); // only return name + username
+        const students = await Student.find({}, 'name nickname username'); // include nickname field
         res.json({ students });
     } catch (err) {
         console.error('❌ Error fetching students:', err);

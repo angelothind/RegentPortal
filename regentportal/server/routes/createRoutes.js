@@ -32,7 +32,7 @@ router.post('/createadmin', async (req, res) => {
 
 
 router.post('/createstudent', async (req, res) => {
-  const { name, username, password } = req.body;
+  const { name, nickname, username, password } = req.body;
 
   try {
     const existingStudent = await Student.findOne({ username });
@@ -40,7 +40,7 @@ router.post('/createstudent', async (req, res) => {
       return res.status(400).json({ error: 'Student already exists' });
     }
     
-    const newStudent = new Student({ name, username, password});
+    const newStudent = new Student({ name, nickname, username, password });
 
     await newStudent.save();
     res.status(201).json({ message: 'Student created', _id: newStudent._id });

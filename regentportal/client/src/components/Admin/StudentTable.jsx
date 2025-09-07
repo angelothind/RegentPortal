@@ -4,7 +4,7 @@ import API_BASE from '../../utils/api';
 
 const StudentTable = ({ onBack }) => {
   const [students, setStudents] = useState([]);
-  const [newStudent, setNewStudent] = useState({ name: '', username: '', password: '' });
+  const [newStudent, setNewStudent] = useState({ name: '', nickname: '', username: '', password: '' });
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -34,8 +34,10 @@ const StudentTable = ({ onBack }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, username, password } = newStudent;
-    if (!name || !username || !password) return alert('Name, username and password required');
+    const { name, nickname, username, password } = newStudent;
+    if (!name || !nickname || !username || !password) {
+      return alert('All fields are required: Name, Nickname, Username, and Password');
+    }
 
     try {
       const response = await fetch(`${API_BASE}/api/create/createstudent`, {
@@ -54,13 +56,14 @@ const StudentTable = ({ onBack }) => {
       const newUser = {
         _id: data._id,
         name: newStudent.name,
+        nickname: newStudent.nickname,
         username: newStudent.username
       };
       
       console.log('📝 Adding new user to state:', newUser);
       setStudents([...students, newUser]);
       setShowModal(false);
-      setNewStudent({ name: '', username: '', password: '' });
+      setNewStudent({ name: '', nickname: '', username: '', password: '' });
     } catch (err) {
       console.error('Error creating student:', err);
       alert('❌ Failed to create student');
@@ -94,15 +97,23 @@ const StudentTable = ({ onBack }) => {
       <table className="student-table">
         <thead>
           <tr>
+            <th>Name</th>
+            <th>Nickname</th>
             <th>Username</th>
           </tr>
         </thead>
         <tbody key={students.length}>
           {students.length === 0 ? (
-            <tr><td>No students found.</td></tr>
+            <tr><td colSpan="3">No students found.</td></tr>
           ) : (
             students.map((student, index) => (
               <tr key={student._id || index} className="table-row">
+                <td className="name-cell">
+                  <span className="name-text">{student.name}</span>
+                </td>
+                <td className="nickname-cell">
+                  <span className="nickname-text">{student.nickname}</span>
+                </td>
                 <td className="username-cell">
                   <span className="username-text">{student.username}</span>
                   <button className="delete-button" onClick={() => handleDelete(student._id)}>Delete</button>
@@ -123,6 +134,14 @@ const StudentTable = ({ onBack }) => {
                 name="name"
                 placeholder="Full Name"
                 value={newStudent.name}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="text"
+                name="nickname"
+                placeholder="Nickname"
+                value={newStudent.nickname}
                 onChange={handleInputChange}
                 required
               />
