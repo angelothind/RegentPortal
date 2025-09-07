@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/Admin/StudentTable.css';
 import API_BASE from '../../utils/api';
+import { calculateIELTSBand, getBandScoreDescription, formatBandScore } from '../../utils/bandScoreCalculator';
 
 const StudentSubmissions = ({ selectedTest, onSubmissionSelect }) => {
   const [submissions, setSubmissions] = useState([]);
@@ -19,11 +20,15 @@ const StudentSubmissions = ({ selectedTest, onSubmissionSelect }) => {
       const response = await fetch(`${API_BASE}/api/submissions/${selectedTest.testId._id}`);
       const data = await response.json();
       setSubmissions(data.submissions || []);
-    } catch (error) {
-      console.error('Error fetching submissions:', error);
-    } finally {
+      setLoading(false);
+    } catch (err) {
+      console.error('Failed to fetch submissions:', err);
       setLoading(false);
     }
+  };
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleString();
   };
 
   const handleSubmissionSelect = (submission) => {
@@ -33,16 +38,8 @@ const StudentSubmissions = ({ selectedTest, onSubmissionSelect }) => {
     }
   };
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleString();
-  };
-
   if (loading) {
-    return (
-      <div className="student-submissions">
-        <div className="loading">Loading submissions...</div>
-      </div>
-    );
+    return <div className="loading">Loading submissions...</div>;
   }
 
   return (
@@ -67,30 +64,35 @@ const StudentSubmissions = ({ selectedTest, onSubmissionSelect }) => {
                     <th>Student</th>
                     <th>Score</th>
                     <th>Correct/Total</th>
+                    <th>Band Score</th>
                     <th>Submitted</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {submissions.map((submission) => (
-                    <tr 
-                      key={submission._id}
-                      className={selectedSubmission?._id === submission._id ? 'selected' : ''}
-                    >
-                      <td>{submission.studentName || 'Unknown Student'}</td>
-                      <td>{submission.score}%</td>
-                      <td>{submission.correctCount}/{submission.totalQuestions}</td>
-                      <td>{formatDate(submission.submittedAt)}</td>
-                      <td>
-                        <button 
-                          className="view-button"
-                          onClick={() => handleSubmissionSelect(submission)}
-                        >
-                          View Details
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  {submissions.map((submission) => {
+                    const bandScore = calculateIELTSBand(submission.correctCount, selectedTest?.type);
+                    return (
+                      <tr 
+                        key={submission._id}
+                        className={selectedSubmission?._id === submission._id ? 'selected' : ''}
+                      >
+                        <td>{submission.studentName || 'Unknown Student'}</td>
+                        <td>{submission.score}%</td>
+                        <td>{submission.correctCount}/{submission.totalQuestions}</td>
+                        <td>{formatBandScore(bandScore)}</td>
+                        <td>{formatDate(submission.submittedAt)}</td>
+                        <td>
+                          <button 
+                            className="view-button"
+                            onClick={() => handleSubmissionSelect(submission)}
+                          >
+                            View Details
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -105,6 +107,8 @@ const StudentSubmissions = ({ selectedTest, onSubmissionSelect }) => {
               <p><strong>Name:</strong> {selectedSubmission.studentName || 'Unknown'}</p>
               <p><strong>Score:</strong> {selectedSubmission.score}%</p>
               <p><strong>Correct Answers:</strong> {selectedSubmission.correctCount}/{selectedSubmission.totalQuestions}</p>
+              <p><strong>Band Score:</strong> {formatBandScore(calculateIELTSBand(selectedSubmission.correctCount, selectedTest?.type))}</p>
+              <p><strong>Level:</strong> {getBandScoreDescription(calculateIELTSBand(selectedSubmission.correctCount, selectedTest?.type))}</p>
               <p><strong>Submitted:</strong> {formatDate(selectedSubmission.submittedAt)}</p>
             </div>
             

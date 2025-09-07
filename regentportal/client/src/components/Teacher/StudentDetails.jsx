@@ -3,6 +3,7 @@ import TeacherTestAnalysis from './TeacherTestAnalysis';
 import StudentSubmissions from './StudentSubmissions';
 import '../../styles/Admin/StudentTable.css';
 import API_BASE from '../../utils/api';
+import { calculateIELTSBand, getBandScoreDescription, formatBandScore } from '../../utils/bandScoreCalculator';
 
 const StudentDetails = ({ student, onBack }) => {
   const [testSubmissions, setTestSubmissions] = useState([]);
@@ -229,6 +230,14 @@ const StudentDetails = ({ student, onBack }) => {
                         <span className="detail-value">{submission.correctCount}/{submission.totalQuestions}</span>
                       </div>
                       <div className="detail-row">
+                        <span className="detail-label">Band Score:</span>
+                        <span className="detail-value">{formatBandScore(calculateIELTSBand(submission.correctCount, submission.testType))}</span>
+                      </div>
+                      <div className="detail-row">
+                        <span className="detail-label">Level:</span>
+                        <span className="detail-value">{getBandScoreDescription(calculateIELTSBand(submission.correctCount, submission.testType))}</span>
+                      </div>
+                      <div className="detail-row">
                         <span className="detail-label">Submitted:</span>
                         <span className="detail-value">{formatDate(submission.submittedAt)}</span>
                       </div>
@@ -277,6 +286,14 @@ const StudentDetails = ({ student, onBack }) => {
                       <div className="detail-row">
                         <span className="detail-label">Correct Answers:</span>
                         <span className="detail-value">{submission.correctCount}/{submission.totalQuestions}</span>
+                      </div>
+                      <div className="detail-row">
+                        <span className="detail-label">Band Score:</span>
+                        <span className="detail-value">{formatBandScore(calculateIELTSBand(submission.correctCount, submission.testType))}</span>
+                      </div>
+                      <div className="detail-row">
+                        <span className="detail-label">Level:</span>
+                        <span className="detail-value">{getBandScoreDescription(calculateIELTSBand(submission.correctCount, submission.testType))}</span>
                       </div>
                       <div className="detail-row">
                         <span className="detail-label">Submitted:</span>

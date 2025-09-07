@@ -107,17 +107,17 @@
         { "questionNumber": "39" },
         { "questionNumber": "40" }
       ],
-      "options": [
-        { "letter": "A", "text": "development plans" },
-        { "letter": "B", "text": "deep excavations" },
-        { "letter": "C", "text": "great distance" },
-        { "letter": "D", "text": "excessive expense" },
-        { "letter": "E", "text": "impossible tasks" },
-        { "letter": "F", "text": "associated risks" },
-        { "letter": "G", "text": "water level" },
-        { "letter": "H", "text": "specific areas" },
-        { "letter": "I", "text": "total expenditure" },
-        { "letter": "J", "text": "construction guidelines" }
+        "options": [
+          { "letter": "A", "text": "development plans" },
+          { "letter": "B", "text": "deep excavations" },
+          { "letter": "C", "text": "great distance" },
+          { "letter": "D", "text": "excessive expense" },
+          { "letter": "E", "text": "impossible tasks" },
+          { "letter": "F", "text": "associated risks" },
+          { "letter": "G", "text": "water level" },
+          { "letter": "H", "text": "specific areas" },
+          { "letter": "I", "text": "total expenditure" },
+          { "letter": "J", "text": "construction guidelines" }
       ],
       "correctAnswers": {
         "36": "",

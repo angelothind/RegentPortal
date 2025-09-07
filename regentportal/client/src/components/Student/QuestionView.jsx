@@ -661,8 +661,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         </div>
       )}
       
-      {/* Results section - only show after submission on last passage (not shown in teacher mode) */}
-      {!isTeacherMode && finalTestSubmitted && currentPassage === 3 && finalTestResults && (
+      {/* Results section - show after submission on last passage for both students and teachers */}
+      {finalTestSubmitted && currentPassage === 3 && finalTestResults && (
         <div className="test-controls">
           <div className="results-section">
             <h3>Test Results</h3>
@@ -688,9 +688,11 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
                 </span>
               </div>
             </div>
-            <button className="reset-button" onClick={handleResetTest}>
-              Take Test Again
-            </button>
+            {!isTeacherMode && (
+              <button className="reset-button" onClick={handleResetTest}>
+                Take Test Again
+              </button>
+            )}
           </div>
         </div>
       )}
