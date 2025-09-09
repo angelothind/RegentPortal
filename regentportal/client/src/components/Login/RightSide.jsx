@@ -20,7 +20,6 @@ const RightSide = () => {
         {!selectedRole ? (
           <>
             <h2 className="welcome-text">Welcome to Regent Portal</h2>
-            <SelectionBox message="Admin" onClick={() => handleSelect('Teacher')} />
             <SelectionBox message="Teacher" onClick={() => handleSelect('Teacher')} />
             <SelectionBox message="Student" onClick={() => handleSelect('Student')} />
           </>
