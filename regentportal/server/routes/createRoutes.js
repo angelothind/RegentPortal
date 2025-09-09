@@ -14,11 +14,9 @@ router.post('/createadmin', async (req, res) => {
       return res.status(400).json({ error: 'Admin already exists' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     const newAdmin = new Admin({
       username,
-      password: hashedPassword
+      password: password  // Let the Admin model's pre('save') hook handle the hashing
     });
 
     await newAdmin.save();

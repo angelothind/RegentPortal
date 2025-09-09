@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 const Admin = require('../models/Admin');
 const Teacher = require('../models/Teacher');
 const Student = require('../models/Student');
@@ -13,22 +14,32 @@ router.post('/login', async (req, res) => {
     if (userType === 'Teacher') {
       // Check Admins first
       console.log('Teacher type has been looked into');
-      user = await Admin.findOne({ username });
-      if (user) {
-        console.log('Admin found checking');
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (isMatch) {
-          console.log('Admin password checking');
-          const token = generateToken(user._id, userType);
-          console.log('The login was succesful');
-          return res.status(200).json({
-            message: 'Login successful',
-            user: { _id: user._id, username, userType: 'Admin'},
-            token});
-            
-        } else {
-          return res.status(401).json({ error: 'Invalid password' });
+      console.log('Looking for admin with username:', username);
+      
+      try {
+        console.log('🔍 Looking for admin with username:', username);
+        user = await Admin.findOne({ username });
+        console.log('🔍 Admin query result:', user ? 'Found' : 'Not found');
+        if (user) {
+          console.log('🔍 Admin found, checking password...');
+          const isMatch = await bcrypt.compare(password, user.password);
+          console.log('🔍 Password match result:', isMatch);
+          if (isMatch) {
+            console.log('Admin password checking');
+            const token = generateToken(user._id, userType);
+            console.log('The login was succesful');
+            return res.status(200).json({
+              message: 'Login successful',
+              user: { _id: user._id, username, userType: 'Admin'},
+              token});
+              
+          } else {
+            console.log('Admin password mismatch');
+            return res.status(401).json({ error: 'Invalid password' });
+          }
         }
+      } catch (adminError) {
+        console.error('Error querying Admin collection:', adminError);
       }
 
       // If not admin, check Teachers
