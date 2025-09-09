@@ -19,10 +19,29 @@ const StudentDashboard = () => {
     } else {
       // Fallback to localStorage if navigation state is not available
       const storedUser = localStorage.getItem('user');
+      const currentUserId = localStorage.getItem('currentUserId');
+      
       if (storedUser) {
         try {
           const parsedUser = JSON.parse(storedUser);
           console.log('🔍 StudentDashboard using user data from localStorage:', parsedUser);
+          console.log('🔍 Current user ID from localStorage:', currentUserId);
+          
+          // CRITICAL FIX: Validate that the stored user matches the current user ID
+          if (currentUserId && parsedUser._id !== currentUserId) {
+            console.error('❌ SECURITY ISSUE: Stored user data does not match current user ID!');
+            console.error('❌ Stored user ID:', parsedUser._id);
+            console.error('❌ Current user ID:', currentUserId);
+            console.error('❌ This could cause cross-user data leakage!');
+            
+            // Clear potentially corrupted user data
+            localStorage.removeItem('user');
+            localStorage.removeItem('currentUserId');
+            alert('Security Error: User session mismatch detected. Please log in again.');
+            navigate('/');
+            return;
+          }
+          
           setUser(parsedUser);
         } catch (error) {
           console.error('❌ Error parsing user data from localStorage:', error);
@@ -57,11 +76,12 @@ const StudentDashboard = () => {
       
       console.log('🧹 Clearing user data...');
       localStorage.removeItem('user');
+      localStorage.removeItem('currentUserId');
       
       // Clear any test-related data that might be causing delays
       console.log('🧹 Clearing test data...');
       if (selectedTest && selectedTest.testId) {
-        const testKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+        const testKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
         localStorage.removeItem(testKey);
         console.log('🧹 Removed test data:', testKey);
       }

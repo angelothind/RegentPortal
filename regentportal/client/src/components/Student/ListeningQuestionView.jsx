@@ -35,7 +35,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
   // Load saved answers from localStorage on component mount
   useEffect(() => {
     if (selectedTest && selectedTest.testId) {
-      const savedAnswers = localStorage.getItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`);
+      const savedAnswers = localStorage.getItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`);
       if (savedAnswers) {
         try {
           const parsedAnswers = JSON.parse(savedAnswers);
@@ -47,7 +47,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
           
           if (savedTimestamp && (currentTime - savedTimestamp) > fourHours) {
             // Data is older than 4 hours, clear it
-            localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`);
+            localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`);
             console.log('📝 Cleared expired saved answers (older than 4 hours)');
             return;
           }
@@ -212,7 +212,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
         _testStarted: testStarted,
         _testResults: testResults
       };
-      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
+      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`, JSON.stringify(answersWithTimestamp));
       console.log(`📝 Test state saved to localStorage for Part ${currentPart} (has answers)`);
     }
   }, [currentPart, selectedTest, testStarted, testSubmitted, testResults, answers]);
@@ -245,7 +245,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
         _testStarted: testStarted,
         _testResults: testResults
       };
-      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
+      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`, JSON.stringify(answersWithTimestamp));
       console.log('📝 Answers and test state saved to localStorage with timestamp:', answersWithTimestamp);
     }
     
@@ -266,7 +266,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
         _testStarted: true,
         _testResults: testResults
       };
-      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
+      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`, JSON.stringify(answersWithTimestamp));
       console.log('📝 Test started state saved to localStorage (has answers)');
     }
   };
@@ -367,12 +367,19 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
   };
 
   const handleSubmit = async () => {
+    // Validate user data before submission
+    if (!user || !user._id) {
+      console.error('❌ No valid user data available for submission');
+      alert('Error: User session not found. Please log in again.');
+      return;
+    }
+
     const confirmed = window.confirm('Are you sure you want to submit the test? You cannot change your answers after submission.');
     if (!confirmed) return;
     
     // Clear saved answers from localStorage after submission
     if (selectedTest && selectedTest.testId) {
-      localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`);
+      localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`);
       console.log('📝 Cleared saved answers from localStorage after submission');
     }
     
@@ -389,7 +396,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
           testId: selectedTest.testId._id,
           testType: selectedTest.type,
           answers: answers,
-          studentId: user?._id || 'dummy-student-id'
+          studentId: user._id
         })
       });
 
@@ -447,7 +454,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
               submittedAt: result.data.submittedAt
             }
           };
-          localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
+          localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`, JSON.stringify(answersWithTimestamp));
           console.log('📝 Submitted test state saved to localStorage');
         }
         
@@ -473,7 +480,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     
     // Clear saved test state from localStorage
     if (selectedTest && selectedTest.testId) {
-      localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`);
+      localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`);
       console.log('📝 Cleared saved test state from localStorage after reset');
     }
     
@@ -509,7 +516,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
         _testStarted: testStarted,
         _testResults: testResults
       };
-      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`, JSON.stringify(answersWithTimestamp));
+      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`, JSON.stringify(answersWithTimestamp));
       console.log(`📝 Part changed to ${partNumber}, saved to localStorage`);
     }
     

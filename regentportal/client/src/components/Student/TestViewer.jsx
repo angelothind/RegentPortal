@@ -21,7 +21,7 @@ const TestViewer = ({ selectedTest, user }) => {
     console.log('🔄 TestViewer: Reset testStarted to false for new test');
     
     if (selectedTest && selectedTest.testId) {
-      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
       const savedData = localStorage.getItem(storageKey);
       if (savedData) {
         try {
@@ -43,7 +43,7 @@ const TestViewer = ({ selectedTest, user }) => {
     
     // Save test state to localStorage
     if (selectedTest && selectedTest.testId) {
-      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
       const existingData = localStorage.getItem(storageKey);
       let savedData = {};
       

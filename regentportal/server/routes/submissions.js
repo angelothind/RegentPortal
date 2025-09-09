@@ -34,9 +34,18 @@ router.get('/student/:studentId', async (req, res) => {
   }
 });
 
-// Get all submissions for a specific test (MUST come last)
+// Get all submissions for a specific test (MUST come last) - TEACHERS ONLY
 router.get('/:testId', async (req, res) => {
   try {
+    // TODO: Add authentication middleware to ensure only teachers can access this
+    console.log('⚠️  WARNING: Submissions endpoint accessed without authentication check');
+    console.log('📝 Request details:', {
+      method: req.method,
+      url: req.url,
+      headers: req.headers,
+      params: req.params
+    });
+    
     const submissions = await TestSubmission.find({ 
       testId: req.params.testId 
     }).sort({ submittedAt: -1 }); // Sort by most recent first

@@ -113,7 +113,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
 
     console.log('🔄 Loading saved answers for test:', selectedTest);
     if (selectedTest && selectedTest.testId) {
-      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
       console.log('🔍 Looking for answers in localStorage with key:', storageKey);
       
       const savedAnswers = localStorage.getItem(storageKey);
@@ -182,7 +182,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     // Only reload answers if we have a selectedTest (to avoid running on initial mount)
     if (selectedTest && selectedTest.testId && Object.keys(answers).length > 0) {
       console.log('🔄 Passage changed to:', sharedPassage, '- reloading answers from localStorage');
-      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
       const savedAnswers = localStorage.getItem(storageKey);
       if (savedAnswers) {
         try {
@@ -260,7 +260,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         _testStarted: testStarted,
         _testResults: testResults
       };
-      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
       localStorage.setItem(storageKey, JSON.stringify(answersWithTimestamp));
       console.log('📝 Answers and test state saved to localStorage with key:', storageKey);
       console.log('📝 Saved data:', answersWithTimestamp);
@@ -278,12 +278,19 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       return;
     }
 
+    // Validate user data before submission
+    if (!user || !user._id) {
+      console.error('❌ No valid user data available for submission');
+      alert('Error: User session not found. Please log in again.');
+      return;
+    }
+
     const confirmed = window.confirm('Are you sure you want to submit the test? You cannot change your answers after submission.');
     if (!confirmed) return;
     
     // Clear saved answers from localStorage after submission
     if (selectedTest && selectedTest.testId) {
-      localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}`);
+      localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`);
       console.log('📝 Cleared saved answers from localStorage after submission');
     }
     
@@ -301,7 +308,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
           testId: selectedTest.testId._id,
           testType: selectedTest.type,
           answers: answers,
-          studentId: user?._id || 'dummy-student-id'
+          studentId: user._id
         })
       });
 
@@ -360,7 +367,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               submittedAt: result.data.submittedAt
             }
           };
-          const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+          const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
           localStorage.setItem(storageKey, JSON.stringify(answersWithTimestamp));
           console.log('📝 Saved submitted answers, passage state, test results, and testStarted to localStorage:', answersWithTimestamp);
         }
@@ -408,7 +415,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     
     // Clear localStorage for this test
     if (selectedTest && selectedTest.testId) {
-      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}`;
+      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
       localStorage.removeItem(storageKey);
       console.log('🧹 Cleared localStorage for test reset:', storageKey);
       
@@ -689,9 +696,9 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               </div>
             </div>
             {!isTeacherMode && (
-              <button className="reset-button" onClick={handleResetTest}>
-                Take Test Again
-              </button>
+            <button className="reset-button" onClick={handleResetTest}>
+              Take Test Again
+            </button>
             )}
           </div>
         </div>

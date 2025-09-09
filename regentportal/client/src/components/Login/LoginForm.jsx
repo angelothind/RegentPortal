@@ -26,14 +26,17 @@ const LoginForm = ({ onBack, userType }) => {
         console.log('🔍 User _id field:', data.user._id);
         if (data.user.userType === 'Admin') {
           localStorage.setItem('user', JSON.stringify(data.user));
+          localStorage.setItem('currentUserId', data.user._id); // Add user-specific identifier
           navigate('/admin', { state: { user: data.user  } });
         } else if (data.user.userType === 'Teacher') {
           localStorage.setItem('user', JSON.stringify(data.user));
+          localStorage.setItem('currentUserId', data.user._id); // Add user-specific identifier
           navigate('/teacher', { state: { user: data.user  } });
         } else if (data.user.userType === 'Student') {
           console.log('🔍 Navigating to student dashboard with user:', data.user);
           // Store user data in localStorage as backup
           localStorage.setItem('user', JSON.stringify(data.user));
+          localStorage.setItem('currentUserId', data.user._id); // Add user-specific identifier
           navigate('/student', { state: { user: data.user  } });
         }
         // TODO: Redirect or update app state here

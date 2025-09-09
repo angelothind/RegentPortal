@@ -45,6 +45,7 @@ const TeacherDashboard = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('currentUserId');
     navigate('/'); // or '/login' depending on your setup
   };
 

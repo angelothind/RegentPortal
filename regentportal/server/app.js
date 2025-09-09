@@ -81,8 +81,8 @@ app.use('/api/submissions', require('./routes/submissions'));
 
 // Backend only - no frontend serving needed
 
-// Health check endpoint for Render
-app.get('/api/test', (req, res) => {
+// Health check endpoint for Render - moved to avoid route conflict with /api/test/:testId
+app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
     message: 'Regent Portal API is running',

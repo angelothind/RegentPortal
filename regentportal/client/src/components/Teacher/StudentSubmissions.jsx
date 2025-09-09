@@ -73,24 +73,24 @@ const StudentSubmissions = ({ selectedTest, onSubmissionSelect }) => {
                   {submissions.map((submission) => {
                     const bandScore = calculateIELTSBand(submission.correctCount, selectedTest?.type);
                     return (
-                      <tr 
-                        key={submission._id}
-                        className={selectedSubmission?._id === submission._id ? 'selected' : ''}
-                      >
-                        <td>{submission.studentName || 'Unknown Student'}</td>
-                        <td>{submission.score}%</td>
-                        <td>{submission.correctCount}/{submission.totalQuestions}</td>
+                    <tr 
+                      key={submission._id}
+                      className={selectedSubmission?._id === submission._id ? 'selected' : ''}
+                    >
+                      <td>{submission.studentName || 'Unknown Student'}</td>
+                      <td>{submission.score}%</td>
+                      <td>{submission.correctCount}/{submission.totalQuestions}</td>
                         <td>{formatBandScore(bandScore)}</td>
-                        <td>{formatDate(submission.submittedAt)}</td>
-                        <td>
-                          <button 
-                            className="view-button"
-                            onClick={() => handleSubmissionSelect(submission)}
-                          >
-                            View Details
-                          </button>
-                        </td>
-                      </tr>
+                      <td>{formatDate(submission.submittedAt)}</td>
+                      <td>
+                        <button 
+                          className="view-button"
+                          onClick={() => handleSubmissionSelect(submission)}
+                        >
+                          View Details
+                        </button>
+                      </td>
+                    </tr>
                     );
                   })}
                 </tbody>
