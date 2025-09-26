@@ -190,29 +190,17 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                         </div>
                       ) : cell.type === 'question' ? (
                         <div className="question-cell">
-                          {processNewlines(processTextFormatting(cell.content)).split(/\[INPUT_(\d+)\]/).map((part, partIndex, array) => {
-                            // Check if this part is a question number placeholder
-                            const questionMatch = part.match(/^(\d+)$/);
-                            if (questionMatch) {
-                              const questionNumber = questionMatch[1];
-                              return (
-                                <React.Fragment key={partIndex}>
+                          {processNewlines(stripMarkdownBold(cell.content)).split('________').map((part, partIndex, array) => (
+                            <span key={partIndex}>
+                              <span dangerouslySetInnerHTML={{ __html: part }} />
+                              {partIndex < array.length - 1 && (
+                                <>
                                 <input
                                   type="text"
-                                  className={`listening-table-answer-input ${getAnswerClass(questionNumber)}`}
-                                  style={{
-                                    border: '2px solid #ddd',
-                                    borderRadius: '4px',
-                                    padding: '8px 12px',
-                                    fontSize: '0.9rem',
-                                    minWidth: '120px',
-                                    backgroundColor: 'white',
-                                    color: '#333',
-                                    transition: 'border-color 0.2s ease'
-                                  }}
+                                    className={`listening-table-answer-input ${getAnswerClass(cell.questionNumber)}`}
                                   placeholder="Answer"
-                                  value={getAnswerValue(questionNumber)}
-                                  onChange={(e) => handleAnswerChange(questionNumber, e.target.value)}
+                                    value={getAnswerValue(cell.questionNumber)}
+                                    onChange={(e) => handleAnswerChange(cell.questionNumber, e.target.value)}
                                   disabled={testSubmitted}
                                   autoComplete="off"
                                   data-form-type="other"
@@ -222,18 +210,14 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                                   {/* Show correct answer inline for each input field */}
                                   {testSubmitted && transformedResults && (
                                     <span className="inline-correction">
-                                      Correct: {String(transformedResults[questionNumber]?.correctAnswer || '')}
+                                      Correct: {String(transformedResults[cell.questionNumber]?.correctAnswer || '')}
                                     </span>
                                   )}
-                                </React.Fragment>
-                              );
-                            }
-                            // Regular text content
-                            return (
-                              <span key={partIndex} dangerouslySetInnerHTML={{ __html: part }} />
-                            );
-                          })}
-                          {/* Remove the old cell-level feedback since we now show it inline */}
+                                </>
+                              )}
+                            </span>
+                          ))}
+                          {/* Remove the cell-level feedback since we now show it inline */}
                         </div>
                       ) : (
                         <div className="text-cell">
@@ -302,10 +286,10 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                                 <>
                                 <input
                                   type="text"
-                                    className={`table-answer-input ${getAnswerClass(`${cell.questionNumber}_${partIndex}`)}`}
+                                    className={`table-answer-input ${getAnswerClass(cell.questionNumber)}`}
                                   placeholder="Answer"
-                                    value={getAnswerValue(`${cell.questionNumber}_${partIndex}`)}
-                                    onChange={(e) => handleAnswerChange(`${cell.questionNumber}_${partIndex}`, e.target.value)}
+                                    value={getAnswerValue(cell.questionNumber)}
+                                    onChange={(e) => handleAnswerChange(cell.questionNumber, e.target.value)}
                                   disabled={testSubmitted}
                                   autoComplete="off"
                                   data-form-type="other"
@@ -315,7 +299,22 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                                   {/* Show correct answer inline for each input field */}
                                   {testSubmitted && testResults && (
                                     <span className="inline-correction">
-                                      Correct: {String(testResults.results?.[`${cell.questionNumber}_${partIndex}`]?.correctAnswer || '')}
+                                      Correct: {(() => {
+                                        // Try multiple ways to get the correct answer
+                                        const questionNum = String(cell.questionNumber);
+                                        const correctAnswer = testResults.correctAnswers?.[questionNum] || 
+                                                             testResults.correctAnswers?.[cell.questionNumber] ||
+                                                             testResults.results?.[questionNum]?.correctAnswer ||
+                                                             testResults.results?.[cell.questionNumber]?.correctAnswer ||
+                                                             '';
+                                        
+                                        // Handle arrays (for multiple choice questions)
+                                        if (Array.isArray(correctAnswer)) {
+                                          return correctAnswer.join(', ');
+                                        }
+                                        
+                                        return String(correctAnswer);
+                                      })()}
                                     </span>
                                   )}
                                 </>

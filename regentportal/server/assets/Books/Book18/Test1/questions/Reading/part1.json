@@ -18,7 +18,7 @@
         {
           "questionNumber": "2",
           "question": "There will eventually be a daily harvest of as much as **2** ________ in weight of fruit and vegetables.",
-          "answer": "1,000 kg",
+          "answer": ["1,000 kg", "1000 kg", "1,000 kilograms", "1000 kilograms"],
           "numbered": true,
           "numberedIndex": 2
         },
@@ -32,7 +32,7 @@
       ],
       "correctAnswers": {
         "1": "lettuces",
-        "2": "1,000 kg",
+        "2": ["1,000 kg", "1000 kg", "1,000 kilograms", "1000 kilograms"],
         "3": "(food) consumption"
       }
     },
