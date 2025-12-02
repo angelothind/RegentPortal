@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ChooseXWords from '../Questions/ChooseXWords';
 import ChooseFrom from '../Questions/ChooseFrom';
 import TFNG from '../Questions/TFNG';
@@ -27,6 +27,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
   const [testResults, setTestResults] = useState(externalTestResults || null);
   const [testStarted, setTestStarted] = useState(isTeacherMode); // Add testStarted state like ListeningQuestionView
   const [currentPassage, setCurrentPassage] = useState(sharedPassage || 1); // Track current passage
+  const abortControllerRef = useRef(null); // Track abort controller for request cancellation
   
   // Use external test results if provided (for teacher view) - same pattern as ListeningQuestionView
   const finalTestResults = externalTestResults || testResults;
@@ -41,68 +42,124 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
   useEffect(() => {
     if (sharedPassage && sharedPassage !== currentPassage) {
       console.log('🔄 QuestionView: Updating currentPassage from prop:', sharedPassage);
+      // Cancel any in-flight requests when passage changes
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+        abortControllerRef.current = null;
+      }
+      // Clear question data immediately to prevent showing stale content
+      setQuestionData(null);
       setCurrentPassage(sharedPassage);
     }
   }, [sharedPassage, currentPassage]);
 
+  // Cleanup: Cancel any in-flight requests when component unmounts
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
+
   // Wrap fetchQuestionData in useCallback to prevent infinite re-renders
-  const fetchQuestionData = useCallback(async () => {
+  const fetchQuestionData = useCallback(async (passageNumber = null) => {
     if (!selectedTest) {
       console.log('❌ No selectedTest provided to QuestionView');
       setQuestionData(null);
       return;
     }
 
-    console.log('🔍 QuestionView: Fetching questions for passage:', currentPassage);
+    // Cancel any previous in-flight request to prevent race conditions
+    if (abortControllerRef.current) {
+      console.log('🛑 Cancelling previous fetch request');
+      abortControllerRef.current.abort();
+    }
+
+    // In teacher mode, prefer sharedPassage prop; otherwise use currentPassage state
+    // This prevents race conditions where state hasn't updated yet
+    const passageToFetch = passageNumber || (isTeacherMode && sharedPassage ? sharedPassage : currentPassage);
+    
+    console.log('🔍 QuestionView: Fetching questions for passage:', passageToFetch);
+    console.log('🔍 QuestionView: Using passage from:', {
+      passageNumber,
+      isTeacherMode,
+      sharedPassage,
+      currentPassage,
+      finalPassage: passageToFetch
+    });
+    
+    // Create new AbortController for this request
+    const abortController = new AbortController();
+    abortControllerRef.current = abortController;
+    
     setLoading(true);
     setError(null);
+    // Clear old data immediately to prevent showing stale content
+    setQuestionData(null);
 
     try {
       // Fetch question data for current passage with test type
-      const endpoint = `${API_BASE}/api/tests/${selectedTest.testId._id}/questions/part${currentPassage}?testType=${selectedTest.type}`;
+      const endpoint = `${API_BASE}/api/tests/${selectedTest.testId._id}/questions/part${passageToFetch}?testType=${selectedTest.type}`;
       console.log('📡 Fetching from endpoint:', endpoint);
       
-      const response = await fetch(endpoint);
+      const response = await fetch(endpoint, {
+        signal: abortController.signal
+      });
+      
+      // Check if request was aborted
+      if (abortController.signal.aborted) {
+        console.log('🛑 Request was aborted, ignoring response');
+        return;
+      }
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
       const data = await response.json();
-      console.log('📋 Question data loaded:', data);
+      
+      // Double-check this data is still for the correct passage (in case of rapid toggling)
+      // Compare against the current passage value to ensure we're not showing stale data
+      const currentExpectedPassage = isTeacherMode && sharedPassage ? sharedPassage : currentPassage;
+      if (currentExpectedPassage !== passageToFetch) {
+        console.log('⚠️ Passage changed during fetch, discarding stale data. Expected:', currentExpectedPassage, 'Got:', passageToFetch);
+        return;
+      }
+      
+      console.log('📋 Question data loaded for passage:', passageToFetch);
       console.log('📋 Question templates:', data.questionData?.templates);
       setQuestionData(data);
+      setLoading(false);
     } catch (error) {
+      // Ignore abort errors (they're expected when cancelling)
+      if (error.name === 'AbortError') {
+        console.log('🛑 Fetch was aborted (expected when toggling quickly)');
+        // Don't update loading state - new request will handle it
+        return;
+      }
       console.error('❌ Failed to fetch question data:', error);
       setError('Failed to load questions');
-    } finally {
       setLoading(false);
     }
-  }, [selectedTest, currentPassage]);
+  }, [selectedTest, currentPassage, isTeacherMode, sharedPassage]);
 
-  // In teacher mode, fetch questions when testData becomes available
+  // In teacher mode, fetch questions when testData becomes available or when sharedPassage changes
   useEffect(() => {
-    if (isTeacherMode && testData && currentPassage) {
-      console.log('👨‍🏫 Teacher mode: Initial question data fetch for passage:', currentPassage);
-      fetchQuestionData();
+    if (isTeacherMode && testData && sharedPassage) {
+      console.log('👨‍🏫 Teacher mode: Fetching question data for passage:', sharedPassage);
+      // Use sharedPassage directly to avoid race conditions
+      fetchQuestionData(sharedPassage);
     }
-  }, [isTeacherMode, testData, currentPassage, fetchQuestionData]);
+  }, [isTeacherMode, testData, sharedPassage, fetchQuestionData]);
 
-  // In teacher mode, fetch question data when passage changes and testData is available
+  // In student mode, fetch question data when passage changes
   useEffect(() => {
-    if (isTeacherMode) {
-      if (testData) {
-        console.log('👨‍🏫 Teacher mode: Fetching question data for passage:', currentPassage);
-        fetchQuestionData();
-      } else {
-        console.log('👨‍🏫 Teacher mode: No testData available yet');
-      }
-      return;
+    if (!isTeacherMode && selectedTest && currentPassage) {
+      console.log('👨‍🎓 Student mode: Fetching question data for passage:', currentPassage);
+      fetchQuestionData(currentPassage);
     }
-    
-    console.log('👨‍🎓 Student mode: Fetching question data for passage:', currentPassage);
-    fetchQuestionData();
-  }, [selectedTest, currentPassage, isTeacherMode, testData, fetchQuestionData]);
+  }, [selectedTest, currentPassage, isTeacherMode, fetchQuestionData]);
 
   // Load saved answers from localStorage on component mount (only for students, not teachers)
   useEffect(() => {
