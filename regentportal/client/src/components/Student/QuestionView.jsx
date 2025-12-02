@@ -28,6 +28,9 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
   const [testStarted, setTestStarted] = useState(isTeacherMode); // Add testStarted state like ListeningQuestionView
   const [currentPassage, setCurrentPassage] = useState(sharedPassage || 1); // Track current passage
   const abortControllerRef = useRef(null); // Track abort controller for request cancellation
+  const expectedPassageRef = useRef(null); // Track which passage we're currently fetching for
+  const activePassageRef = useRef(sharedPassage || 1); // Track the active passage that should be displayed
+  const fetchRequestIdRef = useRef(0); // Track unique request IDs to ensure we only accept the latest fetch
   
   // Use external test results if provided (for teacher view) - same pattern as ListeningQuestionView
   const finalTestResults = externalTestResults || testResults;
@@ -42,16 +45,27 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
   useEffect(() => {
     if (sharedPassage && sharedPassage !== currentPassage) {
       console.log('🔄 QuestionView: Updating currentPassage from prop:', sharedPassage);
+      // Update active passage ref immediately
+      activePassageRef.current = sharedPassage;
       // Cancel any in-flight requests when passage changes
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
         abortControllerRef.current = null;
       }
+      // Clear expected passage ref to invalidate any in-flight requests
+      expectedPassageRef.current = null;
       // Clear question data immediately to prevent showing stale content
       setQuestionData(null);
       setCurrentPassage(sharedPassage);
     }
   }, [sharedPassage, currentPassage]);
+
+  // Keep activePassageRef in sync with sharedPassage
+  useEffect(() => {
+    if (sharedPassage) {
+      activePassageRef.current = sharedPassage;
+    }
+  }, [sharedPassage]);
 
   // Cleanup: Cancel any in-flight requests when component unmounts
   useEffect(() => {
@@ -80,7 +94,12 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     // This prevents race conditions where state hasn't updated yet
     const passageToFetch = passageNumber || (isTeacherMode && sharedPassage ? sharedPassage : currentPassage);
     
-    console.log('🔍 QuestionView: Fetching questions for passage:', passageToFetch);
+    // Store the expected passage for this fetch to validate later
+    expectedPassageRef.current = passageToFetch;
+    // Generate unique request ID for this fetch
+    const requestId = ++fetchRequestIdRef.current;
+    
+    console.log('🔍 QuestionView: Fetching questions for passage:', passageToFetch, 'Request ID:', requestId);
     console.log('🔍 QuestionView: Using passage from:', {
       passageNumber,
       isTeacherMode,
@@ -119,15 +138,44 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       
       const data = await response.json();
       
-      // Double-check this data is still for the correct passage (in case of rapid toggling)
-      // Compare against the current passage value to ensure we're not showing stale data
+      // CRITICAL: Validate this data is still for the correct passage before setting it
+      // Check multiple sources to ensure we're not showing stale data
+      const fetchStartedFor = expectedPassageRef.current;
+      const currentActivePassage = activePassageRef.current;
       const currentExpectedPassage = isTeacherMode && sharedPassage ? sharedPassage : currentPassage;
-      if (currentExpectedPassage !== passageToFetch) {
-        console.log('⚠️ Passage changed during fetch, discarding stale data. Expected:', currentExpectedPassage, 'Got:', passageToFetch);
+      const currentRequestId = fetchRequestIdRef.current;
+      
+      // Check 1: Ensure this is still the latest request (not a stale one)
+      if (requestId !== currentRequestId) {
+        console.log('⚠️ This is not the latest request, discarding. Request ID:', requestId, 'Current:', currentRequestId);
         return;
       }
       
-      console.log('📋 Question data loaded for passage:', passageToFetch);
+      // Check 2: If ANY of these don't match passageToFetch, discard this data (it's stale)
+      // This triple-check ensures we catch race conditions even in production builds
+      if (fetchStartedFor !== passageToFetch || 
+          currentActivePassage !== passageToFetch || 
+          currentExpectedPassage !== passageToFetch) {
+        console.log('⚠️ Passage changed during fetch, discarding stale data.', {
+          fetchStartedFor,
+          passageToFetch,
+          currentActivePassage,
+          currentExpectedPassage,
+          isTeacherMode,
+          sharedPassage,
+          currentPassage,
+          requestId
+        });
+        return;
+      }
+      
+      // Check 3: Ensure abort signal wasn't triggered (double-check)
+      if (abortController.signal.aborted) {
+        console.log('🛑 Request was aborted (final check), ignoring response');
+        return;
+      }
+      
+      console.log('📋 Question data loaded for passage:', passageToFetch, 'Request ID:', requestId);
       console.log('📋 Question templates:', data.questionData?.templates);
       setQuestionData(data);
       setLoading(false);
