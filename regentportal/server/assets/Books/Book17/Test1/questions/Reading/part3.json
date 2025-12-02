@@ -2,38 +2,30 @@
   "partNumber": 3,
   "templates": [
     {
-      "questionType": "choose-x-word",
+      "questionType": "choose-from",
       "introInstruction": "Questions 27-31\nComplete the summary using the list of phrases, A-J, below.",
       "formattingInstruction": "Write the correct letter, A-J, in boxes 27-31 on your answer sheet.",
-      "notesTitle": "The story behind the hunt for Charles II",
+      "mainQuestion": "The story behind the hunt for Charles II",
+      "summaryText": "Charles II's father was executed by the Parliamentarian forces in 1649. Charles II then formed a **27** ________ with the Scots, and in order to become King of Scots, he abandoned an important **28** ________ that was held by his father and had contributed to his father's death. The opposing sides then met outside Worcester in 1651. The battle led to a **29** ________ for the Parliamentarians and Charles had to flee for his life. A **30** ________ was offered for Charles's capture, but after six weeks spent in hiding, he eventually managed to reach the **31** ________ of continental Europe.",
       "questionBlock": [
-        {
-          "questionNumber": "27-31",
-          "text": "Charles II's father was executed by the Parliamentarian forces in 1649. Charles II then formed a **27** ________ with the Scots, and in order to become King of Scots, he abandoned an important **28** ________ that was held by his father and had contributed to his father's death. The opposing sides then met outside Worcester in 1651. The battle led to a **29** ________ for the Parliamentarians and Charles had to flee for his life. A **30** ________ was offered for Charles's capture, but after six weeks spent in hiding, he eventually managed to reach the **31** ________ of continental Europe.",
-          "blanks": [
-            { "number": "27", "answer": "" },
-            { "number": "28", "answer": "" },
-            { "number": "29", "answer": "" },
-            { "number": "30", "answer": "" },
-            { "number": "31", "answer": "" }
-          ]
-        }
+        { "questionNumber": "27" },
+        { "questionNumber": "28" },
+        { "questionNumber": "29" },
+        { "questionNumber": "30" },
+        { "questionNumber": "31" }
       ],
-      "wordBank": {
-        "title": "List of Phrases",
-          "options": [
-          { "letter": "A", "text": "military innovation" },
-          { "letter": "B", "text": "large reward" },
-          { "letter": "C", "text": "widespread conspiracy" },
-          { "letter": "D", "text": "relative safety" },
-          { "letter": "E", "text": "new government" },
-          { "letter": "F", "text": "decisive victory" },
-          { "letter": "G", "text": "political debate" },
-          { "letter": "H", "text": "strategic alliance" },
-          { "letter": "I", "text": "popular solution" },
-          { "letter": "J", "text": "religious conviction" }
-          ]
-      },
+      "options": [
+        { "letter": "A", "text": "military innovation" },
+        { "letter": "B", "text": "large reward" },
+        { "letter": "C", "text": "widespread conspiracy" },
+        { "letter": "D", "text": "relative safety" },
+        { "letter": "E", "text": "new government" },
+        { "letter": "F", "text": "decisive victory" },
+        { "letter": "G", "text": "political debate" },
+        { "letter": "H", "text": "strategic alliance" },
+        { "letter": "I", "text": "popular solution" },
+        { "letter": "J", "text": "religious conviction" }
+      ],
       "correctAnswers": {
         "27": "",
         "28": "",
@@ -43,33 +35,32 @@
       }
     },
     {
-      "questionType": "ysng",
+      "questionType": "TFNG",
+      "subType": "YSNG",
       "introInstruction": "Questions 32-35\nDo the following statements agree with the claims of the writer in Reading Passage 3?",
-      "formattingInstruction": "In boxes 32-35 on your answer sheet, write",
+      "formattingInstruction": "For questions 32-35 select",
       "questionBlock": [
         {
           "questionNumber": 32,
-          "question": "Charles chose Pepys for the task because he considered him to be trustworthy."
+          "question": "Charles chose Pepys for the task because he considered him to be trustworthy.",
+          "answer": ""
         },
         {
           "questionNumber": 33,
-          "question": "Charles's personal recollection of the escape lacked sufficient detail."
+          "question": "Charles's personal recollection of the escape lacked sufficient detail.",
+          "answer": ""
         },
         {
           "questionNumber": 34,
-          "question": "Charles indicated to Pepys that he had planned his escape before the battle."
+          "question": "Charles indicated to Pepys that he had planned his escape before the battle.",
+          "answer": ""
         },
         {
           "questionNumber": 35,
-          "question": "The inclusion of Charles's account is a positive aspect of the book."
+          "question": "The inclusion of Charles's account is a positive aspect of the book.",
+          "answer": ""
         }
-      ],
-      "correctAnswers": {
-        "32": "",
-        "33": "",
-        "34": "",
-        "35": ""
-      }
+      ]
     },
     {
       "questionType": "multiple-choice",

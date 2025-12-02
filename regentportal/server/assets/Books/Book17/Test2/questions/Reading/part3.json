@@ -66,68 +66,59 @@
       }
     },
     {
-      "questionType": "ysng",
+      "questionType": "TFNG",
+      "subType": "YSNG",
       "introInstruction": "Questions 32-36\nDo the following statements agree with the claims of the writer in Reading Passage 3?",
       "formattingInstruction": "For questions 32-36 select",
       "questionBlock": [
         {
           "questionNumber": 32,
-          "question": "Acknowledging people such as Plato or da Vinci as geniuses will help us understand the process by which great minds create new ideas."
+          "question": "Acknowledging people such as Plato or da Vinci as geniuses will help us understand the process by which great minds create new ideas.",
+          "answer": ""
         },
         {
           "questionNumber": 33,
-          "question": "The Law of Effect was discovered at a time when psychologists were seeking a scientific reason why creativity occurs."
+          "question": "The Law of Effect was discovered at a time when psychologists were seeking a scientific reason why creativity occurs.",
+          "answer": ""
         },
         {
           "questionNumber": 34,
-          "question": "The Law of Effect states that no planning is involved in the behaviour of organisms."
+          "question": "The Law of Effect states that no planning is involved in the behaviour of organisms.",
+          "answer": ""
         },
         {
           "questionNumber": 35,
-          "question": "The Law of Effect sets out clear explanations about the sources of new ideas and behaviours."
+          "question": "The Law of Effect sets out clear explanations about the sources of new ideas and behaviours.",
+          "answer": ""
         },
         {
           "questionNumber": 36,
-          "question": "Many scientists are now turning away from the notion of intelligent design and genius."
+          "question": "Many scientists are now turning away from the notion of intelligent design and genius.",
+          "answer": ""
         }
-      ],
-      "correctAnswers": {
-        "32": "",
-        "33": "",
-        "34": "",
-        "35": "",
-        "36": ""
-      }
+      ]
     },
     {
-      "questionType": "choose-x-word",
+      "questionType": "choose-from",
       "introInstruction": "Questions 37-40\nComplete the summary using the list of words, A-G, below.",
       "formattingInstruction": "Write the correct letter, A-G, in boxes 37-40 on your answer sheet.",
-      "notesTitle": "The origins of creative behaviour",
+      "mainQuestion": "The origins of creative behaviour",
+      "summaryText": "The traditional view of scientific discovery is that breakthroughs happen when a single great mind has sudden **37** ________. Although this can occur, it is not often the case. Advances are more likely to be the result of a longer process. In some cases, this process involves **38** ________, such as Nicholson's theory about proto-elements. In others, simple necessity may provoke innovation, as with Westrope's decision to modify the position of his riding stirrups. There is also often an element of **39** ________, for example, the coincidence of ideas that led to the invention of the Post-It note. With both the Law of Natural Selection and the Law of Effect, there may be no clear **40** ________ involved, but merely a process of variation and selection.",
       "questionBlock": [
-        {
-          "questionNumber": "37-40",
-          "text": "The traditional view of scientific discovery is that breakthroughs happen when a single great mind has sudden **37** ________. Although this can occur, it is not often the case. Advances are more likely to be the result of a longer process. In some cases, this process involves **38** ________, such as Nicholson's theory about proto-elements. In others, simple necessity may provoke innovation, as with Westrope's decision to modify the position of his riding stirrups. There is also often an element of **39** ________, for example, the coincidence of ideas that led to the invention of the Post-It note. With both the Law of Natural Selection and the Law of Effect, there may be no clear **40** ________ involved, but merely a process of variation and selection.",
-          "blanks": [
-            { "number": "37", "answer": "" },
-            { "number": "38", "answer": "" },
-            { "number": "39", "answer": "" },
-            { "number": "40", "answer": "" }
-          ]
-        }
+        { "questionNumber": "37" },
+        { "questionNumber": "38" },
+        { "questionNumber": "39" },
+        { "questionNumber": "40" }
       ],
-      "wordBank": {
-        "title": "List of Words",
-        "options": [
-          { "letter": "A", "text": "invention" },
-          { "letter": "B", "text": "goals" },
-          { "letter": "C", "text": "compromise" },
-          { "letter": "D", "text": "mistakes" },
-          { "letter": "E", "text": "luck" },
-          { "letter": "F", "text": "inspiration" },
-          { "letter": "G", "text": "experiments" }
-        ]
-      },
+      "options": [
+        { "letter": "A", "text": "invention" },
+        { "letter": "B", "text": "goals" },
+        { "letter": "C", "text": "compromise" },
+        { "letter": "D", "text": "mistakes" },
+        { "letter": "E", "text": "luck" },
+        { "letter": "F", "text": "inspiration" },
+        { "letter": "G", "text": "experiments" }
+      ],
       "correctAnswers": {
         "37": "",
         "38": "",

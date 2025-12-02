@@ -77,74 +77,66 @@
       ]
     },
     {
-      "questionType": "choose-two-letters",
+      "questionType": "multiple-choice-two",
       "introInstruction": "Questions 17 and 18",
-      "formattingInstruction": "Choose TWO letters, A-E.",
-      "questionBlock": [
-        {
-          "questionNumber": "17&18",
-          "question": "Which TWO reasons does the speaker give for recommending Alive and Kicking?",
-          "options": [
-            {
-              "letter": "A",
-              "text": "It will appeal to both boys and girls."
-            },
-            {
-              "letter": "B",
-              "text": "The author is well known."
-            },
-            {
-              "letter": "C",
-              "text": "It has colourful illustrations."
-            },
-            {
-              "letter": "D",
-              "text": "It is funny."
-            },
-            {
-              "letter": "E",
-              "text": "It deals with an important topic."
-            }
-          ],
-          "answer": ["D", "E"],
-          "note": "IN EITHER ORDER"
-        }
-      ]
+      "formattingInstruction": "Which TWO reasons does the speaker give for recommending Alive and Kicking?",
+      "questionGroup": {
+        "questionNumbers": [17, 18],
+        "options": [
+          {
+            "letter": "A",
+            "text": "It will appeal to both boys and girls."
+          },
+          {
+            "letter": "B",
+            "text": "The author is well known."
+          },
+          {
+            "letter": "C",
+            "text": "It has colourful illustrations."
+          },
+          {
+            "letter": "D",
+            "text": "It is funny."
+          },
+          {
+            "letter": "E",
+            "text": "It deals with an important topic."
+          }
+        ],
+        "correctAnswers": ["D", "E"]
+      }
     },
     {
-      "questionType": "choose-two-letters",
+      "questionType": "multiple-choice-two",
       "introInstruction": "Questions 19 and 20",
-      "formattingInstruction": "Choose TWO letters, A-E.",
-      "questionBlock": [
-        {
-          "questionNumber": "19&20",
-          "question": "Which TWO pieces of advice does the speaker give to parents about reading?",
-          "options": [
-            {
-              "letter": "A",
-              "text": "Encourage children to write down new vocabulary."
-            },
-            {
-              "letter": "B",
-              "text": "Allow children to listen to audio books."
-            },
-            {
-              "letter": "C",
-              "text": "Get recommendations from librarians."
-            },
-            {
-              "letter": "D",
-              "text": "Give children a choice about what they read."
-            },
-            {
-              "letter": "E",
-              "text": "Only read aloud to children until they can read independently."
-            }
-          ],
-          "answer": ["B", "C"],
-          "note": "IN EITHER ORDER"
-        }
-      ]
+      "formattingInstruction": "Which TWO pieces of advice does the speaker give to parents about reading?",
+      "questionGroup": {
+        "questionNumbers": [19, 20],
+        "options": [
+          {
+            "letter": "A",
+            "text": "Encourage children to write down new vocabulary."
+          },
+          {
+            "letter": "B",
+            "text": "Allow children to listen to audio books."
+          },
+          {
+            "letter": "C",
+            "text": "Get recommendations from librarians."
+          },
+          {
+            "letter": "D",
+            "text": "Give children a choice about what they read."
+          },
+          {
+            "letter": "E",
+            "text": "Only read aloud to children until they can read independently."
+          }
+        ],
+        "correctAnswers": ["B", "C"]
+      }
     }
   ]
 } 

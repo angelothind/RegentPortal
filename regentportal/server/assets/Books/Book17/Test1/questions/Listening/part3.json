@@ -3,7 +3,7 @@
   "templates": [
     {
       "questionType": "multiple-choice",
-      "introInstruction": "Questions 21-30",
+      "introInstruction": "Questions 21-26",
       "formattingInstruction": "Choose the correct letter, A, B or C.",
       "sectionTitle": "Work experience for veterinary science students",
       "questionBlock": [
@@ -13,7 +13,7 @@
           "options": [
             {
               "letter": "A",
-              "text": "making initial contact with suitable farms"
+              "text": "make initial contact with suitable farms"
             },
             {
               "letter": "B",
@@ -24,7 +24,7 @@
               "text": "finding a placement for the required length of time"
             }
           ],
-          "answer": "A"
+          "answer": ""
         },
         {
           "questionNumber": 22,
@@ -43,96 +43,119 @@
               "text": "a newly born lamb that was having trouble feeding."
             }
           ],
-          "answer": "B"
-        }
-      ]
-    },
-    {
-      "questionType": "matching",
-      "introInstruction": "Questions 23-27\nWhich opinion do the speakers give about each of the following aspects of The Emporium's production of Romeo and Juliet?",
-      "formattingInstruction": "Choose FIVE answers from the box and write the correct letter, A-G, next to Questions 23-27.",
-      "sectionTitle": "The Emporium's production of Romeo and Juliet",
-      "questionBlock": [
+          "answer": ""
+        },
         {
           "questionNumber": 23,
-          "question": "the set",
-          "answer": "A"
+          "question": "Diana says the sheep on her farm",
+          "options": [
+            {
+              "letter": "A",
+              "text": "were of various different varieties."
+            },
+            {
+              "letter": "B",
+              "text": "were mainly reared for their meat."
+            },
+            {
+              "letter": "C",
+              "text": "had better quality wool than sheep on the hills."
+            }
+          ],
+          "answer": ""
         },
         {
           "questionNumber": 24,
-          "question": "the lighting",
-          "answer": "C"
+          "question": "What did the students learn about adding supplements to chicken feed?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "These should only be given if specially needed."
+            },
+            {
+              "letter": "B",
+              "text": "It is worth paying extra for the most effective ones."
+            },
+            {
+              "letter": "C",
+              "text": "The amount given at one time should be limited."
+            }
+          ],
+          "answer": ""
         },
         {
           "questionNumber": 25,
-          "question": "the costume design",
-          "answer": "D"
+          "question": "What happened when Diana was working with dairy cows?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "She identified some cows incorrectly."
+            },
+            {
+              "letter": "B",
+              "text": "She accidentally threw some milk away."
+            },
+            {
+              "letter": "C",
+              "text": "She made a mistake when storing milk."
+            }
+          ],
+          "answer": ""
         },
         {
           "questionNumber": 26,
-          "question": "the music",
-          "answer": "E"
-        },
-        {
-          "questionNumber": 27,
-          "question": "the actors' delivery",
-          "answer": "F"
+          "question": "What did both farmers mention about vets and farming?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "Vets are failing to cope with some aspects of animal health."
+            },
+            {
+              "letter": "B",
+              "text": "There needs to be a fundamental change in the training of vets."
+            },
+            {
+              "letter": "C",
+              "text": "Some jobs could be done by the farmer rather than by a vet."
+            }
+          ],
+          "answer": ""
         }
       ],
-      "opinionsBox": {
-        "title": "Opinions",
-        "options": [
-          {
-            "letter": "A",
-            "text": "They both expected this to be more traditional."
-          },
-          {
-            "letter": "B",
-            "text": "They both thought this was original."
-          },
-          {
-            "letter": "C",
-            "text": "They agree this created the right atmosphere."
-          },
-          {
-            "letter": "D",
-            "text": "They agree this was a major strength."
-          },
-          {
-            "letter": "E",
-            "text": "They were both disappointed by this."
-          },
-          {
-            "letter": "F",
-            "text": "They disagree about why this was an issue."
-          },
-          {
-            "letter": "G",
-            "text": "They disagree about how this could be improved."
-          }
-        ]
+      "correctAnswers": {
+        "21": "",
+        "22": "",
+        "23": "",
+        "24": "",
+        "25": "",
+        "26": ""
       }
     },
     {
       "questionType": "matching",
-      "introInstruction": "Questions 28-30\nWhat opinion do the students give about each of the following modules on their veterinary science course?",
-      "formattingInstruction": "Choose THREE answers from the box and write the correct letter, A-F, next to questions 28-30.",
+      "introInstruction": "Questions 27-30\nWhat opinion do the students give about each of the following modules on their veterinary science course?",
+      "formattingInstruction": "Choose FOUR answers from the box and write the correct letter, A-F, next to questions 27-30.",
       "sectionTitle": "Modules on Veterinary Science course",
       "questionBlock": [
         {
-          "questionNumber": 28,
+          "questionNumber": 27,
           "question": "Medical terminology",
-          "answer": "A"
+          "answer": ""
+        },
+        {
+          "questionNumber": 28,
+          "question": "Diet and nutrition",
+          "answer": ""
         },
         {
           "questionNumber": 29,
-          "question": "Diet and nutrition",
-          "answer": "B"
+          "question": "Animal disease",
+          "answer": ""
         },
         {
           "questionNumber": 30,
-          "question": "Animal disease",
-          "answer": "C"
+          "question": "Wildlife medication",
+          "answer": ""
         }
       ],
       "opinionsBox": {
