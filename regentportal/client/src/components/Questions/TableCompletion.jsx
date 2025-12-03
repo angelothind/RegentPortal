@@ -190,33 +190,42 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                         </div>
                       ) : cell.type === 'question' ? (
                         <div className="question-cell">
-                          {processNewlines(stripMarkdownBold(cell.content)).split('________').map((part, partIndex, array) => (
-                            <span key={partIndex}>
-                              <span dangerouslySetInnerHTML={{ __html: part }} />
-                              {partIndex < array.length - 1 && (
-                                <>
-                                <input
-                                  type="text"
-                                    className={`listening-table-answer-input ${getAnswerClass(cell.questionNumber)}`}
-                                  placeholder="Answer"
-                                    value={getAnswerValue(cell.questionNumber)}
-                                    onChange={(e) => handleAnswerChange(cell.questionNumber, e.target.value)}
-                                  disabled={testSubmitted}
-                                  autoComplete="off"
-                                  data-form-type="other"
-                                  data-lpignore="true"
-                                  data-1p-ignore="true"
-                                />
-                                  {/* Show correct answer inline for each input field */}
-                                  {testSubmitted && transformedResults && (
-                                    <span className="inline-correction">
-                                      Correct: {String(transformedResults[cell.questionNumber]?.correctAnswer || '')}
-                                    </span>
-                                  )}
-                                </>
-                              )}
-                            </span>
-                          ))}
+                          {processNewlines(stripMarkdownBold(cell.content)).split('________').map((part, partIndex, array) => {
+                            // Create unique key for each input within a cell
+                            // If there's only one blank, use questionNumber directly
+                            // If multiple blanks, append partIndex to make it unique
+                            const inputKey = array.length === 2 
+                              ? cell.questionNumber 
+                              : `${cell.questionNumber}_${partIndex}`;
+                            
+                            return (
+                              <span key={partIndex}>
+                                <span dangerouslySetInnerHTML={{ __html: part }} />
+                                {partIndex < array.length - 1 && (
+                                  <>
+                                  <input
+                                    type="text"
+                                      className={`listening-table-answer-input ${getAnswerClass(cell.questionNumber)}`}
+                                    placeholder="Answer"
+                                      value={getAnswerValue(inputKey)}
+                                      onChange={(e) => handleAnswerChange(inputKey, e.target.value)}
+                                    disabled={testSubmitted}
+                                    autoComplete="off"
+                                    data-form-type="other"
+                                    data-lpignore="true"
+                                    data-1p-ignore="true"
+                                  />
+                                    {/* Show correct answer inline for each input field */}
+                                    {testSubmitted && transformedResults && (
+                                      <span className="inline-correction">
+                                        Correct: {String(transformedResults[cell.questionNumber]?.correctAnswer || '')}
+                                      </span>
+                                    )}
+                                  </>
+                                )}
+                              </span>
+                            );
+                          })}
                           {/* Remove the cell-level feedback since we now show it inline */}
                         </div>
                       ) : (
@@ -279,48 +288,57 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                         </div>
                       ) : cell.type === 'question' ? (
                         <div className="question-cell">
-                          {processNewlines(stripMarkdownBold(cell.content)).split('________').map((part, partIndex, array) => (
-                            <span key={partIndex}>
-                              <span dangerouslySetInnerHTML={{ __html: part }} />
-                              {partIndex < array.length - 1 && (
-                                <>
-                                <input
-                                  type="text"
-                                    className={`table-answer-input ${getAnswerClass(cell.questionNumber)}`}
-                                  placeholder="Answer"
-                                    value={getAnswerValue(cell.questionNumber)}
-                                    onChange={(e) => handleAnswerChange(cell.questionNumber, e.target.value)}
-                                  disabled={testSubmitted}
-                                  autoComplete="off"
-                                  data-form-type="other"
-                                  data-lpignore="true"
-                                  data-1p-ignore="true"
-                                />
-                                  {/* Show correct answer inline for each input field */}
-                                  {testSubmitted && testResults && (
-                                    <span className="inline-correction">
-                                      Correct: {(() => {
-                                        // Try multiple ways to get the correct answer
-                                        const questionNum = String(cell.questionNumber);
-                                        const correctAnswer = testResults.correctAnswers?.[questionNum] || 
-                                                             testResults.correctAnswers?.[cell.questionNumber] ||
-                                                             testResults.results?.[questionNum]?.correctAnswer ||
-                                                             testResults.results?.[cell.questionNumber]?.correctAnswer ||
-                                                             '';
-                                        
-                                        // Handle arrays (for multiple choice questions)
-                                        if (Array.isArray(correctAnswer)) {
-                                          return correctAnswer.join(', ');
-                                        }
-                                        
-                                        return String(correctAnswer);
-                                      })()}
-                                    </span>
-                                  )}
-                                </>
-                              )}
-                            </span>
-                          ))}
+                          {processNewlines(stripMarkdownBold(cell.content)).split('________').map((part, partIndex, array) => {
+                            // Create unique key for each input within a cell
+                            // If there's only one blank, use questionNumber directly
+                            // If multiple blanks, append partIndex to make it unique
+                            const inputKey = array.length === 2 
+                              ? cell.questionNumber 
+                              : `${cell.questionNumber}_${partIndex}`;
+                            
+                            return (
+                              <span key={partIndex}>
+                                <span dangerouslySetInnerHTML={{ __html: part }} />
+                                {partIndex < array.length - 1 && (
+                                  <>
+                                  <input
+                                    type="text"
+                                      className={`table-answer-input ${getAnswerClass(cell.questionNumber)}`}
+                                    placeholder="Answer"
+                                      value={getAnswerValue(inputKey)}
+                                      onChange={(e) => handleAnswerChange(inputKey, e.target.value)}
+                                    disabled={testSubmitted}
+                                    autoComplete="off"
+                                    data-form-type="other"
+                                    data-lpignore="true"
+                                    data-1p-ignore="true"
+                                  />
+                                    {/* Show correct answer inline for each input field */}
+                                    {testSubmitted && testResults && (
+                                      <span className="inline-correction">
+                                        Correct: {(() => {
+                                          // Try multiple ways to get the correct answer
+                                          const questionNum = String(cell.questionNumber);
+                                          const correctAnswer = testResults.correctAnswers?.[questionNum] || 
+                                                                 testResults.correctAnswers?.[cell.questionNumber] ||
+                                                                 testResults.results?.[questionNum]?.correctAnswer ||
+                                                                 testResults.results?.[cell.questionNumber]?.correctAnswer ||
+                                                                 '';
+                                          
+                                          // Handle arrays (for multiple choice questions)
+                                          if (Array.isArray(correctAnswer)) {
+                                            return correctAnswer.join(', ');
+                                          }
+                                          
+                                          return String(correctAnswer);
+                                        })()}
+                                      </span>
+                                    )}
+                                  </>
+                                )}
+                              </span>
+                            );
+                          })}
                           {/* Remove the cell-level feedback since we now show it inline */}
                         </div>
                       ) : (

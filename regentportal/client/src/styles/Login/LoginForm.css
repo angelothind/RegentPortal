@@ -32,3 +32,30 @@
   font-size: 1rem;
   border-radius: 8px;
 }
+
+.login-button:disabled,
+.back-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-error-message {
+  background-color: #fee;
+  color: #c33;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #fcc;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.login-input-error {
+  border-color: #c33 !important;
+  background-color: #fff5f5;
+}
+
+.login-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
