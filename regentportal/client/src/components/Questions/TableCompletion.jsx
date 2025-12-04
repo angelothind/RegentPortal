@@ -78,29 +78,104 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
   };
 
   const getAnswerClass = (questionNumber) => {
-    if (!testSubmitted || !transformedResults) return '';
+    if (!testSubmitted) return '';
     
-    const result = transformedResults[questionNumber];
-    console.log(`🎯 getAnswerClass for question ${questionNumber}:`, result);
-    if (!result) return '';
+    try {
+      // Convert to string and use base question number for marking (handles both "4" and "4_0" style keys)
+      const questionNumberStr = String(questionNumber);
+      const baseQuestionNumber = questionNumberStr.includes('_')
+        ? questionNumberStr.split('_')[0]
+        : questionNumberStr;
+      
+      // Also try numeric version in case results are keyed by numbers
+      const baseQuestionNumberNum = Number(baseQuestionNumber);
+      
+      // First try transformedResults
+      if (transformedResults) {
+        const result = transformedResults[baseQuestionNumber] || transformedResults[baseQuestionNumberNum];
+        console.log(`🎯 getAnswerClass for question ${baseQuestionNumber} (from ${questionNumber}):`, result);
+        if (result && typeof result === 'object' && 'isCorrect' in result) {
+          return result.isCorrect ? 'answer-correct' : 'answer-incorrect';
+        }
+      }
+      
+      // Fallback to testResults.results
+      if (testResults?.results) {
+        const fallbackResult = testResults.results[baseQuestionNumber] || testResults.results[baseQuestionNumberNum];
+        if (fallbackResult && typeof fallbackResult === 'object' && 'isCorrect' in fallbackResult) {
+          return fallbackResult.isCorrect ? 'answer-correct' : 'answer-incorrect';
+        }
+      }
+    } catch (error) {
+      console.error('❌ Error in getAnswerClass:', error, 'questionNumber:', questionNumber);
+      return '';
+    }
     
-    return result.isCorrect ? 'answer-correct' : 'answer-incorrect';
+    return '';
   };
 
-  const getAnswerValue = (questionNumber) => {
-    if (testSubmitted && testResults) {
-      // First try to get from testResults.answers (teacher view)
-      if (testResults.answers && testResults.answers[questionNumber] !== undefined) {
-        return testResults.answers[questionNumber];
+  const getAnswerValue = (questionNumberOrKey) => {
+    try {
+      // Convert to string to handle both numbers and strings safely
+      const keyStr = String(questionNumberOrKey);
+      
+      // Handle input keys with suffixes (e.g., "4_0", "4_1") for multiple inputs in a cell
+      // First, always check currentAnswers for the specific key (for active editing)
+      if (currentAnswers) {
+        if (currentAnswers[keyStr] !== undefined) {
+          return currentAnswers[keyStr];
+        }
+        // Also check with original value in case it's stored as a number
+        if (currentAnswers[questionNumberOrKey] !== undefined) {
+          return currentAnswers[questionNumberOrKey];
+        }
       }
-      // Then try from transformedResults (student view)
-      if (transformedResults && transformedResults[questionNumber]?.userAnswer !== undefined) {
-        return transformedResults[questionNumber].userAnswer;
+      
+      if (testSubmitted && testResults) {
+        // After submission, check testResults.answers for the specific key
+        // This handles cases where answers are stored with suffixes like "4_0", "4_1"
+        if (testResults.answers) {
+          if (testResults.answers[keyStr] !== undefined) {
+            return testResults.answers[keyStr];
+          }
+          // Also check with original value
+          if (testResults.answers[questionNumberOrKey] !== undefined) {
+            return testResults.answers[questionNumberOrKey];
+          }
+        }
+        
+        // Extract base question number if key has suffix (e.g., "4_0" -> "4")
+        const baseQuestionNumber = keyStr.includes('_') 
+          ? keyStr.split('_')[0] 
+          : keyStr;
+        const baseQuestionNumberNum = Number(baseQuestionNumber);
+        
+        // Try to get from transformedResults using base question number (for marking results)
+        if (transformedResults) {
+          const result = transformedResults[baseQuestionNumber] || transformedResults[baseQuestionNumberNum];
+          if (result && typeof result === 'object' && result.userAnswer !== undefined) {
+            // If the result has a userAnswer, it might be a combined answer
+            // For multiple inputs, we need to check if the answer was stored with the suffix
+            return result.userAnswer;
+          }
+        }
+        
+        // Try testResults.answers with base question number as fallback
+        if (testResults.answers) {
+          if (testResults.answers[baseQuestionNumber] !== undefined) {
+            return testResults.answers[baseQuestionNumber];
+          }
+          if (testResults.answers[baseQuestionNumberNum] !== undefined) {
+            return testResults.answers[baseQuestionNumberNum];
+          }
+        }
       }
-      // Finally fall back to currentAnswers
-      return currentAnswers[questionNumber] || '';
+    } catch (error) {
+      console.error('❌ Error in getAnswerValue:', error, 'questionNumberOrKey:', questionNumberOrKey);
+      return '';
     }
-    return currentAnswers[questionNumber] || '';
+    
+    return '';
   };
 
   if (!template || !template.tableData) {
@@ -216,9 +291,49 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                                     data-1p-ignore="true"
                                   />
                                     {/* Show correct answer inline for each input field */}
-                                    {testSubmitted && transformedResults && (
+                                    {testSubmitted && testResults && (
                                       <span className="inline-correction">
-                                        Correct: {String(transformedResults[cell.questionNumber]?.correctAnswer || '')}
+                                        Correct: {(() => {
+                                          try {
+                                            // Handle range questions (e.g., "3-4" should look up "3" and "4" separately)
+                                            let questionNumToLookup = cell.questionNumber;
+                                            
+                                            // Check if this is a range question and we have multiple inputs
+                                            if (typeof cell.questionNumber === 'string' && cell.questionNumber.includes('-') && array.length > 2) {
+                                              // Split range and get the question number for this specific input
+                                              const [startNum, endNum] = cell.questionNumber.split('-').map(Number);
+                                              // For each input in the range, use the corresponding question number
+                                              // partIndex 0 -> startNum, partIndex 1 -> startNum + 1, etc.
+                                              questionNumToLookup = startNum + partIndex;
+                                            }
+                                            
+                                            const questionNum = String(questionNumToLookup);
+                                            const questionNumAsNumber = Number(questionNumToLookup);
+                                            
+                                            // Try all possible key formats
+                                            const correctAnswer = 
+                                              testResults.correctAnswers?.[questionNum] || 
+                                              testResults.correctAnswers?.[questionNumAsNumber] ||
+                                              testResults.correctAnswers?.[questionNumToLookup] ||
+                                              transformedResults?.[questionNum]?.correctAnswer ||
+                                              transformedResults?.[questionNumAsNumber]?.correctAnswer ||
+                                              transformedResults?.[questionNumToLookup]?.correctAnswer ||
+                                              testResults.results?.[questionNum]?.correctAnswer ||
+                                              testResults.results?.[questionNumAsNumber]?.correctAnswer ||
+                                              testResults.results?.[questionNumToLookup]?.correctAnswer ||
+                                              '';
+                                            
+                                            // Handle arrays (for multiple choice questions)
+                                            if (Array.isArray(correctAnswer)) {
+                                              return correctAnswer.join(', ');
+                                            }
+                                            
+                                            return String(correctAnswer || '');
+                                          } catch (error) {
+                                            console.error('❌ Error getting correct answer:', error, 'cell.questionNumber:', cell.questionNumber);
+                                            return '';
+                                          }
+                                        })()}
                                       </span>
                                     )}
                                   </>
@@ -317,20 +432,45 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                                     {testSubmitted && testResults && (
                                       <span className="inline-correction">
                                         Correct: {(() => {
-                                          // Try multiple ways to get the correct answer
-                                          const questionNum = String(cell.questionNumber);
-                                          const correctAnswer = testResults.correctAnswers?.[questionNum] || 
-                                                                 testResults.correctAnswers?.[cell.questionNumber] ||
-                                                                 testResults.results?.[questionNum]?.correctAnswer ||
-                                                                 testResults.results?.[cell.questionNumber]?.correctAnswer ||
-                                                                 '';
-                                          
-                                          // Handle arrays (for multiple choice questions)
-                                          if (Array.isArray(correctAnswer)) {
-                                            return correctAnswer.join(', ');
+                                          try {
+                                            // Handle range questions (e.g., "3-4" should look up "3" and "4" separately)
+                                            let questionNumToLookup = cell.questionNumber;
+                                            
+                                            // Check if this is a range question and we have multiple inputs
+                                            if (typeof cell.questionNumber === 'string' && cell.questionNumber.includes('-') && array.length > 2) {
+                                              // Split range and get the question number for this specific input
+                                              const [startNum, endNum] = cell.questionNumber.split('-').map(Number);
+                                              // For each input in the range, use the corresponding question number
+                                              // partIndex 0 -> startNum, partIndex 1 -> startNum + 1, etc.
+                                              questionNumToLookup = startNum + partIndex;
+                                            }
+                                            
+                                            const questionNum = String(questionNumToLookup);
+                                            const questionNumAsNumber = Number(questionNumToLookup);
+                                            
+                                            // Try all possible key formats
+                                            const correctAnswer = 
+                                              testResults.correctAnswers?.[questionNum] || 
+                                              testResults.correctAnswers?.[questionNumAsNumber] ||
+                                              testResults.correctAnswers?.[questionNumToLookup] ||
+                                              transformedResults?.[questionNum]?.correctAnswer ||
+                                              transformedResults?.[questionNumAsNumber]?.correctAnswer ||
+                                              transformedResults?.[questionNumToLookup]?.correctAnswer ||
+                                              testResults.results?.[questionNum]?.correctAnswer ||
+                                              testResults.results?.[questionNumAsNumber]?.correctAnswer ||
+                                              testResults.results?.[questionNumToLookup]?.correctAnswer ||
+                                              '';
+                                            
+                                            // Handle arrays (for multiple choice questions)
+                                            if (Array.isArray(correctAnswer)) {
+                                              return correctAnswer.join(', ');
+                                            }
+                                            
+                                            return String(correctAnswer || '');
+                                          } catch (error) {
+                                            console.error('❌ Error getting correct answer:', error, 'cell.questionNumber:', cell.questionNumber);
+                                            return '';
                                           }
-                                          
-                                          return String(correctAnswer);
                                         })()}
                                       </span>
                                     )}

@@ -386,6 +386,55 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     console.log('📝 Submitting test with answers:', answers);
     console.log('📝 User data:', user);
     
+    // Normalize answer keys: convert "4_0", "4_1" style keys back to base question numbers
+    // This handles multiple inputs in a single cell
+    const normalizeAnswers = (answers) => {
+      const normalized = { ...answers };
+      const keysToRemove = [];
+      
+      // Find all keys with suffixes (e.g., "4_0", "4_1", "3-4_0", "3-4_1")
+      Object.keys(answers).forEach(key => {
+        if (typeof key === 'string' && key.includes('_')) {
+          const [baseQuestionNum, suffix] = key.split('_');
+          const suffixNum = Number(suffix);
+          
+          // Check if this is a valid suffix pattern (numeric suffix)
+          if (!isNaN(suffixNum)) {
+            // Check if base question number is a range (e.g., "3-4")
+            if (baseQuestionNum.includes('-')) {
+              // Range question: map each input to its corresponding question number
+              const [startNum, endNum] = baseQuestionNum.split('-').map(Number);
+              const targetQuestionNum = startNum + suffixNum;
+              
+              if (!isNaN(targetQuestionNum)) {
+                normalized[targetQuestionNum] = answers[key];
+                keysToRemove.push(key);
+              }
+            } else {
+              // Non-range question: use the first input's answer (suffix "_0")
+              // For cells with multiple inputs, typically only the first input is the actual answer
+              if (suffixNum === 0) {
+                // This is the first input - use it as the answer for the base question
+                normalized[baseQuestionNum] = answers[key];
+                keysToRemove.push(key);
+              } else {
+                // For subsequent inputs, remove them (they're typically just for display/formatting)
+                keysToRemove.push(key);
+              }
+            }
+          }
+        }
+      });
+      
+      // Remove the suffix keys
+      keysToRemove.forEach(key => delete normalized[key]);
+      
+      console.log('📝 Normalized answers (removed suffix keys):', normalized);
+      return normalized;
+    };
+    
+    const normalizedAnswers = normalizeAnswers(answers);
+    
     try {
       const response = await fetch(`${API_BASE}/api/submit/submit`, {
         method: 'POST',
@@ -395,7 +444,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
         body: JSON.stringify({
           testId: selectedTest.testId._id,
           testType: selectedTest.type,
-          answers: answers,
+          answers: normalizedAnswers,
           studentId: user._id
         })
       });
