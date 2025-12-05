@@ -48,8 +48,7 @@
     {
       "questionType": "multiple-choice-two",
       "introInstruction": "Questions 21 and 22\nChoose TWO letters, A-E.",
-      "formattingInstruction": "Write the correct letters in boxes 21 and 22 on your answer sheet.",
-      "mainQuestion": "Which TWO statements are made about the Roundtable on Sustainable Palm Oil (RSPO)?",
+      "formattingInstruction": "Which TWO statements are made about the Roundtable on Sustainable Palm Oil (RSPO)?",
       "questionGroup": {
         "questionNumbers": ["21", "22"],
         "options": [

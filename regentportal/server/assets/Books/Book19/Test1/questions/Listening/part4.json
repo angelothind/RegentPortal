@@ -21,10 +21,6 @@
           "answer": "walls"
         },
         {
-          "descriptiveText": "His son became an archaeologist and undertook an investigation of the site:",
-          "bulletLevel": 0
-        },
-        {
           "questionNumber": 32,
           "question": "His **32** ________ became an archaeologist and undertook an investigation of the site:",
           "answer": "son"
@@ -32,11 +28,12 @@
         {
           "questionNumber": 33,
           "question": "A traditional method used by local people to dig for **33** ________ was used to identify where stones were located.",
-          "answer": "fuel"
+          "answer": "fuel",
+          "bulletLevel": 1
         },
         {
           "descriptiveText": "Carbon dating later proved the site was Neolithic.",
-          "bulletLevel": 0
+          "bulletLevel": 1
         },
         {
           "questionNumber": 34,
@@ -62,7 +59,8 @@
         {
           "questionNumber": 36,
           "question": "Pots used for storage and to make **36** ________.",
-          "answer": "cheese"
+          "answer": "cheese",
+          "bulletLevel": 1
         },
         {
           "questionNumber": 37,

@@ -57,8 +57,8 @@
     {
       "questionType": "multiple-choice-two",
       "introInstruction": "Questions 23 and 24\nChoose TWO letters, A-E.",
-      "formattingInstruction": "Write the correct letters in boxes 23 and 24 on your answer sheet.",
-      "mainQuestion": "When comparing twentieth-century stadiums to ancient amphitheatres in Section D, which TWO negative features does the writer mention?",
+      "formattingInstruction": "When comparing twentieth-century stadiums to ancient amphitheatres in Section D, which TWO negative features does the writer mention?",
+     
       "questionGroup": {
         "questionNumbers": ["23", "24"],
         "options": [
@@ -90,8 +90,7 @@
     {
       "questionType": "multiple-choice-two",
       "introInstruction": "Questions 25 and 26\nChoose TWO letters, A-E.",
-      "formattingInstruction": "Write the correct letters in boxes 25 and 26 on your answer sheet.",
-      "mainQuestion": "Which TWO advantages of modern stadium design does the writer mention?",
+      "formattingInstruction": "Which TWO advantages of modern stadium design does the writer mention?",
       "questionGroup": {
         "questionNumbers": ["25", "26"],
         "options": [

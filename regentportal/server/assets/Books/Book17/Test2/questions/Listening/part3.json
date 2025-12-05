@@ -3,7 +3,7 @@
   "templates": [
     {
       "questionType": "multiple-choice-two",
-      "introInstruction": "Choose TWO letters, A-E.",
+      "introInstruction": "Questions 21 and 22",
       "formattingInstruction": "Which TWO things do the students agree they need to include in their review of Romeo and Juliet?",
       "questionGroup": {
         "questionNumbers": ["21", "22"],
