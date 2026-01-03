@@ -34,6 +34,39 @@ router.get('/student/:studentId', async (req, res) => {
   }
 });
 
+// Get most recent submission for a specific student and test (MUST come before /:testId)
+// Query parameter: testType (required) - 'reading' or 'listening'
+router.get('/student/:studentId/test/:testId', async (req, res) => {
+  try {
+    const { testType } = req.query;
+    
+    if (!testType) {
+      return res.status(400).json({ error: 'testType query parameter is required' });
+    }
+    
+    const normalizedTestType = testType.toLowerCase();
+    if (!['reading', 'listening'].includes(normalizedTestType)) {
+      return res.status(400).json({ error: 'testType must be "reading" or "listening"' });
+    }
+    
+    const submission = await TestSubmission.findOne({ 
+      studentId: req.params.studentId,
+      testId: req.params.testId,
+      testType: normalizedTestType
+    })
+      .sort({ submittedAt: -1 }); // Get most recent submission
+    
+    if (!submission) {
+      return res.status(404).json({ error: 'No submission found for this test and type' });
+    }
+    
+    res.json(submission);
+  } catch (err) {
+    console.error('❌ Error fetching student test submission:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // Get all submissions for a specific test (MUST come last) - TEACHERS ONLY
 router.get('/:testId', async (req, res) => {
   try {

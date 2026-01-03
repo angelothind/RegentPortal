@@ -209,23 +209,127 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     }
   }, [selectedTest, currentPassage, isTeacherMode, fetchQuestionData]);
 
-  // Load saved answers from localStorage on component mount (only for students, not teachers)
+  // Load test data when selectedTest changes (only for students, not teachers)
   useEffect(() => {
     if (isTeacherMode) {
       console.log('👨‍🏫 Teacher mode: Using external test results instead of localStorage');
       return;
     }
 
-    console.log('🔄 Loading saved answers for test:', selectedTest);
-    if (selectedTest && selectedTest.testId) {
-      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
-      console.log('🔍 Looking for answers in localStorage with key:', storageKey);
+    // Clear state first when selectedTest changes to prevent loading wrong test data
+    console.log('🔄 Clearing state for new test:', selectedTest);
+    setAnswers({});
+    setTestSubmitted(false);
+    setTestResults(null);
+    setTestStarted(false);
+
+    const loadTestData = async () => {
+      if (!selectedTest || !selectedTest.testId || !user?._id) {
+        return;
+      }
+
+      const testId = selectedTest.testId._id;
+      const testType = selectedTest.type;
+
+      try {
+        // First, try to fetch submission from backend (for marked tests)
+        // Include testType in query to ensure we get the correct submission (Reading vs Listening)
+        console.log('🔄 Checking for submission in backend for test:', testId, 'type:', testType);
+        const submissionResponse = await fetch(`${API_BASE}/api/submissions/student/${user._id}/test/${testId}?testType=${testType}`);
+        
+        if (submissionResponse.ok) {
+          const submission = await submissionResponse.json();
+          console.log('✅ Found submission in backend:', submission);
+          
+          // Format submission data similar to TeacherTestAnalysis
+          const answers = {};
+          const correctAnswers = {};
+          const results = {};
+
+          // Process answers from submission.answers
+          if (submission.answers) {
+            if (submission.answers instanceof Map) {
+              submission.answers.forEach((value, key) => {
+                answers[key.toString()] = value || '';
+              });
+            } else if (typeof submission.answers === 'object') {
+              Object.keys(submission.answers).forEach(key => {
+                answers[key] = submission.answers[key] || '';
+              });
+            }
+          }
+
+          // Process results from submission.results
+          if (submission.results) {
+            if (submission.results instanceof Map) {
+              submission.results.forEach((value, key) => {
+                const questionNumber = key.toString();
+                results[questionNumber] = {
+                  isCorrect: value.isCorrect || false,
+                  studentAnswer: value.userAnswer || value.studentAnswer || '',
+                  correctAnswer: value.correctAnswer || ''
+                };
+              });
+            } else if (typeof submission.results === 'object') {
+              Object.keys(submission.results).forEach(key => {
+                const value = submission.results[key];
+                results[key] = {
+                  isCorrect: value.isCorrect || false,
+                  studentAnswer: value.userAnswer || value.studentAnswer || '',
+                  correctAnswer: value.correctAnswer || ''
+                };
+              });
+            }
+          }
+
+          // Process correctAnswers from submission.correctAnswers
+          if (submission.correctAnswers) {
+            if (submission.correctAnswers instanceof Map) {
+              submission.correctAnswers.forEach((value, key) => {
+                correctAnswers[key.toString()] = value;
+              });
+            } else if (typeof submission.correctAnswers === 'object') {
+              Object.keys(submission.correctAnswers).forEach(key => {
+                correctAnswers[key] = submission.correctAnswers[key];
+              });
+            }
+          }
+
+          // Set state with submission data (marked test)
+          setAnswers(answers);
+          setTestResults({
+            score: submission.score,
+            correctCount: submission.correctCount,
+            totalQuestions: submission.totalQuestions,
+            submittedAt: submission.submittedAt,
+            answers: answers,
+            correctAnswers: correctAnswers,
+            results: results
+          });
+          setTestSubmitted(true);
+          setTestStarted(true);
+          console.log('✅ Loaded marked test data from backend');
+          return;
+        } else if (submissionResponse.status === 404) {
+          // No submission found - test is not marked, try localStorage for in-progress test
+          console.log('📝 No submission found in backend, checking localStorage for in-progress test');
+        } else {
+          throw new Error(`HTTP error! status: ${submissionResponse.status}`);
+        }
+      } catch (error) {
+        console.error('❌ Error fetching submission from backend:', error);
+        // Fall through to localStorage check
+      }
+
+      // Fallback to localStorage for in-progress tests
+      const storageKey = `test-answers-${testId}-${testType}-${user._id}`;
+      console.log('🔍 Looking for in-progress answers in localStorage with key:', storageKey);
       
       const savedAnswers = localStorage.getItem(storageKey);
       if (savedAnswers) {
         try {
           const parsedAnswers = JSON.parse(savedAnswers);
-          console.log('📝 Found saved answers:', parsedAnswers);
+          console.log('📝 Found saved answers in localStorage:', parsedAnswers);
           
           // Check if data is older than 4 hours
           const savedTimestamp = parsedAnswers._timestamp;
@@ -239,43 +343,40 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
             return;
           }
           
+          // Only load from localStorage if test is NOT marked (no _testSubmitted or no _testResults)
+          if (parsedAnswers._testSubmitted && parsedAnswers._testResults) {
+            // This is a marked test in localStorage - should have been fetched from backend
+            // Clear it and don't load (backend is source of truth for marked tests)
+            console.log('⚠️ Marked test found in localStorage - should use backend instead');
+            return;
+          }
+          
           // Remove the timestamp from the answers object before setting state
           const { _timestamp, _currentPassage, _testSubmitted, _testResults, _testStarted, ...answersWithoutTimestamp } = parsedAnswers;
           setAnswers(answersWithoutTimestamp);
           
           // Restore the current passage if it was saved
           if (_currentPassage && typeof _currentPassage === 'number') {
-            // setCurrentPassage(_currentPassage); // This line is removed as per the edit hint
             console.log('📝 Restored current passage from localStorage:', _currentPassage);
           }
           
-          // Restore testSubmitted and testResults if they were saved
-          if (_testSubmitted && _testResults) {
-            setTestSubmitted(true);
-            setTestResults(_testResults);
-            console.log('📝 Restored testSubmitted and testResults from localStorage');
-          }
-          
           // Restore testStarted if it was saved AND there are actual answers
-          // If no answers, don't restore testStarted (so overlay can show)
           if (_testStarted && Object.keys(answersWithoutTimestamp).length > 0) {
             setTestStarted(true);
-            console.log('📝 Restored testStarted from localStorage (has answers)');
-          } else if (_testStarted && Object.keys(answersWithoutTimestamp).length === 0) {
-            // If test was started but no answers, reset to show overlay
-            setTestStarted(false);
-            console.log('📝 Reset testStarted to false (no answers, overlay should show)');
+            console.log('📝 Restored testStarted from localStorage (in-progress test)');
           }
           
-          console.log('📝 Loaded saved answers from localStorage:', answersWithoutTimestamp);
+          console.log('📝 Loaded in-progress test data from localStorage:', answersWithoutTimestamp);
         } catch (error) {
           console.error('❌ Error parsing saved answers:', error);
         }
       } else {
         console.log('📝 No saved answers found in localStorage');
       }
-    }
-  }, [selectedTest, isTeacherMode]);
+    };
+
+    loadTestData();
+  }, [selectedTest?.testId?._id, selectedTest?.type, isTeacherMode, user?._id]);
 
   // Reload answers from localStorage when passage changes (only for students, not teachers)
   useEffect(() => {
