@@ -17,10 +17,18 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [answers, setAnswers] = useState({});
-  const [currentPart, setCurrentPart] = useState(1);
+  // In teacher mode, use sharedPassage as the part number (parent-controlled)
+  // In student mode, use internal currentPart state
+  const [currentPart, setCurrentPart] = useState(isTeacherMode && sharedPassage ? sharedPassage : 1);
   const [testStarted, setTestStarted] = useState(isTeacherMode);
   const [testSubmitted, setTestSubmitted] = useState(false);
   const [testResults, setTestResults] = useState(null);
+  
+  // Race condition protection - same as QuestionView
+  const abortControllerRef = useRef(null);
+  const expectedPartRef = useRef(null);
+  const activePartRef = useRef(isTeacherMode && sharedPassage ? sharedPassage : 1);
+  const fetchRequestIdRef = useRef(0);
   
   // Audio player state - lifted up to persist across part changes
   const [audioIsPlaying, setAudioIsPlaying] = useState(false);
@@ -34,6 +42,14 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
 
   // Load test data when selectedTest changes
   useEffect(() => {
+    // In teacher mode, skip student-specific data loading
+    if (isTeacherMode) {
+      console.log('👨‍🏫 Teacher mode: Skipping student data loading');
+      // Ensure testStarted is true for teachers
+      setTestStarted(true);
+      return;
+    }
+
     // Clear state first when selectedTest changes to prevent loading wrong test data
     console.log('🔄 Clearing state for new test:', selectedTest);
     setAnswers({});
@@ -200,42 +216,109 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     };
 
     loadTestData();
-  }, [selectedTest?.testId?._id, selectedTest?.type, user?._id]);
+  }, [selectedTest?.testId?._id, selectedTest?.type, user?._id, isTeacherMode]);
 
-  // Reset to part 1 when overlay shows (test not started)
+  // Keep activePartRef in sync with sharedPassage (for teacher mode) or currentPart (for student mode)
   useEffect(() => {
-    if (!testStarted && currentPart !== 1) {
+    if (isTeacherMode && sharedPassage) {
+      activePartRef.current = sharedPassage;
+    } else if (!isTeacherMode) {
+      activePartRef.current = currentPart;
+    }
+  }, [isTeacherMode, sharedPassage, currentPart]);
+
+  // In teacher mode, sync currentPart with sharedPassage prop (treating it as part number)
+  useEffect(() => {
+    if (isTeacherMode && sharedPassage && sharedPassage !== currentPart) {
+      console.log('🔄 Teacher mode: Syncing currentPart with sharedPassage prop:', sharedPassage);
+      // Update active part ref immediately
+      activePartRef.current = sharedPassage;
+      // Cancel any in-flight requests when part changes
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+        abortControllerRef.current = null;
+      }
+      // Clear expected part ref to invalidate any in-flight requests
+      expectedPartRef.current = null;
+      // Clear question data immediately to prevent showing stale content
+      setQuestionData(null);
+      setCurrentPart(sharedPassage);
+    }
+  }, [isTeacherMode, sharedPassage, currentPart]);
+
+  // Cleanup: Cancel any in-flight requests when component unmounts
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
+
+  // Reset to part 1 when overlay shows (test not started) - only for students
+  useEffect(() => {
+    if (!isTeacherMode && !testStarted && currentPart !== 1) {
       console.log('🔄 Test not started - resetting to part 1');
       setCurrentPart(1);
     }
-  }, [testStarted, currentPart]);
+  }, [testStarted, currentPart, isTeacherMode]);
 
-  // Define fetchQuestionData function
-  const fetchQuestionData = useCallback(async () => {
-    console.log('🚀 fetchQuestionData CALLED with:', { selectedTest, currentPart, isTeacherMode });
-    
+  // Define fetchQuestionData function with race condition protection
+  const fetchQuestionData = useCallback(async (partNumber = null) => {
     if (!selectedTest) {
       console.log('❌ No selectedTest provided to ListeningQuestionView');
       setQuestionData(null);
       return;
     }
 
-    console.log('🔍 ListeningQuestionView: Fetching questions for:', selectedTest);
-    console.log('🔍 ListeningQuestionView: Current part:', currentPart);
-    console.log('🔍 ListeningQuestionView: Test ID:', selectedTest.testId?._id);
-    console.log('🔍 ListeningQuestionView: Test Type:', selectedTest.type);
-    console.log('🔍 ListeningQuestionView: Is Teacher Mode:', isTeacherMode);
-    console.log('🔍 ListeningQuestionView: Test Data Available:', !!testData);
+    // Cancel any previous in-flight request to prevent race conditions
+    if (abortControllerRef.current) {
+      console.log('🛑 Cancelling previous fetch request');
+      abortControllerRef.current.abort();
+    }
+
+    // In teacher mode, prefer sharedPassage prop; otherwise use currentPart state
+    // This prevents race conditions where state hasn't updated yet
+    const partToFetch = partNumber || (isTeacherMode && sharedPassage ? sharedPassage : currentPart);
+    
+    // Store the expected part for this fetch to validate later
+    expectedPartRef.current = partToFetch;
+    // Generate unique request ID for this fetch
+    const requestId = ++fetchRequestIdRef.current;
+    
+    console.log('🔍 ListeningQuestionView: Fetching questions for part:', partToFetch, 'Request ID:', requestId);
+    console.log('🔍 ListeningQuestionView: Using part from:', {
+      partNumber,
+      isTeacherMode,
+      sharedPassage,
+      currentPart,
+      finalPart: partToFetch
+    });
+    
+    // Create new AbortController for this request
+    const abortController = new AbortController();
+    abortControllerRef.current = abortController;
     
     setLoading(true);
     setError(null);
+    // Clear old data immediately to prevent showing stale content
+    setQuestionData(null);
 
     try {
       // Fetch question data for current part with test type
-      const endpoint = `${API_BASE}/api/tests/${selectedTest.testId._id}/questions/part${currentPart}?testType=${selectedTest.type}`;
+      const endpoint = `${API_BASE}/api/tests/${selectedTest.testId._id}/questions/part${partToFetch}?testType=${selectedTest.type}`;
       console.log('📡 Fetching from endpoint:', endpoint);
       
-      const response = await fetch(endpoint);
+      const response = await fetch(endpoint, {
+        signal: abortController.signal
+      });
+      
+      // Check if request was aborted
+      if (abortController.signal.aborted) {
+        console.log('🛑 Request was aborted, ignoring response');
+        return;
+      }
+      
       console.log('📡 Response status:', response.status);
       console.log('📡 Response ok:', response.ok);
       
@@ -246,46 +329,82 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
       }
       
       const data = await response.json();
-      console.log('📋 Question data loaded:', data);
+      
+      // CRITICAL: Validate this data is still for the correct part before setting it
+      // Check multiple sources to ensure we're not showing stale data
+      const fetchStartedFor = expectedPartRef.current;
+      const currentActivePart = activePartRef.current;
+      // Use activePartRef for students (more reliable than state), sharedPassage for teachers
+      const currentExpectedPart = isTeacherMode && sharedPassage ? sharedPassage : activePartRef.current;
+      const currentRequestId = fetchRequestIdRef.current;
+      
+      // Check 1: Ensure this is still the latest request (not a stale one)
+      if (requestId !== currentRequestId) {
+        console.log('⚠️ This is not the latest request, discarding. Request ID:', requestId, 'Current:', currentRequestId);
+        return;
+      }
+      
+      // Check 2: If ANY of these don't match partToFetch, discard this data (it's stale)
+      // This triple-check ensures we catch race conditions even in production builds
+      // For students, we use activePartRef which is updated immediately, not state which might lag
+      if (fetchStartedFor !== partToFetch || 
+          currentActivePart !== partToFetch || 
+          currentExpectedPart !== partToFetch) {
+        console.log('⚠️ Part changed during fetch, discarding stale data.', {
+          fetchStartedFor,
+          partToFetch,
+          currentActivePart,
+          currentExpectedPart,
+          isTeacherMode,
+          sharedPassage,
+          currentPart,
+          requestId
+        });
+        return;
+      }
+      
+      // Check 3: Ensure abort signal wasn't triggered (double-check)
+      if (abortController.signal.aborted) {
+        console.log('🛑 Request was aborted (final check), ignoring response');
+        return;
+      }
+      
+      console.log('📋 Question data loaded for part:', partToFetch, 'Request ID:', requestId);
       console.log('📋 Question templates:', data.questionData?.templates);
-      console.log('📋 Question data structure:', Object.keys(data));
       setQuestionData(data);
+      setLoading(false);
     } catch (error) {
+      // Ignore abort errors (they're expected when cancelling)
+      if (error.name === 'AbortError') {
+        console.log('🛑 Fetch was aborted (expected when toggling quickly)');
+        // Don't update loading state - new request will handle it
+        return;
+      }
       console.error('❌ Failed to fetch question data:', error);
       console.error('❌ Error details:', error.message);
       setError('Failed to load questions');
-    } finally {
       setLoading(false);
     }
-  }, [selectedTest, currentPart, isTeacherMode, testData]);
+  }, [selectedTest, currentPart, isTeacherMode, sharedPassage, testData]);
 
-  // In teacher mode, fetch questions when testData becomes available
+  // In teacher mode, fetch questions when testData becomes available or when sharedPassage changes
   useEffect(() => {
-    console.log('🔍 useEffect 1 - Teacher mode initial fetch:', { isTeacherMode, testData: !!testData, currentPart });
-    if (isTeacherMode && testData && currentPart) {
-      console.log('👨‍🏫 Teacher mode: Initial question data fetch for part:', currentPart);
-      fetchQuestionData();
+    if (isTeacherMode && testData && sharedPassage) {
+      console.log('👨‍🏫 Teacher mode: Fetching question data for part:', sharedPassage);
+      // Use sharedPassage directly to avoid race conditions
+      fetchQuestionData(sharedPassage);
     }
-  }, [isTeacherMode, testData, currentPart, fetchQuestionData]);
+  }, [isTeacherMode, testData, sharedPassage, fetchQuestionData]);
 
-  // In teacher mode, fetch question data when part changes and testData is available
+  // In student mode, fetch question data when part changes
   useEffect(() => {
-    console.log('🔍 useEffect 2 - Teacher mode part change:', { isTeacherMode, testData: !!testData, currentPart });
-    if (isTeacherMode) {
-      if (testData) {
-        console.log('👨‍🏫 Teacher mode: Fetching question data for part:', currentPart);
-        fetchQuestionData();
-      } else {
-        console.log('👨‍🏫 Teacher mode: No testData available yet');
-      }
-      return; // Add missing return statement
+    if (!isTeacherMode && selectedTest && currentPart) {
+      console.log('👨‍🎓 Student mode: Fetching question data for part:', currentPart);
+      fetchQuestionData(currentPart);
     }
-    
-    console.log('👨‍🎓 Student mode: Fetching question data for part:', currentPart);
-    fetchQuestionData();
-  }, [selectedTest, currentPart, isTeacherMode, testData, fetchQuestionData]);
+  }, [selectedTest, currentPart, isTeacherMode, fetchQuestionData]);
 
-  // Additional safety: ensure part 1 when overlay should show
+  // Additional safety: ensure part 1 when overlay should show - only for students
   useEffect(() => {
     // Show overlay when: not started (and not teacher mode)
     const shouldShowOverlay = !testStarted && !isTeacherMode;
@@ -294,6 +413,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
       console.log('🔄 Overlay should show - forcing reset to part 1');
       setCurrentPart(1);
     }
+    // In teacher mode, allow any part to be selected
   }, [testStarted, currentPart, isTeacherMode]);
 
   // Add refresh confirmation warning
@@ -648,13 +768,6 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     console.log('🔄 Test reset - returned to Part 1 and cleared overlay');
   };
 
-  // Fetch questions when not in teacher mode
-  useEffect(() => {
-    // Only fetch automatically if not in teacher mode
-    if (!isTeacherMode) {
-      fetchQuestionData();
-    }
-  }, [selectedTest, currentPart, isTeacherMode, fetchQuestionData]);
 
   const handlePartChange = (partNumber) => {
     // Prevent unnecessary re-renders if user is already on this part
@@ -664,11 +777,31 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     }
     
     console.log('🔄 Switching from Part', currentPart, 'to Part', partNumber);
+    
+    // In teacher mode, notify parent via onPassageChange callback (treating it as onPartChange)
+    if (isTeacherMode && onPassageChange) {
+      console.log('👨‍🏫 Teacher mode: Notifying parent of part change via onPassageChange');
+      onPassageChange(partNumber);
+      // Parent will update sharedPassage, which will trigger our useEffect to update currentPart
+      return;
+    }
+    
+    // In student mode, update internal state and ref immediately
+    // Update ref immediately to prevent validation issues
+    activePartRef.current = partNumber;
     setCurrentPart(partNumber);
     setQuestionData(null); // Clear current data when switching parts
     
-    // Save current part to localStorage
-    if (selectedTest && selectedTest.testId) {
+    // Cancel any in-flight requests when part changes (for students)
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    // Clear expected part ref to invalidate any in-flight requests
+    expectedPartRef.current = null;
+    
+    // Save current part to localStorage (only for students)
+    if (!isTeacherMode && selectedTest && selectedTest.testId) {
       const answersWithTimestamp = {
         ...answers,
         _timestamp: Date.now(),
