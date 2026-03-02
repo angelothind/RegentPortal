@@ -137,17 +137,7 @@
   margin: 0 4px;
 }
 
-/* Smaller input boxes specifically for reading tests */
-.choose-x-words-container.reading-test .answer-input {
-  min-width: 133px;
-  max-width: 133px;
-  width: 133px;
-  padding: 6px 8px;
-  font-size: 0.85rem;
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0 4px;
-}
+/* Unified input boxes for both reading and listening - same size (no reading-specific override) */
 
 .answer-input:focus {
   outline: none;
@@ -207,8 +197,8 @@
   border-left: 4px solid #25245D;
 }
 
-/* Reading test specific styling - remove grey background and purple border */
-.choose-x-words-container.reading-test .question-item {
+/* Unified styling - both reading and listening use same question-item styling */
+.choose-x-words-container .question-item {
   padding: 0;
   background-color: transparent;
   border: none;
@@ -327,7 +317,8 @@
   text-align: left;
 }
 
-/* Listening notes styling - use same styling as regular notes */
+/* Unified notes styling - listening and reading use same classes now */
+/* Keep listening-specific classes for backward compatibility but they inherit from main classes */
 .listening-notes-container {
   background-color: #fff;
   border: 1px solid #ddd;
@@ -351,19 +342,16 @@
 }
 
 .listening-section-heading {
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.6;
-  color: #333;
-  margin: 0;
+  color: #25245D;
+  margin: 15px 0 8px 0;
   padding: 0;
   font-weight: 600;
-  margin-top: 15px;
-  margin-bottom: 8px;
-  color: #25245D;
 }
 
 .listening-descriptive-text {
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.6;
   color: #333;
   margin: 0;
@@ -373,10 +361,12 @@
 .listening-question-item {
   padding: 0;
   margin: 0;
+  border: none;
+  background: transparent;
 }
 
 .listening-question-text {
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.6;
   color: #333;
   margin: 0;
@@ -391,6 +381,7 @@
   color: #333;
 }
 
+/* Unified styling - listening-answer-input now uses same styles as answer-input */
 .listening-answer-input {
   border: 2px solid #ddd;
   border-radius: 4px;
@@ -649,14 +640,14 @@
   border-left: 3px solid #dc3545;
 }
 
-/* Disabled input styling */
+/* Disabled input styling - unified for both reading and listening */
 .answer-input:disabled,
 .listening-answer-input:disabled {
   opacity: 0.8;
   cursor: not-allowed;
 }
 
-/* Styling for "No answer given" placeholder text */
+/* Styling for "No answer given" placeholder text - unified for both reading and listening */
 .answer-input:disabled::placeholder,
 .listening-answer-input:disabled::placeholder {
   color: #721c24;

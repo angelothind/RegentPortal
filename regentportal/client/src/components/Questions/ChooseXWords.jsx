@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import '../../styles/Questions/ChooseXWords.css';
 import { processTextFormatting } from '../../utils/textFormatting';
 
+// Unified component for both student and teacher views
+// Teacher view shows the same as student view after marking (testSubmitted=true with testResults)
+// No teacher-specific logic - renders identically for both views
 const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, testType, componentId = 'choose-x-words', currentAnswers = {} }) => {
   console.log('🎯 ChooseXWords rendered with template:', template);
   console.log('🎯 ChooseXWords testResults:', testResults);
@@ -128,248 +131,21 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
     type: item.sectionHeading ? 'sectionHeading' : item.text && item.blanks ? 'question' : 'other'
   })));
 
-  // For Listening tests, render with Listening-specific styling
-  if (testType === 'Listening' || testType === 'listening' || testType === 'LISTENING') {
-    return (
-      <div className="listening-notes-container" style={{
-        backgroundColor: '#fff',
-        border: '1px solid #ddd',
-        borderRadius: '8px',
-        padding: '20px',
-        margin: '20px 0'
-      }}>
-
-        {/* Instructions - keep them visible like we made sure to do */}
-        <div className="instructions" style={{
-          marginBottom: '20px',
-          padding: '15px',
-          backgroundColor: '#f8f9fa',
-          border: '1px solid #e9ecef',
-          borderRadius: '6px'
-        }}>
-          <h3 className="main-instruction" style={{
-            margin: '0 0 8px 0',
-            color: '#333',
-            fontSize: '1rem',
-            fontWeight: '600'
-          }} dangerouslySetInnerHTML={{ 
-            __html: processTextFormatting(template.introInstruction) 
-          }} />
-          {template.formattingInstruction && (
-            <p className="formatting-instruction" style={{
-              margin: '0',
-              color: '#666',
-              fontSize: '0.9rem',
-              fontStyle: 'italic'
-            }} dangerouslySetInnerHTML={{ 
-              __html: processTextFormatting(template.formattingInstruction) 
-            }} />
-          )}
-        </div>
-        
-        {template.notesTitle && (
-          <h4 className="listening-notes-title" style={{
-            margin: '0 0 20px 0',
-            color: '#333',
-            fontSize: '1.3rem',
-            fontWeight: '600',
-            textAlign: 'center'
-          }}>
-            {template.notesTitle}
-          </h4>
-        )}
-        
-        <div className="listening-notes-content" style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px'
-        }}>
-          {template.questionBlock.map((item, index) => {
-            if (item.sectionHeading) {
-              return (
-                <div key={index} className="listening-section-heading" style={{
-                  fontSize: '1rem',
-                  lineHeight: '1.6',
-                  color: '#25245D',
-                  margin: '15px 0 8px 0',
-                  padding: '0',
-                  fontWeight: '600'
-                }}>
-                  <strong>{item.sectionHeading}</strong>
-                </div>
-              );
-            } else if (item.descriptiveText) {
-              return (
-                <div key={index} className="listening-descriptive-text" style={{
-                  fontSize: '1rem',
-                  lineHeight: '1.6',
-                  color: '#333',
-                  margin: '0',
-                  padding: '0'
-                }}>
-                  <span dangerouslySetInnerHTML={{ 
-                    __html: (template.useBullets || item.numbered) ? addBulletPoints(item.descriptiveText, item.bulletLevel || 0, false, item.numbered || false, item.numberedIndex || null) : item.descriptiveText 
-                  }} />
-                </div>
-              );
-            } else if (item.text && item.blanks) {
-              // New structure: single text with blanks array
-              return (
-                <div key={index} className="listening-question-item" style={{
-                  padding: '0',
-                  margin: '0'
-                }}>
-                  <div className="listening-question-text" style={{
-                    fontSize: '1rem',
-                    lineHeight: '1.6',
-                    color: '#333',
-                    margin: '0',
-                    padding: '0',
-                    display: 'block',
-                    wordWrap: 'break-word',
-                    overflowWrap: 'break-word'
-                  }}>
-                    {processNewlines(processBulletTags(stripMarkdownBold(item.text || ''))).split('________').map((part, partIndex, array) => {
-                      const blankNumber = item.blanks[partIndex]?.number;
-                      console.log(`🎯 Rendering input for part ${partIndex}, blank number: ${blankNumber}`);
-                      return (
-                        <span key={partIndex}>
-                          <span dangerouslySetInnerHTML={{ __html: part || '' }} />
-                                                  {partIndex < array.length - 1 && (
-                            <>
-                              <input
-                                type="text"
-                                className={`listening-answer-input ${getAnswerClass(blankNumber || '')}`}
-                                style={{
-                                  border: '2px solid #ddd',
-                                  borderRadius: '4px',
-                                  padding: '8px 12px',
-                                  fontSize: '0.9rem',
-                                  backgroundColor: 'white',
-                                  color: '#333',
-                                  transition: 'border-color 0.2s ease'
-                                }}
-                                placeholder={getInputPlaceholder(blankNumber || '')}
-                                value={getAnswerValue(blankNumber || '')}
-                                onChange={(e) => {
-                                  console.log(`🎯 Input change event triggered for blank ${blankNumber}`);
-                                  console.log(`🎯 Input value: ${e.target.value}`);
-                                  console.log(`🎯 testSubmitted: ${testSubmitted}`);
-                                  handleAnswerChange(blankNumber || '', e.target.value);
-                                }}
-                                disabled={testSubmitted}
-                                data-test-submitted={testSubmitted}
-                                data-blank-number={blankNumber}
-                                autoComplete="off"
-                                data-form-type="other"
-                                data-lpignore="true"
-                                data-1p-ignore="true"
-                              />
-                              {/* Show inline correction after input field */}
-                              {testSubmitted && testResults && (
-                                <span className="inline-correction">
-                                  Correct: {String(testResults.correctAnswers?.[blankNumber || ''] || '')}
-                                </span>
-                              )}
-                            </>
-                          )}
-                        </span>
-                      );
-                    })}
-                  </div>
-
-                </div>
-              );
-            } else if (item.questionNumber) {
-              console.log(`🎯 Rendering old structure question ${item.questionNumber}:`, item.question);
-              console.log(`🎯 Split parts:`, stripMarkdownBold(item.question).split('________'));
-              return (
-                <div key={index} className="listening-question-item" style={{
-                  padding: '0',
-                  margin: '0'
-                }}>
-                  <div className="listening-question-text" style={{
-                    fontSize: '1rem',
-                    lineHeight: '1.6',
-                    color: '#333',
-                    margin: '0',
-                    padding: '0',
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}>
-                    {stripMarkdownBold(item.question).split('________').map((part, partIndex, array) => (
-                      <span key={partIndex}>
-                        <span dangerouslySetInnerHTML={{ 
-                          __html: (template.useBullets || item.numbered) && partIndex === 0 ? addBulletPoints(part, item.bulletLevel || 0, false, item.numbered || false, item.numberedIndex || null) : part 
-                        }} />
-                        {partIndex < array.length - 1 && (
-                          <>
-                            <input
-                              type="text"
-                              className={`listening-answer-input ${getAnswerClass(item.questionNumber)}`}
-                              style={{
-                                border: '2px solid #ddd',
-                                borderRadius: '4px',
-                                padding: '8px 12px',
-                                fontSize: '0.9rem',
-                                backgroundColor: 'white',
-                                color: '#333',
-                                transition: 'border-color 0.2s ease'
-                              }}
-                              placeholder={getInputPlaceholder(item.questionNumber)}
-                              value={getAnswerValue(item.questionNumber)}
-                              onChange={(e) => {
-                                console.log(`🎯 Old structure input change for question ${item.questionNumber}`);
-                                console.log(`🎯 Input value: ${e.target.value}`);
-                                console.log(`🎯 testSubmitted: ${testSubmitted}`);
-                                handleAnswerChange(item.questionNumber, e.target.value);
-                              }}
-                              disabled={testSubmitted}
-                              data-test-submitted={testSubmitted}
-                              data-question-number={item.questionNumber}
-                              autoComplete="off"
-                              data-form-type="other"
-                              data-lpignore="true"
-                              data-1p-ignore="true"
-                            />
-                            {/* Show inline correction after input field */}
-                            {testSubmitted && testResults && (
-                              <span className="inline-correction">
-                                Correct: {String(testResults.correctAnswers?.[item.questionNumber] || '')}
-                              </span>
-                            )}
-                          </>
-                        )}
-                      </span>
-                    ))}
-                  </div>
-
-                </div>
-              );
-            }
-            console.log(`🎯 Unhandled item type in listening section:`, item);
-            return null;
-          })}
-        </div>
-      </div>
-    );
-  }
-
-  // For Reading tests, handle both old and new structures
+  // Unified rendering for both Reading and Listening - use same structure and styling
   return (
     <div className={`choose-x-words-container ${testType === 'Reading' ? 'reading-test' : ''}`}>
       <div className="instructions">
         <h3 className="main-instruction" dangerouslySetInnerHTML={{ 
           __html: processTextFormatting(template.introInstruction) 
         }} />
-        <p className="formatting-instruction" dangerouslySetInnerHTML={{ 
-          __html: processTextFormatting(template.formattingInstruction) 
-        }} />
+        {template.formattingInstruction && (
+          <p className="formatting-instruction" dangerouslySetInnerHTML={{ 
+            __html: processTextFormatting(template.formattingInstruction) 
+          }} />
+        )}
       </div>
       
-      {/* Show notes title for Reading tests */}
+      {/* Show notes title for both Reading and Listening */}
       {template.notesTitle && (
         <h4 className="reading-notes-title" style={{
           margin: '0 0 20px 0',
@@ -385,16 +161,17 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
       <div className="notes-container">
         <div className="notes-content">
           {isNewStructure ? (
-            // New structure: single text with blanks array
+            // New structure: single text with blanks array (supports bullet points and descriptive text)
             template.questionBlock.map((block, blockIndex) => {
-              console.log(`🎯 Reading - New structure - Block ${blockIndex}:`, block);
-              console.log(`🎯 Reading - Block has sectionHeading:`, !!block.sectionHeading);
-              console.log(`🎯 Reading - Block has text:`, !!block.text);
-              console.log(`🎯 Reading - Block has blanks:`, !!block.blanks);
+              console.log(`🎯 Unified - New structure - Block ${blockIndex}:`, block);
+              console.log(`🎯 Unified - Block has sectionHeading:`, !!block.sectionHeading);
+              console.log(`🎯 Unified - Block has descriptiveText:`, !!block.descriptiveText);
+              console.log(`🎯 Unified - Block has text:`, !!block.text);
+              console.log(`🎯 Unified - Block has blanks:`, !!block.blanks);
               
               // Check if this block is a section heading
               if (block.sectionHeading) {
-                console.log(`🎯 Reading - Rendering section heading:`, block.sectionHeading);
+                console.log(`🎯 Unified - Rendering section heading:`, block.sectionHeading);
                 return (
                   <div key={blockIndex} className="section-heading">
                     <strong>{block.sectionHeading}</strong>
@@ -402,103 +179,194 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                 );
               }
               
-              // Otherwise render the question with blanks
-              console.log(`🎯 Reading - Rendering question with blanks`);
-              return (
-                <div key={blockIndex} className="question-item">
-                  <div className="question-text">
-                    {processNewlines(processBulletTags(stripMarkdownBold(block.text || ''))).split('________').map((part, index, array) => (
-                      <span key={index}>
-                        <span dangerouslySetInnerHTML={{ __html: part || '' }} />
-                        {index < array.length - 1 && (
-                          <>
-                            <input
-                              type="text"
-                              className={`answer-input ${getAnswerClass(block.blanks[index]?.number || '')}`}
-                              placeholder={getInputPlaceholder(block.blanks[index]?.number || '')}
-                              value={getAnswerValue(block.blanks[index]?.number || '')}
-                              onChange={(e) => handleAnswerChange(block.blanks[index]?.number || '', e.target.value)}
-                              disabled={testSubmitted}
-                              autoComplete="off"
-                              data-form-type="other"
-                              data-lpignore="true"
-                              data-1p-ignore="true"
-                            />
-                            {/* Show inline correction after input field */}
-                            {testSubmitted && testResults && (
-                              <span className="inline-correction">
-                                Correct: {String(testResults.correctAnswers?.[block.blanks[index]?.number || ''] || '')}
-                              </span>
-                            )}
-                          </>
-                        )}
-                      </span>
-                    ))}
-                  </div>
-
-                </div>
-              );
-            })
-          ) : (
-            // Old structure: individual questions
-            template.questionBlock.map((item, index) => {
-              if (item.sectionHeading) {
+              // Check if this block is descriptive text
+              if (block.descriptiveText) {
+                console.log(`🎯 Unified - Rendering descriptive text:`, block.descriptiveText);
                 return (
-                  <div key={index} className="section-heading">
-                    <strong>{item.sectionHeading}</strong>
-                  </div>
-                );
-              } else if (item.descriptiveText) {
-                return (
-                  <div key={index} className="descriptive-text">
+                  <div key={blockIndex} className="descriptive-text">
                     <span dangerouslySetInnerHTML={{ 
-                      __html: (template.useBullets || item.numbered) ? addBulletPoints(item.descriptiveText, item.bulletLevel || 0, false, item.numbered || false, item.numberedIndex || null) : item.descriptiveText 
+                      __html: (template.useBullets || block.numbered) ? addBulletPoints(block.descriptiveText, block.bulletLevel || 0, false, block.numbered || false, block.numberedIndex || null) : block.descriptiveText 
                     }} />
                   </div>
                 );
-              } else if (item.questionNumber) {
-                console.log(`🎯 Rendering question ${item.questionNumber}:`, item);
-                console.log(`🎯 template.useBullets:`, template.useBullets);
-                console.log(`🎯 item.bulletLevel:`, item.bulletLevel);
-                return (
-                  <div key={index} className="question-item">
-                    <div className="question-text">
-                      {stripMarkdownBold(item.question || '').split('________').map((part, partIndex, array) => (
-                        <span key={partIndex}>
+              }
+              
+              // Otherwise render the question with blanks
+              // Support both paragraph style (no bulletLevel) and bullet point style (with bulletLevel)
+              console.log(`🎯 Unified - Rendering question with blanks`);
+              // Add bullet if: useBullets is true and bulletLevel is defined, OR if numbered is true
+              const hasBullet = (template.useBullets && block.bulletLevel !== undefined) || block.numbered;
+              const bulletLevel = block.bulletLevel !== undefined ? block.bulletLevel : 0;
+              const numberedIndex = block.numberedIndex || null;
+              
+              return (
+                <div key={blockIndex} className="question-item">
+                  <div className="question-text">
+                    {processNewlines(processBulletTags(stripMarkdownBold(block.text || ''))).split('________').map((part, index, array) => {
+                      // Get the blank for this position - use index to match split position
+                      const blank = block.blanks && block.blanks[index] ? block.blanks[index] : null;
+                      const blankNumber = blank?.number;
+                      const isFirstPart = index === 0;
+                      const shouldAddBullet = hasBullet && isFirstPart;
+                      
+                      // Only render input if we have a valid blank number
+                      const shouldRenderInput = index < array.length - 1 && blankNumber;
+                      
+                      console.log(`🎯 Rendering part ${index}, blank:`, blank, `blankNumber:`, blankNumber);
+                      
+                      // Use blankNumber in key to ensure unique React keys for each input
+                      const uniqueKey = blankNumber ? `blank-${blankNumber}` : `part-${index}`;
+                      
+                      return (
+                        <span key={uniqueKey}>
                           <span dangerouslySetInnerHTML={{ 
-                            __html: (template.useBullets || item.numbered) && partIndex === 0 ? addBulletPoints(part, item.bulletLevel || 0, false, item.numbered || false, item.numberedIndex || null) : part 
+                            __html: shouldAddBullet 
+                              ? addBulletPoints(part, bulletLevel, false, block.numbered || false, numberedIndex)
+                              : part || '' 
                           }} />
-                          {partIndex < array.length - 1 && (
+                          {shouldRenderInput && blankNumber && (
                             <>
                               <input
+                                key={`input-${blankNumber}`}
                                 type="text"
-                                className={`answer-input ${getAnswerClass(item.questionNumber)}`}
-                                placeholder={getInputPlaceholder(item.questionNumber)}
-                                value={getAnswerValue(item.questionNumber)}
-                                onChange={(e) => handleAnswerChange(item.questionNumber, e.target.value)}
+                                className={`answer-input ${getAnswerClass(blankNumber)}`}
+                                placeholder={getInputPlaceholder(blankNumber)}
+                                value={getAnswerValue(blankNumber)}
+                                onChange={(e) => {
+                                  console.log(`🎯 Input onChange for blankNumber: ${blankNumber}, value: ${e.target.value}`);
+                                  console.log(`🎯 Current answers before change:`, currentAnswers);
+                                  handleAnswerChange(blankNumber, e.target.value);
+                                }}
                                 disabled={testSubmitted}
                                 autoComplete="off"
                                 data-form-type="other"
                                 data-lpignore="true"
                                 data-1p-ignore="true"
+                                data-blank-number={blankNumber}
+                                id={`answer-input-${blankNumber}`}
                               />
                               {/* Show inline correction after input field */}
                               {testSubmitted && testResults && (
                                 <span className="inline-correction">
-                                  Correct: {String(testResults.correctAnswers?.[item.questionNumber] || '')}
+                                  Correct: {String(testResults.correctAnswers?.[blankNumber] || '')}
                                 </span>
                               )}
                             </>
                           )}
                         </span>
-                      ))}
-                    </div>
-
+                      );
+                    })}
                   </div>
-                );
-              }
-              return null;
+                </div>
+              );
             })
+          ) : (
+            // Old structure: individual questions
+            (() => {
+              // Track which question numbers have been rendered from range questions
+              // to avoid rendering duplicates
+              const renderedQuestionNumbers = new Set();
+              
+              return template.questionBlock.map((item, index) => {
+                if (item.sectionHeading) {
+                  return (
+                    <div key={index} className="section-heading">
+                      <strong>{item.sectionHeading}</strong>
+                    </div>
+                  );
+                } else if (item.descriptiveText) {
+                  return (
+                    <div key={index} className="descriptive-text">
+                      <span dangerouslySetInnerHTML={{ 
+                        __html: (template.useBullets || item.numbered) ? addBulletPoints(item.descriptiveText, item.bulletLevel || 0, false, item.numbered || false, item.numberedIndex || null) : item.descriptiveText 
+                      }} />
+                    </div>
+                  );
+                } else if (item.questionNumber) {
+                  // Extract individual question numbers from the text for range questions
+                  const extractQuestionNumbers = (text) => {
+                    const matches = text.match(/\*\*(\d+)\*\*/g);
+                    if (matches) {
+                      return matches.map(match => match.replace(/\*\*/g, ''));
+                    }
+                    return [];
+                  };
+                  
+                  const questionNumbers = extractQuestionNumbers(item.question || '');
+                  const isRangeQuestion = item.questionNumber.includes('-') && questionNumbers.length > 0;
+                  
+                  // Check if this is a single question that's already covered by a range question
+                  if (!isRangeQuestion && renderedQuestionNumbers.has(item.questionNumber)) {
+                    console.log(`🎯 Skipping duplicate question ${item.questionNumber} - already rendered from range question`);
+                    return null;
+                  }
+                  
+                  // Mark question numbers as rendered
+                  if (isRangeQuestion) {
+                    questionNumbers.forEach(qNum => renderedQuestionNumbers.add(qNum));
+                  } else {
+                    renderedQuestionNumbers.add(item.questionNumber);
+                  }
+                  console.log(`🎯 Unified - Rendering question ${item.questionNumber}:`, item);
+                  console.log(`🎯 Unified - template.useBullets:`, template.useBullets);
+                  console.log(`🎯 Unified - item.bulletLevel:`, item.bulletLevel);
+                  console.log(`🎯 Question numbers extracted:`, questionNumbers);
+                  console.log(`🎯 Is range question:`, isRangeQuestion);
+                
+                  return (
+                    <div key={index} className="question-item">
+                      <div className="question-text">
+                        {stripMarkdownBold(item.question || '').split('________').map((part, partIndex, array) => {
+                          // For range questions, use the extracted question number for each blank
+                          // For single questions, use the item.questionNumber
+                          const questionNumberForThisInput = isRangeQuestion && questionNumbers[partIndex] 
+                            ? questionNumbers[partIndex] 
+                            : item.questionNumber;
+                          
+                          console.log(`🎯 Part ${partIndex}, questionNumberForThisInput:`, questionNumberForThisInput);
+                          
+                          return (
+                            <span key={partIndex}>
+                              <span dangerouslySetInnerHTML={{ 
+                                __html: (template.useBullets || item.numbered) && partIndex === 0 ? addBulletPoints(part, item.bulletLevel || 0, false, item.numbered || false, item.numberedIndex || null) : part 
+                              }} />
+                              {partIndex < array.length - 1 && (
+                                <>
+                                  <input
+                                    key={`input-${questionNumberForThisInput}-${partIndex}`}
+                                    type="text"
+                                    className={`answer-input ${getAnswerClass(questionNumberForThisInput)}`}
+                                    placeholder={getInputPlaceholder(questionNumberForThisInput)}
+                                    value={getAnswerValue(questionNumberForThisInput)}
+                                    onChange={(e) => {
+                                      console.log(`🎯 Old structure input onChange for questionNumber: ${questionNumberForThisInput}, value: ${e.target.value}`);
+                                      handleAnswerChange(questionNumberForThisInput, e.target.value);
+                                    }}
+                                    disabled={testSubmitted}
+                                    autoComplete="off"
+                                    data-form-type="other"
+                                    data-lpignore="true"
+                                    data-1p-ignore="true"
+                                    data-question-number={questionNumberForThisInput}
+                                  />
+                                  {/* Show inline correction after input field */}
+                                  {testSubmitted && testResults && (
+                                    <span className="inline-correction">
+                                      Correct: {String(testResults.correctAnswers?.[questionNumberForThisInput] || '')}
+                                    </span>
+                                  )}
+                                </>
+                              )}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                }
+                return null;
+              });
+            })()
           )}
         </div>
       </div>
