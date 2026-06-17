@@ -25,7 +25,7 @@ const TestContentViewer = ({ selectedTest, testData }) => {
           
           if (currentSource && currentSource.content) {
             setPassageContent(currentSource.content);
-          } else {
+          } else if (currentSource?.contentPath?.toLowerCase().endsWith('.json')) {
             const fetchUrl = `${API_BASE}/assets/${currentSource.contentPath}`;
             const response = await fetch(fetchUrl);
             
@@ -35,6 +35,8 @@ const TestContentViewer = ({ selectedTest, testData }) => {
             
             const data = await response.json();
             setPassageContent(data);
+          } else {
+            setPassageContent(null);
           }
         }
       } catch (err) {

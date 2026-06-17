@@ -38,7 +38,7 @@ const ReadingTest = ({ testId, testData, onPassageChange, currentPassage, isTeac
           // Backend already sent the parsed JSON content
           if (currentSource && currentSource.content) {
             setPassageContent(currentSource.content);
-          } else {
+          } else if (currentSource?.contentPath?.toLowerCase().endsWith('.json')) {
             // Fallback: fetch JSON content if not provided by backend
             const fetchUrl = `${API_BASE}/assets/${currentSource.contentPath}`;
             const response = await fetch(fetchUrl);
@@ -49,6 +49,8 @@ const ReadingTest = ({ testId, testData, onPassageChange, currentPassage, isTeac
             
             const data = await response.json();
             setPassageContent(data);
+          } else {
+            setPassageContent(null);
           }
         }
       } catch (err) {

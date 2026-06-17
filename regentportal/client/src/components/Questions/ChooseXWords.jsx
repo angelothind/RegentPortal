@@ -111,6 +111,11 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
     return 'Answer';
   };
 
+  const normalizeQuestionNumber = (questionNumber) => {
+    if (questionNumber == null) return '';
+    return String(questionNumber);
+  };
+
   if (!template || !template.questionBlock) {
     console.log('❌ ChooseXWords: No template or questionBlock');
     return <div>No questions available</div>;
@@ -205,7 +210,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                     {processNewlines(processBulletTags(stripMarkdownBold(block.text || ''))).split('________').map((part, index, array) => {
                       // Get the blank for this position - use index to match split position
                       const blank = block.blanks && block.blanks[index] ? block.blanks[index] : null;
-                      const blankNumber = blank?.number;
+                      const blankNumber = blank?.number != null ? normalizeQuestionNumber(blank.number) : null;
                       const isFirstPart = index === 0;
                       const shouldAddBullet = hasBullet && isFirstPart;
                       
@@ -282,7 +287,9 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                       }} />
                     </div>
                   );
-                } else if (item.questionNumber) {
+                } else if (item.questionNumber != null) {
+                  const questionNumberStr = normalizeQuestionNumber(item.questionNumber);
+
                   // Extract individual question numbers from the text for range questions
                   const extractQuestionNumbers = (text) => {
                     const matches = text.match(/\*\*(\d+)\*\*/g);
@@ -293,11 +300,11 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                   };
                   
                   const questionNumbers = extractQuestionNumbers(item.question || '');
-                  const isRangeQuestion = item.questionNumber.includes('-') && questionNumbers.length > 0;
+                  const isRangeQuestion = questionNumberStr.includes('-') && questionNumbers.length > 0;
                   
                   // Check if this is a single question that's already covered by a range question
-                  if (!isRangeQuestion && renderedQuestionNumbers.has(item.questionNumber)) {
-                    console.log(`🎯 Skipping duplicate question ${item.questionNumber} - already rendered from range question`);
+                  if (!isRangeQuestion && renderedQuestionNumbers.has(questionNumberStr)) {
+                    console.log(`🎯 Skipping duplicate question ${questionNumberStr} - already rendered from range question`);
                     return null;
                   }
                   
@@ -305,9 +312,9 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                   if (isRangeQuestion) {
                     questionNumbers.forEach(qNum => renderedQuestionNumbers.add(qNum));
                   } else {
-                    renderedQuestionNumbers.add(item.questionNumber);
+                    renderedQuestionNumbers.add(questionNumberStr);
                   }
-                  console.log(`🎯 Unified - Rendering question ${item.questionNumber}:`, item);
+                  console.log(`🎯 Unified - Rendering question ${questionNumberStr}:`, item);
                   console.log(`🎯 Unified - template.useBullets:`, template.useBullets);
                   console.log(`🎯 Unified - item.bulletLevel:`, item.bulletLevel);
                   console.log(`🎯 Question numbers extracted:`, questionNumbers);
@@ -321,7 +328,7 @@ const ChooseXWords = ({ template, onAnswerChange, testResults, testSubmitted, te
                           // For single questions, use the item.questionNumber
                           const questionNumberForThisInput = isRangeQuestion && questionNumbers[partIndex] 
                             ? questionNumbers[partIndex] 
-                            : item.questionNumber;
+                            : questionNumberStr;
                           
                           console.log(`🎯 Part ${partIndex}, questionNumberForThisInput:`, questionNumberForThisInput);
                           
