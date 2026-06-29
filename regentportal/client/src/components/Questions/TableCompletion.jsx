@@ -1,6 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../../styles/Questions/TableCompletion.css';
 import { processTextFormatting } from '../../utils/textFormatting';
+
+const getInputKey = (questionNumber, partIndex, blankCount) => (
+  blankCount === 1 ? questionNumber : `${questionNumber}_${partIndex}`
+);
+
+const getMarkingQuestionNumber = (questionNumber, partIndex, blankCount) => {
+  if (blankCount > 1 && typeof questionNumber === 'string' && questionNumber.includes('-')) {
+    const [startNum] = questionNumber.split('-').map(Number);
+    return startNum + partIndex;
+  }
+  return questionNumber;
+};
 
 const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted, testType, componentId = 'table-completion', currentAnswers = {} }) => {
   console.log('🎯 TableCompletion rendered with template:', template);
@@ -40,23 +52,10 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
         if (cell.type === 'question' && cell.questionNumber && typeof cell.questionNumber === 'string' && cell.questionNumber.includes('-')) {
           console.log('🎯 Found range question:', cell.questionNumber);
           const [startNum, endNum] = cell.questionNumber.split('-').map(Number);
-          // Don't use JSON answers - only use database answers
-          
-          // Transform the backend data to split range questions
-          for (let i = 0; i < 2; i++) { // Assume 2 answers for range questions
-            const questionNumber = startNum + i;
-            
-            // Create individual question results using database data only
+
+          for (let questionNumber = startNum; questionNumber <= endNum; questionNumber++) {
             if (transformedResults[questionNumber]) {
-              // Keep existing database data
               console.log(`🎯 Keeping database data for question ${questionNumber}:`, transformedResults[questionNumber]);
-            } else {
-              // Create placeholder for missing questions
-              transformedResults[questionNumber] = {
-                correctAnswer: '', // Will be filled from database
-                isCorrect: false,
-                userAnswer: ''
-              };
             }
           }
         }
@@ -138,9 +137,18 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
           if (testResults.answers[keyStr] !== undefined) {
             return testResults.answers[keyStr];
           }
-          // Also check with original value
           if (testResults.answers[questionNumberOrKey] !== undefined) {
             return testResults.answers[questionNumberOrKey];
+          }
+
+          const suffixMatch = keyStr.match(/^(\d+-\d+)_(\d+)$/);
+          if (suffixMatch) {
+            const [, range, indexStr] = suffixMatch;
+            const [startNum] = range.split('-').map(Number);
+            const markingKey = String(startNum + parseInt(indexStr, 10));
+            if (testResults.answers[markingKey] !== undefined) {
+              return testResults.answers[markingKey];
+            }
           }
         }
         
@@ -176,6 +184,34 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
     }
     
     return '';
+  };
+
+  const getCorrectAnswerDisplay = (markingQuestionNumber) => {
+    try {
+      const questionNum = String(markingQuestionNumber);
+      const questionNumAsNumber = Number(markingQuestionNumber);
+
+      const correctAnswer =
+        testResults?.correctAnswers?.[questionNum] ||
+        testResults?.correctAnswers?.[questionNumAsNumber] ||
+        testResults?.correctAnswers?.[markingQuestionNumber] ||
+        transformedResults?.[questionNum]?.correctAnswer ||
+        transformedResults?.[questionNumAsNumber]?.correctAnswer ||
+        transformedResults?.[markingQuestionNumber]?.correctAnswer ||
+        testResults?.results?.[questionNum]?.correctAnswer ||
+        testResults?.results?.[questionNumAsNumber]?.correctAnswer ||
+        testResults?.results?.[markingQuestionNumber]?.correctAnswer ||
+        '';
+
+      if (Array.isArray(correctAnswer)) {
+        return correctAnswer.join(', ');
+      }
+
+      return String(correctAnswer || '');
+    } catch (error) {
+      console.error('❌ Error getting correct answer:', error, 'markingQuestionNumber:', markingQuestionNumber);
+      return '';
+    }
   };
 
   if (!template || !template.tableData) {
@@ -266,12 +302,9 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                       ) : cell.type === 'question' ? (
                         <div className="question-cell">
                           {processNewlines(stripMarkdownBold(cell.content)).split('________').map((part, partIndex, array) => {
-                            // Create unique key for each input within a cell
-                            // If there's only one blank, use questionNumber directly
-                            // If multiple blanks, append partIndex to make it unique
-                            const inputKey = array.length === 2 
-                              ? cell.questionNumber 
-                              : `${cell.questionNumber}_${partIndex}`;
+                            const blankCount = array.length - 1;
+                            const inputKey = getInputKey(cell.questionNumber, partIndex, blankCount);
+                            const markingQuestionNumber = getMarkingQuestionNumber(cell.questionNumber, partIndex, blankCount);
                             
                             return (
                               <span key={partIndex}>
@@ -280,7 +313,7 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                                   <>
                                   <input
                                     type="text"
-                                      className={`listening-table-answer-input ${getAnswerClass(cell.questionNumber)}`}
+                                      className={`listening-table-answer-input ${getAnswerClass(markingQuestionNumber)}`}
                                     placeholder="Answer"
                                       value={getAnswerValue(inputKey)}
                                       onChange={(e) => handleAnswerChange(inputKey, e.target.value)}
@@ -290,50 +323,9 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                                     data-lpignore="true"
                                     data-1p-ignore="true"
                                   />
-                                    {/* Show correct answer inline for each input field */}
                                     {testSubmitted && testResults && (
                                       <span className="inline-correction">
-                                        Correct: {(() => {
-                                          try {
-                                            // Handle range questions (e.g., "3-4" should look up "3" and "4" separately)
-                                            let questionNumToLookup = cell.questionNumber;
-                                            
-                                            // Check if this is a range question and we have multiple inputs
-                                            if (typeof cell.questionNumber === 'string' && cell.questionNumber.includes('-') && array.length > 2) {
-                                              // Split range and get the question number for this specific input
-                                              const [startNum, endNum] = cell.questionNumber.split('-').map(Number);
-                                              // For each input in the range, use the corresponding question number
-                                              // partIndex 0 -> startNum, partIndex 1 -> startNum + 1, etc.
-                                              questionNumToLookup = startNum + partIndex;
-                                            }
-                                            
-                                            const questionNum = String(questionNumToLookup);
-                                            const questionNumAsNumber = Number(questionNumToLookup);
-                                            
-                                            // Try all possible key formats
-                                            const correctAnswer = 
-                                              testResults.correctAnswers?.[questionNum] || 
-                                              testResults.correctAnswers?.[questionNumAsNumber] ||
-                                              testResults.correctAnswers?.[questionNumToLookup] ||
-                                              transformedResults?.[questionNum]?.correctAnswer ||
-                                              transformedResults?.[questionNumAsNumber]?.correctAnswer ||
-                                              transformedResults?.[questionNumToLookup]?.correctAnswer ||
-                                              testResults.results?.[questionNum]?.correctAnswer ||
-                                              testResults.results?.[questionNumAsNumber]?.correctAnswer ||
-                                              testResults.results?.[questionNumToLookup]?.correctAnswer ||
-                                              '';
-                                            
-                                            // Handle arrays (for multiple choice questions)
-                                            if (Array.isArray(correctAnswer)) {
-                                              return correctAnswer.join(', ');
-                                            }
-                                            
-                                            return String(correctAnswer || '');
-                                          } catch (error) {
-                                            console.error('❌ Error getting correct answer:', error, 'cell.questionNumber:', cell.questionNumber);
-                                            return '';
-                                          }
-                                        })()}
+                                        Correct: {getCorrectAnswerDisplay(markingQuestionNumber)}
                                       </span>
                                     )}
                                   </>
@@ -404,12 +396,9 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                       ) : cell.type === 'question' ? (
                         <div className="question-cell">
                           {processNewlines(stripMarkdownBold(cell.content)).split('________').map((part, partIndex, array) => {
-                            // Create unique key for each input within a cell
-                            // If there's only one blank, use questionNumber directly
-                            // If multiple blanks, append partIndex to make it unique
-                            const inputKey = array.length === 2 
-                              ? cell.questionNumber 
-                              : `${cell.questionNumber}_${partIndex}`;
+                            const blankCount = array.length - 1;
+                            const inputKey = getInputKey(cell.questionNumber, partIndex, blankCount);
+                            const markingQuestionNumber = getMarkingQuestionNumber(cell.questionNumber, partIndex, blankCount);
                             
                             return (
                               <span key={partIndex}>
@@ -418,7 +407,7 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                                   <>
                                   <input
                                     type="text"
-                                      className={`table-answer-input ${getAnswerClass(cell.questionNumber)}`}
+                                      className={`table-answer-input ${getAnswerClass(markingQuestionNumber)}`}
                                     placeholder="Answer"
                                       value={getAnswerValue(inputKey)}
                                       onChange={(e) => handleAnswerChange(inputKey, e.target.value)}
@@ -428,50 +417,9 @@ const TableCompletion = ({ template, onAnswerChange, testResults, testSubmitted,
                                     data-lpignore="true"
                                     data-1p-ignore="true"
                                   />
-                                    {/* Show correct answer inline for each input field */}
                                     {testSubmitted && testResults && (
                                       <span className="inline-correction">
-                                        Correct: {(() => {
-                                          try {
-                                            // Handle range questions (e.g., "3-4" should look up "3" and "4" separately)
-                                            let questionNumToLookup = cell.questionNumber;
-                                            
-                                            // Check if this is a range question and we have multiple inputs
-                                            if (typeof cell.questionNumber === 'string' && cell.questionNumber.includes('-') && array.length > 2) {
-                                              // Split range and get the question number for this specific input
-                                              const [startNum, endNum] = cell.questionNumber.split('-').map(Number);
-                                              // For each input in the range, use the corresponding question number
-                                              // partIndex 0 -> startNum, partIndex 1 -> startNum + 1, etc.
-                                              questionNumToLookup = startNum + partIndex;
-                                            }
-                                            
-                                            const questionNum = String(questionNumToLookup);
-                                            const questionNumAsNumber = Number(questionNumToLookup);
-                                            
-                                            // Try all possible key formats
-                                            const correctAnswer = 
-                                              testResults.correctAnswers?.[questionNum] || 
-                                              testResults.correctAnswers?.[questionNumAsNumber] ||
-                                              testResults.correctAnswers?.[questionNumToLookup] ||
-                                              transformedResults?.[questionNum]?.correctAnswer ||
-                                              transformedResults?.[questionNumAsNumber]?.correctAnswer ||
-                                              transformedResults?.[questionNumToLookup]?.correctAnswer ||
-                                              testResults.results?.[questionNum]?.correctAnswer ||
-                                              testResults.results?.[questionNumAsNumber]?.correctAnswer ||
-                                              testResults.results?.[questionNumToLookup]?.correctAnswer ||
-                                              '';
-                                            
-                                            // Handle arrays (for multiple choice questions)
-                                            if (Array.isArray(correctAnswer)) {
-                                              return correctAnswer.join(', ');
-                                            }
-                                            
-                                            return String(correctAnswer || '');
-                                          } catch (error) {
-                                            console.error('❌ Error getting correct answer:', error, 'cell.questionNumber:', cell.questionNumber);
-                                            return '';
-                                          }
-                                        })()}
+                                        Correct: {getCorrectAnswerDisplay(markingQuestionNumber)}
                                       </span>
                                     )}
                                   </>

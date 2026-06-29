@@ -66,9 +66,10 @@
       }
     },
     {
-      "questionType": "ysng",
+      "questionType": "TFNG",
+      "subType": "YSNG",
       "introInstruction": "Questions 32-35\nDo the following statements agree with the claims of the writer in Reading Passage 3?",
-      "formattingInstruction": "In boxes 32-35 on your answer sheet, write",
+      "formattingInstruction": "In boxes 32-35, select",
       "questionBlock": [
         {
           "questionNumber": 32,

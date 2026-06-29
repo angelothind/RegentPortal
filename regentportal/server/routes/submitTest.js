@@ -67,6 +67,23 @@ const loadCorrectAnswers = async (testId, testType, submittedAnswers = {}) => {
   }
 };
 
+// Map table-completion keys (e.g. "8-9_0", "10-12_2") to individual question numbers
+const normalizeTableCompletionAnswers = (answers) => {
+  const normalized = { ...answers };
+
+  Object.entries(answers).forEach(([key, value]) => {
+    const rangeMatch = key.match(/^(\d+-\d+)_(\d+)$/);
+    if (!rangeMatch) return;
+
+    const [, range, indexStr] = rangeMatch;
+    const [startNum] = range.split('-').map(Number);
+    const questionNumber = String(startNum + parseInt(indexStr, 10));
+    normalized[questionNumber] = value;
+  });
+
+  return normalized;
+};
+
 // Test endpoint to verify route is working
 router.get('/test', (req, res) => {
   res.json({ message: 'Submit test route is working' });
@@ -168,9 +185,8 @@ router.post('/submit', async (req, res) => {
       });
     });
     
-    // Use answers directly - no normalization needed for our new approach
-    const normalizedAnswers = { ...answers };
-    console.log('📝 Using answers directly:', normalizedAnswers);
+    const normalizedAnswers = normalizeTableCompletionAnswers(answers);
+    console.log('📝 Normalized answers for grading:', normalizedAnswers);
 
     // Calculate score and results - grade ALL questions individually
     let correctCount = 0;
