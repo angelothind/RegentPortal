@@ -87,60 +87,33 @@
       "questionType": "multiple-choice-two",
       "introInstruction": "Questions 25 and 26\nChoose TWO letters, A-E.",
       "formattingInstruction": "Which TWO issues following the Laki eruption surprised the students?",
-      "questionBlock": [
-        {
-          "options": [
-            {
-              "letter": "A",
-              "text": "how widespread the effects were"
-            },
-            {
-              "letter": "B",
-              "text": "how long-lasting the effects were"
-            },
-            {
-              "letter": "C",
-              "text": "the number of deaths it caused"
-            },
-            {
-              "letter": "D",
-              "text": "the speed at which the volcanic ash cloud spread"
-            },
-            {
-              "letter": "E",
-              "text": "how people ignored the warning signs"
-            }
-          ],
-          "answer": ["A", "B"]
-        },
-        {
-          "questionNumber": 26,
-          "question": "Which TWO issues following the Laki eruption surprised the students?",
-          "options": [
-            {
-              "letter": "A",
-              "text": "how widespread the effects were"
-            },
-            {
-              "letter": "B",
-              "text": "how long-lasting the effects were"
-            },
-            {
-              "letter": "C",
-              "text": "the number of deaths it caused"
-            },
-            {
-              "letter": "D",
-              "text": "the speed at which the volcanic ash cloud spread"
-            },
-            {
-              "letter": "E",
-              "text": "how people ignored the warning signs"
-            }
-          ],
-          "answer": ["A", "B"]
-        }
-      ]
+      "questionGroup": {
+        "questionNumbers": ["25", "26"],
+        "options": [
+          {
+            "letter": "A",
+            "text": "how widespread the effects were"
+          },
+          {
+            "letter": "B",
+            "text": "how long-lasting the effects were"
+          },
+          {
+            "letter": "C",
+            "text": "the number of deaths it caused"
+          },
+          {
+            "letter": "D",
+            "text": "the speed at which the volcanic ash cloud spread"
+          },
+          {
+            "letter": "E",
+            "text": "how people ignored the warning signs"
+          }
+        ],
+        "correctAnswers": ["A", "B"],
+        "maxSelections": 2
+      }
     },
     {
       "questionType": "matching",

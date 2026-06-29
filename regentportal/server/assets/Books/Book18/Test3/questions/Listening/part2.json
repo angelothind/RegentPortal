@@ -5,119 +5,65 @@
       "questionType": "multiple-choice-two",
       "introInstruction": "Questions 11-12\nChoose TWO letters, A-E.",
       "formattingInstruction": "Which TWO warnings does Dan give about picking mushrooms?",
-      "questionBlock": [
-        {
-          "options": [
-            {
-              "letter": "A",
-              "text": "Don't pick more than one variety of mushroom at a time."
-            },
-            {
-              "letter": "B",
-              "text": "Don't pick mushrooms near busy roads."
-            },
-            {
-              "letter": "C",
-              "text": "Don't eat mushrooms given to you."
-            },
-            {
-              "letter": "D",
-              "text": "Don't eat mushrooms while picking them."
-            },
-            {
-              "letter": "E",
-              "text": "Don't pick old mushrooms."
-            }
-          ],
-          "answer": ["B", "C"]
-        },
-        {
-          "questionNumber": 12,
-          "question": "Which TWO warnings does Dan give about picking mushrooms?",
-          "options": [
-            {
-              "letter": "A",
-              "text": "Don't pick more than one variety of mushroom at a time."
-            },
-            {
-              "letter": "B",
-              "text": "Don't pick mushrooms near busy roads."
-            },
-            {
-              "letter": "C",
-              "text": "Don't eat mushrooms given to you."
-            },
-            {
-              "letter": "D",
-              "text": "Don't eat mushrooms while picking them."
-            },
-            {
-              "letter": "E",
-              "text": "Don't pick old mushrooms."
-            }
-          ],
-          "answer": ["B", "C"]
-        }
-      ]
+      "questionGroup": {
+        "questionNumbers": ["11", "12"],
+        "options": [
+          {
+            "letter": "A",
+            "text": "Don't pick more than one variety of mushroom at a time."
+          },
+          {
+            "letter": "B",
+            "text": "Don't pick mushrooms near busy roads."
+          },
+          {
+            "letter": "C",
+            "text": "Don't eat mushrooms given to you."
+          },
+          {
+            "letter": "D",
+            "text": "Don't eat mushrooms while picking them."
+          },
+          {
+            "letter": "E",
+            "text": "Don't pick old mushrooms."
+          }
+        ],
+        "correctAnswers": ["B", "C"],
+        "maxSelections": 2
+      }
     },
     {
       "questionType": "multiple-choice-two",
       "introInstruction": "Questions 13-14\nChoose TWO letters, A-E.",
       "formattingInstruction": "Which TWO ideas about wild mushrooms does Dan say are correct?",
-      "questionBlock": [
-        {
-          "options": [
-            {
-              "letter": "A",
-              "text": "Mushrooms should always be peeled before eating."
-            },
-            {
-              "letter": "B",
-              "text": "Mushrooms eaten by animals may be unsafe."
-            },
-            {
-              "letter": "C",
-              "text": "Cooking destroys toxins in mushrooms."
-            },
-            {
-              "letter": "D",
-              "text": "Brightly coloured mushrooms can be edible."
-            },
-            {
-              "letter": "E",
-              "text": "All poisonous mushrooms have a bad smell."
-            }
-          ],
-          "answer": ["D", "E"]
-        },
-        {
-          "questionNumber": 14,
-          "question": "Which TWO ideas about wild mushrooms does Dan say are correct?",
-          "options": [
-            {
-              "letter": "A",
-              "text": "Mushrooms should always be peeled before eating."
-            },
-            {
-              "letter": "B",
-              "text": "Mushrooms eaten by animals may be unsafe."
-            },
-            {
-              "letter": "C",
-              "text": "Cooking destroys toxins in mushrooms."
-            },
-            {
-              "letter": "D",
-              "text": "Brightly coloured mushrooms can be edible."
-            },
-            {
-              "letter": "E",
-              "text": "All poisonous mushrooms have a bad smell."
-            }
-          ],
-          "answer": ["D", "E"]
-        }
-      ]
+      "questionGroup": {
+        "questionNumbers": ["13", "14"],
+        "options": [
+          {
+            "letter": "A",
+            "text": "Mushrooms should always be peeled before eating."
+          },
+          {
+            "letter": "B",
+            "text": "Mushrooms eaten by animals may be unsafe."
+          },
+          {
+            "letter": "C",
+            "text": "Cooking destroys toxins in mushrooms."
+          },
+          {
+            "letter": "D",
+            "text": "Brightly coloured mushrooms can be edible."
+          },
+          {
+            "letter": "E",
+            "text": "All poisonous mushrooms have a bad smell."
+          }
+        ],
+        "correctAnswers": ["D", "E"],
+        "maxSelections": 2
+      }
     },
     {
       "questionType": "multiple-choice",

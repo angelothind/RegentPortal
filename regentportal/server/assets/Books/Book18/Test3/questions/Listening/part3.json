@@ -5,121 +5,65 @@
       "questionType": "multiple-choice-two",
       "introInstruction": "Questions 21-22\nChoose TWO letters, A-E.",
       "formattingInstruction": "Which TWO opinions about the Luddites do the students express?",
-      "questionBlock": [
-        {
-  
-          "options": [
-            {
-              "letter": "A",
-              "text": "Their actions were ineffective."
-            },
-            {
-              "letter": "B",
-              "text": "They are still influential today."
-            },
-            {
-              "letter": "C",
-              "text": "They have received unfair criticism."
-            },
-            {
-              "letter": "D",
-              "text": "They were proved right."
-            },
-            {
-              "letter": "E",
-              "text": "Their attitude is understandable."
-            }
-          ],
-          "answer": ["C", "E"]
-        },
-        {
-          "questionNumber": 22,
-          "question": "Which TWO opinions about the Luddites do the students express?",
-          "options": [
-            {
-              "letter": "A",
-              "text": "Their actions were ineffective."
-            },
-            {
-              "letter": "B",
-              "text": "They are still influential today."
-            },
-            {
-              "letter": "C",
-              "text": "They have received unfair criticism."
-            },
-            {
-              "letter": "D",
-              "text": "They were proved right."
-            },
-            {
-              "letter": "E",
-              "text": "Their attitude is understandable."
-            }
-          ],
-          "answer": ["C", "E"]
-        }
-      ]
+      "questionGroup": {
+        "questionNumbers": ["21", "22"],
+        "options": [
+          {
+            "letter": "A",
+            "text": "Their actions were ineffective."
+          },
+          {
+            "letter": "B",
+            "text": "They are still influential today."
+          },
+          {
+            "letter": "C",
+            "text": "They have received unfair criticism."
+          },
+          {
+            "letter": "D",
+            "text": "They were proved right."
+          },
+          {
+            "letter": "E",
+            "text": "Their attitude is understandable."
+          }
+        ],
+        "correctAnswers": ["C", "E"],
+        "maxSelections": 2
+      }
     },
     {
       "questionType": "multiple-choice-two",
       "introInstruction": "Questions 23-24\nChoose TWO letters, A-E.",
       "formattingInstruction": "Which TWO predictions about the future of work are the students doubtful about?",
-      "questionBlock": [
-        {
-        
-          "options": [
-            {
-              "letter": "A",
-              "text": "Work will be more rewarding."
-            },
-            {
-              "letter": "B",
-              "text": "Unemployment will fall."
-            },
-            {
-              "letter": "C",
-              "text": "People will want to delay retiring."
-            },
-            {
-              "letter": "D",
-              "text": "Working hours will be shorter."
-            },
-            {
-              "letter": "E",
-              "text": "People will change jobs more frequently."
-            }
-          ],
-          "answer": ["A", "D"]
-        },
-        {
-          "questionNumber": 24,
-          "question": "Which TWO predictions about the future of work are the students doubtful about?",
-          "options": [
-            {
-              "letter": "A",
-              "text": "Work will be more rewarding."
-            },
-            {
-              "letter": "B",
-              "text": "Unemployment will fall."
-            },
-            {
-              "letter": "C",
-              "text": "People will want to delay retiring."
-            },
-            {
-              "letter": "D",
-              "text": "Working hours will be shorter."
-            },
-            {
-              "letter": "E",
-              "text": "People will change jobs more frequently."
-            }
-          ],
-          "answer": ["A", "D"]
-        }
-      ]
+      "questionGroup": {
+        "questionNumbers": ["23", "24"],
+        "options": [
+          {
+            "letter": "A",
+            "text": "Work will be more rewarding."
+          },
+          {
+            "letter": "B",
+            "text": "Unemployment will fall."
+          },
+          {
+            "letter": "C",
+            "text": "People will want to delay retiring."
+          },
+          {
+            "letter": "D",
+            "text": "Working hours will be shorter."
+          },
+          {
+            "letter": "E",
+            "text": "People will change jobs more frequently."
+          }
+        ],
+        "correctAnswers": ["A", "D"],
+        "maxSelections": 2
+      }
     },
     {
       "questionType": "matching",
