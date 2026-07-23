@@ -103,10 +103,9 @@ const MultipleChoice = ({ template, onAnswerChange, testResults, testSubmitted, 
         </div>
       )}
       
-      {/* Section Title - check if first item is a section heading */}
-      {template.questionBlock[0]?.sectionHeading && (
+      {(template.sectionTitle || template.questionBlock[0]?.sectionHeading) && (
         <div className="section-title">
-          <h4>{template.questionBlock[0].sectionHeading}</h4>
+          <h4>{template.sectionTitle || template.questionBlock[0].sectionHeading}</h4>
         </div>
       )}
       
