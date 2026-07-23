@@ -9,35 +9,35 @@
         "title": "List of Headings",
         "options": [
           {
-            "letter": "1",
+            "letter": "i",
             "text": "A period in cold conditions before the technology is assessed"
           },
           {
-            "letter": "2",
+            "letter": "ii",
             "text": "Marketing issues lead to failure"
           },
           {
-            "letter": "3",
+            "letter": "iii",
             "text": "Good and bad aspects of steam technology are passed on"
           },
           {
-            "letter": "4",
+            "letter": "iv",
             "text": "A possible solution to the issues of today"
           },
           {
-            "letter": "5",
+            "letter": "v",
             "text": "Further improvements lead to commercial orders"
           },
           {
-            "letter": "6",
+            "letter": "vi",
             "text": "Positive publicity at last for this quiet, clean, fast vehicle"
           },
           {
-            "letter": "7",
+            "letter": "vii",
             "text": "A disappointing outcome for customers"
           },
           {
-            "letter": "8",
+            "letter": "viii",
             "text": "A better option than the steam car arises"
           }
         ]
