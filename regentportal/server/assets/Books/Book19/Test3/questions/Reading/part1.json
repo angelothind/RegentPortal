@@ -50,19 +50,52 @@
       "questionType": "choose-x-word",
       "introInstruction": "Complete the notes below.",
               "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 8-13.",
-      "notesTitle": "Archaeological excavations at Kelo",
+      "notesTitle": "Archaeological excavations at Obi",
+      "useBullets": true,
       "questionBlock": [
         {
-          "questionNumber": "8-13",
-          "text": "Excavations of rock shelters inside **8** ________ near the village of Kelo revealed: axes made out of **9** ________ , dating from around 11,700 years ago, **10** ________ of an animal: evidence of what ancient islanders ate, **11** ________ which resembled ones found on other islands, had **12** ________ as well as items made out of metal, probably took part in the production and sale of **13** ________.",
-          "blanks": [
-            { "number": "8", "answer": "caves" },
-            { "number": "9", "answer": "stone" },
-            { "number": "10", "answer": "bones" },
-            { "number": "11", "answer": "beads" },
-            { "number": "12", "answer": "pottery" },
-            { "number": "13", "answer": "spices" }
-          ]
+          "questionNumber": "8",
+          "question": "Excavations of rock shelters inside **8** ________ near the village of Kelo revealed:",
+          "answer": "caves",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "axes from around 14,000 years ago, probably used to make canoes",
+          "bulletLevel": 0
+        },
+  
+        {
+          "questionNumber": "9",
+          "question": "axes made out of **9** ________ dating from around 11,700 years ago",
+          "answer": "bones",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "10",
+          "question": "**11** ________ of an animal: evidence of what ancient islanders ate",
+          "answer": "beads",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "evidence of travel between islands",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "obsidian: a meterial thaat is found naturally on Obi",
+          "bulletLevel": 1
+        },
+
+        {
+          "questionNumber": "11",
+          "question": "**12** ________ which resembled ones found on other islands.",
+          "answer": "pottery",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": "13",
+          "question": "probably took part in the production and sale of **13** ________",
+          "answer": "spices",
+          "bulletLevel": 0
         }
       ],
       "correctAnswers": {
