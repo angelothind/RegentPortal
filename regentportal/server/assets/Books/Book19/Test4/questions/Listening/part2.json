@@ -67,81 +67,42 @@
       "questionType": "matching",
       "introInstruction": "Questions 15-18",
       "formattingInstruction": "What reason prevented each of the following members of the Compton Park Runners Club from joining until recently? Write the correct letter, A, B, or C next to Questions 15-18.",
+      "opinionsBox": {
+        "title": "Reasons",
+        "options": [
+          {
+            "letter": "A",
+            "text": "a lack of confidence"
+          },
+          {
+            "letter": "B",
+            "text": "a dislike of running"
+          },
+          {
+            "letter": "C",
+            "text": "a lack of time"
+          }
+        ]
+      },
       "questionBlock": [
         {
           "questionNumber": "15",
           "question": "Ceri",
-          "options": [
-            {
-              "letter": "A",
-              "text": "a lack of confidence"
-            },
-            {
-              "letter": "B",
-              "text": "a dislike of running"
-            },
-            {
-              "letter": "C",
-              "text": "a lack of time"
-            }
-          ],
           "answer": "A"
         },
         {
           "questionNumber": "16",
           "question": "James",
-          "options": [
-            {
-              "letter": "A",
-              "text": "a lack of confidence"
-            },
-            {
-              "letter": "B",
-              "text": "a dislike of running"
-            },
-            {
-              "letter": "C",
-              "text": "a lack of time"
-            }
-          ],
           "answer": "C"
         },
         {
           "questionNumber": "17",
           "question": "Leo",
-          "options": [
-            {
-              "letter": "A",
-              "text": "a lack of confidence"
-            },
-            {
-              "letter": "B",
-              "text": "a dislike of running"
-            },
-            {
-              "letter": "C",
-              "text": "a lack of time"
-            }
-          ],
           "answer": "B"
         },
         {
           "questionNumber": "18",
           "question": "Mark",
-          "options": [
-            {
-              "letter": "A",
-              "text": "a lack of confidence"
-            },
-            {
-              "letter": "B",
-              "text": "a dislike of running"
-            },
-            {
-              "letter": "C",
-              "text": "a lack of time"
-            }
-          ],
           "answer": "A"
         }
       ]
