@@ -27,6 +27,34 @@
     {
       "label": "F",
       "text": "The oceans occupy around 70% of the planet and arc relatively unexplored, says Mike Johnston, chief executive of Nautilus, a Canadian underwater exploration company: ‘It makes sense to explore this untapped potential in an environmentally sustainable way, instead of continually looking at the fast depleting land resources of the planet to meet society’s rising needs.’Those leading the global rush to place giant mining machines thousands of metres below the sea surface say the environmental impacts will be far lower than on land. But critics say exotic and little-known ecosystems in the deep oceans could be destroyed and must be protected. ‘Mining will be the greatest assault on deep-sea ecosystems ever inflicted by humans,’ according to hydrothermal vent expert Vcrena TunniclifTe, at the University of Victoria in Canada. She argues that active vents must be off-limits for mining to protect the new knowledge and biotechnology spin-offs they can deliver, and that strict controls must be in place elsewhere."
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Complete the summary below.",
+              "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 24-26.",
+      "notesTitle": "Deep sea mining",
+      "questionBlock": [
+        {
+          "questionNumber": "24",
+          "question": "Mining corporations believe that the mineral resources lying under the sea may be superior to those found in the earth. They also say that these can be removed without producing much **24** ________",
+          "answer": "waste"
+        },
+        {
+          "questionNumber": "25",
+          "question": "The extraction is often done by adapting the **25** ________ that has already been used to work on land.",
+          "answer": "machinery"
+        },
+        {
+          "questionNumber": "26",
+          "question": "However, concerned groups strongly believe that **26** ________ is necessary due to the possible number of unidentified consequences.",
+          "answer": "caution"
+        }
+      ],
+      "correctAnswers": {
+        "24": "waste",
+        "25": "machinery",
+        "26": "caution"
+      }
     }
   ]
 } 
