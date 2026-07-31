@@ -278,8 +278,8 @@ router.post('/submit', async (req, res) => {
         }
       } else {
         // Single answer questions (including Multiple Choice 2 individual questions)
-        const normalizedUserAnswer = userAnswer ? userAnswer.toString().trim().toUpperCase() : '';
-        const normalizedCorrectAnswer = correctAnswer ? correctAnswer.toString().trim().toUpperCase() : '';
+        const normalizedUserAnswer = userAnswer ? userAnswer.toString().trim() : '';
+        const normalizedCorrectAnswer = correctAnswer ? correctAnswer.toString().trim()  : '';
         
         // Debug empty answers
         console.log(`🔍 Question ${questionNumber} answer analysis:`, {
