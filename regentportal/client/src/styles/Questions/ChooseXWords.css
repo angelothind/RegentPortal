@@ -97,6 +97,13 @@
   color: #25245D;
 }
 
+/* Keep question and descriptive content at the same normal weight. */
+.choose-x-words-container .question-text,
+.choose-x-words-container .descriptive-text,
+.choose-x-words-container .question-text strong {
+  font-weight: 400;
+}
+
 /* Bullet point styling */
 .bullet-point {
   display: inline-block;
