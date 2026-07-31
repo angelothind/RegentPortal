@@ -5,11 +5,11 @@ services:
       dockerfile: Dockerfile.backend
     ports:
       - "3001:3000"
+    env_file:
+      - .env
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - MONGO_URI=mongodb+srv://angelothind:Ch1angmai%21@regentportal.77lx7vr.mongodb.net/regentportal?retryWrites=true&w=majority&appName=regentportal
-      - JWT_SECRET=your_jwt_secret_key_here
     volumes:
       - ./assets:/app/assets
 
@@ -22,4 +22,4 @@ services:
     environment:
       - REACT_APP_API_URL=http://localhost:3001
     depends_on:
-      - backend 
+      - backend

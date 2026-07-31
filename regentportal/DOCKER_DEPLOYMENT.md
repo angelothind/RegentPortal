@@ -15,12 +15,12 @@
    - **Build Context**: `/` (root directory)
    - **Dockerfile**: `Dockerfile.backend`
 
-3. **Environment Variables**
+3. **Environment Variables** (set in Northflank dashboard — do not commit secrets to git)
    ```
    NODE_ENV=production
    PORT=3000
-   MONGO_URI=mongodb+srv://angelothind:Ch1angmai%21@regentportal.77lx7vr.mongodb.net/regentportal?retryWrites=true&w=majority&appName=regentportal
-   JWT_SECRET=your_jwt_secret_key_here
+   MONGO_URI=<your MongoDB Atlas connection string>
+   JWT_SECRET=<generate a strong random secret, e.g. openssl rand -base64 32>
    ```
 
 4. **Port Configuration**
@@ -110,6 +110,9 @@ You can also use the provided YAML files:
 To test the production setup locally:
 
 ```bash
+# Copy the example env file and fill in your credentials
+cp .env.example .env
+
 # Build and run with production settings
 docker-compose up --build
 
