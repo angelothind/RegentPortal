@@ -1,10 +1,9 @@
 const express = require('express');
 const app = express();
-const connectDB = require('./config/db');
 const path = require('path');
 
-// Connect DB
-connectDB();
+// Note: database connection is established by server.js before listening.
+// app.js only builds and exports the Express app so it can be tested in isolation.
 
 // Middleware
 app.use(express.json());
