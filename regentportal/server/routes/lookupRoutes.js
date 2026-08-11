@@ -1,44 +1,12 @@
 // routes/lookupRoutes.js
 const express = require('express');
 const router = express.Router();
-const Student = require('../models/Student'); // adjust path if needed
-const Teacher = require('../models/Teacher');
-const Admin = require('../models/Admin');
+const studentController = require('../controllers/studentController');
+const teacherController = require('../controllers/teacherController');
+const adminController = require('../controllers/adminController');
 
-router.get('/lookupstudents', async (req, res) => {
-    console.log('In lookupstudents route');
-    try {
-        const students = await Student.find({}, 'name nickname username'); // include nickname field
-        res.json({ students });
-    } catch (err) {
-        console.error('❌ Error fetching students:', err);
-        res.status(500).json({ error: 'Server error' });
-    }
-    });
-
-router.get('/lookupteachers', async (req, res) => {
-    console.log('In lookupteachers route');
-    try {
-        const teachers = await Teacher.find({}, 'name username');
-        res.json({ teachers });
-    } catch (err) {
-        console.error('❌ Error fetching teachers:', err);
-        res.status(500).json({ error: 'Server error' });
-    }
-    });
-
-
-router.get('/lookupadmins', async (req, res) => {
-    console.log('In lookupadmins route');
-    try {
-        const admins = await Admin.find({}, 'username');
-        console.log('Found admins:', admins);
-        res.json({ admins });
-    } catch (err) {
-        console.error('❌ Error fetching admins:', err);
-        res.status(500).json({ error: 'Server error' });
-    }
-});
-
+router.get('/lookupstudents', studentController.listStudents);
+router.get('/lookupteachers', teacherController.listTeachers);
+router.get('/lookupadmins', adminController.listAdmins);
 
 module.exports = router;
