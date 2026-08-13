@@ -10,28 +10,18 @@ const login = async (req, res) => {
     let user;
     if (userType === 'Teacher') {
       // Check Admins first
-      console.log('Teacher type has been looked into');
-      console.log('Looking for admin with username:', username);
-
       try {
-        console.log('🔍 Looking for admin with username:', username);
         user = await Admin.findOne({ username });
-        console.log('🔍 Admin query result:', user ? 'Found' : 'Not found');
         if (user) {
-          console.log('🔍 Admin found, checking password...');
           const isMatch = await bcrypt.compare(password, user.password);
-          console.log('🔍 Password match result:', isMatch);
           if (isMatch) {
-            console.log('Admin password checking');
             const token = generateToken(user._id, userType);
-            console.log('The login was succesful');
             return res.status(200).json({
               message: 'Login successful',
               user: { _id: user._id, username, userType: 'Admin' },
               token
             });
           } else {
-            console.log('Admin password mismatch');
             return res.status(401).json({ error: 'Invalid password' });
           }
         }
@@ -44,7 +34,6 @@ const login = async (req, res) => {
       if (user) {
         const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
-          console.log('The login was succesful');
           const token = generateToken(user._id, userType);
           return res.status(200).json({
             message: 'Login successful',
@@ -62,7 +51,6 @@ const login = async (req, res) => {
       if (user) {
         const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
-          console.log('The login was succesful');
           const token = generateToken(user._id, userType);
           return res.status(200).json({
             message: 'Login successful',

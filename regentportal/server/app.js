@@ -8,12 +8,6 @@ const path = require('path');
 // Middleware
 app.use(express.json());
 
-// Request logging middleware
-app.use((req, res, next) => {
-  console.log(`📨 ${req.method} ${req.url} - Origin: ${req.headers.origin || 'No origin'}`);
-  next();
-});
-
 // Enhanced CORS middleware
 app.use((req, res, next) => {
   // Allow requests from any origin in development, or specific origins in production
@@ -29,7 +23,6 @@ app.use((req, res, next) => {
   ];
   
   const origin = req.headers.origin;
-  console.log(`🌐 CORS check - Origin: ${origin}, Allowed: ${allowedOrigins.includes(origin)}`);
   
   if (allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
     res.header('Access-Control-Allow-Origin', origin);
@@ -41,7 +34,6 @@ app.use((req, res, next) => {
   
   // Handle preflight requests
   if (req.method === 'OPTIONS') {
-    console.log('✅ Preflight request handled');
     res.status(200).end();
     return;
   }
@@ -55,9 +47,7 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 // Serve built frontend files for preview/testing
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
-console.log('✅ Routes loaded');
 // Routes
-
 app.use('/api/user', require('./routes/loginRoutes'));
 
 app.use('/api/lookup', require('./routes/lookupRoutes'));
@@ -98,11 +88,6 @@ app.get('/', (req, res) => {
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development'
   });
-});
-
-app.use((req, res, next) => {
-  console.log(`🔥 Unmatched route hit: ${req.method} ${req.url}`);
-  next();
 });
 
 module.exports = app;

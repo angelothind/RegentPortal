@@ -20,12 +20,11 @@ const createStudent = async (req, res) => {
 };
 
 const listStudents = async (req, res) => {
-  console.log('In lookupstudents route');
   try {
     const students = await Student.find({}, 'name nickname username'); // include nickname field
     res.json({ students });
   } catch (err) {
-    console.error('❌ Error fetching students:', err);
+    console.error('Error fetching students:', err);
     res.status(500).json({ error: 'Server error' });
   }
 };
@@ -40,7 +39,7 @@ const deleteStudent = async (req, res) => {
 
     res.json({ message: 'Student deleted successfully', id: deletedStudent._id });
   } catch (err) {
-    console.error('❌ Error deleting student:', err);
+    console.error('Error deleting student:', err);
     res.status(500).json({ error: 'Server error' });
   }
 };

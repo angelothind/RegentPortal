@@ -14,18 +14,17 @@ const createTeacher = async (req, res) => {
 
     res.status(201).json({ message: 'Teacher created', _id: newTeacher._id, username });
   } catch (err) {
-    console.error('❌ Error creating teacher:', err);
+    console.error('Error creating teacher:', err);
     res.status(500).json({ error: 'Server error' });
   }
 };
 
 const listTeachers = async (req, res) => {
-  console.log('In lookupteachers route');
   try {
     const teachers = await Teacher.find({}, 'name username');
     res.json({ teachers });
   } catch (err) {
-    console.error('❌ Error fetching teachers:', err);
+    console.error('Error fetching teachers:', err);
     res.status(500).json({ error: 'Server error' });
   }
 };
@@ -40,7 +39,7 @@ const deleteTeacher = async (req, res) => {
 
     res.json({ message: 'Teacher deleted successfully', id: deletedTeacher._id });
   } catch (err) {
-    console.error('❌ Error deleting teacher:', err);
+    console.error('Error deleting teacher:', err);
     res.status(500).json({ error: 'Server error' });
   }
 };
