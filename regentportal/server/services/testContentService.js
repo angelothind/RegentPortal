@@ -34,7 +34,7 @@ const loadReadingSources = (test) => {
       const absolutePath = path.join(ASSETS_DIR, filePath);
 
       if (!fs.existsSync(absolutePath)) {
-        console.error(`❌ File not found: ${absolutePath}`);
+        console.error(`File not found: ${absolutePath}`);
         return null;
       }
 
@@ -62,20 +62,13 @@ const loadQuestionFile = (test, part, testType) => {
   const questionFilePath = `assets/Books/${test.belongsTo}/${testPath}/questions/${testType.charAt(0).toUpperCase() + testType.slice(1)}/part${partNumber}.json`;
   const absolutePath = path.join(ASSETS_DIR, questionFilePath);
 
-  console.log(`🔍 Looking for question file: ${absolutePath}`);
-  console.log(`📋 User selected test type: ${testType}`);
-  console.log(`📚 Test belongs to: ${test.belongsTo}`);
-  console.log(`🧪 Test title: ${test.title}`);
-
   if (!fs.existsSync(absolutePath)) {
-    console.error(`❌ Question file not found: ${absolutePath}`);
+    console.error(`Question file not found: ${absolutePath}`);
     return { found: false, questionFilePath };
   }
 
   const rawContent = fs.readFileSync(absolutePath, 'utf-8');
   const questionData = JSON.parse(rawContent);
-
-  console.log(`✅ Question file loaded: ${part}.json`);
 
   return { found: true, questionData };
 };

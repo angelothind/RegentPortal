@@ -17,19 +17,17 @@ const createAdmin = async (req, res) => {
     await newAdmin.save();
     res.status(201).json({ message: 'Admin created successfully', username: newAdmin.username });
   } catch (err) {
-    console.error('❌ Error creating admin:', err);
+    console.error('Error creating admin:', err);
     res.status(500).json({ error: 'Server error' });
   }
 };
 
 const listAdmins = async (req, res) => {
-  console.log('In lookupadmins route');
   try {
     const admins = await Admin.find({}, 'username');
-    console.log('Found admins:', admins);
     res.json({ admins });
   } catch (err) {
-    console.error('❌ Error fetching admins:', err);
+    console.error('Error fetching admins:', err);
     res.status(500).json({ error: 'Server error' });
   }
 };
@@ -44,7 +42,7 @@ const deleteAdmin = async (req, res) => {
 
     res.json({ message: 'Admin deleted successfully', id: deletedAdmin._id });
   } catch (err) {
-    console.error('❌ Error deleting admin:', err);
+    console.error('Error deleting admin:', err);
     res.status(500).json({ error: 'Server error' });
   }
 };

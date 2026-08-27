@@ -42,7 +42,6 @@ studentSchema.pre('findOneAndDelete', async function (next) {
     
     if (student) {
       await TestSubmission.deleteMany({ studentId: student._id });
-      console.log(`🧹 Deleted all test submissions for student: ${student.username}`);
     }
     next();
   } catch (err) {
@@ -59,7 +58,6 @@ studentSchema.pre('deleteOne', async function (next) {
     
     if (student) {
       await TestSubmission.deleteMany({ studentId: student._id });
-      console.log(`🧹 Deleted all test submissions for student: ${student.username}`);
     }
     next();
   } catch (err) {
@@ -77,7 +75,6 @@ studentSchema.pre('deleteMany', async function (next) {
     
     if (studentIds.length > 0) {
       await TestSubmission.deleteMany({ studentId: { $in: studentIds } });
-      console.log(`🧹 Deleted all test submissions for ${studentIds.length} students`);
     }
     next();
   } catch (err) {

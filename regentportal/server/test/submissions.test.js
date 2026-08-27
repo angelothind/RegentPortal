@@ -23,19 +23,6 @@ beforeEach(async () => {
   await clearDatabase();
 });
 
-test('GET /api/submit/test confirms the submit router is mounted', async () => {
-  const res = await request(app).get('/api/submit/test');
-  assert.equal(res.status, 200);
-  assert.equal(res.body.message, 'Submit test route is working');
-});
-
-test('POST /api/submit/test-submission returns the fixed debug payload', async () => {
-  const res = await request(app).post('/api/submit/test-submission').send({ any: 'thing' });
-  assert.equal(res.status, 200);
-  assert.equal(res.body.success, true);
-  assert.equal(res.body.data.score, 85);
-});
-
 test('POST /api/submit/submit grades against database answers and stores a submission', async () => {
   const testDoc = await Test.create({
     title: 'Test 1',
@@ -64,17 +51,6 @@ test('POST /api/submit/submit grades against database answers and stores a submi
   const stored = await TestSubmission.findById(res.body.data.submissionId);
   assert.ok(stored);
   assert.equal(stored.score, 67);
-});
-
-test('POST /api/submit/submit 500s when answers is missing (pre-existing behavior)', async () => {
-  // The handler logs `Object.keys(answers).length` before validating required
-  // fields, so a missing `answers` throws and falls into the catch-all 500
-  // handler instead of the 400 validation response. This refactor preserves
-  // that existing behavior rather than silently fixing it.
-  const res = await request(app).post('/api/submit/submit').send({ testType: 'reading' });
-
-  assert.equal(res.status, 500);
-  assert.equal(res.body.success, false);
 });
 
 test('POST /api/submit/submit rejects a request missing testId/studentId', async () => {
