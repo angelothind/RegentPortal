@@ -13,6 +13,15 @@
   font-family: 'Roboto', sans-serif;
   transition: width 0.3s ease;
   z-index: 1000;
+  --sidebar-padding-y: 20px;
+  --sidebar-title-margin-top: 20px;
+  --sidebar-title-font-size: 1.6rem;
+  --sidebar-title-line-height: 1.2;
+  --sidebar-title-margin-bottom: 2rem;
+  --sidebar-control-size: 30px;
+  --sidebar-controls-top: 20px;
+  --sidebar-controls-right: 10px;
+  --sidebar-controls-gap: 24px;
 }
 
 /* Shrunk state */
@@ -23,15 +32,9 @@
 
 /* Sidebar control buttons (minimize + fullscreen) */
 .sidebar-controls {
-  --sidebar-control-size: 30px;
-  --sidebar-control-gap: 14px;
   position: absolute;
-  top: 20px;
-  right: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--sidebar-control-gap);
+  top: var(--sidebar-controls-top);
+  right: var(--sidebar-controls-right);
   z-index: 10;
 }
 
@@ -58,6 +61,32 @@
   box-sizing: border-box;
 }
 
+/* Align bottom edge with top of first book row */
+.sidebar:not(.shrunk) .sidebar-fullscreen-toggle {
+  position: absolute;
+  right: var(--sidebar-controls-right);
+  top: calc(
+    var(--sidebar-padding-y)
+    + var(--sidebar-title-margin-top)
+    + var(--sidebar-title-font-size) * var(--sidebar-title-line-height)
+    + var(--sidebar-title-margin-bottom)
+    - var(--sidebar-control-size)
+  );
+  z-index: 10;
+}
+
+/* When collapsed, keep stacked under minimize */
+.sidebar.shrunk .sidebar-fullscreen-toggle {
+  position: absolute;
+  right: var(--sidebar-controls-right);
+  top: calc(
+    var(--sidebar-controls-top)
+    + var(--sidebar-control-size)
+    + var(--sidebar-controls-gap)
+  );
+  z-index: 10;
+}
+
 .sidebar-toggle:hover,
 .sidebar-fullscreen-toggle:hover {
   background: rgba(255, 255, 255, 0.2);
@@ -65,10 +94,11 @@
 
 /* Sidebar header */
 .sidebar-title {
-  font-size: 1.6rem;
+  font-size: var(--sidebar-title-font-size);
+  line-height: var(--sidebar-title-line-height);
   font-weight: bold;
-  margin-bottom: 2rem;
-  margin-top: 20px;
+  margin-bottom: var(--sidebar-title-margin-bottom);
+  margin-top: var(--sidebar-title-margin-top);
 }
 
 /* Current selection display */
@@ -229,24 +259,27 @@
   .sidebar {
     width: 200px !important; /* Force override with !important */
     padding: 15px;
+    --sidebar-padding-y: 15px;
+    --sidebar-title-margin-top: 15px;
+    --sidebar-title-font-size: 1.4rem;
+    --sidebar-title-margin-bottom: 1.5rem;
+    --sidebar-control-size: 26px;
+    --sidebar-controls-top: 15px;
+    --sidebar-controls-right: 8px;
+    --sidebar-controls-gap: 18px;
   }
   
   .sidebar.shrunk {
     width: 60px !important; /* Ensure collapsed state overrides responsive width */
     padding: 20px 10px;
-  }
-  
-  .sidebar-controls {
-    --sidebar-control-size: 26px;
-    --sidebar-control-gap: 12px;
-    top: 15px;
-    right: 8px;
+    --sidebar-padding-y: 20px;
+    --sidebar-controls-right: 10px;
   }
   
   .sidebar-title {
-    font-size: 1.4rem;
-    margin-bottom: 1.5rem;
-    margin-top: 15px;
+    font-size: var(--sidebar-title-font-size);
+    margin-bottom: var(--sidebar-title-margin-bottom);
+    margin-top: var(--sidebar-title-margin-top);
   }
   
   .current-selection {
@@ -283,24 +316,27 @@
   .sidebar {
     width: 180px !important; /* Force override with !important */
     padding: 12px;
+    --sidebar-padding-y: 12px;
+    --sidebar-title-margin-top: 12px;
+    --sidebar-title-font-size: 1.2rem;
+    --sidebar-title-margin-bottom: 1.2rem;
+    --sidebar-control-size: 24px;
+    --sidebar-controls-top: 12px;
+    --sidebar-controls-right: 6px;
+    --sidebar-controls-gap: 18px;
   }
   
   .sidebar.shrunk {
     width: 60px !important; /* Ensure collapsed state overrides responsive width */
     padding: 20px 10px;
-  }
-  
-  .sidebar-controls {
-    --sidebar-control-size: 24px;
-    --sidebar-control-gap: 12px;
-    top: 12px;
-    right: 6px;
+    --sidebar-padding-y: 20px;
+    --sidebar-controls-right: 10px;
   }
   
   .sidebar-title {
-    font-size: 1.2rem;
-    margin-bottom: 1.2rem;
-    margin-top: 12px;
+    font-size: var(--sidebar-title-font-size);
+    margin-bottom: var(--sidebar-title-margin-bottom);
+    margin-top: var(--sidebar-title-margin-top);
   }
   
   .current-selection {
