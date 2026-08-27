@@ -63,15 +63,6 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-.fullscreen-toggle-exit {
-  --sidebar-control-size: 30px;
-  --sidebar-control-gap: 14px;
-  position: fixed;
-  top: calc(20px + var(--sidebar-control-size) + var(--sidebar-control-gap));
-  left: 10px;
-  z-index: 10001;
-}
-
 /* Sidebar header */
 .sidebar-title {
   font-size: 1.6rem;
@@ -251,13 +242,6 @@
     top: 15px;
     right: 8px;
   }
-
-  .fullscreen-toggle-exit {
-    --sidebar-control-size: 26px;
-    --sidebar-control-gap: 12px;
-    top: calc(15px + var(--sidebar-control-size) + var(--sidebar-control-gap));
-    left: 8px;
-  }
   
   .sidebar-title {
     font-size: 1.4rem;
@@ -311,13 +295,6 @@
     --sidebar-control-gap: 12px;
     top: 12px;
     right: 6px;
-  }
-
-  .fullscreen-toggle-exit {
-    --sidebar-control-size: 24px;
-    --sidebar-control-gap: 12px;
-    top: calc(12px + var(--sidebar-control-size) + var(--sidebar-control-gap));
-    left: 6px;
   }
   
   .sidebar-title {

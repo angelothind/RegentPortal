@@ -4,6 +4,15 @@
   width: 100%;
 }
 
+/* Snap overlay/layout instantly during fullscreen enter/exit (before paint) */
+.student-dashboard[data-overlay-instant] .test-overlay {
+  transition: none !important;
+}
+
+.student-dashboard[data-overlay-instant] .main-content-area {
+  transition: none;
+}
+
 .main-content-area {
   flex: 1;
   margin-left: 234px; /* Account for sidebar width */

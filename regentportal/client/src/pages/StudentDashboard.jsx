@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import StudentSidebar from '../components/Student/StudentSidebar';
 import TestViewer from '../components/Student/TestViewer';
@@ -66,6 +66,19 @@ const StudentDashboard = () => {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const mainContentRef = useRef(null);
+  const dashboardRef = useRef(null);
+
+  const freezeOverlayLayout = useCallback(() => {
+    dashboardRef.current?.setAttribute('data-overlay-instant', 'true');
+  }, []);
+
+  const scheduleOverlayTransitionRestore = useCallback(() => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        dashboardRef.current?.removeAttribute('data-overlay-instant');
+      });
+    });
+  }, []);
 
   const requestElementFullscreen = useCallback(async (element) => {
     if (element.requestFullscreen) {
@@ -88,6 +101,7 @@ const StudentDashboard = () => {
       const isActive = Boolean(
         document.fullscreenElement || document.webkitFullscreenElement
       );
+      freezeOverlayLayout();
       setIsFullscreen(isActive);
     };
 
@@ -97,7 +111,13 @@ const StudentDashboard = () => {
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
       document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
     };
-  }, []);
+  }, [freezeOverlayLayout]);
+
+  useLayoutEffect(() => {
+    if (dashboardRef.current?.hasAttribute('data-overlay-instant')) {
+      scheduleOverlayTransitionRestore();
+    }
+  }, [isFullscreen, scheduleOverlayTransitionRestore]);
 
   useEffect(() => {
     if (!selectedTest && isFullscreen) {
@@ -113,6 +133,7 @@ const StudentDashboard = () => {
       if (document.fullscreenElement || document.webkitFullscreenElement) {
         await exitDocumentFullscreen();
       } else {
+        freezeOverlayLayout();
         setIsFullscreen(true);
         await requestElementFullscreen(element);
       }
@@ -166,7 +187,7 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="student-dashboard">
+    <div className="student-dashboard" ref={dashboardRef}>
       <StudentSidebar
         onSelectTest={handleSelectTest}
         onLogout={handleLogout}
@@ -191,17 +212,6 @@ const StudentDashboard = () => {
         ref={mainContentRef}
         className={`main-content-area${isFullscreen ? ' fullscreen-mode' : ''}`}
       >
-        {selectedTest && isFullscreen && (
-          <button
-            type="button"
-            className="sidebar-toggle sidebar-fullscreen-toggle fullscreen-toggle-exit"
-            onClick={toggleFullscreen}
-            aria-label="Exit fullscreen"
-            title="Exit fullscreen"
-          >
-            ⊡
-          </button>
-        )}
         {selectedTest && (
           <>
             {console.log('🔍 StudentDashboard passing to TestViewer:', { selectedTest, user })}
