@@ -61,18 +61,18 @@ const StudentSidebar = ({
         <button type="button" className="sidebar-toggle" onClick={toggleSidebar}>
           {isShrunk ? '→' : '←'}
         </button>
-        {hasSelectedTest && !isFullscreen && (
-          <button
-            type="button"
-            className="sidebar-toggle sidebar-fullscreen-toggle"
-            onClick={onToggleFullscreen}
-            aria-label="Enter fullscreen"
-            title="Enter fullscreen"
-          >
-            ⛶
-          </button>
-        )}
       </div>
+      {hasSelectedTest && !isFullscreen && (
+        <button
+          type="button"
+          className="sidebar-toggle sidebar-fullscreen-toggle"
+          onClick={onToggleFullscreen}
+          aria-label="Enter fullscreen"
+          title="Enter fullscreen"
+        >
+          ⛶
+        </button>
+      )}
 
       {!isShrunk && (
         <>
