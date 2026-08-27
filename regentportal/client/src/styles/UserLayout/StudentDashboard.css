@@ -10,6 +10,18 @@
   height: 100vh;
   overflow: hidden;
   transition: margin-left 0.3s ease;
+  position: relative;
+}
+
+.main-content-area.fullscreen-mode {
+  margin-left: 0;
+}
+
+.main-content-area:fullscreen,
+.main-content-area:-webkit-full-screen {
+  margin-left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 /* When sidebar is shrunk */

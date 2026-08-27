@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/UserLayout/ReadingTest.css';
 import API_BASE from '../../utils/api';
+import HighlightableArea from './HighlightableArea';
 
 const ReadingTest = ({ testId, testData, onPassageChange, currentPassage, isTeacherMode = false }) => {
   const [passageContent, setPassageContent] = useState(null);
@@ -97,7 +98,10 @@ const ReadingTest = ({ testId, testData, onPassageChange, currentPassage, isTeac
           </div>
         </div>
         
-        <div className="passage-content">
+        <HighlightableArea
+          regionId={`reading-passage-${currentPassage}`}
+          className="passage-content"
+        >
           <div className="passage-title-section">
             <h2>{passageContent.title}</h2>
             {passageContent.hasSubtitle && passageContent.subtitle && (
@@ -110,7 +114,7 @@ const ReadingTest = ({ testId, testData, onPassageChange, currentPassage, isTeac
               <p>{paragraph.text}</p>
             </div>
           ))}
-        </div>
+        </HighlightableArea>
       </div>
       
 

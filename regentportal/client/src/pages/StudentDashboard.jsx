@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import StudentSidebar from '../components/Student/StudentSidebar';
 import TestViewer from '../components/Student/TestViewer';
@@ -64,6 +64,63 @@ const StudentDashboard = () => {
   }, [selectedTest]);
 
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const mainContentRef = useRef(null);
+
+  const requestElementFullscreen = useCallback(async (element) => {
+    if (element.requestFullscreen) {
+      await element.requestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+      await element.webkitRequestFullscreen();
+    }
+  }, []);
+
+  const exitDocumentFullscreen = useCallback(async () => {
+    if (document.exitFullscreen) {
+      await document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      await document.webkitExitFullscreen();
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isActive = Boolean(
+        document.fullscreenElement || document.webkitFullscreenElement
+      );
+      setIsFullscreen(isActive);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!selectedTest && isFullscreen) {
+      exitDocumentFullscreen().catch(() => {});
+    }
+  }, [selectedTest, isFullscreen, exitDocumentFullscreen]);
+
+  const toggleFullscreen = async () => {
+    const element = mainContentRef.current;
+    if (!element) return;
+
+    try {
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        await exitDocumentFullscreen();
+      } else {
+        setIsFullscreen(true);
+        await requestElementFullscreen(element);
+      }
+    } catch (error) {
+      console.error('Fullscreen toggle failed:', error);
+      setIsFullscreen(false);
+    }
+  };
 
   const handleLogout = async () => {
     console.log('🚪 Logout initiated...');
@@ -110,7 +167,14 @@ const StudentDashboard = () => {
 
   return (
     <div className="student-dashboard">
-      <StudentSidebar onSelectTest={handleSelectTest} onLogout={handleLogout} isLoggingOut={isLoggingOut} />
+      <StudentSidebar
+        onSelectTest={handleSelectTest}
+        onLogout={handleLogout}
+        isLoggingOut={isLoggingOut}
+        hasSelectedTest={Boolean(selectedTest)}
+        isFullscreen={isFullscreen}
+        onToggleFullscreen={toggleFullscreen}
+      />
       
       {/* Logout Progress Indicator */}
       {isLoggingOut && (
@@ -123,7 +187,21 @@ const StudentDashboard = () => {
         </div>
       )}
       
-      <div className="main-content-area">
+      <div
+        ref={mainContentRef}
+        className={`main-content-area${isFullscreen ? ' fullscreen-mode' : ''}`}
+      >
+        {selectedTest && isFullscreen && (
+          <button
+            type="button"
+            className="sidebar-toggle sidebar-fullscreen-toggle fullscreen-toggle-exit"
+            onClick={toggleFullscreen}
+            aria-label="Exit fullscreen"
+            title="Exit fullscreen"
+          >
+            ⊡
+          </button>
+        )}
         {selectedTest && (
           <>
             {console.log('🔍 StudentDashboard passing to TestViewer:', { selectedTest, user })}

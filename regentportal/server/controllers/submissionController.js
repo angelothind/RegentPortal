@@ -136,6 +136,14 @@ const getLatestStudentTestSubmission = async (req, res) => {
       return res.status(404).json({ error: 'No submission found for this test and type' });
     }
 
+    const ttlHours = Number(process.env.TEST_SUBMISSION_TTL_HOURS) || 3;
+    const ttlMs = ttlHours * 60 * 60 * 1000;
+    const ageMs = Date.now() - new Date(submission.submittedAt).getTime();
+
+    if (ageMs > ttlMs) {
+      return res.status(404).json({ error: 'No submission found for this test and type' });
+    }
+
     res.json(submission);
   } catch (err) {
     console.error('Error fetching student test submission:', err);

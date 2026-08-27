@@ -505,6 +505,17 @@
   width: calc(100% - 60px);
 }
 
+.main-content-area:fullscreen .test-overlay,
+.main-content-area:-webkit-full-screen .test-overlay,
+.main-content-area.fullscreen-mode .test-overlay,
+.sidebar.shrunk ~ .main-content-area:fullscreen .test-overlay,
+.sidebar.shrunk ~ .main-content-area:-webkit-full-screen .test-overlay,
+.sidebar.shrunk ~ .main-content-area.fullscreen-mode .test-overlay {
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
 /* Tablet responsive design for test overlay */
 @media (max-width: 1024px) and (min-width: 769px) {
   .test-overlay {
@@ -515,6 +526,17 @@
   .sidebar.shrunk ~ .main-content-area .test-overlay {
     left: 60px !important;
     width: calc(100% - 60px) !important;
+  }
+
+  .main-content-area:fullscreen .test-overlay,
+  .main-content-area:-webkit-full-screen .test-overlay,
+  .main-content-area.fullscreen-mode .test-overlay,
+  .sidebar.shrunk ~ .main-content-area:fullscreen .test-overlay,
+  .sidebar.shrunk ~ .main-content-area:-webkit-full-screen .test-overlay,
+  .sidebar.shrunk ~ .main-content-area.fullscreen-mode .test-overlay {
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 }
 
@@ -528,6 +550,17 @@
   .sidebar.shrunk ~ .main-content-area .test-overlay {
     left: 60px !important;
     width: calc(100% - 60px) !important;
+  }
+
+  .main-content-area:fullscreen .test-overlay,
+  .main-content-area:-webkit-full-screen .test-overlay,
+  .main-content-area.fullscreen-mode .test-overlay,
+  .sidebar.shrunk ~ .main-content-area:fullscreen .test-overlay,
+  .sidebar.shrunk ~ .main-content-area:-webkit-full-screen .test-overlay,
+  .sidebar.shrunk ~ .main-content-area.fullscreen-mode .test-overlay {
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 }
 

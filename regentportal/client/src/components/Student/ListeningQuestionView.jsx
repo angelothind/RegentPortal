@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import ChooseXWords from '../Questions/ChooseXWords';
 import MultipleChoice from '../Questions/MultipleChoice';
 import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
@@ -8,9 +8,17 @@ import TableCompletion from '../Questions/TableCompletion';
 import FlowchartCompletion from '../Questions/FlowchartCompletion';
 import TFNG from '../Questions/TFNG';
 import { calculateIELTSBand, formatBandScore, getBandScoreDescription } from '../../utils/bandScoreCalculator';
+import { HighlightProvider, useHighlight } from '../../contexts/HighlightContext';
+import HighlightableArea from './HighlightableArea';
 import API_BASE from '../../utils/api';
+import useTestSessionExpiry from '../../hooks/useTestSessionExpiry';
+import {
+  clearTestStorage,
+  isSessionExpired,
+  isSubmissionExpired,
+} from '../../utils/testSessionUtils';
 
-const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null, testData, sharedPassage, onPassageChange }) => {
+const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null, testData, sharedPassage, onPassageChange }) => {
   console.log('🔍 ListeningQuestionView received user:', user);
   console.log('🔍 ListeningQuestionView received selectedTest:', selectedTest);
   const [questionData, setQuestionData] = useState(null);
@@ -29,6 +37,29 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
   const expectedPartRef = useRef(null);
   const activePartRef = useRef(isTeacherMode && sharedPassage ? sharedPassage : 1);
   const fetchRequestIdRef = useRef(0);
+  const { clearHighlights } = useHighlight();
+
+  const storageKey = useMemo(() => {
+    if (!selectedTest?.testId || !user?._id) return null;
+    return `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user._id}`;
+  }, [selectedTest?.testId?._id, selectedTest?.type, user?._id]);
+
+  const handleSessionExpire = useCallback(() => {
+    setTestSubmitted(false);
+    setTestResults(null);
+    setAnswers({});
+    setTestStarted(false);
+    setCurrentPart(1);
+    clearHighlights();
+  }, [clearHighlights]);
+
+  useTestSessionExpiry({
+    enabled: !isTeacherMode,
+    testSubmitted,
+    testResults,
+    storageKey,
+    onExpire: handleSessionExpire,
+  });
   
   // Audio player state - lifted up to persist across part changes
   const [audioIsPlaying, setAudioIsPlaying] = useState(false);
@@ -65,6 +96,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
 
       const testId = selectedTest.testId._id;
       const testType = selectedTest.type;
+      const testStorageKey = `test-answers-${testId}-${testType}-${user._id}`;
 
       try {
         // First, try to fetch submission from backend (for marked tests)
@@ -75,6 +107,13 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
         if (submissionResponse.ok) {
           const submission = await submissionResponse.json();
           console.log('✅ Found submission in backend:', submission);
+
+          if (isSubmissionExpired(submission.submittedAt)) {
+            clearTestStorage(testStorageKey);
+            clearHighlights();
+            console.log('📝 Submission expired (>3 hours), reverting to unsubmitted');
+            return;
+          }
           
           // Format submission data
           const answers = {};
@@ -157,30 +196,30 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
       }
 
       // Fallback to localStorage for in-progress tests
-      const storageKey = `test-answers-${testId}-${testType}-${user._id}`;
-      console.log('🔍 Looking for in-progress answers in localStorage with key:', storageKey);
-      const savedAnswers = localStorage.getItem(storageKey);
+      console.log('🔍 Looking for in-progress answers in localStorage with key:', testStorageKey);
+      const savedAnswers = localStorage.getItem(testStorageKey);
       if (savedAnswers) {
         try {
           const parsedAnswers = JSON.parse(savedAnswers);
           console.log('📝 Found saved answers in localStorage:', parsedAnswers);
           
-          // Check if data is older than 4 hours
-          const savedTimestamp = parsedAnswers._timestamp;
-          const currentTime = Date.now();
-          const fourHours = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
-          
-          if (savedTimestamp && (currentTime - savedTimestamp) > fourHours) {
-            // Data is older than 4 hours, clear it
-            localStorage.removeItem(storageKey);
-            console.log('📝 Cleared expired saved answers (older than 4 hours)');
+          if (isSessionExpired(parsedAnswers._timestamp)) {
+            clearTestStorage(testStorageKey);
+            clearHighlights();
+            console.log('📝 Cleared expired saved answers (older than 3 hours)');
             return;
           }
           
-          // Only load from localStorage if test is NOT marked (no _testSubmitted or no _testResults)
           if (parsedAnswers._testSubmitted && parsedAnswers._testResults) {
-            // This is a marked test in localStorage - should have been fetched from backend
-            // Clear it and don't load (backend is source of truth for marked tests)
+            if (
+              isSubmissionExpired(parsedAnswers._testResults.submittedAt) ||
+              isSessionExpired(parsedAnswers._timestamp)
+            ) {
+              clearTestStorage(testStorageKey);
+              clearHighlights();
+              console.log('📝 Cleared expired submitted cache from localStorage');
+              return;
+            }
             console.log('⚠️ Marked test found in localStorage - should use backend instead');
             return;
           }
@@ -216,7 +255,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     };
 
     loadTestData();
-  }, [selectedTest?.testId?._id, selectedTest?.type, user?._id, isTeacherMode]);
+  }, [selectedTest?.testId?._id, selectedTest?.type, user?._id, isTeacherMode, clearHighlights]);
 
   // Keep activePartRef in sync with sharedPassage (for teacher mode) or currentPart (for student mode)
   useEffect(() => {
@@ -614,6 +653,8 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
       localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`);
       console.log('📝 Cleared saved answers from localStorage after submission');
     }
+
+    clearHighlights();
     
     console.log('📝 Submitting test with answers:', answers);
     console.log('📝 User data:', user);
@@ -764,6 +805,8 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
       localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`);
       console.log('📝 Cleared saved test state from localStorage after reset');
     }
+
+    clearHighlights();
     
     console.log('🔄 Test reset - returned to Part 1 and cleared overlay');
   };
@@ -1038,7 +1081,10 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
     
     return (
       <div className="listening-question-view-container">
-        <div className="question-content">
+        <HighlightableArea
+          regionId={`listening-questions-${currentPart}`}
+          className="question-content"
+        >
           <div className="question-header">
             <div className="header-left">
               <div className="header-top-row">
@@ -1174,7 +1220,7 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
               </div>
             </div>
           )}
-        </div>
+        </HighlightableArea>
         
         {/* Start Test Overlay - Only show for students, not teachers */}
         {!testStarted && !isTeacherMode && (
@@ -1202,5 +1248,16 @@ const ListeningQuestionView = ({ selectedTest, user, testResults: externalTestRe
       </div>
     );
 };
+
+const ListeningQuestionView = (props) => (
+  <HighlightProvider
+    testId={props.selectedTest?.testId?._id}
+    testType={props.selectedTest?.type}
+    userId={props.user?._id}
+    persist={Boolean(props.user?._id && !props.isTeacherMode)}
+  >
+    <ListeningQuestionViewContent {...props} />
+  </HighlightProvider>
+);
 
 export default ListeningQuestionView; 
