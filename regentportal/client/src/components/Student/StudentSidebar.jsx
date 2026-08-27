@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react';
 import '../../styles/UserLayout/SideBar.css';
 import API_BASE from '../../utils/api';
 
-const StudentSidebar = ({ onSelectTest, onLogout, isLoggingOut = false }) => {
+const StudentSidebar = ({
+  onSelectTest,
+  onLogout,
+  isLoggingOut = false,
+  hasSelectedTest = false,
+  isFullscreen = false,
+  onToggleFullscreen,
+}) => {
   const [books, setBooks] = useState([]);
   const [openBook, setOpenBook] = useState(null);
   const [openTest, setOpenTest] = useState(null);
@@ -50,10 +57,23 @@ const StudentSidebar = ({ onSelectTest, onLogout, isLoggingOut = false }) => {
 
   return (
     <div className={`sidebar ${isShrunk ? 'shrunk' : ''}`}>
-      <button className="sidebar-toggle" onClick={toggleSidebar}>
-        {isShrunk ? '→' : '←'}
-      </button>
-      
+      <div className="sidebar-controls">
+        <button type="button" className="sidebar-toggle" onClick={toggleSidebar}>
+          {isShrunk ? '→' : '←'}
+        </button>
+        {hasSelectedTest && !isFullscreen && (
+          <button
+            type="button"
+            className="sidebar-toggle sidebar-fullscreen-toggle"
+            onClick={onToggleFullscreen}
+            aria-label="Enter fullscreen"
+            title="Enter fullscreen"
+          >
+            ⛶
+          </button>
+        )}
+      </div>
+
       {!isShrunk && (
         <>
           <h2 className="sidebar-title">Student Portal</h2>

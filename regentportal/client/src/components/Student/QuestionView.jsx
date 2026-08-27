@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import ChooseXWords from '../Questions/ChooseXWords';
 import ChooseFrom from '../Questions/ChooseFrom';
 import TFNG from '../Questions/TFNG';
@@ -10,7 +10,15 @@ import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
 import SummaryCompletion from '../Questions/SummaryCompletion';
 import TableCompletion from '../Questions/TableCompletion';
 import { calculateIELTSBand, formatBandScore, getBandScoreDescription } from '../../utils/bandScoreCalculator';
+import { useHighlight } from '../../contexts/HighlightContext';
+import HighlightableArea from './HighlightableArea';
 import API_BASE from '../../utils/api';
+import useTestSessionExpiry from '../../hooks/useTestSessionExpiry';
+import {
+  clearTestStorage,
+  isSessionExpired,
+  isSubmissionExpired,
+} from '../../utils/testSessionUtils';
 
 const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onTestReset, sharedPassage, onPassageChange, testData }) => {
   console.log('🚀 QuestionView component mounted with selectedTest:', selectedTest);
@@ -31,6 +39,28 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
   const expectedPassageRef = useRef(null); // Track which passage we're currently fetching for
   const activePassageRef = useRef(sharedPassage || 1); // Track the active passage that should be displayed
   const fetchRequestIdRef = useRef(0); // Track unique request IDs to ensure we only accept the latest fetch
+  const { clearHighlights } = useHighlight();
+
+  const storageKey = useMemo(() => {
+    if (!selectedTest?.testId || !user?._id) return null;
+    return `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user._id}`;
+  }, [selectedTest?.testId?._id, selectedTest?.type, user?._id]);
+
+  const handleSessionExpire = useCallback(() => {
+    setTestSubmitted(false);
+    setTestResults(null);
+    setAnswers({});
+    setTestStarted(false);
+    clearHighlights();
+  }, [clearHighlights]);
+
+  useTestSessionExpiry({
+    enabled: !isTeacherMode,
+    testSubmitted,
+    testResults,
+    storageKey,
+    onExpire: handleSessionExpire,
+  });
   
   // Use external test results if provided (for teacher view) - same pattern as ListeningQuestionView
   const finalTestResults = externalTestResults || testResults;
@@ -75,6 +105,18 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       }
     };
   }, []);
+
+  // Reset to passage 1 when test not started (start overlay showing) - only for students
+  useEffect(() => {
+    if (!isTeacherMode && !testStarted && (currentPassage !== 1 || sharedPassage !== 1)) {
+      console.log('🔄 Test not started - resetting to passage 1');
+      activePassageRef.current = 1;
+      setCurrentPassage(1);
+      if (onPassageChange) {
+        onPassageChange(1);
+      }
+    }
+  }, [testStarted, currentPassage, sharedPassage, isTeacherMode, onPassageChange]);
 
   // Wrap fetchQuestionData in useCallback to prevent infinite re-renders
   const fetchQuestionData = useCallback(async (passageNumber = null) => {
@@ -222,6 +264,11 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     setTestSubmitted(false);
     setTestResults(null);
     setTestStarted(false);
+    setCurrentPassage(1);
+    activePassageRef.current = 1;
+    if (onPassageChange) {
+      onPassageChange(1);
+    }
 
     const loadTestData = async () => {
       if (!selectedTest || !selectedTest.testId || !user?._id) {
@@ -230,6 +277,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
 
       const testId = selectedTest.testId._id;
       const testType = selectedTest.type;
+      const testStorageKey = `test-answers-${testId}-${testType}-${user._id}`;
 
       try {
         // First, try to fetch submission from backend (for marked tests)
@@ -240,6 +288,13 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         if (submissionResponse.ok) {
           const submission = await submissionResponse.json();
           console.log('✅ Found submission in backend:', submission);
+
+          if (isSubmissionExpired(submission.submittedAt)) {
+            clearTestStorage(testStorageKey);
+            clearHighlights();
+            console.log('📝 Submission expired (>3 hours), reverting to unsubmitted');
+            return;
+          }
           
           // Format submission data similar to TeacherTestAnalysis
           const answers = {};
@@ -322,31 +377,31 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       }
 
       // Fallback to localStorage for in-progress tests
-      const storageKey = `test-answers-${testId}-${testType}-${user._id}`;
-      console.log('🔍 Looking for in-progress answers in localStorage with key:', storageKey);
+      console.log('🔍 Looking for in-progress answers in localStorage with key:', testStorageKey);
       
-      const savedAnswers = localStorage.getItem(storageKey);
+      const savedAnswers = localStorage.getItem(testStorageKey);
       if (savedAnswers) {
         try {
           const parsedAnswers = JSON.parse(savedAnswers);
           console.log('📝 Found saved answers in localStorage:', parsedAnswers);
           
-          // Check if data is older than 4 hours
-          const savedTimestamp = parsedAnswers._timestamp;
-          const currentTime = Date.now();
-          const fourHours = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
-          
-          if (savedTimestamp && (currentTime - savedTimestamp) > fourHours) {
-            // Data is older than 4 hours, clear it
-            localStorage.removeItem(storageKey);
-            console.log('📝 Cleared expired saved answers (older than 4 hours)');
+          if (isSessionExpired(parsedAnswers._timestamp)) {
+            clearTestStorage(testStorageKey);
+            clearHighlights();
+            console.log('📝 Cleared expired saved answers (older than 3 hours)');
             return;
           }
           
-          // Only load from localStorage if test is NOT marked (no _testSubmitted or no _testResults)
           if (parsedAnswers._testSubmitted && parsedAnswers._testResults) {
-            // This is a marked test in localStorage - should have been fetched from backend
-            // Clear it and don't load (backend is source of truth for marked tests)
+            if (
+              isSubmissionExpired(parsedAnswers._testResults.submittedAt) ||
+              isSessionExpired(parsedAnswers._timestamp)
+            ) {
+              clearTestStorage(testStorageKey);
+              clearHighlights();
+              console.log('📝 Cleared expired submitted cache from localStorage');
+              return;
+            }
             console.log('⚠️ Marked test found in localStorage - should use backend instead');
             return;
           }
@@ -355,15 +410,27 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
           const { _timestamp, _currentPassage, _testSubmitted, _testResults, _testStarted, ...answersWithoutTimestamp } = parsedAnswers;
           setAnswers(answersWithoutTimestamp);
           
-          // Restore the current passage if it was saved
-          if (_currentPassage && typeof _currentPassage === 'number') {
-            console.log('📝 Restored current passage from localStorage:', _currentPassage);
-          }
-          
-          // Restore testStarted if it was saved AND there are actual answers
-          if (_testStarted && Object.keys(answersWithoutTimestamp).length > 0) {
+          const hasAnswers = Object.keys(answersWithoutTimestamp).length > 0;
+
+          // Restore testStarted and passage only for in-progress tests with answers
+          if (_testStarted && hasAnswers) {
             setTestStarted(true);
             console.log('📝 Restored testStarted from localStorage (in-progress test)');
+            if (_currentPassage && typeof _currentPassage === 'number') {
+              setCurrentPassage(_currentPassage);
+              activePassageRef.current = _currentPassage;
+              if (onPassageChange) {
+                onPassageChange(_currentPassage);
+              }
+              console.log('📝 Restored current passage from localStorage:', _currentPassage);
+            }
+          } else {
+            setTestStarted(false);
+            setCurrentPassage(1);
+            activePassageRef.current = 1;
+            if (onPassageChange) {
+              onPassageChange(1);
+            }
           }
           
           console.log('📝 Loaded in-progress test data from localStorage:', answersWithoutTimestamp);
@@ -376,7 +443,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     };
 
     loadTestData();
-  }, [selectedTest?.testId?._id, selectedTest?.type, isTeacherMode, user?._id]);
+  }, [selectedTest?.testId?._id, selectedTest?.type, isTeacherMode, user?._id, clearHighlights]);
 
   // Reload answers from localStorage when passage changes (only for students, not teachers)
   useEffect(() => {
@@ -499,6 +566,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`);
       console.log('📝 Cleared saved answers from localStorage after submission');
     }
+
+    clearHighlights();
     
     console.log('📝 Submitting test with answers:', answers);
     console.log('📝 User data:', user);
@@ -678,6 +747,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       const checkStorage = localStorage.getItem(storageKey);
       console.log('🧹 localStorage check after clear:', checkStorage ? 'STILL EXISTS' : 'CLEARED');
     }
+
+    clearHighlights();
     
     // Call the parent's reset callback
     if (onTestReset) {
@@ -908,9 +979,12 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         </div>
       </div>
       
-      <div className="question-content">
+      <HighlightableArea
+        regionId={`reading-questions-${sharedPassage || currentPassage}`}
+        className="question-content"
+      >
         {renderQuestionComponent()}
-      </div>
+      </HighlightableArea>
       
       {/* Test Controls - Submit only on last passage, reset only after submission (not shown in teacher mode) */}
       {!isTeacherMode && currentPassage === 3 && !finalTestSubmitted && (

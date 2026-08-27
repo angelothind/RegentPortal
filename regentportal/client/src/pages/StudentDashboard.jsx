@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import StudentSidebar from '../components/Student/StudentSidebar';
 import TestViewer from '../components/Student/TestViewer';
@@ -64,6 +64,84 @@ const StudentDashboard = () => {
   }, [selectedTest]);
 
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const mainContentRef = useRef(null);
+  const dashboardRef = useRef(null);
+
+  const freezeOverlayLayout = useCallback(() => {
+    dashboardRef.current?.setAttribute('data-overlay-instant', 'true');
+  }, []);
+
+  const scheduleOverlayTransitionRestore = useCallback(() => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        dashboardRef.current?.removeAttribute('data-overlay-instant');
+      });
+    });
+  }, []);
+
+  const requestElementFullscreen = useCallback(async (element) => {
+    if (element.requestFullscreen) {
+      await element.requestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+      await element.webkitRequestFullscreen();
+    }
+  }, []);
+
+  const exitDocumentFullscreen = useCallback(async () => {
+    if (document.exitFullscreen) {
+      await document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      await document.webkitExitFullscreen();
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isActive = Boolean(
+        document.fullscreenElement || document.webkitFullscreenElement
+      );
+      freezeOverlayLayout();
+      setIsFullscreen(isActive);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+    };
+  }, [freezeOverlayLayout]);
+
+  useLayoutEffect(() => {
+    if (dashboardRef.current?.hasAttribute('data-overlay-instant')) {
+      scheduleOverlayTransitionRestore();
+    }
+  }, [isFullscreen, scheduleOverlayTransitionRestore]);
+
+  useEffect(() => {
+    if (!selectedTest && isFullscreen) {
+      exitDocumentFullscreen().catch(() => {});
+    }
+  }, [selectedTest, isFullscreen, exitDocumentFullscreen]);
+
+  const toggleFullscreen = async () => {
+    const element = mainContentRef.current;
+    if (!element) return;
+
+    try {
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        await exitDocumentFullscreen();
+      } else {
+        freezeOverlayLayout();
+        setIsFullscreen(true);
+        await requestElementFullscreen(element);
+      }
+    } catch (error) {
+      console.error('Fullscreen toggle failed:', error);
+      setIsFullscreen(false);
+    }
+  };
 
   const handleLogout = async () => {
     console.log('🚪 Logout initiated...');
@@ -109,8 +187,15 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="student-dashboard">
-      <StudentSidebar onSelectTest={handleSelectTest} onLogout={handleLogout} isLoggingOut={isLoggingOut} />
+    <div className="student-dashboard" ref={dashboardRef}>
+      <StudentSidebar
+        onSelectTest={handleSelectTest}
+        onLogout={handleLogout}
+        isLoggingOut={isLoggingOut}
+        hasSelectedTest={Boolean(selectedTest)}
+        isFullscreen={isFullscreen}
+        onToggleFullscreen={toggleFullscreen}
+      />
       
       {/* Logout Progress Indicator */}
       {isLoggingOut && (
@@ -123,7 +208,10 @@ const StudentDashboard = () => {
         </div>
       )}
       
-      <div className="main-content-area">
+      <div
+        ref={mainContentRef}
+        className={`main-content-area${isFullscreen ? ' fullscreen-mode' : ''}`}
+      >
         {selectedTest && (
           <>
             {console.log('🔍 StudentDashboard passing to TestViewer:', { selectedTest, user })}

@@ -4,6 +4,7 @@ import ListeningTest from '../Student/ListeningTest';
 import QuestionView from '../Student/QuestionView';
 import ListeningQuestionView from '../Student/ListeningQuestionView';
 import DraggableDivider from '../Student/DraggableDivider';
+import { HighlightProvider } from '../../contexts/HighlightContext';
 import API_BASE from '../../utils/api';
 
 const TeacherTestAnalysis = ({ submission, onBack }) => {
@@ -297,36 +298,38 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
       {/* Test Content and Questions */}
       {console.log('🎯 About to render test type:', submission.testType.toLowerCase())}
       {submission.testType.toLowerCase() === 'reading' ? (
-        <div className="test-viewer-container">
-          <div 
-            className="test-content-area"
-            style={{ width: `${passageWidth}%` }}
-          >
-            <ReadingTest 
-              testId={{ _id: testIdValue }} 
-              testData={testData} 
-              isTeacherMode={true}
-              currentPassage={sharedPassage}
-              onPassageChange={handlePassageChange}
-            />
+        <HighlightProvider persist={false}>
+          <div className="test-viewer-container">
+            <div 
+              className="test-content-area"
+              style={{ width: `${passageWidth}%` }}
+            >
+              <ReadingTest 
+                testId={{ _id: testIdValue }} 
+                testData={testData} 
+                isTeacherMode={true}
+                currentPassage={sharedPassage}
+                onPassageChange={handlePassageChange}
+              />
+            </div>
+            <DraggableDivider onResize={handleResize} />
+            <div 
+              className="question-area"
+              style={{ width: `${questionWidth}%` }}
+            >
+              <QuestionView 
+                selectedTest={selectedTest} 
+                user={null}
+                testResults={testResults}
+                testSubmitted={true}
+                isTeacherMode={true}
+                sharedPassage={sharedPassage}
+                onPassageChange={handlePassageChange}
+                testData={testData} // Pass testData so QuestionView can fetch questions
+              />
+            </div>
           </div>
-          <DraggableDivider onResize={handleResize} />
-          <div 
-            className="question-area"
-            style={{ width: `${questionWidth}%` }}
-          >
-            <QuestionView 
-              selectedTest={selectedTest} 
-              user={null}
-              testResults={testResults}
-              testSubmitted={true}
-              isTeacherMode={true}
-              sharedPassage={sharedPassage}
-              onPassageChange={handlePassageChange}
-              testData={testData} // Pass testData so QuestionView can fetch questions
-            />
-          </div>
-        </div>
+        </HighlightProvider>
       ) : (
         <div className="listening-layout" style={{ 
           position: 'relative',

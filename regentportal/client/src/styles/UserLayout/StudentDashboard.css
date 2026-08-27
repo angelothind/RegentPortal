@@ -4,12 +4,33 @@
   width: 100%;
 }
 
+/* Snap overlay/layout instantly during fullscreen enter/exit (before paint) */
+.student-dashboard[data-overlay-instant] .test-overlay {
+  transition: none !important;
+}
+
+.student-dashboard[data-overlay-instant] .main-content-area {
+  transition: none;
+}
+
 .main-content-area {
   flex: 1;
   margin-left: 234px; /* Account for sidebar width */
   height: 100vh;
   overflow: hidden;
   transition: margin-left 0.3s ease;
+  position: relative;
+}
+
+.main-content-area.fullscreen-mode {
+  margin-left: 0;
+}
+
+.main-content-area:fullscreen,
+.main-content-area:-webkit-full-screen {
+  margin-left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 /* When sidebar is shrunk */

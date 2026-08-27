@@ -15,10 +15,12 @@ const TeacherSidebar = ({ onLogout }) => {
 
   return (
     <div className={`sidebar ${isShrunk ? 'shrunk' : ''}`}>
-      <button className="sidebar-toggle" onClick={toggleSidebar}>
-        {isShrunk ? '→' : '←'}
-      </button>
-      
+      <div className="sidebar-controls">
+        <button type="button" className="sidebar-toggle" onClick={toggleSidebar}>
+          {isShrunk ? '→' : '←'}
+        </button>
+      </div>
+
       {!isShrunk && (
         <>
           <h2 className="sidebar-title">Teacher Portal</h2>

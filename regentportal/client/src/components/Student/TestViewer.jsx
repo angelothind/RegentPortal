@@ -3,7 +3,9 @@ import ReadingTest from './ReadingTest';
 import QuestionView from './QuestionView';
 import ListeningQuestionView from './ListeningQuestionView';
 import DraggableDivider from './DraggableDivider';
+import { HighlightProvider } from '../../contexts/HighlightContext';
 import API_BASE from '../../utils/api';
+import { isSessionExpired } from '../../utils/testSessionUtils';
 
 const TestViewer = ({ selectedTest, user }) => {
   const [testData, setTestData] = useState(null);
@@ -14,11 +16,14 @@ const TestViewer = ({ selectedTest, user }) => {
   const [testSubmitted, setTestSubmitted] = useState(false);
   const [testResults, setTestResults] = useState(null);
 
+  const [sharedPassage, setSharedPassage] = useState(1);
+
   // Load test state from localStorage when selectedTest changes
   useEffect(() => {
-    // Reset testStarted to false when a new test is selected
+    // Reset testStarted and passage when a new test is selected
     setTestStarted(false);
-    console.log('🔄 TestViewer: Reset testStarted to false for new test');
+    setSharedPassage(1);
+    console.log('🔄 TestViewer: Reset testStarted to false and passage to 1 for new test');
     
     if (selectedTest && selectedTest.testId) {
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
@@ -26,6 +31,10 @@ const TestViewer = ({ selectedTest, user }) => {
       if (savedData) {
         try {
           const parsedData = JSON.parse(savedData);
+          if (isSessionExpired(parsedData._timestamp)) {
+            localStorage.removeItem(storageKey);
+            return;
+          }
           if (parsedData._testStarted) {
             setTestStarted(true);
             console.log('📝 Restored testStarted state from localStorage');
@@ -35,7 +44,7 @@ const TestViewer = ({ selectedTest, user }) => {
         }
       }
     }
-  }, [selectedTest]);
+  }, [selectedTest, user?._id]);
 
   const handleStartTest = () => {
     setTestStarted(true);
@@ -70,7 +79,8 @@ const TestViewer = ({ selectedTest, user }) => {
     setTestStarted(false);
     setTestSubmitted(false);
     setTestResults(null);
-    console.log('🔄 Test reset - testStarted set to false');
+    setSharedPassage(1);
+    console.log('🔄 Test reset - testStarted set to false, passage reset to 1');
   };
 
   const handleSubmit = async () => {
@@ -91,8 +101,6 @@ const TestViewer = ({ selectedTest, user }) => {
   useEffect(() => {
     console.log('🔄 TestViewer: testStarted state changed to:', testStarted);
   }, [testStarted]);
-
-  const [sharedPassage, setSharedPassage] = useState(1);
 
   const handlePassageChange = (passageNumber) => {
     console.log('🔄 TestViewer: Passage changed to:', passageNumber);
@@ -178,36 +186,43 @@ const TestViewer = ({ selectedTest, user }) => {
   return (
     <>
       {selectedTest.type === 'Reading' && (
-        <div className="test-viewer-container">
-          <div 
-            className="test-content-area"
-            style={{ width: `${passageWidth}%` }}
-          >
-            <ReadingTest 
-              testId={selectedTest.testId} 
-              testData={testData} 
-              onPassageChange={handlePassageChange}
-              currentPassage={sharedPassage}
-            />
+        <HighlightProvider
+          testId={selectedTest.testId._id}
+          testType={selectedTest.type}
+          userId={user?._id}
+          persist={Boolean(user?._id)}
+        >
+          <div className="test-viewer-container">
+            <div 
+              className="test-content-area"
+              style={{ width: `${passageWidth}%` }}
+            >
+              <ReadingTest 
+                testId={selectedTest.testId} 
+                testData={testData} 
+                onPassageChange={handlePassageChange}
+                currentPassage={sharedPassage}
+              />
+            </div>
+            <DraggableDivider onResize={handleResize} />
+            <div 
+              className="question-area"
+              style={{ width: `${questionWidth}%` }}
+            >
+              <QuestionView 
+                selectedTest={selectedTest} 
+                user={user} 
+                testStarted={testStarted}
+                onTestReset={handleTestReset}
+                sharedPassage={sharedPassage}
+                onPassageChange={handlePassageChange}
+                testSubmitted={testSubmitted}
+                testResults={testResults}
+                onTestSubmit={handleSubmit}
+              />
+            </div>
           </div>
-          <DraggableDivider onResize={handleResize} />
-          <div 
-            className="question-area"
-            style={{ width: `${questionWidth}%` }}
-          >
-            <QuestionView 
-              selectedTest={selectedTest} 
-              user={user} 
-              testStarted={testStarted}
-              onTestReset={handleTestReset}
-              sharedPassage={sharedPassage}
-              onPassageChange={handlePassageChange}
-              testSubmitted={testSubmitted}
-              testResults={testResults}
-              onTestSubmit={handleSubmit}
-            />
-          </div>
-        </div>
+        </HighlightProvider>
       )}
       {selectedTest.type === 'Listening' && (
         <div className="listening-layout">
