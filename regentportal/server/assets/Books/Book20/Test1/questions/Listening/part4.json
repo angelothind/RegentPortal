@@ -1,0 +1,100 @@
+{
+  "partNumber": 4,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 31-40",
+      "formattingInstruction": "Complete the notes below.\nWrite ONE WORD ONLY for each answer.",
+      "notesTitle": "Reclaiming Urban Rivers",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Historical background"
+        },
+        {
+          "descriptiveText": "Nearly all major cities were built on a river.",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "Rivers were traditionally used for transport, fishing and recreation.",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "Industrial development and rising populations later led to:",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "more sewage from houses being discharged into the river",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 31,
+          "question": "pollution from **31** ________ on the river bank",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 32,
+          "question": "In 1957, the River Thames in London was declared biologically **32** ________.",
+          "answer": ""
+        },
+        {
+          "sectionHeading": "Recent improvements"
+        },
+        {
+          "questionNumber": 33,
+          "question": "Seals and even a **33** ________ have been seen in the River Thames.",
+          "answer": ""
+        },
+        {
+          "questionNumber": 34,
+          "question": "Riverside warehouses are converted to restaurants and **34** ________.",
+          "answer": ""
+        },
+        {
+          "descriptiveText": "In Los Angeles, there are plans to:",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 35,
+          "question": "build a riverside **35** ________",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 36,
+          "question": "display **36** ________ projects",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 37,
+          "question": "In Paris, **37** ________ are created on the sides of the river every summer.",
+          "answer": ""
+        },
+        {
+          "sectionHeading": "Transport possibilities"
+        },
+        {
+          "questionNumber": 38,
+          "question": "Over 2 billion passengers already travel by **38** ________ in cities around the world.",
+          "answer": ""
+        },
+        {
+          "descriptiveText": "Changes in shopping habits mean the number of deliveries that are made is increasing.",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 39,
+          "question": "Instead of road transport, goods can be transported by large freight barges and electric **39** ________,",
+          "answer": ""
+        },
+        {
+          "questionNumber": 40,
+          "question": "or, in future, by **40** ________.",
+          "answer": ""
+        }
+      ]
+    }
+  ]
+}

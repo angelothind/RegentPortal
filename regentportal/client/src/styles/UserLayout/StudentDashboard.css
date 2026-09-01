@@ -284,6 +284,12 @@
   padding: 20px;
   overflow-y: auto;
   line-height: 1.6;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.passage-content::-webkit-scrollbar {
+  display: none;
 }
 
 .paragraph {

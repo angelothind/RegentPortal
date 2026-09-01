@@ -1,0 +1,112 @@
+{
+  "passageNumber": 2,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 14-18\nReading Passage 2 has seven paragraphs, A-G.",
+      "formattingInstruction": "Which paragraph contains the following information?\nWrite the correct letter, A-G, in boxes 14-18.\n\nNB You may use any letter more than once.",
+      "questionBlock": [
+        {
+          "questionNumber": "14",
+          "question": "Reference to the research problems that arise from there being only a few surviving large elms"
+        },
+        {
+          "questionNumber": "15",
+          "question": "Details of a difference of opinion about the value of reintroducing elms to Britain"
+        },
+        {
+          "questionNumber": "16",
+          "question": "Reference to how Dutch elm disease was brought into Britain"
+        },
+        {
+          "questionNumber": "17",
+          "question": "A description of the conditions that have enabled a location in Britain to escape Dutch elm disease"
+        },
+        {
+          "questionNumber": "18",
+          "question": "Reference to the stage at which young elms become vulnerable to Dutch elm disease"
+        }
+      ],
+      "correctAnswers": {
+        "14": "",
+        "15": "",
+        "16": "",
+        "17": "",
+        "18": ""
+      }
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 19-23\nLook at the following statements and the list of people below.",
+      "formattingInstruction": "Match each statement with the correct person, A, B or C.\nWrite the correct letter, A, B or C, in boxes 19-23.\nNB You may use any letter more than once.",
+      "opinionsBox": {
+        "title": "List of People",
+        "options": [
+          {
+            "letter": "A",
+            "text": "Matt Elliot"
+          },
+          {
+            "letter": "B",
+            "text": "Karen Russell"
+          },
+          {
+            "letter": "C",
+            "text": "Peter Bourne"
+          }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": "19",
+          "question": "If a tree gets infected with Dutch elm disease, the damage rapidly becomes visible"
+        },
+        {
+          "questionNumber": "20",
+          "question": "It may be better to wait and see if the mature elms that have survived continue to flourish"
+        },
+        {
+          "questionNumber": "21",
+          "question": "There must be an explanation for the survival of some mature elms"
+        },
+        {
+          "questionNumber": "22",
+          "question": "We need to be aware that insects carrying Dutch elm disease are not very far away"
+        },
+        {
+          "questionNumber": "23",
+          "question": "You understand the effect Dutch elm disease has had when you see evidence of how prominent the tree once was"
+        }
+      ],
+      "correctAnswers": {
+        "19": "",
+        "20": "",
+        "21": "",
+        "22": "",
+        "23": ""
+      }
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 24-26\nComplete the summary below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 24-26.",
+      "notesTitle": "Uses of a Popular Tree",
+      "questionBlock": [
+        {
+          "questionNumber": "24-26",
+          "text": "For hundreds of years, the only tree that was more popular in Britain than elm was **24** ________. Starting in the Bronze Age, many tools were made from elm, and people also used it to make weapons. In the 18th century, it was grown to provide wood for boxes and **25** ________. Due to its strength, elm was often used for mining equipment, and the Cutty Sark's **26** ________ was also constructed from elm.",
+          "blanks": [
+            { "number": "24", "answer": "" },
+            { "number": "25", "answer": "" },
+            { "number": "26", "answer": "" }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "24": "",
+        "25": "",
+        "26": ""
+      }
+    }
+  ]
+}
