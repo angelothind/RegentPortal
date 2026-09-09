@@ -279,11 +279,42 @@
   border-color: #25245D;
 }
 
+.passage-controls button.passage-exit-fullscreen {
+  background-color: #25245D;
+  color: #fff;
+  border-color: #25245D;
+  padding: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  align-self: stretch;
+  aspect-ratio: 1;
+}
+
+.passage-controls button.passage-exit-fullscreen:hover {
+  background-color: #1a1a4a;
+  border-color: #1a1a4a;
+  color: #fff;
+}
+
+.passage-controls button.passage-exit-fullscreen svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
 .passage-content {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
   line-height: 1.6;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.passage-content::-webkit-scrollbar {
+  display: none;
 }
 
 .paragraph {

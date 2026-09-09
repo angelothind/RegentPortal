@@ -14,6 +14,9 @@ export const getCommentHighlightName = (regionId) =>
 export const getPreviewHighlightName = (regionId) =>
   `user-text-highlight-preview-${regionId}`;
 
+export const getHoverHighlightName = (regionId) =>
+  `user-text-highlight-hover-${regionId}`;
+
 export const createHighlightId = () => {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {
     return crypto.randomUUID();
@@ -370,14 +373,31 @@ export const ensurePreviewHighlightStyle = (highlightName) => {
   document.head.appendChild(style);
 };
 
-const setHighlightRegistry = (highlightName, domRanges) => {
+export const ensureHoverHighlightStyle = (highlightName) => {
+  const styleId = `${HIGHLIGHT_STYLE_ID_PREFIX}${highlightName}`;
+  if (document.getElementById(styleId)) return;
+
+  const style = document.createElement('style');
+  style.id = styleId;
+  style.textContent = `
+    ::highlight(${highlightName}) {
+      background-color: rgba(255, 143, 0, 0.9);
+      color: inherit;
+    }
+  `;
+  document.head.appendChild(style);
+};
+
+const setHighlightRegistry = (highlightName, domRanges, priority = 0) => {
   try {
     if (!domRanges.length) {
       CSS.highlights.delete(highlightName);
       return;
     }
 
-    CSS.highlights.set(highlightName, new Highlight(...domRanges));
+    const highlight = new Highlight(...domRanges);
+    highlight.priority = priority;
+    CSS.highlights.set(highlightName, highlight);
   } catch (error) {
     console.error(`Failed to set highlight registry for ${highlightName}:`, error);
     CSS.highlights.delete(highlightName);
@@ -436,11 +456,28 @@ export const clearPreviewHighlight = (regionId) => {
   CSS.highlights.delete(getPreviewHighlightName(regionId));
 };
 
+export const applyHoverHighlight = (container, regionId, start, end) => {
+  if (!isCssHighlightSupported() || !container || start >= end) return false;
+
+  const highlightName = getHoverHighlightName(regionId);
+  ensureHoverHighlightStyle(highlightName);
+
+  const domRanges = characterOffsetsToRanges(container, start, end);
+  setHighlightRegistry(highlightName, domRanges, 1);
+  return Boolean(domRanges.length);
+};
+
+export const clearHoverHighlight = (regionId) => {
+  if (!isCssHighlightSupported()) return;
+  CSS.highlights.delete(getHoverHighlightName(regionId));
+};
+
 export const clearCssHighlights = (regionId) => {
   if (!isCssHighlightSupported()) return;
   CSS.highlights.delete(getHighlightName(regionId));
   CSS.highlights.delete(getCommentHighlightName(regionId));
   CSS.highlights.delete(getPreviewHighlightName(regionId));
+  CSS.highlights.delete(getHoverHighlightName(regionId));
 };
 
 export const getStorageKey = (testId, testType, userId) =>

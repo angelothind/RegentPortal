@@ -1,0 +1,181 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 21 and 22",
+      "formattingInstruction": "Choose TWO letters, A–E.\nWhich TWO things do the students both believe are responsible for the increase in loneliness?",
+      "questionGroup": {
+        "questionNumbers": [21, 22],
+        "options": [
+          {
+            "letter": "A",
+            "text": "social media"
+          },
+          {
+            "letter": "B",
+            "text": "smaller nuclear families"
+          },
+          {
+            "letter": "C",
+            "text": "urban design"
+          },
+          {
+            "letter": "D",
+            "text": "longer lifespans"
+          },
+          {
+            "letter": "E",
+            "text": "a mobile workforce"
+          }
+        ],
+        "correctAnswers": []
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 23 and 24",
+      "formattingInstruction": "Choose TWO letters, A–E.\nWhich TWO health risks associated with loneliness do the students agree are based on solid evidence?",
+      "questionGroup": {
+        "questionNumbers": [23, 24],
+        "options": [
+          {
+            "letter": "A",
+            "text": "a weakened immune system"
+          },
+          {
+            "letter": "B",
+            "text": "dementia"
+          },
+          {
+            "letter": "C",
+            "text": "cancer"
+          },
+          {
+            "letter": "D",
+            "text": "obesity"
+          },
+          {
+            "letter": "E",
+            "text": "cardiovascular disease"
+          }
+        ],
+        "correctAnswers": []
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 25 and 26",
+      "formattingInstruction": "Choose TWO letters, A–E.\nWhich TWO opinions do both the students express about the evolutionary theory of loneliness?",
+      "questionGroup": {
+        "questionNumbers": [25, 26],
+        "options": [
+          {
+            "letter": "A",
+            "text": "It has little practical relevance."
+          },
+          {
+            "letter": "B",
+            "text": "It needs further investigation."
+          },
+          {
+            "letter": "C",
+            "text": "It is misleading."
+          },
+          {
+            "letter": "D",
+            "text": "It should be more widely accepted."
+          },
+          {
+            "letter": "E",
+            "text": "It is difficult to understand."
+          }
+        ],
+        "correctAnswers": []
+      }
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 27-30",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "questionBlock": [
+        {
+          "questionNumber": 27,
+          "question": "When comparing loneliness to depression, the students",
+          "options": [
+            {
+              "letter": "A",
+              "text": "doubt that there will ever be a medical cure for loneliness."
+            },
+            {
+              "letter": "B",
+              "text": "claim that the link between loneliness and mental health is overstated."
+            },
+            {
+              "letter": "C",
+              "text": "express frustration that loneliness is not taken more seriously."
+            }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 28,
+          "question": "Why do the students decide to start their presentation with an example from their own experience?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "to explain how difficult loneliness can be"
+            },
+            {
+              "letter": "B",
+              "text": "to highlight a situation that most students will recognise"
+            },
+            {
+              "letter": "C",
+              "text": "to emphasise that feeling lonely is more common for men than women"
+            }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 29,
+          "question": "The students agree that talking to strangers is a good strategy for dealing with loneliness because",
+          "options": [
+            {
+              "letter": "A",
+              "text": "it creates a sense of belonging."
+            },
+            {
+              "letter": "B",
+              "text": "it builds self-confidence."
+            },
+            {
+              "letter": "C",
+              "text": "it makes people feel more positive."
+            }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 30,
+          "question": "The students find it difficult to understand why solitude is considered to be",
+          "options": [
+            {
+              "letter": "A",
+              "text": "similar to loneliness."
+            },
+            {
+              "letter": "B",
+              "text": "necessary for mental health."
+            },
+            {
+              "letter": "C",
+              "text": "an enjoyable experience."
+            }
+          ],
+          "answer": ""
+        }
+      ]
+    }
+  ]
+}

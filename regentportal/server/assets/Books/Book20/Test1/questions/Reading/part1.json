@@ -1,0 +1,126 @@
+{
+  "passageNumber": 1,
+  "templates": [
+    {
+      "questionType": "TFNG",
+      "subType": "TFNG",
+      "introInstruction": "Questions 1-6\nDo the following statements agree with the information given in Reading Passage 1?",
+      "formattingInstruction": "In boxes 1-6 select",
+      "answerKey": {
+        "TRUE": "if the statement agrees with the information",
+        "FALSE": "if the statement contradicts the information",
+        "NOT GIVEN": "if there is no information on this"
+      },
+      "questionBlock": [
+        {
+          "questionNumber": "1",
+          "question": "There are other parrots that share the kakapo's inability to fly."
+        },
+        {
+          "questionNumber": "2",
+          "question": "Adult kakapo produce chicks every year."
+        },
+        {
+          "questionNumber": "3",
+          "question": "Adult male kakapo bring food back to nesting females."
+        },
+        {
+          "questionNumber": "4",
+          "question": "The Polynesian rat was a greater threat to the kakapo than Polynesian settlers."
+        },
+        {
+          "questionNumber": "5",
+          "question": "Kakapo were transferred from Rakiura Island to other locations because they were at risk from feral cats."
+        },
+        {
+          "questionNumber": "6",
+          "question": "One Recovery Plan initiative that helped increase the kakapo population size was caring for struggling young birds."
+        }
+      ],
+      "correctAnswers": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "6": ""
+      }
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 7-13\nComplete the notes below.",
+      "formattingInstruction": "Choose ONE WORD AND/OR A NUMBER from the passage for each answer.\nWrite your answers in boxes 7-13.",
+      "notesTitle": "New Zealand's kakapo",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "A type of parrot"
+        },
+        {
+          "questionNumber": "7",
+          "question": "Diet consists of fern fronds, various parts of a tree and **7** ________.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "8",
+          "question": "Nests are created in **8** ________ where eggs are laid.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Arrival of Polynesian settlers"
+        },
+        {
+          "questionNumber": "9",
+          "question": "The **9** ________ of the kakapo were used to make clothes.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Arrival of European colonisers"
+        },
+        {
+          "questionNumber": "10",
+          "question": "**10** ________ were an animal which they introduced that ate the kakapo's food sources.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Protecting kakapo"
+        },
+        {
+          "descriptiveText": "Richard Henry, a conservationist, tried to protect the kakapo.",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "11",
+          "question": "A definite sighting of female kakapo on Rakiura Island was reported in the year **11** ________.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "12",
+          "question": "The Recovery Plan included an increase in **12** ________.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "13",
+          "question": "A current goal of the Recovery Plan is to maintain the involvement of **13** ________ in kakapo protection.",
+          "answer": "",
+          "bulletLevel": 0
+        }
+      ],
+      "correctAnswers": {
+        "7": "",
+        "8": "",
+        "9": "",
+        "10": "",
+        "11": "",
+        "12": "",
+        "13": ""
+      }
+    }
+  ]
+}

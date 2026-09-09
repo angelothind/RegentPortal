@@ -1,0 +1,188 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 11-16",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "questionBlock": [
+        {
+          "questionNumber": 11,
+          "question": "Heather says pottery differs from other art forms because",
+          "options": [
+            {
+              "letter": "A",
+              "text": "it lasts longer in the ground."
+            },
+            {
+              "letter": "B",
+              "text": "it is practised by more people."
+            },
+            {
+              "letter": "C",
+              "text": "it can be repaired more easily."
+            }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 12,
+          "question": "Archaeologists sometimes identify the use of ancient pottery from",
+          "options": [
+            {
+              "letter": "A",
+              "text": "the clay it was made with."
+            },
+            {
+              "letter": "B",
+              "text": "the marks that are on it."
+            },
+            {
+              "letter": "C",
+              "text": "the basic shape of it."
+            }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 13,
+          "question": "Some people join Heather's pottery class because they want to",
+          "options": [
+            {
+              "letter": "A",
+              "text": "create an item that looks very old."
+            },
+            {
+              "letter": "B",
+              "text": "find something that they are good at."
+            },
+            {
+              "letter": "C",
+              "text": "make something that will outlive them."
+            }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 14,
+          "question": "What does Heather value most about being a potter?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "its calming effect"
+            },
+            {
+              "letter": "B",
+              "text": "its messy nature"
+            },
+            {
+              "letter": "C",
+              "text": "its physical benefits"
+            }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 15,
+          "question": "Most of the visitors to Edelman Pottery",
+          "options": [
+            {
+              "letter": "A",
+              "text": "bring friends to join courses."
+            },
+            {
+              "letter": "B",
+              "text": "have never made a pot before."
+            },
+            {
+              "letter": "C",
+              "text": "try to learn techniques too quickly."
+            }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 16,
+          "question": "Heather reminds her visitors that they should",
+          "options": [
+            {
+              "letter": "A",
+              "text": "put on their aprons."
+            },
+            {
+              "letter": "B",
+              "text": "change their clothes."
+            },
+            {
+              "letter": "C",
+              "text": "take off their jewellery."
+            }
+          ],
+          "answer": ""
+        }
+      ]
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 17 and 18",
+      "formattingInstruction": "Choose TWO letters, A–E.\nWhich TWO things does Heather explain about kilns?",
+      "questionGroup": {
+        "questionNumbers": [17, 18],
+        "options": [
+          {
+            "letter": "A",
+            "text": "what their function is"
+          },
+          {
+            "letter": "B",
+            "text": "when they were invented"
+          },
+          {
+            "letter": "C",
+            "text": "ways of keeping them safe"
+          },
+          {
+            "letter": "D",
+            "text": "where to put one in your home"
+          },
+          {
+            "letter": "E",
+            "text": "what some people use instead of one"
+          }
+        ],
+        "correctAnswers": []
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 19 and 20",
+      "formattingInstruction": "Choose TWO letters, A–E.\nWhich points does Heather make about a potter's tools?",
+      "questionGroup": {
+        "questionNumbers": [19, 20],
+        "options": [
+          {
+            "letter": "A",
+            "text": "Some are hard to hold."
+          },
+          {
+            "letter": "B",
+            "text": "Some are worth buying."
+          },
+          {
+            "letter": "C",
+            "text": "Some are essential items."
+          },
+          {
+            "letter": "D",
+            "text": "Some have memorable names."
+          },
+          {
+            "letter": "E",
+            "text": "Some are available for use by participants."
+          }
+        ],
+        "correctAnswers": []
+      }
+    }
+  ]
+}

@@ -215,7 +215,12 @@ const StudentDashboard = () => {
         {selectedTest && (
           <>
             {console.log('🔍 StudentDashboard passing to TestViewer:', { selectedTest, user })}
-            <TestViewer selectedTest={selectedTest} user={user} />
+            <TestViewer
+              selectedTest={selectedTest}
+              user={user}
+              isFullscreen={isFullscreen}
+              onToggleFullscreen={toggleFullscreen}
+            />
           </>
         )}
       </div>

@@ -7,7 +7,7 @@ import { HighlightProvider } from '../../contexts/HighlightContext';
 import API_BASE from '../../utils/api';
 import { isSessionExpired } from '../../utils/testSessionUtils';
 
-const TestViewer = ({ selectedTest, user }) => {
+const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscreen }) => {
   const [testData, setTestData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [passageWidth, setPassageWidth] = useState(56);
@@ -202,6 +202,8 @@ const TestViewer = ({ selectedTest, user }) => {
                 testData={testData} 
                 onPassageChange={handlePassageChange}
                 currentPassage={sharedPassage}
+                isFullscreen={isFullscreen}
+                onToggleFullscreen={onToggleFullscreen}
               />
             </div>
             <DraggableDivider onResize={handleResize} />

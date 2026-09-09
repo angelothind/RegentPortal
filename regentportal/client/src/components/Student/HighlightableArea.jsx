@@ -2,8 +2,10 @@ import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useSta
 import { useHighlight } from '../../contexts/HighlightContext';
 import {
   applyCssHighlights,
+  applyHoverHighlight,
   applyPreviewHighlight,
   clearCssHighlights,
+  clearHoverHighlight,
   clearPreviewHighlight,
   clickToCharacterOffset,
   findCommentedRangeAtOffset,
@@ -21,6 +23,9 @@ const TOOLBAR_HEIGHT = 44;
 const COMMENT_PANEL_WIDTH = 240;
 const COMMENT_PANEL_HEIGHT = 140;
 const VIEWPORT_PADDING = 12;
+const COMMENT_MARKER_SIZE = 30;
+const COMMENT_MARKER_OFFSET = 11;
+const COMMENT_MARKER_RIGHT_GAP = 6;
 const EMPTY_HIGHLIGHTS = [];
 
 const markersEqual = (left, right) => {
@@ -69,6 +74,8 @@ const HighlightableArea = ({ regionId, children, className = '' }) => {
   const [commentModeActive, setCommentModeActive] = useState(false);
   const [commentMarkers, setCommentMarkers] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
+  const [isHoveringCommentedRange, setIsHoveringCommentedRange] = useState(false);
+  const hoveredCommentIdRef = useRef(null);
 
   const regionHighlights = useMemo(() => {
     const regionRanges = highlights[regionId];
@@ -93,6 +100,12 @@ const HighlightableArea = ({ regionId, children, className = '' }) => {
     setActiveComment(null);
   }, []);
 
+  const clearCommentHover = useCallback(() => {
+    hoveredCommentIdRef.current = null;
+    clearHoverHighlight(regionId);
+    setIsHoveringCommentedRange(false);
+  }, [regionId]);
+
   const getToolbarPosition = useCallback((rect, isCommentPanel = false) => {
     const width = isCommentPanel ? COMMENT_PANEL_WIDTH : TOOLBAR_WIDTH;
     const height = isCommentPanel ? COMMENT_PANEL_HEIGHT : TOOLBAR_HEIGHT;
@@ -115,8 +128,8 @@ const HighlightableArea = ({ regionId, children, className = '' }) => {
         return {
           id: range.id,
           comment: range.comment,
-          top: rect.top - 6,
-          left: rect.right - 6,
+          top: rect.top - COMMENT_MARKER_OFFSET,
+          left: rect.right + COMMENT_MARKER_RIGHT_GAP,
         };
       })
       .filter(Boolean);
@@ -269,6 +282,44 @@ const HighlightableArea = ({ regionId, children, className = '' }) => {
     [addCommentHighlight, closeToolbar, regionId, toolbarState]
   );
 
+  const handlePointerMove = useCallback(
+    (event) => {
+      if (!isCssHighlightSupported()) return;
+
+      if (toolbarState) {
+        if (hoveredCommentIdRef.current) {
+          clearCommentHover();
+        }
+        return;
+      }
+
+      const container = containerRef.current;
+      if (!container) return;
+
+      const offset = clickToCharacterOffset(container, event.clientX, event.clientY);
+      const commentedRange = findCommentedRangeAtOffset(regionHighlights, offset);
+
+      if (!commentedRange) {
+        if (hoveredCommentIdRef.current) {
+          clearCommentHover();
+        }
+        return;
+      }
+
+      setIsHoveringCommentedRange(true);
+
+      if (hoveredCommentIdRef.current === commentedRange.id) return;
+
+      hoveredCommentIdRef.current = commentedRange.id;
+      applyHoverHighlight(container, regionId, commentedRange.start, commentedRange.end);
+    },
+    [clearCommentHover, regionHighlights, regionId, toolbarState]
+  );
+
+  const handlePointerLeave = useCallback(() => {
+    clearCommentHover();
+  }, [clearCommentHover]);
+
   const handleContainerClick = useCallback(
     (event) => {
       if (!isCssHighlightSupported()) return;
@@ -301,10 +352,10 @@ const HighlightableArea = ({ regionId, children, className = '' }) => {
       openCommentPopover(range, {
         top: marker.top,
         left: marker.left,
-        right: marker.left + 16,
-        bottom: marker.top + 16,
-        width: 16,
-        height: 16,
+        right: marker.left + COMMENT_MARKER_SIZE,
+        bottom: marker.top + COMMENT_MARKER_SIZE,
+        width: COMMENT_MARKER_SIZE,
+        height: COMMENT_MARKER_SIZE,
       });
     },
     [openCommentPopover, regionHighlights]
@@ -326,10 +377,27 @@ const HighlightableArea = ({ regionId, children, className = '' }) => {
       console.error('Failed to apply CSS highlights:', error);
     }
 
+    const hoveredId = hoveredCommentIdRef.current;
+    if (hoveredId) {
+      const hoveredRange = regionHighlights.find((range) => range.id === hoveredId);
+      if (hoveredRange) {
+        applyHoverHighlight(container, regionId, hoveredRange.start, hoveredRange.end);
+      } else {
+        hoveredCommentIdRef.current = null;
+        setIsHoveringCommentedRange(false);
+      }
+    }
+
     return () => {
       clearCssHighlights(regionId);
     };
   }, [regionId, regionHighlights]);
+
+  useEffect(() => {
+    if (toolbarState) {
+      clearCommentHover();
+    }
+  }, [clearCommentHover, toolbarState]);
 
   useLayoutEffect(() => {
     const container = containerRef.current;
@@ -416,8 +484,11 @@ const HighlightableArea = ({ regionId, children, className = '' }) => {
       <div
         ref={containerRef}
         className={`highlightable-area ${className}`.trim()}
+        style={isHoveringCommentedRange ? { cursor: 'pointer' } : undefined}
         onMouseUp={handleMouseUp}
         onClick={handleContainerClick}
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
       >
         {children}
       </div>

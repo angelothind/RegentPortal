@@ -1,0 +1,114 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "table-completion",
+      "introInstruction": "Questions 1-10\nComplete the notes below.",
+      "formattingInstruction": "Write ONE WORD AND/OR A NUMBER for each answer.",
+      "tableTitle": "",
+      "tableStructure": {
+        "columns": 4,
+        "rows": 3,
+        "headers": [
+          "Name of restaurant",
+          "Location",
+          "Reason for recommendation",
+          "Other comments"
+        ]
+      },
+      "tableData": [
+        {
+          "row": 1,
+          "cells": [
+            {
+              "content": "The Junction",
+              "type": "text"
+            },
+            {
+              "content": "Greyson Street, near the station",
+              "type": "text"
+            },
+            {
+              "content": "Good for people who are especially keen on **1** ________",
+              "type": "question",
+              "questionNumber": 1,
+              "answer": ""
+            },
+            {
+              "content": "Quite expensive\nThe **2** ________ is a good place for a drink",
+              "type": "question",
+              "questionNumber": 2,
+              "answer": ""
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            {
+              "content": "Paloma",
+              "type": "text"
+            },
+            {
+              "content": "In Bow Street next to the cinema",
+              "type": "text"
+            },
+            {
+              "content": "**3** ________ food, good for sharing",
+              "type": "question",
+              "questionNumber": 3,
+              "answer": ""
+            },
+            {
+              "content": "Staff are very friendly\nNeed to pay £50 deposit\nA limited selection of **4** ________ food on the menu",
+              "type": "question",
+              "questionNumber": 4,
+              "answer": ""
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "cells": [
+            {
+              "content": "The **5** ________",
+              "type": "question",
+              "questionNumber": 5,
+              "answer": ""
+            },
+            {
+              "content": "At the top of a **6** ________",
+              "type": "question",
+              "questionNumber": 6,
+              "answer": ""
+            },
+            {
+              "content": "A famous chef\nAll the **7** ________ are very good\nOnly uses **8** ________ ingredients",
+              "type": "question",
+              "questionNumber": "7-8",
+              "answer": ["", ""]
+            },
+            {
+              "content": "Set lunch costs **9** ________ per person\nPortions probably of **10** ________ size",
+              "type": "question",
+              "questionNumber": "9-10",
+              "answer": ["", ""]
+            }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "6": "",
+        "7": "",
+        "8": "",
+        "9": "",
+        "10": ""
+      }
+    }
+  ]
+}

@@ -70,7 +70,16 @@ const StudentSidebar = ({
           aria-label="Enter fullscreen"
           title="Enter fullscreen"
         >
-          ⛶
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"
+            />
+          </svg>
         </button>
       )}
 

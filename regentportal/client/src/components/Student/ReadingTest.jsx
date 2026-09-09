@@ -4,7 +4,7 @@ import '../../styles/UserLayout/ReadingTest.css';
 import API_BASE from '../../utils/api';
 import HighlightableArea from './HighlightableArea';
 
-const ReadingTest = ({ testId, testData, onPassageChange, currentPassage, isTeacherMode = false }) => {
+const ReadingTest = ({ testId, testData, onPassageChange, currentPassage, isTeacherMode = false, isFullscreen = false, onToggleFullscreen }) => {
   const [passageContent, setPassageContent] = useState(null);
   const [loading, setLoading] = useState(true);
   console.log('🎯 ReadingTest: isTeacherMode:', isTeacherMode);
@@ -95,6 +95,26 @@ const ReadingTest = ({ testId, testData, onPassageChange, currentPassage, isTeac
                 Passage {passageNumber}
               </button>
             ))}
+            {isFullscreen && (
+              <button
+                type="button"
+                className="passage-exit-fullscreen"
+                onClick={onToggleFullscreen}
+                aria-label="Exit fullscreen"
+                title="Exit fullscreen"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6"
+                  />
+                </svg>
+              </button>
+            )}
           </div>
         </div>
         
