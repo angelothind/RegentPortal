@@ -71,17 +71,17 @@
   background-color: #0056b3;
 }
 
-.table-row {
+.teacher-table .table-row {
   position: relative;
   transition: background-color 0.2s ease;
 }
 
-.table-row:hover {
+.teacher-table .table-row:hover {
   background-color: #f8f9fa;
 }
 
-.table-row:hover .username-text,
-.table-row:hover .name-text {
+.teacher-table .table-row:hover .username-text,
+.teacher-table .table-row:hover .name-text {
   text-decoration: line-through;
   color: #c0392b;
 }
@@ -109,7 +109,7 @@
   z-index: 100;
 }
 
-.table-row:hover .delete-button {
+.teacher-table .table-row:hover .delete-button {
   opacity: 1;
 }
 

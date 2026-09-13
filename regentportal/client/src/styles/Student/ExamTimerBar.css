@@ -1,0 +1,98 @@
+.exam-timer-bar {
+  position: fixed;
+  top: 0;
+  left: 234px;
+  width: calc(100% - 234px);
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background-color: #16153c;
+  color: #ffffff;
+  z-index: 9000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: left 0.3s ease, width 0.3s ease, background-color 0.4s ease, color 0.4s ease;
+}
+
+.exam-timer-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.exam-timer-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  min-width: 4.5ch;
+}
+
+.exam-timer-bar.warning-time {
+  background-color: #E8973E;
+  color: #25245d;
+}
+
+.exam-timer-bar.warning-time .exam-timer-label {
+  opacity: 1;
+}
+
+.exam-timer-bar.expired {
+  background-color: #5c1010;
+  color: #ffffff;
+}
+
+.sidebar.shrunk ~ .main-content-area .exam-timer-bar {
+  left: 60px;
+  width: calc(100% - 60px);
+}
+
+.main-content-area:fullscreen .exam-timer-bar,
+.main-content-area:-webkit-full-screen .exam-timer-bar,
+.main-content-area.fullscreen-mode .exam-timer-bar,
+.sidebar.shrunk ~ .main-content-area:fullscreen .exam-timer-bar,
+.sidebar.shrunk ~ .main-content-area:-webkit-full-screen .exam-timer-bar,
+.sidebar.shrunk ~ .main-content-area.fullscreen-mode .exam-timer-bar {
+  left: 0 !important;
+  width: 100% !important;
+}
+
+.reading-test-with-timer {
+  height: 100%;
+  overflow: hidden;
+}
+
+.reading-test-with-timer .test-viewer-container {
+  height: calc(100% - 44px);
+  margin-top: 44px;
+}
+
+.main-content-area:fullscreen .reading-test-with-timer .test-viewer-container,
+.main-content-area:-webkit-full-screen .reading-test-with-timer .test-viewer-container,
+.main-content-area.fullscreen-mode .reading-test-with-timer .test-viewer-container {
+  height: calc(100% - 44px);
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .exam-timer-bar {
+    left: 200px !important;
+    width: calc(100% - 200px) !important;
+  }
+
+  .sidebar.shrunk ~ .main-content-area .exam-timer-bar {
+    left: 60px !important;
+    width: calc(100% - 60px) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .exam-timer-bar {
+    left: 180px !important;
+    width: calc(100% - 180px) !important;
+  }
+
+  .sidebar.shrunk ~ .main-content-area .exam-timer-bar {
+    left: 60px !important;
+    width: calc(100% - 60px) !important;
+  }
+}

@@ -121,8 +121,8 @@
   height: calc(100% - 100px);
 }
 
-.passage-section,
-.questions-section {
+.content-sections .passage-section,
+.content-sections .questions-section {
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -130,8 +130,8 @@
   overflow-y: auto;
 }
 
-.passage-section h4,
-.questions-section h4 {
+.content-sections .passage-section h4,
+.content-sections .questions-section h4 {
   margin: 0 0 15px 0;
   color: #333;
   font-size: 1.1rem;

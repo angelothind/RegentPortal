@@ -3,9 +3,11 @@ import ReadingTest from './ReadingTest';
 import QuestionView from './QuestionView';
 import ListeningQuestionView from './ListeningQuestionView';
 import DraggableDivider from './DraggableDivider';
+import ExamTimerBar from './ExamTimerBar';
 import { HighlightProvider } from '../../contexts/HighlightContext';
 import API_BASE from '../../utils/api';
 import { isSessionExpired } from '../../utils/testSessionUtils';
+import { READING_TIMER_MS } from '../../hooks/useExamTimer';
 
 const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscreen }) => {
   const [testData, setTestData] = useState(null);
@@ -17,12 +19,22 @@ const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscre
   const [testResults, setTestResults] = useState(null);
 
   const [sharedPassage, setSharedPassage] = useState(1);
+  const [examTimerState, setExamTimerState] = useState({
+    remainingMs: READING_TIMER_MS,
+    isExpired: false,
+    visible: false,
+  });
 
   // Load test state from localStorage when selectedTest changes
   useEffect(() => {
     // Reset testStarted and passage when a new test is selected
     setTestStarted(false);
     setSharedPassage(1);
+    setExamTimerState({
+      remainingMs: READING_TIMER_MS,
+      isExpired: false,
+      visible: false,
+    });
     console.log('🔄 TestViewer: Reset testStarted to false and passage to 1 for new test');
     
     if (selectedTest && selectedTest.testId) {
@@ -80,6 +92,11 @@ const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscre
     setTestSubmitted(false);
     setTestResults(null);
     setSharedPassage(1);
+    setExamTimerState({
+      remainingMs: READING_TIMER_MS,
+      isExpired: false,
+      visible: false,
+    });
     console.log('🔄 Test reset - testStarted set to false, passage reset to 1');
   };
 
@@ -192,36 +209,44 @@ const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscre
           userId={user?._id}
           persist={Boolean(user?._id)}
         >
-          <div className="test-viewer-container">
-            <div 
-              className="test-content-area"
-              style={{ width: `${passageWidth}%` }}
-            >
-              <ReadingTest 
-                testId={selectedTest.testId} 
-                testData={testData} 
-                onPassageChange={handlePassageChange}
-                currentPassage={sharedPassage}
-                isFullscreen={isFullscreen}
-                onToggleFullscreen={onToggleFullscreen}
-              />
-            </div>
-            <DraggableDivider onResize={handleResize} />
-            <div 
-              className="question-area"
-              style={{ width: `${questionWidth}%` }}
-            >
-              <QuestionView 
-                selectedTest={selectedTest} 
-                user={user} 
-                testStarted={testStarted}
-                onTestReset={handleTestReset}
-                sharedPassage={sharedPassage}
-                onPassageChange={handlePassageChange}
-                testSubmitted={testSubmitted}
-                testResults={testResults}
-                onTestSubmit={handleSubmit}
-              />
+          <div className={examTimerState.visible ? 'reading-test-with-timer' : undefined}>
+            <ExamTimerBar
+              remainingMs={examTimerState.remainingMs}
+              isExpired={examTimerState.isExpired}
+              visible={examTimerState.visible}
+            />
+            <div className="test-viewer-container">
+              <div 
+                className="test-content-area"
+                style={{ width: `${passageWidth}%` }}
+              >
+                <ReadingTest 
+                  testId={selectedTest.testId} 
+                  testData={testData} 
+                  onPassageChange={handlePassageChange}
+                  currentPassage={sharedPassage}
+                  isFullscreen={isFullscreen}
+                  onToggleFullscreen={onToggleFullscreen}
+                />
+              </div>
+              <DraggableDivider onResize={handleResize} />
+              <div 
+                className="question-area"
+                style={{ width: `${questionWidth}%` }}
+              >
+                <QuestionView 
+                  selectedTest={selectedTest} 
+                  user={user} 
+                  testStarted={testStarted}
+                  onTestReset={handleTestReset}
+                  sharedPassage={sharedPassage}
+                  onPassageChange={handlePassageChange}
+                  testSubmitted={testSubmitted}
+                  testResults={testResults}
+                  onTestSubmit={handleSubmit}
+                  onExamTimerChange={setExamTimerState}
+                />
+              </div>
             </div>
           </div>
         </HighlightProvider>

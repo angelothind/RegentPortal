@@ -175,12 +175,12 @@
   background-color: #ddd;
 }
 
-.table-row {
+.admin-table .table-row {
   position: relative;
   transition: background-color 0.2s ease;
 }
 
-.table-row:hover {
+.admin-table .table-row:hover {
   background-color: #f8f9fa;
 }
 
@@ -207,12 +207,12 @@
 }
 
 /* Show delete button on row hover */
-.table-row:hover .delete-button {
+.admin-table .table-row:hover .delete-button {
   opacity: 1;
 }
 
 /* Strike through the username text on hover */
-.table-row:hover .username-text {
+.admin-table .table-row:hover .username-text {
   text-decoration: line-through;
   opacity: 0.7;
   transition: all 0.2s ease;

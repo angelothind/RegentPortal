@@ -79,7 +79,7 @@
 }
 
 .table-header {
-  background-color: #f8f9fa;
+  background-color: transparent;
   color: #333;
   font-weight: 600;
   padding: 12px 16px;
@@ -92,11 +92,14 @@
 
 .table-row {
   border-bottom: 1px solid #e9ecef;
-  transition: background-color 0.2s ease;
+  background-color: transparent;
 }
 
-.table-row:hover {
-  background-color: #f8f9fa;
+.completion-table .table-row:hover,
+.listening-table .table-row:hover,
+.completion-table .table-row:hover .table-cell,
+.listening-table .table-row:hover .table-cell {
+  background-color: transparent;
 }
 
 .table-row:last-child {
@@ -132,9 +135,8 @@
   line-height: 1.6;
   color: #25245D;
   font-weight: 600;
-  background-color: #f8f9fa;
-  border-radius: 4px;
-  padding: 8px 12px;
+  background-color: transparent;
+  padding: 8px 0;
   margin: 4px 0;
 }
 
@@ -153,6 +155,10 @@
   color: #333;
   transition: border-color 0.2s ease;
   font-family: inherit;
+}
+
+.table-answer-input:hover {
+  background-color: white;
 }
 
 .table-answer-input:focus {
@@ -218,7 +224,7 @@
 }
 
 .listening-table .table-header {
-  background-color: #f8f9fa;
+  background-color: transparent;
   color: #333;
   font-weight: 600;
   padding: 12px 16px;
@@ -231,11 +237,7 @@
 
 .listening-table .table-row {
   border-bottom: 1px solid #e9ecef;
-  transition: background-color 0.2s ease;
-}
-
-.listening-table .table-row:hover {
-  background-color: #f8f9fa;
+  background-color: transparent;
 }
 
 .listening-table .table-row:last-child {
@@ -271,9 +273,8 @@
   line-height: 1.6;
   color: #25245D;
   font-weight: 600;
-  background-color: #f8f9fa;
-  border-radius: 4px;
-  padding: 8px 12px;
+  background-color: transparent;
+  padding: 8px 0;
   margin: 4px 0;
 }
 
@@ -292,6 +293,10 @@
   color: #333;
   transition: border-color 0.2s ease;
   font-family: inherit;
+}
+
+.listening-table-answer-input:hover {
+  background-color: white;
 }
 
 .listening-table-answer-input:focus {
