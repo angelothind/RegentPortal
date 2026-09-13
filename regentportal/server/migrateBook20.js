@@ -9,17 +9,18 @@ const Test = require('./models/Test');
 const { normalizePaper } = require('./assets/Books/Book20/markSchemeFormat');
 const markSchemes = require('./assets/Books/Book20/markSchemes.json');
 
-const BOOK_NAME = 'Book20';
+const BOOK_FOLDER = 'Book20';
+const BOOK_NAME = 'Book 20';
 const TEST_TITLES = ['Test 1', 'Test 2', 'Test 3', 'Test 4'];
 const QUESTION_NUMBERS = Array.from({ length: 40 }, (_, i) => String(i + 1));
 
 const buildSources = (testTitle) => {
   const folder = testTitle.replace(/\s+/g, '');
   return [
-    { name: 'passage1', sourceType: 'Reading', contentPath: `Books/${BOOK_NAME}/${folder}/passages/passage1.json` },
-    { name: 'passage2', sourceType: 'Reading', contentPath: `Books/${BOOK_NAME}/${folder}/passages/passage2.json` },
-    { name: 'passage3', sourceType: 'Reading', contentPath: `Books/${BOOK_NAME}/${folder}/passages/passage3.json` },
-    { name: 'audio1', sourceType: 'Listening', contentPath: `Books/${BOOK_NAME}/${folder}/audios/fullaudio.mp3` },
+    { name: 'passage1', sourceType: 'Reading', contentPath: `Books/${BOOK_FOLDER}/${folder}/passages/passage1.json` },
+    { name: 'passage2', sourceType: 'Reading', contentPath: `Books/${BOOK_FOLDER}/${folder}/passages/passage2.json` },
+    { name: 'passage3', sourceType: 'Reading', contentPath: `Books/${BOOK_FOLDER}/${folder}/passages/passage3.json` },
+    { name: 'audio1', sourceType: 'Listening', contentPath: `Books/${BOOK_FOLDER}/${folder}/audios/fullaudio.mp3` },
   ];
 };
 
@@ -50,9 +51,9 @@ const migrateBook20 = async () => {
     assertCompletePaper(title, 'reading', reading);
     assertCompletePaper(title, 'listening', listening);
 
-    let test = await Test.findOne({ title, belongsTo: BOOK_NAME });
+    let test = await Test.findOne({ title, belongsTo: BOOK_FOLDER });
     if (!test) {
-      test = new Test({ title, belongsTo: BOOK_NAME });
+      test = new Test({ title, belongsTo: BOOK_FOLDER });
     }
 
     test.sources = buildSources(title);
@@ -68,8 +69,12 @@ const migrateBook20 = async () => {
 
   let book = await Book.findOne({ name: BOOK_NAME });
   if (!book) {
+    book = await Book.findOne({ name: BOOK_FOLDER });
+  }
+  if (!book) {
     book = new Book({ name: BOOK_NAME, tests: bookRefs });
   } else {
+    book.name = BOOK_NAME;
     book.tests = bookRefs;
   }
   await book.save();
