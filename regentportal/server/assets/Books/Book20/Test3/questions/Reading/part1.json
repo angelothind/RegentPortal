@@ -1,0 +1,114 @@
+{
+  "passageNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 1-7\nComplete the notes below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 1-7.",
+      "notesTitle": "The history of frozen food",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "questionNumber": "1",
+          "question": "2,000 years ago, South America - People conserved the nutritional value of **1** ________, using a method of freezing then drying.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "2",
+          "question": "1851, USA - **2** ________ was kept cool by ice during transportation in specially adapted trains.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "3",
+          "question": "1880, Australia - Two kinds of **3** ________ were the first frozen food shipped to England.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "1917 onwards, USA - Clarence Birdseye introduced innovations including:",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "4",
+          "question": "quick-freezing methods, so that **4** ________ did not spoil the food.",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": "5",
+          "question": "packaging products with **5** ________, so the product was visible.",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": "6",
+          "question": "Early 1940s, USA - Frozen food became popular because of a shortage of **6** ________.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "7",
+          "question": "1950s, USA - A large number of homes now had a **7** ________.",
+          "answer": "",
+          "bulletLevel": 0
+        }
+      ],
+      "correctAnswers": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "6": "",
+        "7": ""
+      }
+    },
+    {
+      "questionType": "TFNG",
+      "subType": "TFNG",
+      "introInstruction": "Questions 8-13\nDo the following statements agree with the information given in Reading Passage 1?",
+      "formattingInstruction": "In boxes 8-13 select",
+      "answerKey": {
+        "TRUE": "if the statement agrees with the information",
+        "FALSE": "if the statement contradicts the information",
+        "NOT GIVEN": "if there is no information on this"
+      },
+      "questionBlock": [
+        {
+          "questionNumber": "8",
+          "question": "The ice transportation business made some Boston ship owners very wealthy in the early 1800s."
+        },
+        {
+          "questionNumber": "9",
+          "question": "A disadvantage of the freezing process invented in Australia was that it affected the taste of food."
+        },
+        {
+          "questionNumber": "10",
+          "question": "Clarence Birdseye travelled to Labrador in order to learn how the Inuit people froze fish."
+        },
+        {
+          "questionNumber": "11",
+          "question": "Swanson Foods invested a great deal of money in the promotion of the TV Dinner."
+        },
+        {
+          "questionNumber": "12",
+          "question": "Swanson Foods developed a new style of container for the launch of the TV Dinner."
+        },
+        {
+          "questionNumber": "13",
+          "question": "The US frozen food industry is currently the largest in the world."
+        }
+      ],
+      "correctAnswers": {
+        "8": "",
+        "9": "",
+        "10": "",
+        "11": "",
+        "12": "",
+        "13": ""
+      }
+    }
+  ]
+}

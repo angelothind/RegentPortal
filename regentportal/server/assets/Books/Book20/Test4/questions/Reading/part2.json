@@ -1,0 +1,112 @@
+{
+  "passageNumber": 2,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 14-17\nReading Passage 2 has six paragraphs, A-F.",
+      "formattingInstruction": "Which paragraph contains the following information?\nWrite the correct letter, A-F, in boxes 14-17.",
+      "questionBlock": [
+        {
+          "questionNumber": "14",
+          "question": "how a type of plant functions as a natural protection for coastlines"
+        },
+        {
+          "questionNumber": "15",
+          "question": "a prediction about how long it could take to stop noticing the effects of climate change"
+        },
+        {
+          "questionNumber": "16",
+          "question": "a reference to the fact that a solution is particularly cost-effective"
+        },
+        {
+          "questionNumber": "17",
+          "question": "a mention of a technology used to locate areas most in need of intervention"
+        }
+      ],
+      "correctAnswers": {
+        "14": "",
+        "15": "",
+        "16": "",
+        "17": ""
+      }
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 18-22\nComplete the sentences below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 18-22.",
+      "questionBlock": [
+        {
+          "questionNumber": "18",
+          "question": "The stormwater-management programme in Miami Beach has involved the installation of efficient **18** ________.",
+          "answer": ""
+        },
+        {
+          "questionNumber": "19",
+          "question": "The construction of **19** ________ was the first stage of a project to ensure the success of mangroves in Indonesia.",
+          "answer": ""
+        },
+        {
+          "questionNumber": "20",
+          "question": "As a response to rising floodwaters in the Mekong Delta, a not-for-profit organisation has been building houses that can **20** ________.",
+          "answer": ""
+        },
+        {
+          "questionNumber": "21",
+          "question": "Rising sea levels in Bangladesh have made it necessary to introduce various **21** ________ that are suitable for areas of high salt content.",
+          "answer": ""
+        },
+        {
+          "questionNumber": "22",
+          "question": "A project in LA has increased the number of **22** ________ on the city's streets.",
+          "answer": ""
+        }
+      ],
+      "correctAnswers": {
+        "18": "",
+        "19": "",
+        "20": "",
+        "21": "",
+        "22": ""
+      }
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 23-26\nLook at the following statements and the list of people below.",
+      "formattingInstruction": "Match each statement with the correct person, A-E.\nWrite the correct letter, A-E, in boxes 23-26.",
+      "opinionsBox": {
+        "title": "List of People",
+        "options": [
+          { "letter": "A", "text": "Yanira Pineda" },
+          { "letter": "B", "text": "Susanna Tol" },
+          { "letter": "C", "text": "Elizabeth English" },
+          { "letter": "D", "text": "Raisa Chowdhury" },
+          { "letter": "E", "text": "Greg Spotts" }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": "23",
+          "question": "It is essential to adopt strategies which involve and help residents of the region."
+        },
+        {
+          "questionNumber": "24",
+          "question": "Interventions which reduce heat are absolutely vital for our survival in this location."
+        },
+        {
+          "questionNumber": "25",
+          "question": "More work will need to be done in future decades to deal with the impact of rising water levels."
+        },
+        {
+          "questionNumber": "26",
+          "question": "The number of locations requiring action to adapt to flooding has grown in recent years."
+        }
+      ],
+      "correctAnswers": {
+        "23": "",
+        "24": "",
+        "25": "",
+        "26": ""
+      }
+    }
+  ]
+}

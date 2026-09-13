@@ -71,6 +71,7 @@
       "formattingInstruction": "Label the map below. Write the correct letter, A-I, next to Questions 15-20.",
       "mapTitle": "Housing Development Map",
       "mapImage": "housingmap.png",
+      "mapImagePath": "Books/Book18/Test2/maps/housingmap.png",
       "questionBlock": [
         {
           "questionNumber": 15,

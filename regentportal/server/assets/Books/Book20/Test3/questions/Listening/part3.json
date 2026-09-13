@@ -1,0 +1,124 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 21-26",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "questionBlock": [
+        {
+          "questionNumber": 21,
+          "question": "Finn was pleased to discover that their topic",
+          "options": [
+            { "letter": "A", "text": "was not familiar to their module leader." },
+            { "letter": "B", "text": "had not been chosen by other students." },
+            { "letter": "C", "text": "did not prove to be difficult to research." }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 22,
+          "question": "Maya says a mistaken belief about theatre programmes is that",
+          "options": [
+            { "letter": "A", "text": "theatres pay companies to produce them." },
+            { "letter": "B", "text": "few theatre-goers buy them nowadays." },
+            { "letter": "C", "text": "they contain far more adverts than previously." }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 23,
+          "question": "Finn was surprised that, in early British theatre, programmes",
+          "options": [
+            { "letter": "A", "text": "were difficult for audiences to obtain." },
+            { "letter": "B", "text": "were given out free of charge." },
+            { "letter": "C", "text": "were seen as a kind of contract." }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 24,
+          "question": "Maya feels their project should include an explanation of why companies of actors",
+          "options": [
+            { "letter": "A", "text": "promoted their own plays." },
+            { "letter": "B", "text": "performed plays outdoors." },
+            { "letter": "C", "text": "had to tour with their plays." }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 25,
+          "question": "Finn and Maya both think that, compared to nineteenth-century programmes, those from the eighteenth century",
+          "options": [
+            { "letter": "A", "text": "were more original." },
+            { "letter": "B", "text": "were more colourful." },
+            { "letter": "C", "text": "were more informative." }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 26,
+          "question": "Maya doesn't fully understand why, in the twentieth century,",
+          "options": [
+            { "letter": "A", "text": "very few theatre programmes were printed in the USA." },
+            { "letter": "B", "text": "British theatre programmes failed to develop for so long." },
+            { "letter": "C", "text": "theatre programmes in Britain copied fashions from the USA." }
+          ],
+          "answer": ""
+        }
+      ],
+      "correctAnswers": {
+        "21": "",
+        "22": "",
+        "23": "",
+        "24": "",
+        "25": "",
+        "26": ""
+      }
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 27-30\nWhat comment is made about the programme for each of the following shows?",
+      "formattingInstruction": "Choose FOUR answers from the box and write the correct letter, A-F, next to Questions 27-30.",
+      "questionBlock": [
+        {
+          "questionNumber": 27,
+          "question": "Ruy Blas",
+          "answer": ""
+        },
+        {
+          "questionNumber": 28,
+          "question": "Man of La Mancha",
+          "answer": ""
+        },
+        {
+          "questionNumber": 29,
+          "question": "The Tragedy of Jane Shore",
+          "answer": ""
+        },
+        {
+          "questionNumber": 30,
+          "question": "The Sailors' Festival",
+          "answer": ""
+        }
+      ],
+      "opinionsBox": {
+        "title": "Comments about the programme",
+        "options": [
+          { "letter": "A", "text": "Its origin is somewhat controversial" },
+          { "letter": "B", "text": "It is historically significant for a country" },
+          { "letter": "C", "text": "It was effective at attracting audiences" },
+          { "letter": "D", "text": "It is included in a recent project" },
+          { "letter": "E", "text": "It contains insights into the show" },
+          { "letter": "F", "text": "It resembles an artwork" }
+        ]
+      },
+      "correctAnswers": {
+        "27": "",
+        "28": "",
+        "29": "",
+        "30": ""
+      }
+    }
+  ]
+}

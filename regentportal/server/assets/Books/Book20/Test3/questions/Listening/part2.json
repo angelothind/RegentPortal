@@ -1,0 +1,116 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 11-16",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "questionBlock": [
+        {
+          "questionNumber": 11,
+          "question": "Who was responsible for starting the community project?",
+          "options": [
+            { "letter": "A", "text": "The castle owners" },
+            { "letter": "B", "text": "A national charity" },
+            { "letter": "C", "text": "The local council" }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 12,
+          "question": "How was the gold coin found?",
+          "options": [
+            { "letter": "A", "text": "Heavy rain had removed some of the soil" },
+            { "letter": "B", "text": "The ground was dug up by wild rabbits" },
+            { "letter": "C", "text": "A person with a metal detector searched the area" }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 13,
+          "question": "What led the archaeologists to believe there was an ancient village on this site?",
+          "options": [
+            { "letter": "A", "text": "The lucky discovery of old records" },
+            { "letter": "B", "text": "The bases of several structures visible in the grass" },
+            { "letter": "C", "text": "The unusual stones found near the castle" }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 14,
+          "question": "What are the team still hoping to find?",
+          "options": [
+            { "letter": "A", "text": "Everyday pottery" },
+            { "letter": "B", "text": "Animal bones" },
+            { "letter": "C", "text": "Pieces of jewellery" }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 15,
+          "question": "What was found on the other side of the river to the castle?",
+          "options": [
+            { "letter": "A", "text": "The remains of a large palace" },
+            { "letter": "B", "text": "The outline of fields" },
+            { "letter": "C", "text": "A number of small huts" }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 16,
+          "question": "What do the team plan to do after work ends this summer?",
+          "options": [
+            { "letter": "A", "text": "Prepare a display for a museum" },
+            { "letter": "B", "text": "Take part in a television programme" },
+            { "letter": "C", "text": "Start to organise school visits" }
+          ],
+          "answer": ""
+        }
+      ],
+      "correctAnswers": {
+        "11": "",
+        "12": "",
+        "13": "",
+        "14": "",
+        "15": "",
+        "16": ""
+      }
+    },
+    {
+      "questionType": "map-labeling",
+      "introInstruction": "Questions 17-20",
+      "formattingInstruction": "Label the map below.\nWrite the correct letter, A-G, next to Questions 17-20.",
+      "mapTitle": "Bidcaster Archaeological Dig",
+      "mapImage": "BidcasterMap.png",
+      "mapImagePath": "Books/Book20/Test3/maps/BidcasterMap.png",
+      "questionBlock": [
+        {
+          "questionNumber": 17,
+          "question": "bridge foundations",
+          "answer": ""
+        },
+        {
+          "questionNumber": 18,
+          "question": "rubbish pit",
+          "answer": ""
+        },
+        {
+          "questionNumber": 19,
+          "question": "meeting hall",
+          "answer": ""
+        },
+        {
+          "questionNumber": 20,
+          "question": "fish pond",
+          "answer": ""
+        }
+      ],
+      "correctAnswers": {
+        "17": "",
+        "18": "",
+        "19": "",
+        "20": ""
+      }
+    }
+  ]
+}

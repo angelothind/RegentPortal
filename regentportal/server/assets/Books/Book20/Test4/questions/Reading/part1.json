@@ -1,0 +1,110 @@
+{
+  "passageNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 1-7\nComplete the notes below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 1-7.",
+      "notesTitle": "The life and work of Georgia O'Keeffe",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "questionNumber": "1",
+          "question": "studied art, then worked as a **1** ________ in various places in the USA",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "2",
+          "question": "created drawings using **2** ________ which were exhibited in New York City",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "3",
+          "question": "moved to New York and became famous for her paintings of the city's **3** ________",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "4",
+          "question": "produced a series of innovative close-up paintings of **4** ________",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "5",
+          "question": "went to New Mexico and was initially inspired to paint the many **5** ________ that could be found there",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "6",
+          "question": "continued to paint various features that together formed the dramatic **6** ________ of New Mexico for over forty years",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "7",
+          "question": "travelled widely by plane in later years, and painted pictures of clouds and **7** ________ seen from above.",
+          "answer": "",
+          "bulletLevel": 0
+        }
+      ],
+      "correctAnswers": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "6": "",
+        "7": ""
+      }
+    },
+    {
+      "questionType": "TFNG",
+      "subType": "TFNG",
+      "introInstruction": "Questions 8-13\nDo the following statements agree with the information given in Reading Passage 1?",
+      "formattingInstruction": "In boxes 8-13 select",
+      "answerKey": {
+        "TRUE": "if the statement agrees with the information",
+        "FALSE": "if the statement contradicts the information",
+        "NOT GIVEN": "if there is no information on this"
+      },
+      "questionBlock": [
+        {
+          "questionNumber": "8",
+          "question": "Georgia O'Keeffe's style was greatly influenced by the changing fashions in art over the seven decades of her career."
+        },
+        {
+          "questionNumber": "9",
+          "question": "When O'Keeffe finished high school, she had already made her mind up about the career that she wanted."
+        },
+        {
+          "questionNumber": "10",
+          "question": "Alfred Stieglitz first discovered O'Keeffe's work when she sent some abstract drawings to his gallery in New York City."
+        },
+        {
+          "questionNumber": "11",
+          "question": "O'Keeffe was the subject of Stieglitz's photographic work for many years."
+        },
+        {
+          "questionNumber": "12",
+          "question": "O'Keeffe's paintings of the patio of her house in Abiquiu were among the artist's favourite works."
+        },
+        {
+          "questionNumber": "13",
+          "question": "O'Keeffe produced a greater quantity of work during the 1950s to 1970s than at any other time in her life."
+        }
+      ],
+      "correctAnswers": {
+        "8": "",
+        "9": "",
+        "10": "",
+        "11": "",
+        "12": "",
+        "13": ""
+      }
+    }
+  ]
+}

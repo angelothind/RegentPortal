@@ -1,0 +1,75 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 11 and 12\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 11 and 12.",
+      "mainQuestion": "Which TWO things does the speaker say about visiting the football stadium with children?",
+      "questionGroup": {
+        "questionNumbers": ["11", "12"],
+        "options": [
+          { "letter": "A", "text": "Children can get their photo taken with a football player." },
+          { "letter": "B", "text": "There is a competition for children today." },
+          { "letter": "C", "text": "Parents must stay with their children at all times." },
+          { "letter": "D", "text": "Children will need sunhats and drinks." },
+          { "letter": "E", "text": "The cafe has a special offer on meals for children." }
+        ],
+        "correctAnswers": [],
+        "maxSelections": 2
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 13 and 14\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 13 and 14.",
+      "mainQuestion": "Which TWO features of the stadium tour are new this year?",
+      "questionGroup": {
+        "questionNumbers": ["13", "14"],
+        "options": [
+          { "letter": "A", "text": "VIP tour" },
+          { "letter": "B", "text": "360 cinema experience" },
+          { "letter": "C", "text": "audio guide" },
+          { "letter": "D", "text": "dressing room tour" },
+          { "letter": "E", "text": "tours in other languages" }
+        ],
+        "correctAnswers": [],
+        "maxSelections": 2
+      }
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 15-20\nWhich event in the history of football in the UK took place in each of the following years?",
+      "formattingInstruction": "Choose SIX answers from the box and write the correct letter, A-H, next to Questions 15-20.",
+      "questionBlock": [
+        { "questionNumber": 15, "question": "1870", "answer": "" },
+        { "questionNumber": 16, "question": "1874", "answer": "" },
+        { "questionNumber": 17, "question": "1875", "answer": "" },
+        { "questionNumber": 18, "question": "1877", "answer": "" },
+        { "questionNumber": 19, "question": "1878", "answer": "" },
+        { "questionNumber": 20, "question": "1880", "answer": "" }
+      ],
+      "opinionsBox": {
+        "title": "Events in the history of football",
+        "options": [
+          { "letter": "A", "text": "the introduction of pay for the players" },
+          { "letter": "B", "text": "a change to the design of the goal" },
+          { "letter": "C", "text": "the first use of lights for matches" },
+          { "letter": "D", "text": "the introduction of goalkeepers" },
+          { "letter": "E", "text": "the first international match" },
+          { "letter": "F", "text": "two changes to the rules of the game" },
+          { "letter": "G", "text": "the introduction of a fee for spectators" },
+          { "letter": "H", "text": "an agreement on the length of a game" }
+        ]
+      },
+      "correctAnswers": {
+        "15": "",
+        "16": "",
+        "17": "",
+        "18": "",
+        "19": "",
+        "20": ""
+      }
+    }
+  ]
+}

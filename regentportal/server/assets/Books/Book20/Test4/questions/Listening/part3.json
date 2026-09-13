@@ -1,0 +1,116 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 21 and 22\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 21 and 22.",
+      "mainQuestion": "Which TWO benefits for children of learning to write did both students find surprising?",
+      "questionGroup": {
+        "questionNumbers": ["21", "22"],
+        "options": [
+          { "letter": "A", "text": "improved fine motor skills" },
+          { "letter": "B", "text": "improved memory" },
+          { "letter": "C", "text": "improved concentration" },
+          { "letter": "D", "text": "improved imagination" },
+          { "letter": "E", "text": "improved spatial awareness" }
+        ],
+        "correctAnswers": [],
+        "maxSelections": 2
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 23 and 24\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 23 and 24.",
+      "mainQuestion": "For children with dyspraxia, which TWO problems with handwriting do the students think are easiest to correct?",
+      "questionGroup": {
+        "questionNumbers": ["23", "24"],
+        "options": [
+          { "letter": "A", "text": "not spacing letters correctly" },
+          { "letter": "B", "text": "not writing in a straight line" },
+          { "letter": "C", "text": "applying too much pressure when writing" },
+          { "letter": "D", "text": "confusing letter shapes" },
+          { "letter": "E", "text": "writing very slowly" }
+        ],
+        "correctAnswers": [],
+        "maxSelections": 2
+      }
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 25-30",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "questionBlock": [
+        {
+          "questionNumber": 25,
+          "question": "What does the woman say about using laptops to teach writing to children with dyslexia?",
+          "options": [
+            { "letter": "A", "text": "Children often lack motivation to learn that way." },
+            { "letter": "B", "text": "Children become fluent relatively quickly." },
+            { "letter": "C", "text": "Children react more positively if they make a mistake." }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 26,
+          "question": "When discussing whether to teach cursive or print writing, the woman thinks that",
+          "options": [
+            { "letter": "A", "text": "cursive writing disadvantages a certain group of children." },
+            { "letter": "B", "text": "print writing is associated with lower academic performance." },
+            { "letter": "C", "text": "most teachers in the UK prefer a traditional approach to handwriting." }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 27,
+          "question": "According to the students, what impact does poor handwriting have on exam performance?",
+          "options": [
+            { "letter": "A", "text": "There is evidence to suggest grades are affected by poor handwriting." },
+            { "letter": "B", "text": "Neat handwriting is less important now than it used to be." },
+            { "letter": "C", "text": "Candidates write more slowly and produce shorter answers." }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 28,
+          "question": "What prediction does the man make about the future of handwriting?",
+          "options": [
+            { "letter": "A", "text": "Touch typing will be taught before writing by hand." },
+            { "letter": "B", "text": "Children will continue to learn to write by hand." },
+            { "letter": "C", "text": "People will dislike handwriting on digital devices." }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 29,
+          "question": "The woman is concerned that relying on digital devices has made it difficult for her to",
+          "options": [
+            { "letter": "A", "text": "take detailed notes." },
+            { "letter": "B", "text": "spell and punctuate." },
+            { "letter": "C", "text": "read old documents." }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 30,
+          "question": "How do the students feel about their own handwriting?",
+          "options": [
+            { "letter": "A", "text": "concerned they are unable to write quickly" },
+            { "letter": "B", "text": "embarrassed by comments made about it" },
+            { "letter": "C", "text": "regretful that they have lost the habit" }
+          ],
+          "answer": ""
+        }
+      ],
+      "correctAnswers": {
+        "25": "",
+        "26": "",
+        "27": "",
+        "28": "",
+        "29": "",
+        "30": ""
+      }
+    }
+  ]
+}

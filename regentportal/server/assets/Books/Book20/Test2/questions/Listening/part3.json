@@ -1,0 +1,189 @@
+{
+  "partNumber": 3,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 21-25\nWhat is Rosie and Colin's opinion about each of the following aspects of human geography?",
+      "formattingInstruction": "Choose FIVE answers from the box and write the correct letter, A-G, next to Questions 21-25.",
+      "questionBlock": [
+        {
+          "sectionHeading": "Aspects of human geography"
+        },
+        {
+          "questionNumber": 21,
+          "question": "Population",
+          "answer": ""
+        },
+        {
+          "questionNumber": 22,
+          "question": "Health",
+          "answer": ""
+        },
+        {
+          "questionNumber": 23,
+          "question": "Economies",
+          "answer": ""
+        },
+        {
+          "questionNumber": 24,
+          "question": "Culture",
+          "answer": ""
+        },
+        {
+          "questionNumber": 25,
+          "question": "Poverty",
+          "answer": ""
+        }
+      ],
+      "opinionsBox": {
+        "title": "Opinions",
+        "options": [
+          {
+            "letter": "A",
+            "text": "The information given about this was too vague."
+          },
+          {
+            "letter": "B",
+            "text": "This may not be relevant to their course."
+          },
+          {
+            "letter": "C",
+            "text": "This will involve only a small number of statistics."
+          },
+          {
+            "letter": "D",
+            "text": "It will be easy to find facts about this."
+          },
+          {
+            "letter": "E",
+            "text": "The facts about this may not be reliable."
+          },
+          {
+            "letter": "F",
+            "text": "No useful research has been done on this."
+          },
+          {
+            "letter": "G",
+            "text": "The information provided about this was interesting."
+          }
+        ]
+      },
+      "correctAnswers": {
+        "21": "",
+        "22": "",
+        "23": "",
+        "24": "",
+        "25": ""
+      }
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 26-30",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "questionBlock": [
+        {
+          "questionNumber": 26,
+          "question": "Rosie says that in her own city the main problem is",
+          "options": [
+            {
+              "letter": "A",
+              "text": "crime."
+            },
+            {
+              "letter": "B",
+              "text": "housing."
+            },
+            {
+              "letter": "C",
+              "text": "unemployment."
+            }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 27,
+          "question": "What recent additions to the outskirts of their cities are both students happy about?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "conference centres"
+            },
+            {
+              "letter": "B",
+              "text": "sports centres"
+            },
+            {
+              "letter": "C",
+              "text": "retail centres"
+            }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 28,
+          "question": "The students agree that developing disused industrial sites may",
+          "options": [
+            {
+              "letter": "A",
+              "text": "have unexpected costs."
+            },
+            {
+              "letter": "B",
+              "text": "damage the urban environment."
+            },
+            {
+              "letter": "C",
+              "text": "destroy valuable historical buildings."
+            }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 29,
+          "question": "The students will mention Masdar City as an example of an attempt to achieve",
+          "options": [
+            {
+              "letter": "A",
+              "text": "daily collections for waste recycling."
+            },
+            {
+              "letter": "B",
+              "text": "sustainable energy use."
+            },
+            {
+              "letter": "C",
+              "text": "free transport for everyone."
+            }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 30,
+          "question": "When discussing the Eco town of Greenhill Abbots, Colin is uncertain about",
+          "options": [
+            {
+              "letter": "A",
+              "text": "what its objectives were."
+            },
+            {
+              "letter": "B",
+              "text": "why there was opposition to it."
+            },
+            {
+              "letter": "C",
+              "text": "how much of it has actually been built."
+            }
+          ],
+          "answer": ""
+        }
+      ],
+      "correctAnswers": {
+        "26": "",
+        "27": "",
+        "28": "",
+        "29": "",
+        "30": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "passageNumber": 2,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 14-16\nReading Passage 2 has six paragraphs, A-F.",
+      "formattingInstruction": "Which paragraph contains the following information?\nWrite the correct letter, A-F, in boxes 14-16.\n\nNB You may use any letter more than once.",
+      "questionBlock": [
+        {
+          "questionNumber": "14",
+          "question": "mention of false assumptions about why people procrastinate"
+        },
+        {
+          "questionNumber": "15",
+          "question": "reference to the realisation that others also procrastinate"
+        },
+        {
+          "questionNumber": "16",
+          "question": "neurological evidence of a link between procrastination and emotion"
+        }
+      ],
+      "correctAnswers": {
+        "14": "",
+        "15": "",
+        "16": ""
+      }
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 17-22\nComplete the summary below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 17-22.",
+      "notesTitle": "What makes us procrastinate?",
+      "questionBlock": [
+        {
+          "questionNumber": "17-22",
+          "text": "Many people think that procrastination is the result of **17** ________. Others believe it to be the result of an inability to organise time efficiently. But scientific studies suggest that procrastination is actually due to poor mood management. The tasks we are most likely to put off are those that could damage our self-esteem or cause us to feel **18** ________ when we think about them. Research comparing chronic procrastinators with other people even found differences in the brain regions associated with regulating emotions and identifying **19** ________.\n\nEmotionally loaded and difficult tasks often cause us to procrastinate. Getting ready to take **20** ________ might be a typical example of one such task. People who are likely to procrastinate tend to be either **21** ________ or those with low self-esteem. Procrastination is only a short-term measure for managing emotions. It's often followed by a feeling of **22** ________, which worsens our mood and leads to more procrastination.",
+          "blanks": [
+            { "number": "17", "answer": "" },
+            { "number": "18", "answer": "" },
+            { "number": "19", "answer": "" },
+            { "number": "20", "answer": "" },
+            { "number": "21", "answer": "" },
+            { "number": "22", "answer": "" }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "17": "",
+        "18": "",
+        "19": "",
+        "20": "",
+        "21": "",
+        "22": ""
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 23 and 24\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 23 and 24.",
+      "mainQuestion": "Which TWO comparisons between employees who often procrastinate and those who do not are mentioned in the text?",
+      "questionGroup": {
+        "questionNumbers": ["23", "24"],
+        "options": [
+          { "letter": "A", "text": "Their salaries are lower." },
+          { "letter": "B", "text": "The quality of their work is inferior." },
+          { "letter": "C", "text": "They don't keep their jobs for as long." },
+          { "letter": "D", "text": "They don't enjoy their working lives as much." },
+          { "letter": "E", "text": "They have poorer relationships with colleagues." }
+        ],
+        "correctAnswers": [],
+        "maxSelections": 2
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 25 and 26\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 25 and 26.",
+      "mainQuestion": "Which TWO recommendations for getting out of a cycle of procrastination does the writer give?",
+      "questionGroup": {
+        "questionNumbers": ["25", "26"],
+        "options": [
+          { "letter": "A", "text": "not judging ourselves harshly" },
+          { "letter": "B", "text": "setting ourselves manageable aims" },
+          { "letter": "C", "text": "rewarding ourselves for tasks achieved" },
+          { "letter": "D", "text": "prioritising tasks according to their importance" },
+          { "letter": "E", "text": "avoiding things that stop us concentrating on our tasks" }
+        ],
+        "correctAnswers": [],
+        "maxSelections": 2
+      }
+    }
+  ]
+}
