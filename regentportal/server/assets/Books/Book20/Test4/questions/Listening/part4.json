@@ -1,0 +1,111 @@
+{
+  "partNumber": 4,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 31-40",
+      "formattingInstruction": "Complete the notes below.\nWrite ONE WORD ONLY for each answer.",
+      "notesTitle": "Research in the area around the Chembe Bird Sanctuary",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "The importance of birds of prey to the local communities"
+        },
+        {
+          "questionNumber": 31,
+          "question": "They destroy **31** ________ and other rodents.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 32,
+          "question": "They help to prevent farmers from being bitten by **32** ________.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "They have been an important part of the local culture for many years.",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 33,
+          "question": "They now support the economy by encouraging **33** ________ in the area.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Falling numbers of birds of prey"
+        },
+        {
+          "descriptiveText": "The birds may be accidentally killed",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 34,
+          "question": "by **34** ________ when they are hunting or sleeping",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 35,
+          "question": "by electrocution from contact with power lines, especially at times when there is a lot of **35** ________",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 36,
+          "question": "Local farmers may illegally shoot them or **36** ________ them.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Ways of protecting chickens from birds of prey"
+        },
+        {
+          "descriptiveText": "clearing away vegetation from the area (unhelpful)",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 37,
+          "question": "providing a **37** ________ for chickens (expensive)",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "frightening birds of prey by",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 38,
+          "question": "keeping a **38** ________",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 39,
+          "question": "making a **39** ________ - e.g. with metal objects",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 40,
+          "question": "A **40** ________ of methods is usually most effective.",
+          "answer": "",
+          "bulletLevel": 0
+        }
+      ],
+      "correctAnswers": {
+        "31": "",
+        "32": "",
+        "33": "",
+        "34": "",
+        "35": "",
+        "36": "",
+        "37": "",
+        "38": "",
+        "39": "",
+        "40": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "passageNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 1-6\nComplete the notes below.",
+      "formattingInstruction": "Choose ONE WORD AND/OR A NUMBER from the passage for each answer.\nWrite your answers in boxes 1-6.",
+      "notesTitle": "Manatees",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Appearance"
+        },
+        {
+          "questionNumber": "1",
+          "question": "look similar to dugongs, but with a differently shaped **1** ________",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Movement"
+        },
+        {
+          "descriptiveText": "have fewer neck bones than most mammals",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "2",
+          "question": "need to use their **2** ________ to help to turn their bodies around in order to look sideways",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "3",
+          "question": "sense vibrations in the water by means of **3** ________ on their skin",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Feeding"
+        },
+        {
+          "questionNumber": "4",
+          "question": "eat mainly aquatic vegetation, such as **4** ________",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "5",
+          "question": "grasp and pull up plants with their **5** ________",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Breathing"
+        },
+        {
+          "descriptiveText": "come to the surface for air every 2-4 minutes when awake and every 15-20 while sleeping",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": "6",
+          "question": "may regulate the **6** ________ of their bodies by using muscles of diaphragm to store air internally",
+          "answer": "",
+          "bulletLevel": 0
+        }
+      ],
+      "correctAnswers": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "6": ""
+      }
+    },
+    {
+      "questionType": "TFNG",
+      "subType": "TFNG",
+      "introInstruction": "Questions 7-13\nDo the following statements agree with the information given in Reading Passage 1?",
+      "formattingInstruction": "In boxes 7-13 select",
+      "answerKey": {
+        "TRUE": "if the statement agrees with the information",
+        "FALSE": "if the statement contradicts the information",
+        "NOT GIVEN": "if there is no information on this"
+      },
+      "questionBlock": [
+        {
+          "questionNumber": "7",
+          "question": "West Indian manatees can be found in a variety of different aquatic habitats."
+        },
+        {
+          "questionNumber": "8",
+          "question": "The Florida manatee lives in warmer waters than the Antillean manatee."
+        },
+        {
+          "questionNumber": "9",
+          "question": "The African manatee's range is limited to coastal waters between the West African countries of Mauritania and Angola."
+        },
+        {
+          "questionNumber": "10",
+          "question": "The extent of the loss of Amazonian manatees in the mid-twentieth century was only revealed many years later."
+        },
+        {
+          "questionNumber": "11",
+          "question": "It is predicted that West Indian manatee populations will fall in the coming decades."
+        },
+        {
+          "questionNumber": "12",
+          "question": "The risk to manatees from entanglement and plastic consumption increased significantly in the period 2009-2020."
+        },
+        {
+          "questionNumber": "13",
+          "question": "There is some legislation in place which aims to reduce the likelihood of boat strikes on manatees in Florida."
+        }
+      ],
+      "correctAnswers": {
+        "7": "",
+        "8": "",
+        "9": "",
+        "10": "",
+        "11": "",
+        "12": "",
+        "13": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "passageNumber": 3,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 27-33\nLook at the following statements and the list of experts below.",
+      "formattingInstruction": "Match each statement with the correct expert, A, B or C.\nWrite the correct letter, A, B or C, in boxes 27-33.\nNB You may use any letter more than once.",
+      "opinionsBox": {
+        "title": "List of Experts",
+        "options": [
+          { "letter": "A", "text": "Martin Rees" },
+          { "letter": "B", "text": "Daniel Wolpert" },
+          { "letter": "C", "text": "Kathleen Richardson" }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": "27",
+          "question": "For our own safety, humans will need to restrict the abilities of robots."
+        },
+        {
+          "questionNumber": "28",
+          "question": "The risk of robots harming us is less serious than humans believe it to be."
+        },
+        {
+          "questionNumber": "29",
+          "question": "It will take many decades for robot intelligence to be as imaginative as human intelligence."
+        },
+        {
+          "questionNumber": "30",
+          "question": "We may have to start considering whether we are treating robots fairly."
+        },
+        {
+          "questionNumber": "31",
+          "question": "Robots are probably of more help to us on Earth than in space."
+        },
+        {
+          "questionNumber": "32",
+          "question": "The ideas in high-quality science fiction may prove to be just as accurate as those found in the work of mediocre scientists."
+        },
+        {
+          "questionNumber": "33",
+          "question": "There are those who look forward to robots developing greater intelligence."
+        }
+      ],
+      "correctAnswers": {
+        "27": "",
+        "28": "",
+        "29": "",
+        "30": "",
+        "31": "",
+        "32": "",
+        "33": ""
+      }
+    },
+    {
+      "questionType": "choose-from",
+      "introInstruction": "Questions 34-36\nComplete each sentence with the correct ending, A-D, below.",
+      "formattingInstruction": "Write the correct letter, A-D, in boxes 34-36.",
+      "summaryText": "Richardson and Rees express similar views regarding the ethical aspect of **34** ________\nRees and Wolpert share an opinion about the extent of **35** ________\nWolpert disagrees with Richardson on the question of **36** ________",
+      "questionBlock": [
+        { "questionNumber": "34" },
+        { "questionNumber": "35" },
+        { "questionNumber": "36" }
+      ],
+      "options": [
+        { "letter": "A", "text": "robots to explore outer space." },
+        { "letter": "B", "text": "advances made in machine intelligence so far." },
+        { "letter": "C", "text": "changes made to other planets for our own benefit." },
+        { "letter": "D", "text": "the harm already done by artificial intelligence." }
+      ],
+      "correctAnswers": {
+        "34": "",
+        "35": "",
+        "36": ""
+      }
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 37-40\nChoose the correct letter, A, B, C or D.",
+      "formattingInstruction": "Write the correct letter in boxes 37-40.",
+      "questionBlock": [
+        {
+          "questionNumber": "37",
+          "question": "What point does Richardson make about fear of machines?",
+          "options": [
+            { "letter": "A", "text": "It has grown alongside the development of ever more advanced robots." },
+            { "letter": "B", "text": "It is the result of our inclination to attribute human characteristics to non-human entities." },
+            { "letter": "C", "text": "It has its origins in basic misunderstandings about how inanimate objects function." },
+            { "letter": "D", "text": "It demonstrates a key difference between human intelligence and machine intelligence." }
+          ]
+        },
+        {
+          "questionNumber": "38",
+          "question": "What potential advance does Rees see as a cause for concern?",
+          "options": [
+            { "letter": "A", "text": "robots outnumbering people" },
+            { "letter": "B", "text": "robots having abilities which humans do not" },
+            { "letter": "C", "text": "artificial intelligence developing independent thought" },
+            { "letter": "D", "text": "artificial intelligence taking over every aspect of our lives" }
+          ]
+        },
+        {
+          "questionNumber": "39",
+          "question": "What does Wolpert emphasize in his response to the question about science fiction?",
+          "options": [
+            { "letter": "A", "text": "how science fiction influences our attitudes to robots" },
+            { "letter": "B", "text": "how fundamental robots are to the science fiction genre" },
+            { "letter": "C", "text": "how the image of robots in science fiction has changed over time" },
+            { "letter": "D", "text": "how reactions to similar portrayals of robots in science fiction may vary" }
+          ]
+        },
+        {
+          "questionNumber": "40",
+          "question": "What is Richardson doing in her comment about reality and fantasy?",
+          "options": [
+            { "letter": "A", "text": "warning people not to confuse one with the other" },
+            { "letter": "B", "text": "outlining ways in which one has impacted on the other" },
+            { "letter": "C", "text": "recommending a change of approach in how people view them" },
+            { "letter": "D", "text": "explaining why scientists have a different perspective on them from other people" }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "37": "",
+        "38": "",
+        "39": "",
+        "40": ""
+      }
+    }
+  ]
+}

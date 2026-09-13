@@ -1,0 +1,127 @@
+{
+  "partNumber": 4,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 31-40",
+      "formattingInstruction": "Complete the notes below.\nWrite ONE WORD ONLY for each answer.",
+      "notesTitle": "",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Developing food trends"
+        },
+        {
+          "questionNumber": 31,
+          "question": "The growth in interest in food fashions started with **31** ________ of food being shared on social media.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "The UK food industry is constantly developing products which are new or different.",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "Influencers on social media become 'ambassadors' for a brand.",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 32,
+          "question": "Sales of **32** ________ food brands have grown this way.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "Supermarkets track demand for ingredients on social media.",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 33,
+          "question": "Famous **33** ________ are influential.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Marketing campaigns"
+        },
+        {
+          "descriptiveText": "The avocado:",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 34,
+          "question": "**34** ________ were invited to visit growers in South Africa.",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 35,
+          "question": "Advertising focused on its **35** ________ benefits.",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "descriptiveText": "Oat milk:",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "A Swedish brand's media campaign received publicity by upsetting competitors.",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 36,
+          "question": "Promotion in the USA through **36** ________ shops reduced the need for advertising.",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 37,
+          "question": "It appealed to consumers who are concerned about the **37** ________",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "descriptiveText": "Norwegian skrei:",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 38,
+          "question": "has helped strengthen the **38** ________ of Norwegian seafood.",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "sectionHeading": "Ethical concerns"
+        },
+        {
+          "descriptiveText": "Quinoa:",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 39,
+          "question": "Its success led to an increase in its **39** ________",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 40,
+          "question": "Overuse of resources resulted in poor quality **40** ________",
+          "answer": "",
+          "bulletLevel": 1
+        }
+      ],
+      "correctAnswers": {
+        "31": "",
+        "32": "",
+        "33": "",
+        "34": "",
+        "35": "",
+        "36": "",
+        "37": "",
+        "38": "",
+        "39": "",
+        "40": ""
+      }
+    }
+  ]
+}

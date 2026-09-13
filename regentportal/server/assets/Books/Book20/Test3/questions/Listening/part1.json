@@ -1,0 +1,116 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "table-completion",
+      "introInstruction": "Questions 1-10",
+      "formattingInstruction": "Complete the table below.\nWrite ONE WORD AND/OR A NUMBER for each answer.",
+      "tableTitle": "Furniture Rental Companies",
+      "tableStructure": {
+        "columns": 3,
+        "rows": 4,
+        "headers": ["Name of company", "Information about costs", "Additional notes"]
+      },
+      "tableData": [
+        {
+          "row": 1,
+          "cells": [
+            {
+              "content": "Peak Rentals",
+              "type": "text"
+            },
+            {
+              "content": "Prices range from $105 to $**1** ________ per room per month.",
+              "type": "question",
+              "questionNumber": "1",
+              "answer": ""
+            },
+            {
+              "content": "The furniture is very **2** ________\nDelivers in 1-2 days\nSpecial offer: free **3** ________ with every living room set",
+              "type": "question",
+              "questionNumber": "2-3",
+              "answer": ""
+            }
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            {
+              "content": "**4** ________ and Oliver",
+              "type": "question",
+              "questionNumber": "4",
+              "answer": ""
+            },
+            {
+              "content": "Mid-range prices\n12% monthly fee for **5** ________",
+              "type": "question",
+              "questionNumber": "5",
+              "answer": ""
+            },
+            {
+              "content": "Also offers a cleaning service",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "row": 3,
+          "cells": [
+            {
+              "content": "Larch Furniture",
+              "type": "text"
+            },
+            {
+              "content": "Offers cheapest prices for renting furniture and **6** ________ items",
+              "type": "question",
+              "questionNumber": "6",
+              "answer": ""
+            },
+            {
+              "content": "Must have own **7** ________\nMinimum contract length: six months",
+              "type": "question",
+              "questionNumber": "7",
+              "answer": ""
+            }
+          ]
+        },
+        {
+          "row": 4,
+          "cells": [
+            {
+              "content": "**8** ________ Rentals",
+              "type": "question",
+              "questionNumber": "8",
+              "answer": ""
+            },
+            {
+              "content": "See the **9** ________ for the most up-to-date prices",
+              "type": "question",
+              "questionNumber": "9",
+              "answer": ""
+            },
+            {
+              "content": "**10** ________ are allowed within 7 days of delivery",
+              "type": "question",
+              "questionNumber": "10",
+              "answer": ""
+            }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "6": "",
+        "7": "",
+        "8": "",
+        "9": "",
+        "10": ""
+      }
+    }
+  ]
+}

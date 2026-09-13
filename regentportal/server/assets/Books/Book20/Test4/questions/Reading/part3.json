@@ -1,0 +1,107 @@
+{
+  "passageNumber": 3,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 27-31\nReading Passage 3 has seven paragraphs, A-G.",
+      "formattingInstruction": "Which paragraph contains the following information?\nWrite the correct letter, A-G, in boxes 27-31.\n\nNB You may use any letter more than once.",
+      "questionBlock": [
+        {
+          "questionNumber": "27",
+          "question": "an example of how one predator has been protected by the introduction of livestock guard dogs"
+        },
+        {
+          "questionNumber": "28",
+          "question": "an optimistic suggestion about the possible positive developments in the use of livestock guard dogs"
+        },
+        {
+          "questionNumber": "29",
+          "question": "a description of how the methods used by livestock guard dogs help to keep predators away"
+        },
+        {
+          "questionNumber": "30",
+          "question": "claims by different academics that the use of livestock guard dogs is a successful way of protecting farmers' herds"
+        },
+        {
+          "questionNumber": "31",
+          "question": "a reference to how livestock guard dogs gain their skills"
+        }
+      ],
+      "correctAnswers": {
+        "27": "",
+        "28": "",
+        "29": "",
+        "30": "",
+        "31": ""
+      }
+    },
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 32-36\nLook at the following statements and the list of people below.",
+      "formattingInstruction": "Match each statement with the correct person, A-E.\nWrite the correct letter, A-E, in boxes 32-36.",
+      "opinionsBox": {
+        "title": "List of People",
+        "options": [
+          { "letter": "A", "text": "Dan Macon" },
+          { "letter": "B", "text": "Silvia Ribeiro" },
+          { "letter": "C", "text": "Linda van Bommel" },
+          { "letter": "D", "text": "Julie Young" },
+          { "letter": "E", "text": "Bethany Smith" }
+        ]
+      },
+      "questionBlock": [
+        {
+          "questionNumber": "32",
+          "question": "The use of guard dogs may save the lives of both livestock and wild animals."
+        },
+        {
+          "questionNumber": "33",
+          "question": "Claims of a change in behaviour from those using livestock guard dogs may not be totally accurate."
+        },
+        {
+          "questionNumber": "34",
+          "question": "There may be negative results if the use of livestock guard dogs is not sufficiently widespread."
+        },
+        {
+          "questionNumber": "35",
+          "question": "Livestock guard dogs are the best way of protecting farm animals, as long as the dogs are appropriately handled."
+        },
+        {
+          "questionNumber": "36",
+          "question": "Teaching a livestock guard dog how to do its work needs a different focus from teaching a house guard dog."
+        }
+      ],
+      "correctAnswers": {
+        "32": "",
+        "33": "",
+        "34": "",
+        "35": "",
+        "36": ""
+      }
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 37-40\nComplete the summary below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 37-40.",
+      "notesTitle": "Unintended Ecological Effects of Using Guard Dogs",
+      "questionBlock": [
+        {
+          "questionNumber": "37-40",
+          "text": "In Namibia, livestock guard dogs have been used to protect domestic animals from attacks by cheetahs. This has led to a rise in the deaths of other predators, particularly **37** ________. In addition, it has been suggested that the dogs could have **38** ________ which may affect other species, and that they may reduce the amount of **39** ________ available to certain wild animals. On the other hand, these dogs may help birds by protecting their nests. These might otherwise be threatened by predators such as **40** ________.",
+          "blanks": [
+            { "number": "37", "answer": "" },
+            { "number": "38", "answer": "" },
+            { "number": "39", "answer": "" },
+            { "number": "40", "answer": "" }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "37": "",
+        "38": "",
+        "39": "",
+        "40": ""
+      }
+    }
+  ]
+}

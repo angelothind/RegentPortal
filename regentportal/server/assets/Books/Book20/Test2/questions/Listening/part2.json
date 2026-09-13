@@ -1,0 +1,180 @@
+{
+  "partNumber": 2,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 11-16\nWhat is the role of the volunteers in each of the following activities?",
+      "formattingInstruction": "Choose SIX answers from the box and write the correct letter, A-I, next to Questions 11-16.",
+      "questionBlock": [
+        {
+          "questionNumber": 11,
+          "question": "walking around the town centre",
+          "answer": ""
+        },
+        {
+          "questionNumber": 12,
+          "question": "helping at concerts",
+          "answer": ""
+        },
+        {
+          "questionNumber": 13,
+          "question": "getting involved with community groups",
+          "answer": ""
+        },
+        {
+          "questionNumber": 14,
+          "question": "helping with a magazine",
+          "answer": ""
+        },
+        {
+          "questionNumber": 15,
+          "question": "participating at lunches for retired people",
+          "answer": ""
+        },
+        {
+          "questionNumber": 16,
+          "question": "helping with the website",
+          "answer": ""
+        }
+      ],
+      "opinionsBox": {
+        "title": "Roles",
+        "options": [
+          {
+            "letter": "A",
+            "text": "providing entertainment"
+          },
+          {
+            "letter": "B",
+            "text": "providing publicity about a council service"
+          },
+          {
+            "letter": "C",
+            "text": "contacting local businesses"
+          },
+          {
+            "letter": "D",
+            "text": "giving advice to visitors"
+          },
+          {
+            "letter": "E",
+            "text": "collecting feedback on events"
+          },
+          {
+            "letter": "F",
+            "text": "selling tickets"
+          },
+          {
+            "letter": "G",
+            "text": "introducing guest speakers at an event"
+          },
+          {
+            "letter": "H",
+            "text": "encouraging cooperation between local organisations"
+          },
+          {
+            "letter": "I",
+            "text": "helping people find their seats"
+          }
+        ]
+      },
+      "correctAnswers": {
+        "11": "",
+        "12": "",
+        "13": "",
+        "14": "",
+        "15": "",
+        "16": ""
+      }
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 17-20",
+      "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "questionBlock": [
+        {
+          "questionNumber": 17,
+          "question": "Which event requires the largest number of volunteers?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "the music festival"
+            },
+            {
+              "letter": "B",
+              "text": "the science festival"
+            },
+            {
+              "letter": "C",
+              "text": "the book festival"
+            }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 18,
+          "question": "What is the most important requirement for volunteers at the festivals?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "interpersonal skills"
+            },
+            {
+              "letter": "B",
+              "text": "personal interest in the event"
+            },
+            {
+              "letter": "C",
+              "text": "flexibility"
+            }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 19,
+          "question": "New volunteers will start working in the week beginning",
+          "options": [
+            {
+              "letter": "A",
+              "text": "2 September."
+            },
+            {
+              "letter": "B",
+              "text": "9 September."
+            },
+            {
+              "letter": "C",
+              "text": "23 September."
+            }
+          ],
+          "answer": ""
+        },
+        {
+          "questionNumber": 20,
+          "question": "What is the next annual event for volunteers?",
+          "options": [
+            {
+              "letter": "A",
+              "text": "a boat trip"
+            },
+            {
+              "letter": "B",
+              "text": "a barbecue"
+            },
+            {
+              "letter": "C",
+              "text": "a party"
+            }
+          ],
+          "answer": ""
+        }
+      ],
+      "correctAnswers": {
+        "17": "",
+        "18": "",
+        "19": "",
+        "20": ""
+      }
+    }
+  ]
+}

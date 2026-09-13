@@ -1,0 +1,115 @@
+{
+  "partNumber": 4,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 31-40",
+      "formattingInstruction": "Complete the notes below.\nWrite ONE WORD ONLY for each answer.",
+      "notesTitle": "Inclusive Design",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Definition"
+        },
+        {
+          "questionNumber": 31,
+          "question": "Designing products that can be accessed by a diverse range of people without the need for any **31** ________",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 32,
+          "question": "Not the same as universal design: that is design for everyone, including catering for people with **32** ________ problems.",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Examples of Inclusive Design"
+        },
+        {
+          "questionNumber": 33,
+          "question": "**33** ________ which are adjustable, avoiding back or neck problems",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 34,
+          "question": "**34** ________ in public toilets which are easier to use",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "To assist the elderly:",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 35,
+          "question": "Designers avoid using **35** ________ in interfaces",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 36,
+          "question": "People can make commands using a mouse, keyboard, or their **36** ________",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "sectionHeading": "Impact of Non-Inclusive Designs"
+        },
+        {
+          "descriptiveText": "Access:",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "Loss of independence for disabled people.",
+          "bulletLevel": 1
+        },
+        {
+          "descriptiveText": "Safety:",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 37,
+          "question": "Seatbelts are especially problematic for **37** ________ women.",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 38,
+          "question": "PPE jackets are often unsuitable because of the size of women's **38** ________",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 39,
+          "question": "PPE for female **39** ________ officers dealing with emergencies is the worst.",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "descriptiveText": "Comfort in the Workplace:",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 40,
+          "question": "The **40** ________ in offices is often too low for women.",
+          "answer": "",
+          "bulletLevel": 1
+        }
+      ],
+      "correctAnswers": {
+        "31": "",
+        "32": "",
+        "33": "",
+        "34": "",
+        "35": "",
+        "36": "",
+        "37": "",
+        "38": "",
+        "39": "",
+        "40": ""
+      }
+    }
+  ]
+}

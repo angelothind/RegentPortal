@@ -1,0 +1,123 @@
+{
+  "passageNumber": 3,
+  "templates": [
+    {
+      "questionType": "TFNG",
+      "subType": "YSNG",
+      "introInstruction": "Questions 27-32\nDo the following statements agree with the claims of the writer in Reading Passage 3?",
+      "formattingInstruction": "In boxes 27-32 select",
+      "answerKey": {
+        "YES": "if the statement agrees with the claims of the writer",
+        "NO": "if the statement contradicts the claims of the writer",
+        "NOT GIVEN": "if it is impossible to say what the writer thinks about this"
+      },
+      "questionBlock": [
+        {
+          "questionNumber": "27",
+          "question": "When DeJesus first used ABS, he shared decision-making about strikes with it."
+        },
+        {
+          "questionNumber": "28",
+          "question": "MLB considered it necessary to amend the size of the strike zone when criticisms were received from players."
+        },
+        {
+          "questionNumber": "29",
+          "question": "MLB is keen to justify the money spent on improving the accuracy of ABS's calculations."
+        },
+        {
+          "questionNumber": "30",
+          "question": "The hundred-mile-an-hour fastball led to a more exciting style of play."
+        },
+        {
+          "questionNumber": "31",
+          "question": "The differing proposals for alterations to the baseball bat led to fierce debate on Sword's team."
+        },
+        {
+          "questionNumber": "32",
+          "question": "ABS makes changes to the shape of the strike zone feasible."
+        }
+      ],
+      "correctAnswers": {
+        "27": "",
+        "28": "",
+        "29": "",
+        "30": "",
+        "31": "",
+        "32": ""
+      }
+    },
+    {
+      "questionType": "choose-from",
+      "introInstruction": "Questions 33-37\nComplete the summary using the list of phrases, A-H, below.",
+      "formattingInstruction": "Write the correct letter, A-H, in boxes 33-37.",
+      "summaryTitle": "Calls by the umpire",
+      "summaryText": "Even after ABS was developed, MLB still wanted human umpires to shout out decisions as they had in their **33** ________. The umpire's job had, at one time, required a **34** ________ about whether a ball was a strike. A ball is considered a strike when the batter does not hit it and it crosses through a **35** ________ extending approximately from the batter's knee to his chest. In the past, **36** ________ over strike calls were not uncommon, but today everyone accepts the complete ban on pushing or shoving the umpire. One difference, however, is that during the first game DeJesus used ABS, strike calls were met with **37** ________.",
+      "questionBlock": [
+        { "questionNumber": "33" },
+        { "questionNumber": "34" },
+        { "questionNumber": "35" },
+        { "questionNumber": "36" },
+        { "questionNumber": "37" }
+      ],
+      "options": [
+        { "letter": "A", "text": "pitch boundary" },
+        { "letter": "B", "text": "numerous disputes" },
+        { "letter": "C", "text": "team tactics" },
+        { "letter": "D", "text": "subjective assessment" },
+        { "letter": "E", "text": "widespread approval" },
+        { "letter": "F", "text": "former roles" },
+        { "letter": "G", "text": "total silence" },
+        { "letter": "H", "text": "perceived area" }
+      ],
+      "correctAnswers": {
+        "33": "",
+        "34": "",
+        "35": "",
+        "36": "",
+        "37": ""
+      }
+    },
+    {
+      "questionType": "multiple-choice",
+      "introInstruction": "Questions 38-40\nChoose the correct letter, A, B, C or D.",
+      "formattingInstruction": "Write the correct letter in boxes 38-40.",
+      "questionBlock": [
+        {
+          "questionNumber": "38",
+          "question": "What does the writer suggest about ABS in the fifth paragraph?",
+          "options": [
+            { "letter": "A", "text": "It is bound to make key decisions that are wrong." },
+            { "letter": "B", "text": "It may reduce some of the appeal of the game." },
+            { "letter": "C", "text": "It will lead to the disappearance of human umpires." },
+            { "letter": "D", "text": "It may increase calls for the rules of baseball to be changed." }
+          ]
+        },
+        {
+          "questionNumber": "39",
+          "question": "Morgan Sword says that the introduction of ABS",
+          "options": [
+            { "letter": "A", "text": "was regarded as an experiment without a guaranteed outcome." },
+            { "letter": "B", "text": "was intended to keep up with developments in other sports." },
+            { "letter": "C", "text": "was a response to changing attitudes about the role of sport." },
+            { "letter": "D", "text": "was an attempt to ensure baseball retained a young audience." }
+          ]
+        },
+        {
+          "questionNumber": "40",
+          "question": "Why does the writer include the views of Noe and Russo?",
+          "options": [
+            { "letter": "A", "text": "to show that attitudes to technology vary widely" },
+            { "letter": "B", "text": "to argue that people have unrealistic expectations of sport" },
+            { "letter": "C", "text": "to indicate that accuracy is not the same thing as enjoyment" },
+            { "letter": "D", "text": "to suggest that the number of baseball fans needs to increase" }
+          ]
+        }
+      ],
+      "correctAnswers": {
+        "38": "",
+        "39": "",
+        "40": ""
+      }
+    }
+  ]
+}

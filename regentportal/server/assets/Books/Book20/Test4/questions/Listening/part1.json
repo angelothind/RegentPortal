@@ -1,0 +1,116 @@
+{
+  "partNumber": 1,
+  "templates": [
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 1-10",
+      "formattingInstruction": "Complete the notes below.\nWrite ONE WORD AND/OR A NUMBER for each answer.",
+      "notesTitle": "Advice on family visit",
+      "useBullets": true,
+      "questionBlock": [
+        {
+          "sectionHeading": "Accommodation"
+        },
+        {
+          "questionNumber": 1,
+          "question": "**1** ________ Hotel on George Street",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 2,
+          "question": "cost of family room per night: £ **2** ________ (approx.)",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Recommended trips"
+        },
+        {
+          "questionNumber": 3,
+          "question": "a **3** ________ tour of the city centre (starts in Carlton Square)",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 4,
+          "question": "a trip by **4** ________ to the old fort",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Science Museum"
+        },
+        {
+          "questionNumber": 5,
+          "question": "best day to visit: **5** ________",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 6,
+          "question": "see the exhibition about **6** ________ which opens soon",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Food"
+        },
+        {
+          "descriptiveText": "Clacton Market:",
+          "bulletLevel": 0
+        },
+        {
+          "questionNumber": 7,
+          "question": "good for **7** ________ food",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 8,
+          "question": "need to have lunch before **8** ________ p.m.",
+          "answer": "",
+          "bulletLevel": 1
+        },
+        {
+          "sectionHeading": "Theatre tickets"
+        },
+        {
+          "questionNumber": 9,
+          "question": "save up to **9** ________ % on ticket prices at bargaintickets.com",
+          "answer": "",
+          "bulletLevel": 0
+        },
+        {
+          "sectionHeading": "Free activities"
+        },
+        {
+          "descriptiveText": "Blakewell Gardens:",
+          "bulletLevel": 0
+        },
+        {
+          "descriptiveText": "Roots Music Festival",
+          "bulletLevel": 1
+        },
+        {
+          "questionNumber": 10,
+          "question": "climb Telegraph Hill to see a view of the **10** ________",
+          "answer": "",
+          "bulletLevel": 1
+        }
+      ],
+      "correctAnswers": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "6": "",
+        "7": "",
+        "8": "",
+        "9": "",
+        "10": ""
+      }
+    }
+  ]
+}

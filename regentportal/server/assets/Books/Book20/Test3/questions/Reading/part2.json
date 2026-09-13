@@ -1,0 +1,101 @@
+{
+  "passageNumber": 2,
+  "templates": [
+    {
+      "questionType": "matching",
+      "introInstruction": "Questions 14-19\nReading Passage 2 has six sections, A-F.",
+      "formattingInstruction": "Choose the correct heading for each section from the list of headings below.\nWrite the correct number, i-vii, in boxes 14-19.",
+      "opinionsBox": {
+        "title": "List of Headings",
+        "options": [
+          { "letter": "i", "text": "Tried and tested solutions" },
+          { "letter": "ii", "text": "Cooperation beneath the waves" },
+          { "letter": "iii", "text": "Working to lessen the problems" },
+          { "letter": "iv", "text": "Disagreement about the accuracy of a certain phrase" },
+          { "letter": "v", "text": "Two clear educational goals" },
+          { "letter": "vi", "text": "Promoting hope" },
+          { "letter": "vii", "text": "A warning of further trouble ahead" }
+        ]
+      },
+      "questionBlock": [
+        { "questionNumber": "14", "question": "Section A" },
+        { "questionNumber": "15", "question": "Section B" },
+        { "questionNumber": "16", "question": "Section C" },
+        { "questionNumber": "17", "question": "Section D" },
+        { "questionNumber": "18", "question": "Section E" },
+        { "questionNumber": "19", "question": "Section F" }
+      ],
+      "correctAnswers": {
+        "14": "",
+        "15": "",
+        "16": "",
+        "17": "",
+        "18": "",
+        "19": ""
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 20 and 21\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 20 and 21.",
+      "mainQuestion": "Which TWO of these causes of damage to coral reefs are mentioned by the writer of the text?",
+      "questionGroup": {
+        "questionNumbers": ["20", "21"],
+        "options": [
+          { "letter": "A", "text": "a rising number of extreme storms" },
+          { "letter": "B", "text": "the removal of too many fish from the sea" },
+          { "letter": "C", "text": "the contamination of the sea from waste" },
+          { "letter": "D", "text": "increased disease among marine species" },
+          { "letter": "E", "text": "alterations in the usual flow of water in the seas" }
+        ],
+        "correctAnswers": [],
+        "maxSelections": 2
+      }
+    },
+    {
+      "questionType": "multiple-choice-two",
+      "introInstruction": "Questions 22 and 23\nChoose TWO letters, A-E.",
+      "formattingInstruction": "Write the correct letters in boxes 22 and 23.",
+      "mainQuestion": "Which TWO of the following statements are true of the researchers at London Zoo?",
+      "questionGroup": {
+        "questionNumbers": ["22", "23"],
+        "options": [
+          { "letter": "A", "text": "They are hoping to expand the numbers of different corals being bred in laboratories." },
+          { "letter": "B", "text": "They want to identify corals that can cope well with the changed sea conditions." },
+          { "letter": "C", "text": "They are looking at ways of creating artificial reefs that corals could grow on." },
+          { "letter": "D", "text": "They are trying out methods that would speed up reproduction in some corals." },
+          { "letter": "E", "text": "They are investigating materials that might protect reefs from higher temperatures." }
+        ],
+        "correctAnswers": [],
+        "maxSelections": 2
+      }
+    },
+    {
+      "questionType": "choose-x-word",
+      "introInstruction": "Questions 24-26\nComplete the sentences below.",
+      "formattingInstruction": "Choose ONE WORD ONLY from the passage for each answer.\nWrite your answers in boxes 24-26.",
+      "questionBlock": [
+        {
+          "questionNumber": "24",
+          "question": "Corals have a number of **24** ________ which they use to collect their food.",
+          "answer": ""
+        },
+        {
+          "questionNumber": "25",
+          "question": "Algae gain **25** ________ from being inside the coral.",
+          "answer": ""
+        },
+        {
+          "questionNumber": "26",
+          "question": "Increases in the warmth of the sea water can remove the **26** ________ from coral.",
+          "answer": ""
+        }
+      ],
+      "correctAnswers": {
+        "24": "",
+        "25": "",
+        "26": ""
+      }
+    }
+  ]
+}
