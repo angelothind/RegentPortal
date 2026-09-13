@@ -1,7 +1,9 @@
 .reading-test-container {
   display: flex;
-  height: 100vh;
-  width: 50%;
+  height: 100%;
+  width: 100%;
+  border: none;
+  border-radius: 0;
   overflow: hidden;
 }
 
@@ -10,7 +12,10 @@
   display: flex;
   flex-direction: column;
   background-color: #f9f9f9;
-  border-right: 2px solid #ddd;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
   overflow: hidden;
 }
 
@@ -18,6 +23,7 @@
   padding: 20px;
   background-color: #fff;
   border-bottom: 1px solid #ddd;
+  border-radius: 0;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -100,6 +106,10 @@
   line-height: 1.6;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+.highlightable-area.passage-content {
+  border-radius: 0;
 }
 
 .passage-content::-webkit-scrollbar {

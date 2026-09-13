@@ -108,12 +108,12 @@
   background-color: #218838;
 }
 
-.table-row {
+.student-table .table-row {
   position: relative;
   transition: background-color 0.2s ease;
 }
 
-.table-row:hover {
+.student-table .table-row:hover {
   background-color: #f8f9fa;
 }
 
@@ -131,9 +131,9 @@
 }
 
 /* Admin table hover effect - keep red strikethrough */
-.table-row:hover .name-text,
-.table-row:hover .username-text,
-.table-row:hover .nickname-text {
+.student-table .table-row:hover .name-text,
+.student-table .table-row:hover .username-text,
+.student-table .table-row:hover .nickname-text {
   text-decoration: line-through;
   color: #c0392b;
 }
@@ -156,7 +156,8 @@
   background-color: #fff3cd;
 }
 
-.table-row.favorited:hover {
+.student-table .table-row.favorited:hover,
+.teacher-student-table .table-row.favorited:hover {
   background-color: #ffeaa7;
 }
 
@@ -650,7 +651,7 @@
   transition: color 0.2s, text-decoration 0.2s;
 }
 
-.table-row:hover .nickname-text {
+.student-table .table-row:hover .nickname-text {
   text-decoration: line-through;
   color: #c0392b;
 }

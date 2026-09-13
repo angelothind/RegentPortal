@@ -20,7 +20,7 @@
   --sidebar-title-line-height: 1.2;
   --sidebar-title-margin-bottom: 2rem;
   --sidebar-control-size: 30px;
-  --sidebar-controls-top: 20px;
+  --sidebar-controls-top: 8px;
   --sidebar-controls-right: 20px;
   --sidebar-controls-gap: 24px;
 }
@@ -273,7 +273,7 @@
     --sidebar-title-font-size: 1.4rem;
     --sidebar-title-margin-bottom: 1.5rem;
     --sidebar-control-size: 26px;
-    --sidebar-controls-top: 15px;
+    --sidebar-controls-top: 6px;
     --sidebar-controls-right: 15px;
     --sidebar-controls-gap: 18px;
   }
@@ -330,7 +330,7 @@
     --sidebar-title-font-size: 1.2rem;
     --sidebar-title-margin-bottom: 1.2rem;
     --sidebar-control-size: 24px;
-    --sidebar-controls-top: 12px;
+    --sidebar-controls-top: 6px;
     --sidebar-controls-right: 12px;
     --sidebar-controls-gap: 18px;
   }
