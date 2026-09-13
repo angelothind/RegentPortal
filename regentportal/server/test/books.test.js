@@ -33,6 +33,21 @@ test('GET /api/books returns a raw array with populated test references', async 
   assert.equal(res.body[0].tests[0].testId.title, 'Test 1');
 });
 
+test('GET /api/books returns books sorted by number descending', async () => {
+  const test17 = await Test.create({ title: 'Test 1', belongsTo: 'Book17', sources: [] });
+  const test20 = await Test.create({ title: 'Test 1', belongsTo: 'Book20', sources: [] });
+  const test19 = await Test.create({ title: 'Test 1', belongsTo: 'Book19', sources: [] });
+
+  await Book.create({ name: 'Book17', tests: [{ testId: test17._id, testName: 'Test 1' }] });
+  await Book.create({ name: 'Book20', tests: [{ testId: test20._id, testName: 'Test 1' }] });
+  await Book.create({ name: 'Book19', tests: [{ testId: test19._id, testName: 'Test 1' }] });
+
+  const res = await request(app).get('/api/books');
+
+  assert.equal(res.status, 200);
+  assert.deepEqual(res.body.map((book) => book.name), ['Book20', 'Book19', 'Book17']);
+});
+
 test('GET /api/books returns an empty array when there are no books', async () => {
   const res = await request(app).get('/api/books');
 

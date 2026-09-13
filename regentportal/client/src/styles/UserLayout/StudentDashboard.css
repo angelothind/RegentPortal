@@ -661,6 +661,39 @@
   transform: translateY(1px);
 }
 
+.timer-expiry-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.continue-exam-button {
+  background-color: #E8973E;
+  color: #25245d;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 4px rgba(232, 151, 62, 0.3);
+}
+
+.continue-exam-button:hover {
+  background-color: #d4882f;
+}
+
+.timer-expiry-actions .submit-button {
+  background-color: #25245d;
+  box-shadow: 0 2px 4px rgba(37, 36, 93, 0.2);
+}
+
+.timer-expiry-actions .submit-button:hover {
+  background-color: #1a1a4a;
+  box-shadow: 0 4px 8px rgba(37, 36, 93, 0.3);
+}
+
 .reset-button {
   background-color: #6c757d;
   color: white;

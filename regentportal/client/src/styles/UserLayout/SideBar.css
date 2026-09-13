@@ -10,6 +10,7 @@
   top: 0;
   left: 0;
   overflow-y: auto;
+  overflow-x: hidden;
   font-family: 'Roboto', sans-serif;
   transition: width 0.3s ease;
   z-index: 1000;
@@ -20,7 +21,7 @@
   --sidebar-title-margin-bottom: 2rem;
   --sidebar-control-size: 30px;
   --sidebar-controls-top: 20px;
-  --sidebar-controls-right: 10px;
+  --sidebar-controls-right: 20px;
   --sidebar-controls-gap: 24px;
 }
 
@@ -146,6 +147,7 @@
 /* Top-level buttons (Book names) */
 .sidebar-nav > li > button {
   all: unset;
+  box-sizing: border-box;
   display: block;
   width: 100%;
   padding: 10px 14px;
@@ -177,6 +179,7 @@
 /* Buttons inside dropdowns */
 .dropdown button {
   all: unset;
+  box-sizing: border-box;
   display: block;
   width: 100%;
   padding: 8px 14px;
@@ -271,7 +274,7 @@
     --sidebar-title-margin-bottom: 1.5rem;
     --sidebar-control-size: 26px;
     --sidebar-controls-top: 15px;
-    --sidebar-controls-right: 8px;
+    --sidebar-controls-right: 15px;
     --sidebar-controls-gap: 18px;
   }
   
@@ -328,7 +331,7 @@
     --sidebar-title-margin-bottom: 1.2rem;
     --sidebar-control-size: 24px;
     --sidebar-controls-top: 12px;
-    --sidebar-controls-right: 6px;
+    --sidebar-controls-right: 12px;
     --sidebar-controls-gap: 18px;
   }
   

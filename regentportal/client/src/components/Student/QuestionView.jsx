@@ -14,13 +14,14 @@ import { useHighlight } from '../../contexts/HighlightContext';
 import HighlightableArea from './HighlightableArea';
 import API_BASE from '../../utils/api';
 import useTestSessionExpiry from '../../hooks/useTestSessionExpiry';
+import useExamTimer, { READING_TIMER_MS } from '../../hooks/useExamTimer';
 import {
   clearTestStorage,
   isSessionExpired,
   isSubmissionExpired,
 } from '../../utils/testSessionUtils';
 
-const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onTestReset, sharedPassage, onPassageChange, testData }) => {
+const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onTestReset, sharedPassage, onPassageChange, testData, onExamTimerChange }) => {
   console.log('🚀 QuestionView component mounted with selectedTest:', selectedTest);
   console.log('🔍 QuestionView received user:', user);
   console.log('🔍 QuestionView received externalTestResults:', externalTestResults);
@@ -34,6 +35,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
   const [testSubmitted, setTestSubmitted] = useState(externalTestSubmitted || false);
   const [testResults, setTestResults] = useState(externalTestResults || null);
   const [testStarted, setTestStarted] = useState(isTeacherMode); // Add testStarted state like ListeningQuestionView
+  const [timerStartedAt, setTimerStartedAt] = useState(null);
+  const [timerExpiredModalOpen, setTimerExpiredModalOpen] = useState(false);
   const [currentPassage, setCurrentPassage] = useState(sharedPassage || 1); // Track current passage
   const abortControllerRef = useRef(null); // Track abort controller for request cancellation
   const expectedPassageRef = useRef(null); // Track which passage we're currently fetching for
@@ -51,6 +54,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     setTestResults(null);
     setAnswers({});
     setTestStarted(false);
+    setTimerStartedAt(null);
+    setTimerExpiredModalOpen(false);
     clearHighlights();
   }, [clearHighlights]);
 
@@ -65,6 +70,179 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
   // Use external test results if provided (for teacher view) - same pattern as ListeningQuestionView
   const finalTestResults = externalTestResults || testResults;
   const finalTestSubmitted = externalTestSubmitted || testSubmitted;
+
+  const normalizeAnswers = useCallback((answersToNormalize) => {
+    const normalized = { ...answersToNormalize };
+    const keysToRemove = [];
+
+    Object.keys(answersToNormalize).forEach((key) => {
+      if (typeof key === 'string' && key.includes('_')) {
+        const [baseQuestionNum, suffix] = key.split('_');
+        const suffixNum = Number(suffix);
+
+        if (!isNaN(suffixNum)) {
+          if (baseQuestionNum.includes('-')) {
+            const [startNum] = baseQuestionNum.split('-').map(Number);
+            const targetQuestionNum = startNum + suffixNum;
+
+            if (!isNaN(targetQuestionNum)) {
+              normalized[targetQuestionNum] = answersToNormalize[key];
+              keysToRemove.push(key);
+            }
+          } else if (suffixNum === 0) {
+            normalized[baseQuestionNum] = answersToNormalize[key];
+            keysToRemove.push(key);
+          } else {
+            keysToRemove.push(key);
+          }
+        }
+      }
+    });
+
+    keysToRemove.forEach((key) => delete normalized[key]);
+    return normalized;
+  }, []);
+
+  const submitTest = useCallback(async () => {
+    if (isTeacherMode) {
+      console.log('👨‍🏫 Teacher mode: Test submission not allowed');
+      return;
+    }
+
+    if (!user || !user._id) {
+      console.error('❌ No valid user data available for submission');
+      alert('Error: User session not found. Please log in again.');
+      return;
+    }
+
+    if (selectedTest && selectedTest.testId) {
+      localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`);
+      console.log('📝 Cleared saved answers from localStorage after submission');
+    }
+
+    clearHighlights();
+
+    const normalizedAnswers = normalizeAnswers(answers);
+
+    try {
+      const response = await fetch(`${API_BASE}/api/submit/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          testId: selectedTest.testId._id,
+          testType: selectedTest.type,
+          answers: normalizedAnswers,
+          studentId: user._id,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        const correctAnswers = {};
+        Object.keys(result.data.results).forEach((questionNumber) => {
+          const resultItem = result.data.results[questionNumber];
+          if (Array.isArray(resultItem.correctAnswer)) {
+            correctAnswers[questionNumber] = resultItem.correctAnswer.join(', ');
+          } else {
+            correctAnswers[questionNumber] = resultItem.correctAnswer;
+          }
+        });
+
+        setTestResults({
+          score: result.data.score,
+          totalQuestions: result.data.totalQuestions,
+          correctCount: result.data.correctCount,
+          answers: answers,
+          correctAnswers: correctAnswers,
+          results: result.data.results,
+          submittedAt: result.data.submittedAt,
+        });
+        setTestSubmitted(true);
+        setTimerStartedAt(null);
+        setTimerExpiredModalOpen(false);
+
+        if (selectedTest && selectedTest.testId) {
+          const answersWithTimestamp = {
+            ...answers,
+            _timestamp: Date.now(),
+            _currentPassage: currentPassage,
+            _testSubmitted: true,
+            _testStarted: testStarted,
+            _testResults: {
+              score: result.data.score,
+              totalQuestions: result.data.totalQuestions,
+              correctCount: result.data.correctCount,
+              answers: answers,
+              correctAnswers: correctAnswers,
+              results: result.data.results,
+              submittedAt: result.data.submittedAt,
+            },
+          };
+          const submitStorageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
+          localStorage.setItem(submitStorageKey, JSON.stringify(answersWithTimestamp));
+        }
+
+        alert(`Test submitted successfully!\nYour score: ${result.data.score}%`);
+      } else {
+        throw new Error(result.message || 'Failed to submit test');
+      }
+    } catch (error) {
+      console.error('❌ Error submitting test:', error);
+      alert('Failed to submit test. Please try again.');
+    }
+  }, [
+    isTeacherMode,
+    user,
+    selectedTest,
+    answers,
+    clearHighlights,
+    normalizeAnswers,
+    currentPassage,
+    testStarted,
+  ]);
+
+  const handleTimerExpire = useCallback(() => {
+    setTimerExpiredModalOpen(true);
+  }, []);
+
+  const handleTimerContinue = useCallback(() => {
+    setTimerExpiredModalOpen(false);
+  }, []);
+
+  const handleTimerSubmit = useCallback(() => {
+    setTimerExpiredModalOpen(false);
+    submitTest();
+  }, [submitTest]);
+
+  const isReadingTest = selectedTest?.type === 'Reading';
+  const examTimerActive = isReadingTest && testStarted && !finalTestSubmitted && !isTeacherMode;
+
+  const { remainingMs, isExpired, isActive, reset: resetExamTimer } = useExamTimer({
+    enabled: isReadingTest && !isTeacherMode,
+    active: examTimerActive,
+    startedAt: timerStartedAt,
+    durationMs: READING_TIMER_MS,
+    onExpire: handleTimerExpire,
+  });
+
+  useEffect(() => {
+    if (!onExamTimerChange) {
+      return;
+    }
+
+    onExamTimerChange({
+      remainingMs,
+      isExpired,
+      visible: isActive,
+    });
+  }, [onExamTimerChange, remainingMs, isExpired, isActive]);
 
   // Debug currentPassage changes
   useEffect(() => {
@@ -264,6 +442,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     setTestSubmitted(false);
     setTestResults(null);
     setTestStarted(false);
+    setTimerStartedAt(null);
+    setTimerExpiredModalOpen(false);
     setCurrentPassage(1);
     activePassageRef.current = 1;
     if (onPassageChange) {
@@ -407,14 +587,28 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
           }
           
           // Remove the timestamp from the answers object before setting state
-          const { _timestamp, _currentPassage, _testSubmitted, _testResults, _testStarted, ...answersWithoutTimestamp } = parsedAnswers;
+          const {
+            _timestamp,
+            _currentPassage,
+            _testSubmitted,
+            _testResults,
+            _testStarted,
+            _timerStartedAt,
+            _timerDurationMs,
+            ...answersWithoutTimestamp
+          } = parsedAnswers;
           setAnswers(answersWithoutTimestamp);
           
           const hasAnswers = Object.keys(answersWithoutTimestamp).length > 0;
 
-          // Restore testStarted and passage only for in-progress tests with answers
-          if (_testStarted && hasAnswers) {
+          // Restore testStarted, timer, and passage for in-progress tests
+          if (_testStarted && (hasAnswers || _timerStartedAt)) {
             setTestStarted(true);
+            if (_timerStartedAt) {
+              setTimerStartedAt(_timerStartedAt);
+            } else if (_timestamp) {
+              setTimerStartedAt(_timestamp);
+            }
             console.log('📝 Restored testStarted from localStorage (in-progress test)');
             if (_currentPassage && typeof _currentPassage === 'number') {
               setCurrentPassage(_currentPassage);
@@ -426,6 +620,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
             }
           } else {
             setTestStarted(false);
+            setTimerStartedAt(null);
             setCurrentPassage(1);
             activePassageRef.current = 1;
             if (onPassageChange) {
@@ -460,7 +655,16 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       if (savedAnswers) {
         try {
           const parsedAnswers = JSON.parse(savedAnswers);
-          const { _timestamp, _currentPassage, _testSubmitted, _testResults, _testStarted, ...answersWithoutTimestamp } = parsedAnswers;
+          const {
+            _timestamp,
+            _currentPassage,
+            _testSubmitted,
+            _testResults,
+            _testStarted,
+            _timerStartedAt,
+            _timerDurationMs,
+            ...answersWithoutTimestamp
+          } = parsedAnswers;
           setAnswers(answersWithoutTimestamp);
           console.log('📝 Reloaded answers from localStorage after passage change:', answersWithoutTimestamp);
         } catch (error) {
@@ -531,7 +735,9 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         _currentPassage: currentPassage,
         _testSubmitted: testSubmitted,
         _testStarted: testStarted,
-        _testResults: testResults
+        _testResults: testResults,
+        _timerStartedAt: timerStartedAt,
+        _timerDurationMs: timerStartedAt ? READING_TIMER_MS : undefined,
       };
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
       localStorage.setItem(storageKey, JSON.stringify(answersWithTimestamp));
@@ -545,171 +751,51 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
 
 
   const handleSubmit = async () => {
-    // In teacher mode, don't allow test submission
     if (isTeacherMode) {
       console.log('👨‍🏫 Teacher mode: Test submission not allowed');
       return;
     }
 
-    // Validate user data before submission
-    if (!user || !user._id) {
-      console.error('❌ No valid user data available for submission');
-      alert('Error: User session not found. Please log in again.');
-      return;
-    }
-
     const confirmed = window.confirm('Are you sure you want to submit the test? You cannot change your answers after submission.');
     if (!confirmed) return;
-    
-    // Clear saved answers from localStorage after submission
-    if (selectedTest && selectedTest.testId) {
-      localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`);
-      console.log('📝 Cleared saved answers from localStorage after submission');
-    }
 
-    clearHighlights();
-    
-    console.log('📝 Submitting test with answers:', answers);
-    console.log('📝 User data:', user);
-    console.log('📝 Selected test before submission:', selectedTest);
-    
-    // Normalize answer keys: convert "4_0", "4_1" style keys back to base question numbers
-    // This handles multiple inputs in a single cell
-    const normalizeAnswers = (answers) => {
-      const normalized = { ...answers };
-      const keysToRemove = [];
-      
-      // Find all keys with suffixes (e.g., "4_0", "4_1", "3-4_0", "3-4_1")
-      Object.keys(answers).forEach(key => {
-        if (typeof key === 'string' && key.includes('_')) {
-          const [baseQuestionNum, suffix] = key.split('_');
-          const suffixNum = Number(suffix);
-          
-          // Check if this is a valid suffix pattern (numeric suffix)
-          if (!isNaN(suffixNum)) {
-            // Check if base question number is a range (e.g., "3-4")
-            if (baseQuestionNum.includes('-')) {
-              // Range question: map each input to its corresponding question number
-              const [startNum, endNum] = baseQuestionNum.split('-').map(Number);
-              const targetQuestionNum = startNum + suffixNum;
-              
-              if (!isNaN(targetQuestionNum)) {
-                normalized[targetQuestionNum] = answers[key];
-                keysToRemove.push(key);
-              }
-            } else {
-              // Non-range question: use the first input's answer (suffix "_0")
-              // For cells with multiple inputs, typically only the first input is the actual answer
-              if (suffixNum === 0) {
-                // This is the first input - use it as the answer for the base question
-                normalized[baseQuestionNum] = answers[key];
-                keysToRemove.push(key);
-              } else {
-                // For subsequent inputs, remove them (they're typically just for display/formatting)
-                keysToRemove.push(key);
-              }
-            }
-          }
-        }
-      });
-      
-      // Remove the suffix keys
-      keysToRemove.forEach(key => delete normalized[key]);
-      
-      console.log('📝 Normalized answers (removed suffix keys):', normalized);
-      return normalized;
-    };
-    
-    const normalizedAnswers = normalizeAnswers(answers);
-    
-    try {
-      const response = await fetch(`${API_BASE}/api/submit/submit`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          testId: selectedTest.testId._id,
-          testType: selectedTest.type,
-          answers: normalizedAnswers,
-          studentId: user._id
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      
-      if (result.success) {
-        console.log('✅ Test submitted successfully:', result.data);
-        console.log('📝 Server results structure:', result.data.results);
-        console.log('📝 Selected test after submission:', selectedTest);
-        
-        // Set the test results from the backend response
-        // Extract correct answers from the results
-        const correctAnswers = {};
-        Object.keys(result.data.results).forEach(questionNumber => {
-          const resultItem = result.data.results[questionNumber];
-          // Handle arrays (for multiple choice questions)
-          if (Array.isArray(resultItem.correctAnswer)) {
-            correctAnswers[questionNumber] = resultItem.correctAnswer.join(', ');
-          } else {
-            correctAnswers[questionNumber] = resultItem.correctAnswer;
-          }
-        });
-        
-        console.log('📝 Processed correct answers:', correctAnswers);
-        
-        setTestResults({
-          score: result.data.score,
-          totalQuestions: result.data.totalQuestions,
-          correctCount: result.data.correctCount,
-          answers: answers,
-          correctAnswers: correctAnswers,
-          results: result.data.results,
-          submittedAt: result.data.submittedAt
-        });
-        setTestSubmitted(true);
-        
-        // Save the submitted answers and current passage state to localStorage
-        if (selectedTest && selectedTest.testId) {
-          const answersWithTimestamp = {
-            ...answers,
-            _timestamp: Date.now(),
-            _currentPassage: currentPassage,
-            _testSubmitted: true,
-            _testStarted: testStarted,
-            _testResults: {
-              score: result.data.score,
-              totalQuestions: result.data.totalQuestions,
-              correctCount: result.data.correctCount,
-              answers: answers,
-              correctAnswers: correctAnswers,
-              results: result.data.results,
-              submittedAt: result.data.submittedAt
-            }
-          };
-          const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
-          localStorage.setItem(storageKey, JSON.stringify(answersWithTimestamp));
-          console.log('📝 Saved submitted answers, passage state, test results, and testStarted to localStorage:', answersWithTimestamp);
-        }
-        
-        alert(`Test submitted successfully!\nYour score: ${result.data.score}%`);
-      } else {
-        throw new Error(result.message || 'Failed to submit test');
-      }
-    } catch (error) {
-      console.error('❌ Error submitting test:', error);
-      alert('Failed to submit test. Please try again.');
-    }
+    await submitTest();
   };
 
   const handleStartTest = () => {
+    const now = Date.now();
     console.log('🚀 Starting test...');
     setTestStarted(true);
+    setTimerStartedAt(now);
     console.log('✅ Test started');
+
+    if (selectedTest && selectedTest.testId && !isTeacherMode) {
+      const startStorageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
+      const existingData = localStorage.getItem(startStorageKey);
+      let savedData = {};
+
+      if (existingData) {
+        try {
+          savedData = JSON.parse(existingData);
+        } catch (error) {
+          console.error('❌ Error parsing existing saved data:', error);
+        }
+      }
+
+      localStorage.setItem(
+        startStorageKey,
+        JSON.stringify({
+          ...savedData,
+          _timestamp: now,
+          _currentPassage: currentPassage,
+          _testSubmitted: testSubmitted,
+          _testStarted: true,
+          _testResults: testResults,
+          _timerStartedAt: now,
+          _timerDurationMs: READING_TIMER_MS,
+        })
+      );
+    }
   };
 
   const handleResetTest = () => {
@@ -728,7 +814,10 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     // Clear all state
     setTestSubmitted(false);
     setTestResults(null);
-    setTestStarted(false); // Reset testStarted to show start overlay again
+    setTestStarted(false);
+    setTimerStartedAt(null);
+    setTimerExpiredModalOpen(false);
+    resetExamTimer();
     setAnswers({});
     
     // Reset passage back to 1
@@ -1042,6 +1131,23 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
             <button className="start-test-button" onClick={handleStartTest}>
               Start Test Now
             </button>
+          </div>
+        </div>
+      )}
+
+      {timerExpiredModalOpen && (
+        <div className="test-overlay">
+          <div className="overlay-content">
+            <h2>Time's Up</h2>
+            <p>The reading test timer has ended. Would you like to continue the exam or submit your answers now?</p>
+            <div className="timer-expiry-actions">
+              <button type="button" className="continue-exam-button" onClick={handleTimerContinue}>
+                Continue
+              </button>
+              <button type="button" className="submit-button" onClick={handleTimerSubmit}>
+                Submit
+              </button>
+            </div>
           </div>
         </div>
       )}

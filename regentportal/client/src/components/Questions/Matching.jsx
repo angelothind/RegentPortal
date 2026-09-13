@@ -2,11 +2,26 @@ import React, { useState } from 'react';
 import '../../styles/Questions/Matching.css';
 import { processTextFormatting } from '../../utils/textFormatting';
 
+const getOptionLetters = (template) =>
+  (template?.opinionsBox?.options || []).map((option) => String(option.letter || ''));
+
+const usesMultiCharKeys = (template) =>
+  getOptionLetters(template).some((letter) => letter.length > 1);
+
 const Matching = ({ template, onAnswerChange, testResults, testSubmitted, componentId = 'matching', currentAnswers = {} }) => {
   console.log('🎯 Matching rendered with template:', template);
 
+  const multiCharKeys = usesMultiCharKeys(template);
+  const maxLength = multiCharKeys
+    ? Math.max(...getOptionLetters(template).map((letter) => letter.length), 4)
+    : 1;
+
+  const normalizeTypedAnswer = (value) => (
+    multiCharKeys ? value.toLowerCase() : value.toUpperCase()
+  );
+
   const handleAnswerChange = (questionNumber, value) => {
-    const newAnswers = { ...currentAnswers, [questionNumber]: value };
+    const newAnswers = { ...currentAnswers, [questionNumber]: normalizeTypedAnswer(value) };
     if (onAnswerChange) {
       onAnswerChange(newAnswers);
     }
@@ -90,8 +105,8 @@ const Matching = ({ template, onAnswerChange, testResults, testSubmitted, compon
                   className={`matching-answer-input ${getAnswerClass(question.questionNumber)}`}
                   placeholder=""
                   value={getAnswerValue(question.questionNumber)}
-                  onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value.toUpperCase())}
-                  maxLength="1"
+                  onChange={(e) => handleAnswerChange(question.questionNumber, e.target.value)}
+                  maxLength={maxLength}
                   disabled={testSubmitted}
                   autoComplete="off"
                   data-form-type="other"
