@@ -118,11 +118,12 @@
 }
 
 .question-cell {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
+  display: block;
   line-height: 1.6;
+}
+
+.question-cell > span {
+  vertical-align: middle;
 }
 
 .text-cell {
@@ -146,11 +147,14 @@
 }
 
 .table-answer-input {
+  display: inline-block;
   border: 2px solid #ddd;
   border-radius: 4px;
-  padding: 8px 12px;
-  font-size: 0.9rem;
-  min-width: 120px;
+  padding: 7.6px 11.4px;
+  font-size: 0.855rem;
+  min-width: 114px;
+  margin: 0 4px;
+  vertical-align: middle;
   background-color: white;
   color: #333;
   transition: border-color 0.2s ease;
@@ -256,10 +260,7 @@
 }
 
 .listening-table .question-cell {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
+  display: block;
   line-height: 1.6;
 }
 
@@ -284,11 +285,14 @@
 }
 
 .listening-table-answer-input {
+  display: inline-block;
   border: 2px solid #ddd;
   border-radius: 4px;
-  padding: 8px 12px;
-  font-size: 0.9rem;
-  min-width: 120px;
+  padding: 7.6px 11.4px;
+  font-size: 0.855rem;
+  min-width: 114px;
+  margin: 0 4px;
+  vertical-align: middle;
   background-color: white;
   color: #333;
   transition: border-color 0.2s ease;
@@ -341,14 +345,8 @@
     min-width: 100px;
   }
   
-  .question-cell {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  
   .table-answer-input,
   .listening-table-answer-input {
-    min-width: 100%;
+    min-width: 114px;
   }
 } 
