@@ -73,7 +73,7 @@
         { "letter": "D", "text": "were feeling under stress" },
         { "letter": "E", "text": "put them in a stressful situation" },
         { "letter": "F", "text": "behaved in a similar manner, regardless of the circumstances." },
-        { "letter": "G", "text": "thought it more likely they would experience something bad." }
+        { "letter": "G", "text": "thought it more likely that they would experience something bad." }
       ],
       "correctAnswers": {
         "31": "",
