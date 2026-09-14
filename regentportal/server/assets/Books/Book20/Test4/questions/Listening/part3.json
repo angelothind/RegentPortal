@@ -41,6 +41,7 @@
       "questionType": "multiple-choice",
       "introInstruction": "Questions 25-30",
       "formattingInstruction": "Choose the correct letter, A, B or C.",
+      "sectionTitle": "Teaching handwriting",
       "questionBlock": [
         {
           "questionNumber": 25,
