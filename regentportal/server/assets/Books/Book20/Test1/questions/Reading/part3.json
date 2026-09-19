@@ -55,25 +55,27 @@
       }
     },
     {
-      "questionType": "choose-from",
-      "introInstruction": "Questions 31-35\nComplete each sentence with the correct ending, A-G, below.",
-      "formattingInstruction": "Write the correct letter, A-G, in boxes 31-35.",
-      "summaryText": "At times when they were relaxed, the firefighters usually **31** ________\nThe researchers noted that when the firefighters were stressed, they **32** ________\nWhen the firefighters were told good news, they always **33** ________\nThe students' cortisol levels and heart rates were affected when the researchers **34** ________\nIn both experiments, negative information was processed better when the subjects **35** ________",
+      "questionType": "matching",
+      "introInstruction": "Questions 31-35\nLook at the following statements and the list of endings below.",
+      "formattingInstruction": "Match each statement with the correct ending, A-G.\nWrite the correct letter, A-G, in boxes 31-35.",
+      "opinionsBox": {
+        "title": "List of Endings",
+        "options": [
+          { "letter": "A", "text": "made them feel optimistic." },
+          { "letter": "B", "text": "took relatively little notice of bad news." },
+          { "letter": "C", "text": "responded to negative and positive information in the same way." },
+          { "letter": "D", "text": "were feeling under stress" },
+          { "letter": "E", "text": "put them in a stressful situation" },
+          { "letter": "F", "text": "behaved in a similar manner, regardless of the circumstances." },
+          { "letter": "G", "text": "thought it more likely that they would experience something bad." }
+        ]
+      },
       "questionBlock": [
-        { "questionNumber": "31" },
-        { "questionNumber": "32" },
-        { "questionNumber": "33" },
-        { "questionNumber": "34" },
-        { "questionNumber": "35" }
-      ],
-      "options": [
-        { "letter": "A", "text": "made them feel optimistic." },
-        { "letter": "B", "text": "took relatively little notice of bad news." },
-        { "letter": "C", "text": "responded to negative and positive information in the same way." },
-        { "letter": "D", "text": "were feeling under stress" },
-        { "letter": "E", "text": "put them in a stressful situation" },
-        { "letter": "F", "text": "behaved in a similar manner, regardless of the circumstances." },
-        { "letter": "G", "text": "thought it more likely that they would experience something bad." }
+        { "questionNumber": "31", "question": "At times when they were relaxed, the firefighters usually" },
+        { "questionNumber": "32", "question": "The researchers noted that when the firefighters were stressed, they" },
+        { "questionNumber": "33", "question": "When the firefighters were told good news, they always" },
+        { "questionNumber": "34", "question": "The students' cortisol levels and heart rates were affected when the researchers" },
+        { "questionNumber": "35", "question": "In both experiments, negative information was processed better when the subjects" }
       ],
       "correctAnswers": {
         "31": "",

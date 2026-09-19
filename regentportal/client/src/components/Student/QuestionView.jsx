@@ -1073,22 +1073,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         className="question-content"
       >
         {renderQuestionComponent()}
-      </HighlightableArea>
-      
-      {/* Test Controls - Submit only on last passage, reset only after submission (not shown in teacher mode) */}
-      {!isTeacherMode && currentPassage === 3 && !finalTestSubmitted && (
-        <div className="test-controls">
-          <div className="submit-section">
-            <button className="submit-button" onClick={handleSubmit}>
-              Submit Test
-            </button>
-          </div>
-        </div>
-      )}
-      
-      {/* Results section - show after submission on last passage for both students and teachers */}
-      {finalTestSubmitted && currentPassage === 3 && finalTestResults && (
-        <div className="test-controls">
+        {finalTestSubmitted && currentPassage === 3 && finalTestResults && (
           <div className="results-section">
             <h3>Test Results</h3>
             <div className="score-details compact">
@@ -1118,6 +1103,17 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
               Take Test Again
             </button>
             )}
+          </div>
+        )}
+      </HighlightableArea>
+      
+      {/* Submit only on last passage (not shown in teacher mode) */}
+      {!isTeacherMode && currentPassage === 3 && !finalTestSubmitted && (
+        <div className="test-controls">
+          <div className="submit-section">
+            <button className="submit-button" onClick={handleSubmit}>
+              Submit Test
+            </button>
           </div>
         </div>
       )}

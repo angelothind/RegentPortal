@@ -57,6 +57,16 @@
   width: 100% !important;
 }
 
+.reading-test-layout {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.reading-test-layout .test-viewer-container {
+  height: 100%;
+}
+
 .reading-test-with-timer {
   height: 100%;
   overflow: hidden;
