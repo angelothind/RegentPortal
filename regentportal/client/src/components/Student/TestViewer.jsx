@@ -177,6 +177,11 @@ const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscre
     fetchTestData();
   }, [selectedTest]);
 
+  const handleResize = (newPassageWidth, newQuestionWidth) => {
+    setPassageWidth(newPassageWidth);
+    setQuestionWidth(newQuestionWidth);
+  };
+
   if (!selectedTest) {
     console.log('❌ TestViewer: No selectedTest');
     return <div className="main-content">Please select a test</div>;
@@ -194,11 +199,6 @@ const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscre
   console.log('🎯 TestViewer render - selectedTest.type:', selectedTest?.type);
   console.log('🎯 TestViewer render - testData:', testData);
   console.log('🎯 TestViewer render - testData.sources:', testData?.sources);
-  
-  const handleResize = (newPassageWidth, newQuestionWidth) => {
-    setPassageWidth(newPassageWidth);
-    setQuestionWidth(newQuestionWidth);
-  };
 
   return (
     <>
@@ -209,7 +209,7 @@ const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscre
           userId={user?._id}
           persist={Boolean(user?._id)}
         >
-          <div className={examTimerState.visible ? 'reading-test-with-timer' : undefined}>
+          <div className={`reading-test-layout${examTimerState.visible ? ' reading-test-with-timer' : ''}`}>
             <ExamTimerBar
               remainingMs={examTimerState.remainingMs}
               isExpired={examTimerState.isExpired}
