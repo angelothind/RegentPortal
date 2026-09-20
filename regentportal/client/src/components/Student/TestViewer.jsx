@@ -7,6 +7,7 @@ import ExamTimerBar from './ExamTimerBar';
 import { HighlightProvider } from '../../contexts/HighlightContext';
 import API_BASE from '../../utils/api';
 import { isSessionExpired } from '../../utils/testSessionUtils';
+import { loadTestSession, saveTestSession } from '../../utils/testSessionStorage';
 import { READING_TIMER_MS } from '../../hooks/useExamTimer';
 
 const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscreen }) => {
@@ -39,20 +40,15 @@ const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscre
     
     if (selectedTest && selectedTest.testId) {
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
-      const savedData = localStorage.getItem(storageKey);
-      if (savedData) {
-        try {
-          const parsedData = JSON.parse(savedData);
-          if (isSessionExpired(parsedData._timestamp)) {
-            localStorage.removeItem(storageKey);
-            return;
-          }
-          if (parsedData._testStarted) {
-            setTestStarted(true);
-            console.log('📝 Restored testStarted state from localStorage');
-          }
-        } catch (error) {
-          console.error('❌ Error parsing saved test state:', error);
+      const parsedData = loadTestSession(storageKey);
+      if (parsedData) {
+        if (isSessionExpired(parsedData._timestamp)) {
+          localStorage.removeItem(storageKey);
+          return;
+        }
+        if (parsedData._testStarted) {
+          setTestStarted(true);
+          console.log('📝 Restored testStarted state from localStorage');
         }
       }
     }
@@ -65,24 +61,10 @@ const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscre
     // Save test state to localStorage
     if (selectedTest && selectedTest.testId) {
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
-      const existingData = localStorage.getItem(storageKey);
-      let savedData = {};
-      
-      if (existingData) {
-        try {
-          savedData = JSON.parse(existingData);
-        } catch (error) {
-          console.error('❌ Error parsing existing saved data:', error);
-        }
-      }
-      
-      const updatedData = {
-        ...savedData,
+      saveTestSession(storageKey, {
         _testStarted: true,
-        _timestamp: Date.now()
-      };
-      
-      localStorage.setItem(storageKey, JSON.stringify(updatedData));
+        _timestamp: Date.now(),
+      });
       console.log('📝 Saved testStarted state to localStorage');
     }
   };

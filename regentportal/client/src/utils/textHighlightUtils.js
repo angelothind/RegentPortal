@@ -416,6 +416,17 @@ const normalizeHighlightRanges = (ranges) => {
   );
 };
 
+export const countResolvedDomRanges = (container, ranges) => {
+  if (!container || !Array.isArray(ranges)) return 0;
+
+  const normalizedRanges = normalizeHighlightRanges(ranges);
+  return normalizedRanges.reduce(
+    (count, { start, end }) =>
+      count + characterOffsetsToRanges(container, start, end).length,
+    0
+  );
+};
+
 export const applyCssHighlights = (container, regionId, ranges) => {
   if (!isCssHighlightSupported() || !container) return false;
 

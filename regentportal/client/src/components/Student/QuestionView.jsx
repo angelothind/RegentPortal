@@ -20,6 +20,11 @@ import {
   isSessionExpired,
   isSubmissionExpired,
 } from '../../utils/testSessionUtils';
+import {
+  loadTestSession,
+  removeTestSession,
+  saveTestSession,
+} from '../../utils/testSessionStorage';
 
 const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onTestReset, sharedPassage, onPassageChange, testData, onExamTimerChange }) => {
   console.log('🚀 QuestionView component mounted with selectedTest:', selectedTest);
@@ -116,7 +121,9 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     }
 
     if (selectedTest && selectedTest.testId) {
-      localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`);
+      removeTestSession(
+        `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`
+      );
       console.log('📝 Cleared saved answers from localStorage after submission');
     }
 
@@ -186,7 +193,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
             },
           };
           const submitStorageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
-          localStorage.setItem(submitStorageKey, JSON.stringify(answersWithTimestamp));
+          saveTestSession(submitStorageKey, answersWithTimestamp);
         }
 
         alert(`Test submitted successfully!\nYour score: ${result.data.score}%`);
@@ -559,10 +566,9 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       // Fallback to localStorage for in-progress tests
       console.log('🔍 Looking for in-progress answers in localStorage with key:', testStorageKey);
       
-      const savedAnswers = localStorage.getItem(testStorageKey);
-      if (savedAnswers) {
+      const parsedAnswers = loadTestSession(testStorageKey);
+      if (parsedAnswers) {
         try {
-          const parsedAnswers = JSON.parse(savedAnswers);
           console.log('📝 Found saved answers in localStorage:', parsedAnswers);
           
           if (isSessionExpired(parsedAnswers._timestamp)) {
@@ -651,25 +657,20 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     if (selectedTest && selectedTest.testId && Object.keys(answers).length > 0) {
       console.log('🔄 Passage changed to:', sharedPassage, '- reloading answers from localStorage');
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
-      const savedAnswers = localStorage.getItem(storageKey);
-      if (savedAnswers) {
-        try {
-          const parsedAnswers = JSON.parse(savedAnswers);
-          const {
-            _timestamp,
-            _currentPassage,
-            _testSubmitted,
-            _testResults,
-            _testStarted,
-            _timerStartedAt,
-            _timerDurationMs,
-            ...answersWithoutTimestamp
-          } = parsedAnswers;
-          setAnswers(answersWithoutTimestamp);
-          console.log('📝 Reloaded answers from localStorage after passage change:', answersWithoutTimestamp);
-        } catch (error) {
-          console.error('❌ Error parsing saved answers after passage change:', error);
-        }
+      const parsedAnswers = loadTestSession(storageKey);
+      if (parsedAnswers) {
+        const {
+          _timestamp,
+          _currentPassage,
+          _testSubmitted,
+          _testResults,
+          _testStarted,
+          _timerStartedAt,
+          _timerDurationMs,
+          ...answersWithoutTimestamp
+        } = parsedAnswers;
+        setAnswers(answersWithoutTimestamp);
+        console.log('📝 Reloaded answers from localStorage after passage change:', answersWithoutTimestamp);
       }
     }
   }, [sharedPassage, selectedTest, isTeacherMode, answers]);
@@ -740,7 +741,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         _timerDurationMs: timerStartedAt ? READING_TIMER_MS : undefined,
       };
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
-      localStorage.setItem(storageKey, JSON.stringify(answersWithTimestamp));
+      saveTestSession(storageKey, answersWithTimestamp);
       console.log('📝 Answers and test state saved to localStorage with key:', storageKey);
       console.log('📝 Saved data:', answersWithTimestamp);
     }
@@ -771,30 +772,15 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
 
     if (selectedTest && selectedTest.testId && !isTeacherMode) {
       const startStorageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
-      const existingData = localStorage.getItem(startStorageKey);
-      let savedData = {};
-
-      if (existingData) {
-        try {
-          savedData = JSON.parse(existingData);
-        } catch (error) {
-          console.error('❌ Error parsing existing saved data:', error);
-        }
-      }
-
-      localStorage.setItem(
-        startStorageKey,
-        JSON.stringify({
-          ...savedData,
-          _timestamp: now,
-          _currentPassage: currentPassage,
-          _testSubmitted: testSubmitted,
-          _testStarted: true,
-          _testResults: testResults,
-          _timerStartedAt: now,
-          _timerDurationMs: READING_TIMER_MS,
-        })
-      );
+      saveTestSession(startStorageKey, {
+        _timestamp: now,
+        _currentPassage: currentPassage,
+        _testSubmitted: testSubmitted,
+        _testStarted: true,
+        _testResults: testResults,
+        _timerStartedAt: now,
+        _timerDurationMs: READING_TIMER_MS,
+      });
     }
   };
 
@@ -829,12 +815,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     // Clear localStorage for this test
     if (selectedTest && selectedTest.testId) {
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
-      localStorage.removeItem(storageKey);
+      removeTestSession(storageKey);
       console.log('🧹 Cleared localStorage for test reset:', storageKey);
-      
-      // Double-check localStorage is cleared
-      const checkStorage = localStorage.getItem(storageKey);
-      console.log('🧹 localStorage check after clear:', checkStorage ? 'STILL EXISTS' : 'CLEARED');
     }
 
     clearHighlights();
@@ -860,23 +842,32 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     return <div className="question-area-placeholder">Please select a test to view questions</div>;
   }
 
-  if (loading) {
-    console.log('⏳ Loading questions...');
-    return <div className="question-loading">Loading questions...</div>;
-  }
-
-  if (error) {
-    console.log('❌ Error loading questions:', error);
-    return <div className="question-error">Error: {error}</div>;
-  }
-
-  if (!questionData || !questionData.questionData) {
-    console.log('❌ No question data available');
-    return <div className="question-error">No question data available</div>;
-  }
+  const activePassage = sharedPassage || currentPassage;
+  const contentVersion = loading
+    ? `${activePassage}-loading`
+    : error
+      ? `${activePassage}-error`
+      : !questionData?.questionData
+        ? `${activePassage}-empty`
+        : `${activePassage}-ready`;
 
   // Render the appropriate question component based on the template type
   const renderQuestionComponent = () => {
+    if (loading) {
+      console.log('⏳ Loading questions...');
+      return <div className="question-loading">Loading questions...</div>;
+    }
+
+    if (error) {
+      console.log('❌ Error loading questions:', error);
+      return <div className="question-error">Error: {error}</div>;
+    }
+
+    if (!questionData || !questionData.questionData) {
+      console.log('❌ No question data available');
+      return <div className="question-error">No question data available</div>;
+    }
+
     const { templates } = questionData.questionData;
     
     console.log('🎯 Rendering templates:', templates);
@@ -1069,8 +1060,9 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       </div>
       
       <HighlightableArea
-        regionId={`reading-questions-${sharedPassage || currentPassage}`}
+        regionId={`reading-questions-${activePassage}`}
         className="question-content"
+        contentVersion={contentVersion}
       >
         {renderQuestionComponent()}
         {finalTestSubmitted && currentPassage === 3 && finalTestResults && (
