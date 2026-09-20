@@ -8,6 +8,7 @@ import {
   clearHoverHighlight,
   clearPreviewHighlight,
   clickToCharacterOffset,
+  countResolvedDomRanges,
   findCommentedRangeAtOffset,
   getRangeClientRect,
   isCssHighlightSupported,
@@ -27,6 +28,7 @@ const COMMENT_MARKER_SIZE = 30;
 const COMMENT_MARKER_OFFSET = 11;
 const COMMENT_MARKER_RIGHT_GAP = 6;
 const EMPTY_HIGHLIGHTS = [];
+const MAX_HIGHLIGHT_REAPPLY_RETRIES = 3;
 
 const markersEqual = (left, right) => {
   if (left.length !== right.length) return false;
@@ -60,9 +62,10 @@ const getFloatingPosition = (rect, width, height) => {
   return { top, left };
 };
 
-const HighlightableArea = ({ regionId, children, className = '' }) => {
+const HighlightableArea = ({ regionId, children, className = '', contentVersion = null }) => {
   const containerRef = useRef(null);
   const popoverRef = useRef(null);
+  const highlightRetryRef = useRef(null);
   const {
     addHighlight,
     addCommentHighlight,
@@ -112,6 +115,58 @@ const HighlightableArea = ({ regionId, children, className = '' }) => {
     return getFloatingPosition(rect, width, height);
   }, []);
 
+  const applyRegionCssHighlights = useCallback(() => {
+    const container = containerRef.current;
+    if (!container || !isCssHighlightSupported()) return false;
+
+    try {
+      applyCssHighlights(container, regionId, regionHighlights);
+    } catch (error) {
+      console.error('Failed to apply CSS highlights:', error);
+      return false;
+    }
+
+    const hoveredId = hoveredCommentIdRef.current;
+    if (hoveredId) {
+      const hoveredRange = regionHighlights.find((range) => range.id === hoveredId);
+      if (hoveredRange) {
+        applyHoverHighlight(container, regionId, hoveredRange.start, hoveredRange.end);
+      } else {
+        hoveredCommentIdRef.current = null;
+        setIsHoveringCommentedRange(false);
+      }
+    }
+
+    return countResolvedDomRanges(container, regionHighlights) > 0;
+  }, [regionId, regionHighlights]);
+
+  const scheduleHighlightReapply = useCallback(
+    (attempt = 0) => {
+      if (highlightRetryRef.current) {
+        cancelAnimationFrame(highlightRetryRef.current);
+      }
+
+      highlightRetryRef.current = requestAnimationFrame(() => {
+        highlightRetryRef.current = null;
+
+        if (!regionHighlights.length) return;
+
+        const applied = applyRegionCssHighlights();
+        if (applied) return;
+
+        if (attempt < MAX_HIGHLIGHT_REAPPLY_RETRIES) {
+          scheduleHighlightReapply(attempt + 1);
+        } else if (import.meta.env?.DEV) {
+          console.warn(
+            `[HighlightableArea] Failed to resolve highlight ranges for ${regionId}`,
+            { contentVersion, highlightCount: regionHighlights.length }
+          );
+        }
+      });
+    },
+    [applyRegionCssHighlights, contentVersion, regionHighlights, regionId]
+  );
+
   const updateCommentMarkers = useCallback(() => {
     const container = containerRef.current;
     if (!container) {
@@ -138,6 +193,7 @@ const HighlightableArea = ({ regionId, children, className = '' }) => {
   }, [regionHighlights]);
 
   const updateFloatingUiPositions = useCallback(() => {
+    applyRegionCssHighlights();
     updateCommentMarkers();
 
     setToolbarState((prev) => {
@@ -195,7 +251,7 @@ const HighlightableArea = ({ regionId, children, className = '' }) => {
 
       return { ...prev, position };
     });
-  }, [getToolbarPosition, regionHighlights, updateCommentMarkers]);
+  }, [applyRegionCssHighlights, getToolbarPosition, regionHighlights, updateCommentMarkers]);
 
   const openCommentPopover = useCallback((range, anchorRect) => {
     const rect =
@@ -368,30 +424,51 @@ const HighlightableArea = ({ regionId, children, className = '' }) => {
   }, [activeComment, closeCommentPopover, regionId, removeCommentHighlight]);
 
   useLayoutEffect(() => {
-    const container = containerRef.current;
-    if (!container || !isCssHighlightSupported()) return undefined;
-
-    try {
-      applyCssHighlights(container, regionId, regionHighlights);
-    } catch (error) {
-      console.error('Failed to apply CSS highlights:', error);
-    }
-
-    const hoveredId = hoveredCommentIdRef.current;
-    if (hoveredId) {
-      const hoveredRange = regionHighlights.find((range) => range.id === hoveredId);
-      if (hoveredRange) {
-        applyHoverHighlight(container, regionId, hoveredRange.start, hoveredRange.end);
-      } else {
-        hoveredCommentIdRef.current = null;
-        setIsHoveringCommentedRange(false);
-      }
-    }
+    applyRegionCssHighlights();
 
     return () => {
       clearCssHighlights(regionId);
     };
-  }, [regionId, regionHighlights]);
+  }, [applyRegionCssHighlights, regionId]);
+
+  useEffect(() => {
+    if (contentVersion === null) return undefined;
+
+    scheduleHighlightReapply();
+
+    return () => {
+      if (highlightRetryRef.current) {
+        cancelAnimationFrame(highlightRetryRef.current);
+        highlightRetryRef.current = null;
+      }
+    };
+  }, [contentVersion, scheduleHighlightReapply]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return undefined;
+
+    let rafId = null;
+    const scheduleHighlightSync = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        updateFloatingUiPositions();
+      });
+    };
+
+    const mutationObserver = new MutationObserver(scheduleHighlightSync);
+    mutationObserver.observe(container, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+
+    return () => {
+      mutationObserver.disconnect();
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, [regionId, updateFloatingUiPositions]);
 
   useEffect(() => {
     if (toolbarState) {

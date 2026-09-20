@@ -14,6 +14,11 @@ import {
   removeOverlappingRanges,
 } from '../utils/textHighlightUtils';
 import { isSessionExpired } from '../utils/testSessionUtils';
+import {
+  clearHighlightsFromSession,
+  loadTestSession,
+  saveTestSession,
+} from '../utils/testSessionStorage';
 
 const normalizeHighlightsState = (value) => {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
@@ -69,25 +74,10 @@ export const HighlightProvider = ({
     (nextHighlights) => {
       if (!storageKey) return;
 
-      const existingRaw = localStorage.getItem(storageKey);
-      let existingData = {};
-
-      if (existingRaw) {
-        try {
-          existingData = JSON.parse(existingRaw);
-        } catch {
-          existingData = {};
-        }
-      }
-
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({
-          ...existingData,
-          _highlights: nextHighlights,
-          _timestamp: Date.now(),
-        })
-      );
+      saveTestSession(storageKey, {
+        _highlights: nextHighlights,
+        _timestamp: Date.now(),
+      });
     },
     [storageKey]
   );
@@ -118,28 +108,19 @@ export const HighlightProvider = ({
 
     loadedKeyRef.current = storageKey;
 
-    const savedRaw = localStorage.getItem(storageKey);
-    if (!savedRaw) {
+    const parsed = loadTestSession(storageKey);
+    if (!parsed) {
       setHighlights({});
       return undefined;
     }
 
-    try {
-      const parsed = JSON.parse(savedRaw);
-
-      if (isSessionExpired(parsed._timestamp)) {
-        setHighlights({});
-        const { _highlights, ...rest } = parsed;
-        localStorage.setItem(storageKey, JSON.stringify(rest));
-        return undefined;
-      }
-
-      setHighlights(
-        normalizeHighlightsState(parsed._highlights)
-      );
-    } catch {
+    if (isSessionExpired(parsed._timestamp)) {
       setHighlights({});
+      clearHighlightsFromSession(storageKey);
+      return undefined;
     }
+
+    setHighlights(normalizeHighlightsState(parsed._highlights));
 
     return () => {
       if (saveTimeoutRef.current) {
@@ -237,21 +218,7 @@ export const HighlightProvider = ({
 
   const clearHighlights = useCallback(() => {
     setHighlights({});
-    if (storageKey) {
-      const existingRaw = localStorage.getItem(storageKey);
-      if (existingRaw) {
-        try {
-          const existingData = JSON.parse(existingRaw);
-          const { _highlights, ...rest } = existingData;
-          localStorage.setItem(
-            storageKey,
-            JSON.stringify({ ...rest, _timestamp: Date.now() })
-          );
-        } catch {
-          // Ignore malformed storage entries.
-        }
-      }
-    }
+    clearHighlightsFromSession(storageKey);
   }, [storageKey]);
 
   const getRegionHighlights = useCallback(

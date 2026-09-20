@@ -17,6 +17,11 @@ import {
   isSessionExpired,
   isSubmissionExpired,
 } from '../../utils/testSessionUtils';
+import {
+  loadTestSession,
+  removeTestSession,
+  saveTestSession,
+} from '../../utils/testSessionStorage';
 
 const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null, testData, sharedPassage, onPassageChange }) => {
   console.log('🔍 ListeningQuestionView received user:', user);
@@ -197,10 +202,9 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
 
       // Fallback to localStorage for in-progress tests
       console.log('🔍 Looking for in-progress answers in localStorage with key:', testStorageKey);
-      const savedAnswers = localStorage.getItem(testStorageKey);
-      if (savedAnswers) {
+      const parsedAnswers = loadTestSession(testStorageKey);
+      if (parsedAnswers) {
         try {
-          const parsedAnswers = JSON.parse(savedAnswers);
           console.log('📝 Found saved answers in localStorage:', parsedAnswers);
           
           if (isSessionExpired(parsedAnswers._timestamp)) {
@@ -483,7 +487,10 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
         _testStarted: testStarted,
         _testResults: testResults
       };
-      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`, JSON.stringify(answersWithTimestamp));
+      saveTestSession(
+        `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`,
+        answersWithTimestamp
+      );
       console.log(`📝 Test state saved to localStorage for Part ${currentPart} (has answers)`);
     }
   }, [currentPart, selectedTest, testStarted, testSubmitted, testResults, answers]);
@@ -516,7 +523,10 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
         _testStarted: testStarted,
         _testResults: testResults
       };
-      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`, JSON.stringify(answersWithTimestamp));
+      saveTestSession(
+        `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`,
+        answersWithTimestamp
+      );
       console.log('📝 Answers and test state saved to localStorage with timestamp:', answersWithTimestamp);
     }
     
@@ -537,7 +547,10 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
         _testStarted: true,
         _testResults: testResults
       };
-      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`, JSON.stringify(answersWithTimestamp));
+      saveTestSession(
+        `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`,
+        answersWithTimestamp
+      );
       console.log('📝 Test started state saved to localStorage (has answers)');
     }
   };
@@ -650,7 +663,9 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     
     // Clear saved answers from localStorage after submission
     if (selectedTest && selectedTest.testId) {
-      localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`);
+      removeTestSession(
+        `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`
+      );
       console.log('📝 Cleared saved answers from localStorage after submission');
     }
 
@@ -776,7 +791,10 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
               submittedAt: result.data.submittedAt
             }
           };
-          localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`, JSON.stringify(answersWithTimestamp));
+          saveTestSession(
+            `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`,
+            answersWithTimestamp
+          );
           console.log('📝 Submitted test state saved to localStorage');
         }
         
@@ -802,7 +820,9 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     
     // Clear saved test state from localStorage
     if (selectedTest && selectedTest.testId) {
-      localStorage.removeItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`);
+      removeTestSession(
+        `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`
+      );
       console.log('📝 Cleared saved test state from localStorage after reset');
     }
 
@@ -853,7 +873,10 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
         _testStarted: testStarted,
         _testResults: testResults
       };
-      localStorage.setItem(`test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`, JSON.stringify(answersWithTimestamp));
+      saveTestSession(
+        `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`,
+        answersWithTimestamp
+      );
       console.log(`📝 Part changed to ${partNumber}, saved to localStorage`);
     }
     
@@ -1079,11 +1102,20 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     });
   };
     
+    const contentVersion = loading
+      ? `${currentPart}-loading`
+      : error
+        ? `${currentPart}-error`
+        : !questionData?.questionData
+          ? `${currentPart}-empty`
+          : `${currentPart}-ready`;
+
     return (
       <div className="listening-question-view-container">
         <HighlightableArea
           regionId={`listening-questions-${currentPart}`}
           className="question-content"
+          contentVersion={contentVersion}
         >
           <div className="question-header">
             <div className="header-left">
