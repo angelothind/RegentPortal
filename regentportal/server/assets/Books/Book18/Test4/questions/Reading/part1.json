@@ -4,7 +4,7 @@
     {
       "questionType": "matching",
       "introInstruction": "Questions 1-5\nReading Passage 1 has five paragraphs, A-E.\nWhich paragraph contains the following information?",
-      "formattingInstruction": "Write the correct letter, A-E, in boxes 1-5.",
+      "formattingInstruction": "Write the correct letter, A-E, in boxes 1-5. \n NB  You may use any letter more than once.",
       "questionBlock": [
         {
           "questionNumber": 1,
