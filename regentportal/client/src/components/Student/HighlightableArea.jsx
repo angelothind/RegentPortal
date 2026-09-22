@@ -72,6 +72,7 @@ const HighlightableArea = ({ regionId, children, className = '', contentVersion 
     removeHighlight,
     removeCommentHighlight,
     highlights,
+    readOnly,
   } = useHighlight();
   const [toolbarState, setToolbarState] = useState(null);
   const [commentModeActive, setCommentModeActive] = useState(false);
@@ -272,7 +273,7 @@ const HighlightableArea = ({ regionId, children, className = '', contentVersion 
   }, []);
 
   const handleMouseUp = useCallback(() => {
-    if (!isCssHighlightSupported()) return;
+    if (readOnly || !isCssHighlightSupported()) return;
 
     const container = containerRef.current;
     const selection = window.getSelection();
@@ -310,7 +311,7 @@ const HighlightableArea = ({ regionId, children, className = '', contentVersion 
       },
       range: offsets,
     });
-  }, [closeCommentPopover, getToolbarPosition]);
+  }, [closeCommentPopover, getToolbarPosition, readOnly]);
 
   const handleHighlight = useCallback(() => {
     if (!toolbarState?.range) return;
@@ -417,11 +418,17 @@ const HighlightableArea = ({ regionId, children, className = '', contentVersion 
     [openCommentPopover, regionHighlights]
   );
 
+  useEffect(() => {
+    if (readOnly) {
+      closeToolbar();
+    }
+  }, [closeToolbar, readOnly]);
+
   const handleDeleteComment = useCallback(() => {
-    if (!activeComment?.id) return;
+    if (readOnly || !activeComment?.id) return;
     removeCommentHighlight(regionId, activeComment.id);
     closeCommentPopover();
-  }, [activeComment, closeCommentPopover, regionId, removeCommentHighlight]);
+  }, [activeComment, closeCommentPopover, readOnly, regionId, removeCommentHighlight]);
 
   useLayoutEffect(() => {
     applyRegionCssHighlights();
@@ -587,7 +594,7 @@ const HighlightableArea = ({ regionId, children, className = '', contentVersion 
         </button>
       ))}
 
-      {toolbarState && (
+      {toolbarState && !readOnly && (
         <HighlightToolbar
           position={toolbarState.position}
           selectionRect={toolbarState.selectionRect}
@@ -611,15 +618,17 @@ const HighlightableArea = ({ regionId, children, className = '', contentVersion 
           aria-label="Highlight comment"
         >
           <p className="highlight-comment-popover-text">{activeComment.comment}</p>
-          <div className="highlight-comment-popover-actions">
-            <button
-              type="button"
-              className="highlight-comment-popover-delete"
-              onClick={handleDeleteComment}
-            >
-              Delete
-            </button>
-          </div>
+          {!readOnly && (
+            <div className="highlight-comment-popover-actions">
+              <button
+                type="button"
+                className="highlight-comment-popover-delete"
+                onClick={handleDeleteComment}
+              >
+                Delete
+              </button>
+            </div>
+          )}
         </div>
       )}
     </>

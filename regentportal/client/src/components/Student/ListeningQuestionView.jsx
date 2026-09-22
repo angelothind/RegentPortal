@@ -21,6 +21,9 @@ import {
   loadTestSession,
   removeTestSession,
   saveTestSession,
+  stripSessionMeta,
+  markTestReset,
+  getTestResetAt,
 } from '../../utils/testSessionStorage';
 
 const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null, testData, sharedPassage, onPassageChange }) => {
@@ -42,7 +45,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
   const expectedPartRef = useRef(null);
   const activePartRef = useRef(isTeacherMode && sharedPassage ? sharedPassage : 1);
   const fetchRequestIdRef = useRef(0);
-  const { clearHighlights } = useHighlight();
+  const { clearHighlights, highlights, replaceHighlights, setReadOnly } = useHighlight();
 
   const storageKey = useMemo(() => {
     if (!selectedTest?.testId || !user?._id) return null;
@@ -75,6 +78,10 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
   // Use external test results if provided (for teacher view)
   const finalTestResults = externalTestResults || testResults;
   const finalTestSubmitted = externalTestSubmitted || testSubmitted;
+
+  useEffect(() => {
+    setReadOnly(Boolean(finalTestSubmitted || isTeacherMode));
+  }, [finalTestSubmitted, isTeacherMode, setReadOnly]);
 
   // Load test data when selectedTest changes
   useEffect(() => {
@@ -113,82 +120,103 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
           const submission = await submissionResponse.json();
           console.log('✅ Found submission in backend:', submission);
 
-          if (isSubmissionExpired(submission.submittedAt)) {
-            clearTestStorage(testStorageKey);
-            clearHighlights();
-            console.log('📝 Submission expired (>3 hours), reverting to unsubmitted');
+          const submittedAtMs = new Date(submission.submittedAt).getTime();
+
+          if (getTestResetAt(testStorageKey) > submittedAtMs) {
+            // The student ended this attempt with Reset Test on this device, so
+            // ignore the snapshot and fall through to the fresh test path.
+            console.log('📝 Submission superseded by a local test reset, ignoring it');
+          } else {
+            if (isSubmissionExpired(submission.submittedAt)) {
+              clearTestStorage(testStorageKey);
+              clearHighlights();
+              console.log('📝 Submission expired (>3 hours), reverting to unsubmitted');
+              return;
+            }
+          
+            // Format submission data
+            const answers = {};
+            const correctAnswers = {};
+            const results = {};
+
+            // Process answers from submission.answers
+            if (submission.answers) {
+              if (submission.answers instanceof Map) {
+                submission.answers.forEach((value, key) => {
+                  answers[key.toString()] = value || '';
+                });
+              } else if (typeof submission.answers === 'object') {
+                Object.keys(submission.answers).forEach(key => {
+                  answers[key] = submission.answers[key] || '';
+                });
+              }
+            }
+
+            // Process results from submission.results
+            if (submission.results) {
+              if (submission.results instanceof Map) {
+                submission.results.forEach((value, key) => {
+                  const questionNumber = key.toString();
+                  results[questionNumber] = {
+                    isCorrect: value.isCorrect || false,
+                    studentAnswer: value.userAnswer || value.studentAnswer || '',
+                    correctAnswer: value.correctAnswer || ''
+                  };
+                });
+              } else if (typeof submission.results === 'object') {
+                Object.keys(submission.results).forEach(key => {
+                  const value = submission.results[key];
+                  results[key] = {
+                    isCorrect: value.isCorrect || false,
+                    studentAnswer: value.userAnswer || value.studentAnswer || '',
+                    correctAnswer: value.correctAnswer || ''
+                  };
+                });
+              }
+            }
+
+            // Process correctAnswers from submission.correctAnswers
+            if (submission.correctAnswers) {
+              if (submission.correctAnswers instanceof Map) {
+                submission.correctAnswers.forEach((value, key) => {
+                  correctAnswers[key.toString()] = value;
+                });
+              } else if (typeof submission.correctAnswers === 'object') {
+                Object.keys(submission.correctAnswers).forEach(key => {
+                  correctAnswers[key] = submission.correctAnswers[key];
+                });
+              }
+            }
+
+            const restoredResults = {
+              score: submission.score,
+              correctCount: submission.correctCount,
+              totalQuestions: submission.totalQuestions,
+              submittedAt: submission.submittedAt,
+              answers: answers,
+              correctAnswers: correctAnswers,
+              results: results
+            };
+
+            // Set state with submission data (marked test)
+            setAnswers(answers);
+            setTestResults(restoredResults);
+            setTestSubmitted(true);
+            setTestStarted(true);
+            replaceHighlights(submission.highlights);
+            saveTestSession(testStorageKey, {
+              ...answers,
+              _highlights: submission.highlights || {},
+              // Anchor the 3-hour window to the submission, not this page load.
+              _timestamp: submittedAtMs,
+              _testSubmitted: true,
+              _testResults: restoredResults,
+              _testStarted: true,
+            });
+            console.log('✅ Loaded marked test data from backend');
             return;
           }
-          
-          // Format submission data
-          const answers = {};
-          const correctAnswers = {};
-          const results = {};
 
-          // Process answers from submission.answers
-          if (submission.answers) {
-            if (submission.answers instanceof Map) {
-              submission.answers.forEach((value, key) => {
-                answers[key.toString()] = value || '';
-              });
-            } else if (typeof submission.answers === 'object') {
-              Object.keys(submission.answers).forEach(key => {
-                answers[key] = submission.answers[key] || '';
-              });
-            }
-          }
-
-          // Process results from submission.results
-          if (submission.results) {
-            if (submission.results instanceof Map) {
-              submission.results.forEach((value, key) => {
-                const questionNumber = key.toString();
-                results[questionNumber] = {
-                  isCorrect: value.isCorrect || false,
-                  studentAnswer: value.userAnswer || value.studentAnswer || '',
-                  correctAnswer: value.correctAnswer || ''
-                };
-              });
-            } else if (typeof submission.results === 'object') {
-              Object.keys(submission.results).forEach(key => {
-                const value = submission.results[key];
-                results[key] = {
-                  isCorrect: value.isCorrect || false,
-                  studentAnswer: value.userAnswer || value.studentAnswer || '',
-                  correctAnswer: value.correctAnswer || ''
-                };
-              });
-            }
-          }
-
-          // Process correctAnswers from submission.correctAnswers
-          if (submission.correctAnswers) {
-            if (submission.correctAnswers instanceof Map) {
-              submission.correctAnswers.forEach((value, key) => {
-                correctAnswers[key.toString()] = value;
-              });
-            } else if (typeof submission.correctAnswers === 'object') {
-              Object.keys(submission.correctAnswers).forEach(key => {
-                correctAnswers[key] = submission.correctAnswers[key];
-              });
-            }
-          }
-
-          // Set state with submission data (marked test)
-          setAnswers(answers);
-          setTestResults({
-            score: submission.score,
-            correctCount: submission.correctCount,
-            totalQuestions: submission.totalQuestions,
-            submittedAt: submission.submittedAt,
-            answers: answers,
-            correctAnswers: correctAnswers,
-            results: results
-          });
-          setTestSubmitted(true);
-          setTestStarted(true);
-          console.log('✅ Loaded marked test data from backend');
-          return;
         } else if (submissionResponse.status === 404) {
           // No submission found - test is not marked, try localStorage for in-progress test
           console.log('📝 No submission found in backend, checking localStorage for in-progress test');
@@ -229,8 +257,9 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
           }
           
           // Remove the timestamp from the answers object before setting state
-          const { _timestamp, _currentPart, _testSubmitted, _testResults, _testStarted, ...answersWithoutTimestamp } = parsedAnswers;
-          setAnswers(answersWithoutTimestamp);
+          const { _currentPart, _testStarted } = parsedAnswers;
+          const restoredAnswers = stripSessionMeta(parsedAnswers);
+          setAnswers(restoredAnswers);
           
           // Restore the current part if it was saved
           if (_currentPart && typeof _currentPart === 'number') {
@@ -239,17 +268,17 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
           }
           
           // Restore testStarted if it was saved AND there are actual answers
-          if (_testStarted && Object.keys(answersWithoutTimestamp).length > 0) {
+          if (_testStarted && Object.keys(restoredAnswers).length > 0) {
             setTestStarted(true);
             console.log('📝 Restored testStarted from localStorage (in-progress test)');
-          } else if (_testStarted && Object.keys(answersWithoutTimestamp).length === 0) {
+          } else if (_testStarted && Object.keys(restoredAnswers).length === 0) {
             // If test was started but no answers, reset to show overlay
             setTestStarted(false);
             setCurrentPart(1);
             console.log('📝 Reset testStarted to false and currentPart to 1 (no answers, overlay should show)');
           }
           
-          console.log('📝 Loaded in-progress test data from localStorage:', answersWithoutTimestamp);
+          console.log('📝 Loaded in-progress test data from localStorage:', restoredAnswers);
         } catch (error) {
           console.error('❌ Error parsing saved answers:', error);
         }
@@ -259,7 +288,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     };
 
     loadTestData();
-  }, [selectedTest?.testId?._id, selectedTest?.type, user?._id, isTeacherMode, clearHighlights]);
+  }, [selectedTest?.testId?._id, selectedTest?.type, user?._id, isTeacherMode, clearHighlights, replaceHighlights]);
 
   // Keep activePartRef in sync with sharedPassage (for teacher mode) or currentPart (for student mode)
   useEffect(() => {
@@ -510,7 +539,8 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
       console.log('📝 Previous answers:', answers);
       newAnswers = { ...answers, [questionNumber]: value };
     }
-    
+
+    newAnswers = stripSessionMeta(newAnswers);
     setAnswers(newAnswers);
     
     // Save answers to localStorage with timestamp (only if there are answers)
@@ -660,17 +690,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
 
     const confirmed = window.confirm('Are you sure you want to submit the test? You cannot change your answers after submission.');
     if (!confirmed) return;
-    
-    // Clear saved answers from localStorage after submission
-    if (selectedTest && selectedTest.testId) {
-      removeTestSession(
-        `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`
-      );
-      console.log('📝 Cleared saved answers from localStorage after submission');
-    }
 
-    clearHighlights();
-    
     console.log('📝 Submitting test with answers:', answers);
     console.log('📝 User data:', user);
     
@@ -733,7 +753,8 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
           testId: selectedTest.testId._id,
           testType: selectedTest.type,
           answers: normalizedAnswers,
-          studentId: user._id
+          studentId: user._id,
+          highlights
         })
       });
 
@@ -781,6 +802,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
             _currentPart: currentPart,
             _testSubmitted: true,
             _testStarted: true,
+            _highlights: highlights,
             _testResults: {
               score: result.data.score,
               totalQuestions: result.data.totalQuestions,
@@ -820,9 +842,9 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     
     // Clear saved test state from localStorage
     if (selectedTest && selectedTest.testId) {
-      removeTestSession(
-        `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`
-      );
+      const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
+      removeTestSession(storageKey);
+      markTestReset(storageKey);
       console.log('📝 Cleared saved test state from localStorage after reset');
     }
 
@@ -1287,6 +1309,8 @@ const ListeningQuestionView = (props) => (
     testType={props.selectedTest?.type}
     userId={props.user?._id}
     persist={Boolean(props.user?._id && !props.isTeacherMode)}
+    readOnly={Boolean(props.readOnly || props.isTeacherMode)}
+    initialHighlights={props.initialHighlights}
   >
     <ListeningQuestionViewContent {...props} />
   </HighlightProvider>
