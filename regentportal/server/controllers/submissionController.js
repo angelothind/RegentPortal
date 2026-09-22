@@ -2,11 +2,12 @@ const mongoose = require('mongoose');
 const TestSubmission = require('../models/TestSubmission');
 const Student = require('../models/Student');
 const gradingService = require('../services/gradingService');
+const sanitizeHighlights = require('../utils/sanitizeHighlights');
 
 // POST /api/submit/submit
 const submitTest = async (req, res) => {
   try {
-    const { testId, testType, answers, studentId } = req.body;
+    const { testId, testType, answers, studentId, highlights } = req.body;
 
     if (!testId || !testType || !studentId) {
       return res.status(400).json({
@@ -35,6 +36,7 @@ const submitTest = async (req, res) => {
 
     const normalizedAnswers = gradingService.normalizeTableCompletionAnswers(answers);
     const { results, correctCount, totalQuestions, score } = gradingService.gradeAnswers(correctAnswers, normalizedAnswers);
+    const sanitizedHighlights = sanitizeHighlights(highlights);
 
     const testSubmission = new TestSubmission({
       studentId: studentId,
@@ -47,7 +49,8 @@ const submitTest = async (req, res) => {
       score: score,
       totalQuestions: totalQuestions,
       correctCount: correctCount,
-      submittedAt: new Date()
+      submittedAt: new Date(),
+      highlights: sanitizedHighlights
     });
 
     try {
@@ -66,7 +69,8 @@ const submitTest = async (req, res) => {
         totalQuestions: totalQuestions,
         correctCount: correctCount,
         results: results,
-        submittedAt: testSubmission.submittedAt
+        submittedAt: testSubmission.submittedAt,
+        highlights: sanitizedHighlights
       }
     });
   } catch (error) {
@@ -178,7 +182,8 @@ const getTestSubmissions = async (req, res) => {
             isCorrect: result.isCorrect || false
           })) : [],
           correctAnswers: submission.correctAnswers ? Object.fromEntries(submission.correctAnswers) : {},
-          results: submission.results || {}
+          results: submission.results || {},
+          highlights: submission.highlights || {}
         };
       })
     );

@@ -24,6 +24,9 @@ import {
   loadTestSession,
   removeTestSession,
   saveTestSession,
+  stripSessionMeta,
+  markTestReset,
+  getTestResetAt,
 } from '../../utils/testSessionStorage';
 
 const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onTestReset, sharedPassage, onPassageChange, testData, onExamTimerChange }) => {
@@ -47,7 +50,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
   const expectedPassageRef = useRef(null); // Track which passage we're currently fetching for
   const activePassageRef = useRef(sharedPassage || 1); // Track the active passage that should be displayed
   const fetchRequestIdRef = useRef(0); // Track unique request IDs to ensure we only accept the latest fetch
-  const { clearHighlights } = useHighlight();
+  const { clearHighlights, highlights, replaceHighlights, setReadOnly } = useHighlight();
 
   const storageKey = useMemo(() => {
     if (!selectedTest?.testId || !user?._id) return null;
@@ -75,6 +78,10 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
   // Use external test results if provided (for teacher view) - same pattern as ListeningQuestionView
   const finalTestResults = externalTestResults || testResults;
   const finalTestSubmitted = externalTestSubmitted || testSubmitted;
+
+  useEffect(() => {
+    setReadOnly(Boolean(finalTestSubmitted || isTeacherMode));
+  }, [finalTestSubmitted, isTeacherMode, setReadOnly]);
 
   const normalizeAnswers = useCallback((answersToNormalize) => {
     const normalized = { ...answersToNormalize };
@@ -120,15 +127,6 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       return;
     }
 
-    if (selectedTest && selectedTest.testId) {
-      removeTestSession(
-        `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`
-      );
-      console.log('📝 Cleared saved answers from localStorage after submission');
-    }
-
-    clearHighlights();
-
     const normalizedAnswers = normalizeAnswers(answers);
 
     try {
@@ -142,6 +140,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
           testType: selectedTest.type,
           answers: normalizedAnswers,
           studentId: user._id,
+          highlights,
         }),
       });
 
@@ -182,6 +181,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
             _currentPassage: currentPassage,
             _testSubmitted: true,
             _testStarted: testStarted,
+            _highlights: highlights,
             _testResults: {
               score: result.data.score,
               totalQuestions: result.data.totalQuestions,
@@ -209,7 +209,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     user,
     selectedTest,
     answers,
-    clearHighlights,
+    highlights,
     normalizeAnswers,
     currentPassage,
     testStarted,
@@ -476,82 +476,103 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
           const submission = await submissionResponse.json();
           console.log('✅ Found submission in backend:', submission);
 
-          if (isSubmissionExpired(submission.submittedAt)) {
-            clearTestStorage(testStorageKey);
-            clearHighlights();
-            console.log('📝 Submission expired (>3 hours), reverting to unsubmitted');
+          const submittedAtMs = new Date(submission.submittedAt).getTime();
+
+          if (getTestResetAt(testStorageKey) > submittedAtMs) {
+            // The student ended this attempt with Take Test Again on this device,
+            // so ignore the snapshot and fall through to the fresh test path.
+            console.log('📝 Submission superseded by a local test reset, ignoring it');
+          } else {
+            if (isSubmissionExpired(submission.submittedAt)) {
+              clearTestStorage(testStorageKey);
+              clearHighlights();
+              console.log('📝 Submission expired (>3 hours), reverting to unsubmitted');
+              return;
+            }
+          
+            // Format submission data similar to TeacherTestAnalysis
+            const answers = {};
+            const correctAnswers = {};
+            const results = {};
+
+            // Process answers from submission.answers
+            if (submission.answers) {
+              if (submission.answers instanceof Map) {
+                submission.answers.forEach((value, key) => {
+                  answers[key.toString()] = value || '';
+                });
+              } else if (typeof submission.answers === 'object') {
+                Object.keys(submission.answers).forEach(key => {
+                  answers[key] = submission.answers[key] || '';
+                });
+              }
+            }
+
+            // Process results from submission.results
+            if (submission.results) {
+              if (submission.results instanceof Map) {
+                submission.results.forEach((value, key) => {
+                  const questionNumber = key.toString();
+                  results[questionNumber] = {
+                    isCorrect: value.isCorrect || false,
+                    studentAnswer: value.userAnswer || value.studentAnswer || '',
+                    correctAnswer: value.correctAnswer || ''
+                  };
+                });
+              } else if (typeof submission.results === 'object') {
+                Object.keys(submission.results).forEach(key => {
+                  const value = submission.results[key];
+                  results[key] = {
+                    isCorrect: value.isCorrect || false,
+                    studentAnswer: value.userAnswer || value.studentAnswer || '',
+                    correctAnswer: value.correctAnswer || ''
+                  };
+                });
+              }
+            }
+
+            // Process correctAnswers from submission.correctAnswers
+            if (submission.correctAnswers) {
+              if (submission.correctAnswers instanceof Map) {
+                submission.correctAnswers.forEach((value, key) => {
+                  correctAnswers[key.toString()] = value;
+                });
+              } else if (typeof submission.correctAnswers === 'object') {
+                Object.keys(submission.correctAnswers).forEach(key => {
+                  correctAnswers[key] = submission.correctAnswers[key];
+                });
+              }
+            }
+
+            const restoredResults = {
+              score: submission.score,
+              correctCount: submission.correctCount,
+              totalQuestions: submission.totalQuestions,
+              submittedAt: submission.submittedAt,
+              answers: answers,
+              correctAnswers: correctAnswers,
+              results: results
+            };
+
+            // Set state with submission data (marked test)
+            setAnswers(answers);
+            setTestResults(restoredResults);
+            setTestSubmitted(true);
+            setTestStarted(true);
+            replaceHighlights(submission.highlights);
+            saveTestSession(testStorageKey, {
+              ...answers,
+              _highlights: submission.highlights || {},
+              // Anchor the 3-hour window to the submission, not this page load.
+              _timestamp: submittedAtMs,
+              _testSubmitted: true,
+              _testResults: restoredResults,
+              _testStarted: true,
+            });
+            console.log('✅ Loaded marked test data from backend');
             return;
           }
-          
-          // Format submission data similar to TeacherTestAnalysis
-          const answers = {};
-          const correctAnswers = {};
-          const results = {};
 
-          // Process answers from submission.answers
-          if (submission.answers) {
-            if (submission.answers instanceof Map) {
-              submission.answers.forEach((value, key) => {
-                answers[key.toString()] = value || '';
-              });
-            } else if (typeof submission.answers === 'object') {
-              Object.keys(submission.answers).forEach(key => {
-                answers[key] = submission.answers[key] || '';
-              });
-            }
-          }
-
-          // Process results from submission.results
-          if (submission.results) {
-            if (submission.results instanceof Map) {
-              submission.results.forEach((value, key) => {
-                const questionNumber = key.toString();
-                results[questionNumber] = {
-                  isCorrect: value.isCorrect || false,
-                  studentAnswer: value.userAnswer || value.studentAnswer || '',
-                  correctAnswer: value.correctAnswer || ''
-                };
-              });
-            } else if (typeof submission.results === 'object') {
-              Object.keys(submission.results).forEach(key => {
-                const value = submission.results[key];
-                results[key] = {
-                  isCorrect: value.isCorrect || false,
-                  studentAnswer: value.userAnswer || value.studentAnswer || '',
-                  correctAnswer: value.correctAnswer || ''
-                };
-              });
-            }
-          }
-
-          // Process correctAnswers from submission.correctAnswers
-          if (submission.correctAnswers) {
-            if (submission.correctAnswers instanceof Map) {
-              submission.correctAnswers.forEach((value, key) => {
-                correctAnswers[key.toString()] = value;
-              });
-            } else if (typeof submission.correctAnswers === 'object') {
-              Object.keys(submission.correctAnswers).forEach(key => {
-                correctAnswers[key] = submission.correctAnswers[key];
-              });
-            }
-          }
-
-          // Set state with submission data (marked test)
-          setAnswers(answers);
-          setTestResults({
-            score: submission.score,
-            correctCount: submission.correctCount,
-            totalQuestions: submission.totalQuestions,
-            submittedAt: submission.submittedAt,
-            answers: answers,
-            correctAnswers: correctAnswers,
-            results: results
-          });
-          setTestSubmitted(true);
-          setTestStarted(true);
-          console.log('✅ Loaded marked test data from backend');
-          return;
         } else if (submissionResponse.status === 404) {
           // No submission found - test is not marked, try localStorage for in-progress test
           console.log('📝 No submission found in backend, checking localStorage for in-progress test');
@@ -601,11 +622,11 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
             _testStarted,
             _timerStartedAt,
             _timerDurationMs,
-            ...answersWithoutTimestamp
           } = parsedAnswers;
-          setAnswers(answersWithoutTimestamp);
+          const restoredAnswers = stripSessionMeta(parsedAnswers);
+          setAnswers(restoredAnswers);
           
-          const hasAnswers = Object.keys(answersWithoutTimestamp).length > 0;
+          const hasAnswers = Object.keys(restoredAnswers).length > 0;
 
           // Restore testStarted, timer, and passage for in-progress tests
           if (_testStarted && (hasAnswers || _timerStartedAt)) {
@@ -634,7 +655,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
             }
           }
           
-          console.log('📝 Loaded in-progress test data from localStorage:', answersWithoutTimestamp);
+          console.log('📝 Loaded in-progress test data from localStorage:', restoredAnswers);
         } catch (error) {
           console.error('❌ Error parsing saved answers:', error);
         }
@@ -644,7 +665,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     };
 
     loadTestData();
-  }, [selectedTest?.testId?._id, selectedTest?.type, isTeacherMode, user?._id, clearHighlights]);
+  }, [selectedTest?.testId?._id, selectedTest?.type, isTeacherMode, user?._id, clearHighlights, replaceHighlights]);
 
   // Reload answers from localStorage when passage changes (only for students, not teachers)
   useEffect(() => {
@@ -659,18 +680,9 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
       const parsedAnswers = loadTestSession(storageKey);
       if (parsedAnswers) {
-        const {
-          _timestamp,
-          _currentPassage,
-          _testSubmitted,
-          _testResults,
-          _testStarted,
-          _timerStartedAt,
-          _timerDurationMs,
-          ...answersWithoutTimestamp
-        } = parsedAnswers;
-        setAnswers(answersWithoutTimestamp);
-        console.log('📝 Reloaded answers from localStorage after passage change:', answersWithoutTimestamp);
+        const restoredAnswers = stripSessionMeta(parsedAnswers);
+        setAnswers(restoredAnswers);
+        console.log('📝 Reloaded answers from localStorage after passage change:', restoredAnswers);
       }
     }
   }, [sharedPassage, selectedTest, isTeacherMode, answers]);
@@ -723,6 +735,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       console.log('📝 Previous answers:', answers);
       newAnswers = { ...answers, [questionNumber]: value };
     }
+
+    newAnswers = stripSessionMeta(newAnswers);
     
     setAnswers(newAnswers);
     
@@ -816,6 +830,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     if (selectedTest && selectedTest.testId) {
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
       removeTestSession(storageKey);
+      markTestReset(storageKey);
       console.log('🧹 Cleared localStorage for test reset:', storageKey);
     }
 

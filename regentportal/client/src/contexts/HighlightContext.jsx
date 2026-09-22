@@ -11,6 +11,7 @@ import {
   createHighlightId,
   getStorageKey,
   mergeRanges,
+  normalizeHighlightsState,
   removeOverlappingRanges,
 } from '../utils/textHighlightUtils';
 import { isSessionExpired } from '../utils/testSessionUtils';
@@ -19,30 +20,6 @@ import {
   loadTestSession,
   saveTestSession,
 } from '../utils/testSessionStorage';
-
-const normalizeHighlightsState = (value) => {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
-    return {};
-  }
-
-  return Object.entries(value).reduce((acc, [regionId, ranges]) => {
-    if (!Array.isArray(ranges)) return acc;
-
-    const normalizedRanges = ranges.filter(
-      (range) =>
-        range &&
-        Number.isFinite(range.start) &&
-        Number.isFinite(range.end) &&
-        range.end > range.start
-    );
-
-    if (normalizedRanges.length) {
-      acc[regionId] = normalizedRanges;
-    }
-
-    return acc;
-  }, {});
-};
 
 const HighlightContext = createContext(null);
 
@@ -60,10 +37,22 @@ export const HighlightProvider = ({
   testType,
   userId,
   persist = true,
+  readOnly: readOnlyProp = false,
+  initialHighlights = null,
 }) => {
-  const [highlights, setHighlights] = useState({});
+  const [highlights, setHighlights] = useState(() =>
+    normalizeHighlightsState(initialHighlights)
+  );
+  const [readOnlyState, setReadOnlyState] = useState(Boolean(readOnlyProp));
   const saveTimeoutRef = useRef(null);
   const loadedKeyRef = useRef(null);
+  const readOnlyRef = useRef(Boolean(readOnlyProp));
+
+  const readOnly = Boolean(readOnlyProp || readOnlyState);
+
+  useEffect(() => {
+    readOnlyRef.current = readOnly;
+  }, [readOnly]);
 
   const storageKey = useMemo(() => {
     if (!testId || !testType || !persist) return null;
@@ -97,41 +86,83 @@ export const HighlightProvider = ({
     [saveHighlights, storageKey]
   );
 
+  const initialHighlightsSignature = useMemo(
+    () => JSON.stringify(initialHighlights || {}),
+    [initialHighlights]
+  );
+
+  const normalizedInitialHighlights = useMemo(
+    () => normalizeHighlightsState(initialHighlights),
+    // Keyed on the content signature because callers routinely pass a fresh
+    // object literal on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [initialHighlightsSignature]
+  );
+
+  useEffect(() => {
+    setReadOnlyState(Boolean(readOnlyProp));
+  }, [readOnlyProp]);
+
+  useEffect(() => {
+    if (persist) return;
+    setHighlights(normalizedInitialHighlights);
+  }, [persist, normalizedInitialHighlights]);
+
   useEffect(() => {
     if (!storageKey) {
-      setHighlights({});
       loadedKeyRef.current = null;
-      return undefined;
+      if (persist) {
+        setHighlights({});
+      }
+      return;
     }
 
-    if (loadedKeyRef.current === storageKey) return undefined;
+    if (loadedKeyRef.current === storageKey) return;
 
     loadedKeyRef.current = storageKey;
 
     const parsed = loadTestSession(storageKey);
     if (!parsed) {
       setHighlights({});
-      return undefined;
+      return;
     }
 
     if (isSessionExpired(parsed._timestamp)) {
       setHighlights({});
       clearHighlightsFromSession(storageKey);
-      return undefined;
+      return;
     }
 
     setHighlights(normalizeHighlightsState(parsed._highlights));
+  }, [storageKey, persist]);
 
-    return () => {
+  useEffect(
+    () => () => {
       if (saveTimeoutRef.current) {
         clearTimeout(saveTimeoutRef.current);
       }
-    };
-  }, [storageKey]);
+    },
+    []
+  );
+
+  const setReadOnly = useCallback((nextReadOnly) => {
+    setReadOnlyState(Boolean(nextReadOnly));
+  }, []);
+
+  const replaceHighlights = useCallback(
+    (nextHighlights, { persist: shouldPersist = true } = {}) => {
+      const normalized = normalizeHighlightsState(nextHighlights);
+      setHighlights(normalized);
+      if (shouldPersist) {
+        saveHighlights(normalized);
+      }
+    },
+    [saveHighlights]
+  );
 
   const addHighlight = useCallback(
     (regionId, start, end) => {
-      if (!regionId || start >= end) return;
+      if (readOnlyRef.current || !regionId || start >= end) return;
 
       setHighlights((prev) => {
         const regionRanges = prev[regionId] || [];
@@ -148,7 +179,7 @@ export const HighlightProvider = ({
 
   const removeHighlight = useCallback(
     (regionId, start, end) => {
-      if (!regionId || start >= end) return;
+      if (readOnlyRef.current || !regionId || start >= end) return;
 
       setHighlights((prev) => {
         const regionRanges = prev[regionId] || [];
@@ -171,7 +202,7 @@ export const HighlightProvider = ({
   const addCommentHighlight = useCallback(
     (regionId, start, end, comment) => {
       const trimmedComment = comment?.trim();
-      if (!regionId || start >= end || !trimmedComment) return;
+      if (readOnlyRef.current || !regionId || start >= end || !trimmedComment) return;
 
       setHighlights((prev) => {
         const regionRanges = prev[regionId] || [];
@@ -196,7 +227,7 @@ export const HighlightProvider = ({
 
   const removeCommentHighlight = useCallback(
     (regionId, id) => {
-      if (!regionId || !id) return;
+      if (readOnlyRef.current || !regionId || !id) return;
 
       setHighlights((prev) => {
         const regionRanges = prev[regionId] || [];
@@ -218,6 +249,7 @@ export const HighlightProvider = ({
 
   const clearHighlights = useCallback(() => {
     setHighlights({});
+    setReadOnlyState(false);
     clearHighlightsFromSession(storageKey);
   }, [storageKey]);
 
@@ -229,6 +261,9 @@ export const HighlightProvider = ({
   const value = useMemo(
     () => ({
       highlights,
+      readOnly,
+      setReadOnly,
+      replaceHighlights,
       addHighlight,
       addCommentHighlight,
       removeHighlight,
@@ -238,6 +273,9 @@ export const HighlightProvider = ({
     }),
     [
       highlights,
+      readOnly,
+      setReadOnly,
+      replaceHighlights,
       addHighlight,
       addCommentHighlight,
       removeHighlight,

@@ -7,10 +7,19 @@ import DraggableDivider from '../Student/DraggableDivider';
 import { HighlightProvider } from '../../contexts/HighlightContext';
 import API_BASE from '../../utils/api';
 
-const TeacherTestAnalysis = ({ submission, onBack }) => {
+const TeacherTestAnalysis = ({ submission: submissionProp, onBack }) => {
   const [testData, setTestData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sharedPassage, setSharedPassage] = useState(1); // Use sharedPassage like student version
+  const [fetchedSubmission, setFetchedSubmission] = useState(null);
+
+  // Only use the fetched copy when it belongs to the submission being shown, so
+  // the previous student's data can never render while a new fetch is in flight.
+  const submission =
+    fetchedSubmission && fetchedSubmission._id === submissionProp?._id
+      ? fetchedSubmission
+      : submissionProp;
+  const submissionHighlights = submission?.highlights || {};
   
   // Add resizable layout state like student view
   const [passageWidth, setPassageWidth] = useState(56);
@@ -23,27 +32,32 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
 
   useEffect(() => {
     const fetchTestData = async () => {
-      if (!submission) return;
+      if (!submissionProp) return;
 
-      console.log('🔄 TeacherTestAnalysis: Fetching test data for submission:', submission._id);
-      console.log('🔄 TeacherTestAnalysis: Current submission:', submission);
+      console.log('🔄 TeacherTestAnalysis: Fetching test data for submission:', submissionProp._id);
+      console.log('🔄 TeacherTestAnalysis: Current submission:', submissionProp);
       
       setLoading(true);
       try {
         // Fetch complete submission data if we only have basic info
-        let completeSubmission = submission;
-        if (!submission.answers || !submission.results || !submission.correctAnswers) {
+        let completeSubmission = submissionProp;
+        if (
+          !submissionProp.answers ||
+          !submissionProp.results ||
+          !submissionProp.correctAnswers ||
+          submissionProp.highlights === undefined
+        ) {
           console.log('🔍 Fetching complete submission data...');
-          const submissionResponse = await fetch(`${API_BASE}/api/submissions/submission/${submission._id}`);
+          const submissionResponse = await fetch(`${API_BASE}/api/submissions/submission/${submissionProp._id}`);
           if (submissionResponse.ok) {
             completeSubmission = await submissionResponse.json();
             console.log('✅ Complete submission data fetched:', completeSubmission);
-            // Update the submission object with complete data
-            Object.assign(submission, completeSubmission);
           } else {
             console.error('❌ Failed to fetch complete submission data');
           }
         }
+
+        setFetchedSubmission(completeSubmission);
 
         // Extract testId value for API calls
         let testIdForAPI;
@@ -74,7 +88,7 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
     };
 
     fetchTestData();
-  }, [submission, submission?._id]);
+  }, [submissionProp, submissionProp?._id]);
 
   const handlePassageChange = (newPassage) => {
     console.log('🔄 TeacherTestAnalysis: Changing passage from', sharedPassage, 'to', newPassage);
@@ -298,7 +312,12 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
       {/* Test Content and Questions */}
       {console.log('🎯 About to render test type:', submission.testType.toLowerCase())}
       {submission.testType.toLowerCase() === 'reading' ? (
-        <HighlightProvider persist={false}>
+        <HighlightProvider
+          key={submission._id}
+          persist={false}
+          readOnly
+          initialHighlights={submissionHighlights}
+        >
           <div className="test-viewer-container">
             <div 
               className="test-content-area"
@@ -350,6 +369,7 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
             overflow: 'visible'
           }}>
             <ListeningQuestionView 
+              key={submission._id}
               selectedTest={{
                 ...selectedTest,
                 audioSrc: (() => {
@@ -364,6 +384,8 @@ const TeacherTestAnalysis = ({ submission, onBack }) => {
               testResults={testResults}
               testSubmitted={true}
               isTeacherMode={true}
+              readOnly
+              initialHighlights={submissionHighlights}
               onBackToStudent={onBack}
               testData={testData}
               sharedPassage={sharedPassage}

@@ -24,6 +24,49 @@ export const removeTestSession = (storageKey) => {
   }
 };
 
+const resetKeyFor = (storageKey) => `${storageKey}-reset`;
+
+// Device-local marker recording when the student ended an attempt via
+// Take Test Again / Reset Test. Compared against submission.submittedAt so a
+// later submission supersedes it without any cleanup step.
+export const markTestReset = (storageKey) => {
+  if (!storageKey) return;
+
+  localStorage.setItem(resetKeyFor(storageKey), String(Date.now()));
+};
+
+export const getTestResetAt = (storageKey) => {
+  if (!storageKey) return 0;
+
+  const raw = localStorage.getItem(resetKeyFor(storageKey));
+  if (!raw) return 0;
+
+  const parsed = Number(raw);
+  return Number.isFinite(parsed) ? parsed : 0;
+};
+
+export const SESSION_META_KEYS = [
+  '_timestamp',
+  '_currentPassage',
+  '_currentPart',
+  '_testSubmitted',
+  '_testResults',
+  '_testStarted',
+  '_timerStartedAt',
+  '_timerDurationMs',
+  '_highlights',
+];
+
+export const stripSessionMeta = (session) => {
+  if (!session || typeof session !== 'object') return {};
+
+  const answers = { ...session };
+  SESSION_META_KEYS.forEach((key) => {
+    delete answers[key];
+  });
+  return answers;
+};
+
 export const clearHighlightsFromSession = (storageKey) => {
   if (!storageKey) return;
 
