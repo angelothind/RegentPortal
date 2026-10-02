@@ -10,7 +10,7 @@ import { isSessionExpired } from '../../utils/testSessionUtils';
 import { loadTestSession, saveTestSession } from '../../utils/testSessionStorage';
 import { READING_TIMER_MS } from '../../hooks/useExamTimer';
 
-const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscreen }) => {
+const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscreen, teacherPractice = false }) => {
   const [testData, setTestData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [passageWidth, setPassageWidth] = useState(56);
@@ -28,8 +28,9 @@ const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscre
 
   // Load test state from localStorage when selectedTest changes
   useEffect(() => {
-    // Reset testStarted and passage when a new test is selected
-    setTestStarted(false);
+    // Reset testStarted and passage when a new test is selected.
+    // Teacher practice opens ready to answer, with no start step.
+    setTestStarted(Boolean(teacherPractice));
     setSharedPassage(1);
     setExamTimerState({
       remainingMs: READING_TIMER_MS,
@@ -46,13 +47,13 @@ const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscre
           localStorage.removeItem(storageKey);
           return;
         }
-        if (parsedData._testStarted) {
+        if (!teacherPractice && parsedData._testStarted) {
           setTestStarted(true);
           console.log('📝 Restored testStarted state from localStorage');
         }
       }
     }
-  }, [selectedTest, user?._id]);
+  }, [selectedTest, user?._id, teacherPractice]);
 
   const handleStartTest = () => {
     setTestStarted(true);
@@ -70,7 +71,7 @@ const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscre
   };
 
   const handleTestReset = () => {
-    setTestStarted(false);
+    setTestStarted(Boolean(teacherPractice));
     setTestSubmitted(false);
     setTestResults(null);
     setSharedPassage(1);
@@ -219,6 +220,7 @@ const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscre
                 <QuestionView 
                   selectedTest={selectedTest} 
                   user={user} 
+                  teacherPractice={teacherPractice}
                   testStarted={testStarted}
                   onTestReset={handleTestReset}
                   sharedPassage={sharedPassage}
@@ -243,7 +245,8 @@ const TestViewer = ({ selectedTest, user, isFullscreen = false, onToggleFullscre
                   ? `${API_BASE}/assets/${testData.sources[0].contentPath}` 
                   : null
               }} 
-              user={user} 
+              user={user}
+              teacherPractice={teacherPractice}
             />
           </div>
         </div>

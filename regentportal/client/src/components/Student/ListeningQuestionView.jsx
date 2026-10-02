@@ -26,7 +26,7 @@ import {
   getTestResetAt,
 } from '../../utils/testSessionStorage';
 
-const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null, testData, sharedPassage, onPassageChange }) => {
+const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, teacherPractice = false, onBackToStudent = null, testData, sharedPassage, onPassageChange }) => {
   console.log('🔍 ListeningQuestionView received user:', user);
   console.log('🔍 ListeningQuestionView received selectedTest:', selectedTest);
   const [questionData, setQuestionData] = useState(null);
@@ -36,7 +36,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
   // In teacher mode, use sharedPassage as the part number (parent-controlled)
   // In student mode, use internal currentPart state
   const [currentPart, setCurrentPart] = useState(isTeacherMode && sharedPassage ? sharedPassage : 1);
-  const [testStarted, setTestStarted] = useState(isTeacherMode);
+  const [testStarted, setTestStarted] = useState(isTeacherMode || teacherPractice);
   const [testSubmitted, setTestSubmitted] = useState(false);
   const [testResults, setTestResults] = useState(null);
   
@@ -56,10 +56,10 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     setTestSubmitted(false);
     setTestResults(null);
     setAnswers({});
-    setTestStarted(false);
+    setTestStarted(teacherPractice);
     setCurrentPart(1);
     clearHighlights();
-  }, [clearHighlights]);
+  }, [clearHighlights, teacherPractice]);
 
   useTestSessionExpiry({
     enabled: !isTeacherMode,
@@ -98,7 +98,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     setAnswers({});
     setTestSubmitted(false);
     setTestResults(null);
-    setTestStarted(false);
+    setTestStarted(teacherPractice);
     setCurrentPart(1);
 
     const loadTestData = async () => {
@@ -110,6 +110,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
       const testType = selectedTest.type;
       const testStorageKey = `test-answers-${testId}-${testType}-${user._id}`;
 
+      if (!teacherPractice) {
       try {
         // First, try to fetch submission from backend (for marked tests)
         // Include testType in query to ensure we get the correct submission (Reading vs Listening)
@@ -227,6 +228,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
         console.error('❌ Error fetching submission from backend:', error);
         // Fall through to localStorage check
       }
+      }
 
       // Fallback to localStorage for in-progress tests
       console.log('🔍 Looking for in-progress answers in localStorage with key:', testStorageKey);
@@ -242,7 +244,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
             return;
           }
           
-          if (parsedAnswers._testSubmitted && parsedAnswers._testResults) {
+          if (!teacherPractice && parsedAnswers._testSubmitted && parsedAnswers._testResults) {
             if (
               isSubmissionExpired(parsedAnswers._testResults.submittedAt) ||
               isSessionExpired(parsedAnswers._timestamp)
@@ -267,8 +269,11 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
             console.log('📝 Restored current part from localStorage:', _currentPart);
           }
           
-          // Restore testStarted if it was saved AND there are actual answers
-          if (_testStarted && Object.keys(restoredAnswers).length > 0) {
+          // Restore testStarted if it was saved AND there are actual answers.
+          // Teacher practice stays open with no start overlay.
+          if (teacherPractice) {
+            setTestStarted(true);
+          } else if (_testStarted && Object.keys(restoredAnswers).length > 0) {
             setTestStarted(true);
             console.log('📝 Restored testStarted from localStorage (in-progress test)');
           } else if (_testStarted && Object.keys(restoredAnswers).length === 0) {
@@ -288,7 +293,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     };
 
     loadTestData();
-  }, [selectedTest?.testId?._id, selectedTest?.type, user?._id, isTeacherMode, clearHighlights, replaceHighlights]);
+  }, [selectedTest?.testId?._id, selectedTest?.type, user?._id, isTeacherMode, teacherPractice, clearHighlights, replaceHighlights]);
 
   // Keep activePartRef in sync with sharedPassage (for teacher mode) or currentPart (for student mode)
   useEffect(() => {
@@ -329,11 +334,11 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
 
   // Reset to part 1 when overlay shows (test not started) - only for students
   useEffect(() => {
-    if (!isTeacherMode && !testStarted && currentPart !== 1) {
+    if (!isTeacherMode && !teacherPractice && !testStarted && currentPart !== 1) {
       console.log('🔄 Test not started - resetting to part 1');
       setCurrentPart(1);
     }
-  }, [testStarted, currentPart, isTeacherMode]);
+  }, [testStarted, currentPart, isTeacherMode, teacherPractice]);
 
   // Define fetchQuestionData function with race condition protection
   const fetchQuestionData = useCallback(async (partNumber = null) => {
@@ -479,14 +484,14 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
   // Additional safety: ensure part 1 when overlay should show - only for students
   useEffect(() => {
     // Show overlay when: not started (and not teacher mode)
-    const shouldShowOverlay = !testStarted && !isTeacherMode;
+    const shouldShowOverlay = !testStarted && !isTeacherMode && !teacherPractice;
     
     if (shouldShowOverlay && currentPart !== 1) {
       console.log('🔄 Overlay should show - forcing reset to part 1');
       setCurrentPart(1);
     }
     // In teacher mode, allow any part to be selected
-  }, [testStarted, currentPart, isTeacherMode]);
+  }, [testStarted, currentPart, isTeacherMode, teacherPractice]);
 
   // Add refresh confirmation warning
   useEffect(() => {
@@ -681,6 +686,10 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
   };
 
   const handleSubmit = async () => {
+    if (teacherPractice) {
+      return;
+    }
+
     // Validate user data before submission
     if (!user || !user._id) {
       console.error('❌ No valid user data available for submission');
@@ -831,10 +840,14 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
   };
 
   const handleResetTest = () => {
-    const confirmed = window.confirm('Are you sure you want to reset the test? This will clear all your answers and return to the start.');
+    const confirmed = window.confirm(
+      teacherPractice
+        ? 'Are you sure you want to reset the test? This will clear all your answers.'
+        : 'Are you sure you want to reset the test? This will clear all your answers and return to the start.'
+    );
     if (!confirmed) return;
     
-    setTestStarted(false);
+    setTestStarted(Boolean(teacherPractice));
     setTestSubmitted(false);
     setTestResults(null);
     setAnswers({});
@@ -1184,28 +1197,28 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
               <button 
                 className={`part-button ${currentPart === 1 ? 'active' : ''}`}
                 onClick={() => handlePartChange(1)}
-                disabled={!testStarted && !isTeacherMode}
+                disabled={!testStarted && !isTeacherMode && !teacherPractice}
               >
                 Part 1
               </button>
               <button 
                 className={`part-button ${currentPart === 2 ? 'active' : ''}`}
                 onClick={() => handlePartChange(2)}
-                disabled={!testStarted && !isTeacherMode}
+                disabled={!testStarted && !isTeacherMode && !teacherPractice}
               >
                 Part 2
               </button>
               <button 
                 className={`part-button ${currentPart === 3 ? 'active' : ''}`}
                 onClick={() => handlePartChange(3)}
-                disabled={!testStarted && !isTeacherMode}
+                disabled={!testStarted && !isTeacherMode && !teacherPractice}
               >
                 Part 3
               </button>
               <button 
                 className={`part-button ${currentPart === 4 ? 'active' : ''}`}
                 onClick={() => handlePartChange(4)}
-                disabled={!testStarted && !isTeacherMode}
+                disabled={!testStarted && !isTeacherMode && !teacherPractice}
               >
                 Part 4
               </button>
@@ -1214,8 +1227,20 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
           
           {renderQuestionComponent()}
           
+          {teacherPractice && (
+            <div className="submit-section">
+              <button
+                type="button"
+                className="reset-button"
+                onClick={handleResetTest}
+              >
+                Reset
+              </button>
+            </div>
+          )}
+
           {/* Submit button - Only show for students, not teachers */}
-          {currentPart === 4 && testStarted && !isTeacherMode && (
+          {currentPart === 4 && testStarted && !isTeacherMode && !teacherPractice && (
             <div className="submit-section">
               <button 
                 className={testSubmitted ? "reset-button" : "submit-button"}
@@ -1277,7 +1302,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
         </HighlightableArea>
         
         {/* Start Test Overlay - Only show for students, not teachers */}
-        {!testStarted && !isTeacherMode && (
+        {!testStarted && !isTeacherMode && !teacherPractice && (
           <div className="test-overlay">
             <div className="overlay-content">
               <h2>Ready to Start?</h2>
