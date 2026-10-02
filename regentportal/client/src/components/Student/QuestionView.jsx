@@ -29,6 +29,28 @@ import {
   getTestResetAt,
 } from '../../utils/testSessionStorage';
 
+const buildPracticeResults = (data, currentAnswers) => {
+  const correctAnswers = {};
+  Object.keys(data.results || {}).forEach((questionNumber) => {
+    const resultItem = data.results[questionNumber];
+    if (Array.isArray(resultItem.correctAnswer)) {
+      correctAnswers[questionNumber] = resultItem.correctAnswer.join(', ');
+    } else {
+      correctAnswers[questionNumber] = resultItem.correctAnswer;
+    }
+  });
+
+  return {
+    score: data.score,
+    totalQuestions: data.totalQuestions,
+    correctCount: data.correctCount,
+    answers: currentAnswers,
+    correctAnswers,
+    results: data.results,
+    submittedAt: new Date().toISOString(),
+  };
+};
+
 const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, teacherPractice = false, onTestReset, sharedPassage, onPassageChange, testData, onExamTimerChange }) => {
   console.log('🚀 QuestionView component mounted with selectedTest:', selectedTest);
   console.log('🔍 QuestionView received user:', user);
@@ -42,6 +64,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
   const [answers, setAnswers] = useState({});
   const [testSubmitted, setTestSubmitted] = useState(externalTestSubmitted || false);
   const [testResults, setTestResults] = useState(externalTestResults || null);
+  const [marking, setMarking] = useState(false);
   const [testStarted, setTestStarted] = useState(isTeacherMode || teacherPractice); // Add testStarted state like ListeningQuestionView
   const [timerStartedAt, setTimerStartedAt] = useState(null);
   const [timerExpiredModalOpen, setTimerExpiredModalOpen] = useState(false);
@@ -615,6 +638,18 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
             console.log('⚠️ Marked test found in localStorage - should use backend instead');
             return;
           }
+
+          if (
+            teacherPractice &&
+            parsedAnswers._testSubmitted &&
+            parsedAnswers._testResults &&
+            isSubmissionExpired(parsedAnswers._testResults.submittedAt)
+          ) {
+            clearTestStorage(testStorageKey);
+            clearHighlights();
+            console.log('📝 Cleared expired teacher practice mark from localStorage');
+            return;
+          }
           
           // Remove the timestamp from the answers object before setting state
           const {
@@ -636,6 +671,10 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
           if (teacherPractice) {
             setTestStarted(true);
             setTimerStartedAt(null);
+            if (_testSubmitted && _testResults) {
+              setTestSubmitted(true);
+              setTestResults(_testResults);
+            }
             if (_currentPassage && typeof _currentPassage === 'number') {
               setCurrentPassage(_currentPassage);
               activePassageRef.current = _currentPassage;
@@ -729,8 +768,9 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
   }, [testSubmitted, answers, isTeacherMode]);
 
   const handleAnswerChange = (questionNumberOrNewAnswers, value) => {
-    // In teacher mode, don't allow answer changes
-    if (isTeacherMode) {
+    // In teacher mode, don't allow answer changes.
+    // A marked practice test stays locked until Reset.
+    if (isTeacherMode || (teacherPractice && testSubmitted)) {
       console.log('👨‍🏫 Teacher mode: Answer changes not allowed');
       return;
     }
@@ -779,14 +819,76 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
 
 
 
+  const handleMark = async () => {
+    if (!teacherPractice || finalTestSubmitted || marking) {
+      return;
+    }
+
+    if (!selectedTest?.testId) {
+      return;
+    }
+
+    setMarking(true);
+
+    try {
+      const normalizedAnswers = normalizeAnswers(answers);
+      const response = await fetch(`${API_BASE}/api/submit/grade`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          testId: selectedTest.testId._id,
+          testType: selectedTest.type,
+          answers: normalizedAnswers,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error(result.message || 'Failed to mark test');
+      }
+
+      const markedResults = buildPracticeResults(result.data, answers);
+      setTestResults(markedResults);
+      setTestSubmitted(true);
+
+      const markStorageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
+      saveTestSession(markStorageKey, {
+        ...answers,
+        _timestamp: Date.now(),
+        _currentPassage: currentPassage,
+        _testSubmitted: true,
+        _testStarted: true,
+        _testResults: markedResults,
+      });
+
+      alert(`Test submitted successfully!\nYour score: ${result.data.score}%`);
+    } catch (error) {
+      console.error('Error marking practice test:', error);
+      alert('Failed to mark test. Please try again.');
+    } finally {
+      setMarking(false);
+    }
+  };
+
   const handleSubmit = async () => {
-    if (isTeacherMode || teacherPractice) {
+    if (isTeacherMode) {
       console.log('👨‍🏫 Teacher mode: Test submission not allowed');
       return;
     }
 
     const confirmed = window.confirm('Are you sure you want to submit the test? You cannot change your answers after submission.');
     if (!confirmed) return;
+
+    if (teacherPractice) {
+      await handleMark();
+      return;
+    }
 
     await submitTest();
   };
@@ -819,11 +921,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       return;
     }
 
-    const confirmed = window.confirm(
-      teacherPractice
-        ? 'Are you sure you want to reset the test? This will clear all your answers.'
-        : 'Are you sure you want to reset the test? This will clear all your answers and return to the start.'
-    );
+    const confirmed = window.confirm('Are you sure you want to reset the test? This will clear all your answers and return to the start.');
     if (!confirmed) return;
     
     console.log('🔄 Starting test reset...');
@@ -1098,7 +1196,7 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         contentVersion={contentVersion}
       >
         {renderQuestionComponent()}
-        {finalTestSubmitted && currentPassage === 3 && finalTestResults && (
+        {finalTestSubmitted && finalTestResults && currentPassage === 3 && (
           <div className="results-section">
             <h3>Test Results</h3>
             <div className="score-details compact">
@@ -1132,18 +1230,8 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         )}
       </HighlightableArea>
       
-      {teacherPractice && (
-        <div className="test-controls">
-          <div className="submit-section">
-            <button type="button" className="reset-button" onClick={handleResetTest}>
-              Reset
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Submit only on last passage (not shown in teacher mode) */}
-      {!isTeacherMode && !teacherPractice && currentPassage === 3 && !finalTestSubmitted && (
+      {/* Submit only on last passage (not shown while reviewing a student submission) */}
+      {!isTeacherMode && currentPassage === 3 && !finalTestSubmitted && (
         <div className="test-controls">
           <div className="submit-section">
             <button className="submit-button" onClick={handleSubmit}>

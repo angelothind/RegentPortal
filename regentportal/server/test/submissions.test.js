@@ -53,6 +53,35 @@ test('POST /api/submit/submit grades against database answers and stores a submi
   assert.equal(stored.score, 67);
 });
 
+test('POST /api/submit/grade returns a grade without saving a submission', async () => {
+  const testDoc = await Test.create({
+    title: 'Test 1',
+    belongsTo: 'Book18',
+    sources: [],
+    answers: { reading: ['B', 'A', 'C'] }
+  });
+
+  const res = await request(app)
+    .post('/api/submit/grade')
+    .send({
+      testId: testDoc._id.toString(),
+      testType: 'reading',
+      answers: { 1: 'B', 2: 'X', 3: 'C' }
+    });
+
+  assert.equal(res.status, 200);
+  assert.equal(res.body.success, true);
+  assert.equal(res.body.data.totalQuestions, 3);
+  assert.equal(res.body.data.correctCount, 2);
+  assert.equal(res.body.data.score, 67);
+  assert.equal(res.body.data.results['1'].isCorrect, true);
+  assert.equal(res.body.data.results['2'].isCorrect, false);
+  assert.equal(res.body.data.submissionId, undefined);
+
+  const stored = await TestSubmission.countDocuments();
+  assert.equal(stored, 0);
+});
+
 test('POST /api/submit/submit persists sanitized highlights and echoes them back', async () => {
   const testDoc = await Test.create({
     title: 'Test 1',

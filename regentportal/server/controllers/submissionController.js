@@ -83,6 +83,52 @@ const submitTest = async (req, res) => {
   }
 };
 
+// POST /api/submit/grade
+// Grades the supplied answers without creating a TestSubmission.
+const gradeTest = async (req, res) => {
+  try {
+    const { testId, testType, answers } = req.body;
+
+    if (!testId || !testType || answers == null || typeof answers !== 'object' || Array.isArray(answers)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing required fields: testId, testType, answers'
+      });
+    }
+
+    const normalizedTestType = testType.toLowerCase();
+    const correctAnswers = await gradingService.loadCorrectAnswers(testId, normalizedTestType);
+
+    if (!correctAnswers || Object.keys(correctAnswers).length === 0) {
+      console.error('No correct answers loaded');
+      return res.status(500).json({
+        success: false,
+        message: 'Failed to load correct answers'
+      });
+    }
+
+    const normalizedAnswers = gradingService.normalizeTableCompletionAnswers(answers);
+    const { results, correctCount, totalQuestions, score } = gradingService.gradeAnswers(correctAnswers, normalizedAnswers);
+
+    res.json({
+      success: true,
+      data: {
+        score,
+        totalQuestions,
+        correctCount,
+        results
+      }
+    });
+  } catch (error) {
+    console.error('Error grading test:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to grade test',
+      error: error.message
+    });
+  }
+};
+
 // Get a specific submission by ID with complete details (MUST come first)
 const getSubmissionById = async (req, res) => {
   try {
@@ -197,6 +243,7 @@ const getTestSubmissions = async (req, res) => {
 
 module.exports = {
   submitTest,
+  gradeTest,
   getSubmissionById,
   getStudentSubmissions,
   getLatestStudentTestSubmission,
