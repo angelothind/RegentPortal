@@ -208,6 +208,7 @@
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.85);
   font-family: 'Courier New', monospace;
+  font-weight: 900;
 }
 
 .audio-controls {
@@ -238,7 +239,7 @@
   min-width: 40px;
   padding: 0 8px;
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 900;
   line-height: 1;
   cursor: pointer;
   flex-shrink: 0;
@@ -297,7 +298,7 @@
   min-width: 0;
   height: 10px;
   min-height: 10px;
-  background-color: #b7b3e3;
+  background-color: #c9c7d9;
   border-radius: 999px;
   position: relative;
   overflow: hidden;
