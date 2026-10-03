@@ -5,7 +5,7 @@ import '../../styles/Admin/StudentTable.css';
 import API_BASE from '../../utils/api';
 import { calculateIELTSBand, getBandScoreDescription, formatBandScore } from '../../utils/bandScoreCalculator';
 
-const StudentDetails = ({ student, onBack }) => {
+const StudentDetails = ({ student, onBack, selfView = false }) => {
   const [testSubmissions, setTestSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTest, setSelectedTest] = useState(null);
@@ -18,13 +18,18 @@ const StudentDetails = ({ student, onBack }) => {
     if (student) {
       fetchStudentSubmissions();
     }
-  }, [student]);
+  }, [student, selfView]);
 
   const fetchStudentSubmissions = async () => {
     if (!student) return;
 
     try {
-      const response = await fetch(`${API_BASE}/api/teachers/submissions/student/${student._id}`);
+      const token = localStorage.getItem('token');
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      const url = selfView
+        ? `${API_BASE}/api/submissions/mine`
+        : `${API_BASE}/api/teachers/submissions/student/${student._id}`;
+      const response = await fetch(url, { headers });
       const data = await response.json();
       setTestSubmissions(data.submissions || []);
       setLoading(false);
@@ -138,9 +143,11 @@ const StudentDetails = ({ student, onBack }) => {
       ) : (
         <>
           <div className="student-header">
-            <button className="back-button" onClick={onBack}>
-              ← Back to Students
-        </button>
+            {!selfView && (
+              <button className="back-button" onClick={onBack}>
+                ← Back to Students
+              </button>
+            )}
             <h2>{student.name}</h2>
             <p>Username: {student.username}</p>
       </div>

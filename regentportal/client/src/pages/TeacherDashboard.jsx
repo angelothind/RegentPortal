@@ -136,6 +136,7 @@ const TeacherDashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('currentUserId');
+    localStorage.removeItem('token');
 
     Object.keys(localStorage).forEach((key) => {
       if (key.startsWith('test-answers-')) {

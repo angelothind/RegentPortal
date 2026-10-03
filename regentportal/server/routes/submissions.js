@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const submissionController = require('../controllers/submissionController');
 
+// Logged-in student's own submissions (id comes from the JWT)
+router.get('/mine', submissionController.getMySubmissions);
+
 // Get a specific submission by ID with complete details (MUST come first)
 router.get('/submission/:submissionId', submissionController.getSubmissionById);
 
