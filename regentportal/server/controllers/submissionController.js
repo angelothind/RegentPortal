@@ -3,6 +3,8 @@ const TestSubmission = require('../models/TestSubmission');
 const Student = require('../models/Student');
 const gradingService = require('../services/gradingService');
 const sanitizeHighlights = require('../utils/sanitizeHighlights');
+const { getAuthPayload } = require('../utils/authToken');
+const teacherController = require('./teacherController');
 
 // POST /api/submit/submit
 const submitTest = async (req, res) => {
@@ -139,11 +141,30 @@ const getSubmissionById = async (req, res) => {
       return res.status(404).json({ error: 'Submission not found' });
     }
 
+    const payload = getAuthPayload(req);
+    if (payload && payload.userType === 'Student') {
+      const ownerId = submission.studentId?._id || submission.studentId;
+      if (String(ownerId) !== String(payload.userId)) {
+        return res.status(403).json({ error: 'Forbidden' });
+      }
+    }
+
     res.json(submission);
   } catch (err) {
     console.error('Error fetching submission:', err);
     res.status(500).json({ error: 'Server error' });
   }
+};
+
+// GET /api/submissions/mine — student id comes from the JWT, not the URL
+const getMySubmissions = async (req, res) => {
+  const payload = getAuthPayload(req);
+  if (!payload || payload.userType !== 'Student') {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  req.params.studentId = payload.userId;
+  return teacherController.getStudentSubmissionsForTeacher(req, res);
 };
 
 // Get all submissions for a student
@@ -245,6 +266,7 @@ module.exports = {
   submitTest,
   gradeTest,
   getSubmissionById,
+  getMySubmissions,
   getStudentSubmissions,
   getLatestStudentTestSubmission,
   getTestSubmissions

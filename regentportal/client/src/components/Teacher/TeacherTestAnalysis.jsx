@@ -48,7 +48,9 @@ const TeacherTestAnalysis = ({ submission: submissionProp, onBack }) => {
           submissionProp.highlights === undefined
         ) {
           console.log('🔍 Fetching complete submission data...');
-          const submissionResponse = await fetch(`${API_BASE}/api/submissions/submission/${submissionProp._id}`);
+          const token = localStorage.getItem('token');
+          const headers = token ? { Authorization: `Bearer ${token}` } : {};
+          const submissionResponse = await fetch(`${API_BASE}/api/submissions/submission/${submissionProp._id}`, { headers });
           if (submissionResponse.ok) {
             completeSubmission = await submissionResponse.json();
             console.log('✅ Complete submission data fetched:', completeSubmission);

@@ -4,6 +4,8 @@ import API_BASE from '../../utils/api';
 
 const StudentSidebar = ({
   onSelectTest,
+  onShowSubmissions,
+  showSubmissions = false,
   onLogout,
   isLoggingOut = false,
   hasSelectedTest = false,
@@ -32,6 +34,13 @@ const StudentSidebar = ({
 
     fetchBooks();
   }, []);
+
+  useEffect(() => {
+    if (showSubmissions) {
+      setSelectedTest(null);
+      setSelectedTestType(null);
+    }
+  }, [showSubmissions]);
 
   const toggleBook = (bookName) => {
     setOpenBook((prev) => (prev === bookName ? null : bookName));
@@ -88,6 +97,16 @@ const StudentSidebar = ({
           <h2 className="sidebar-title">Student Portal</h2>
           
           <ul className="sidebar-nav">
+            <li>
+              <button
+                type="button"
+                className={showSubmissions ? 'selected' : ''}
+                onClick={onShowSubmissions}
+              >
+                Submissions
+              </button>
+            </li>
+
             {books.map((book) => (
               <li key={book._id}>
                 <button onClick={() => toggleBook(book.name)}>{book.name}</button>

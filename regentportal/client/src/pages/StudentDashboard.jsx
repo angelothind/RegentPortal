@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import StudentSidebar from '../components/Student/StudentSidebar';
+import StudentDetails from '../components/Teacher/StudentDetails';
 import TestViewer from '../components/Student/TestViewer';
 import '../styles/UserLayout/StudentDashboard.css';
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
   const [selectedTest, setSelectedTest] = useState(null);
+  const [showSubmissions, setShowSubmissions] = useState(false);
   const [user, setUser] = useState(null);
 
   // Get user data from navigation state or localStorage
@@ -37,6 +39,7 @@ const StudentDashboard = () => {
             // Clear potentially corrupted user data
             localStorage.removeItem('user');
             localStorage.removeItem('currentUserId');
+            localStorage.removeItem('token');
             alert('Security Error: User session mismatch detected. Please log in again.');
             navigate('/');
             return;
@@ -54,8 +57,14 @@ const StudentDashboard = () => {
 
   const handleSelectTest = async (testInfo) => {
     console.log('🔍 StudentDashboard: handleSelectTest called with:', testInfo);
+    setShowSubmissions(false);
     setSelectedTest(testInfo);
     console.log('🔍 StudentDashboard: selectedTest state set to:', testInfo);
+  };
+
+  const handleShowSubmissions = () => {
+    setSelectedTest(null);
+    setShowSubmissions(true);
   };
 
   // Debug: Monitor selectedTest state changes
@@ -155,6 +164,7 @@ const StudentDashboard = () => {
       console.log('🧹 Clearing user data...');
       localStorage.removeItem('user');
       localStorage.removeItem('currentUserId');
+      localStorage.removeItem('token');
       
       // Clear any test-related data that might be causing delays
       console.log('🧹 Clearing test data...');
@@ -190,6 +200,8 @@ const StudentDashboard = () => {
     <div className="student-dashboard" ref={dashboardRef}>
       <StudentSidebar
         onSelectTest={handleSelectTest}
+        onShowSubmissions={handleShowSubmissions}
+        showSubmissions={showSubmissions}
         onLogout={handleLogout}
         isLoggingOut={isLoggingOut}
         hasSelectedTest={Boolean(selectedTest)}
@@ -212,7 +224,7 @@ const StudentDashboard = () => {
         ref={mainContentRef}
         className={`main-content-area${isFullscreen ? ' fullscreen-mode' : ''}`}
       >
-        {selectedTest && (
+        {selectedTest ? (
           <>
             {console.log('🔍 StudentDashboard passing to TestViewer:', { selectedTest, user })}
             <TestViewer
@@ -222,7 +234,9 @@ const StudentDashboard = () => {
               onToggleFullscreen={toggleFullscreen}
             />
           </>
-        )}
+        ) : showSubmissions && user ? (
+          <StudentDetails student={user} selfView />
+        ) : null}
       </div>
     </div>
   );

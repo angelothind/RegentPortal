@@ -8,6 +8,7 @@ const Student = require('../models/Student');
 const Teacher = require('../models/Teacher');
 const Book = require('../models/Book');
 const TestSubmission = require('../models/TestSubmission');
+const generateToken = require('../utils/generateToken');
 
 let app;
 
@@ -210,6 +211,7 @@ test('GET/POST /api/teachers/:teacherId/favorites toggles a favorited student', 
 test('GET /api/teachers/submissions/student/:studentId formats submissions with book/test names', async () => {
   const testDoc = await Test.create({ title: 'Test 1', belongsTo: 'Book18', sources: [] });
   const student = await Student.create({ name: 'Ann', nickname: 'A', username: 'ann', password: 'secret' });
+  const teacher = await Teacher.create({ name: 'Mr T', username: 'teach', password: 'secret' });
   await Book.create({ name: 'Book18', tests: [{ testId: testDoc._id, testName: 'Test 1' }] });
   await TestSubmission.create({
     studentId: student._id,
@@ -223,12 +225,79 @@ test('GET /api/teachers/submissions/student/:studentId formats submissions with 
     correctCount: 1
   });
 
-  const res = await request(app).get(`/api/teachers/submissions/student/${student._id}`);
+  const token = generateToken(teacher._id, 'Teacher');
+  const res = await request(app)
+    .get(`/api/teachers/submissions/student/${student._id}`)
+    .set('Authorization', `Bearer ${token}`);
 
   assert.equal(res.status, 200);
   assert.equal(res.body.submissions.length, 1);
   assert.equal(res.body.submissions[0].bookTitle, 'Book18');
   assert.equal(res.body.submissions[0].testName, 'Test 1');
+});
+
+test('GET /api/teachers/submissions/student/:studentId rejects missing and student tokens', async () => {
+  const student = await Student.create({ name: 'Ann', nickname: 'A', username: 'ann', password: 'secret' });
+  const studentToken = generateToken(student._id, 'Student');
+
+  const missing = await request(app).get(`/api/teachers/submissions/student/${student._id}`);
+  assert.equal(missing.status, 401);
+
+  const forbidden = await request(app)
+    .get(`/api/teachers/submissions/student/${student._id}`)
+    .set('Authorization', `Bearer ${studentToken}`);
+  assert.equal(forbidden.status, 403);
+});
+
+test('GET /api/submissions/mine returns only the logged-in student submissions', async () => {
+  const testDoc = await Test.create({ title: 'Test 1', belongsTo: 'Book18', sources: [] });
+  const student = await Student.create({ name: 'Ann', nickname: 'A', username: 'ann', password: 'secret' });
+  const other = await Student.create({ name: 'Ben', nickname: 'B', username: 'ben', password: 'secret' });
+  await Book.create({ name: 'Book18', tests: [{ testId: testDoc._id, testName: 'Test 1' }] });
+  await TestSubmission.create({
+    studentId: student._id,
+    testId: testDoc._id,
+    testType: 'reading',
+    answers: { 1: 'B' },
+    correctAnswers: { 1: 'B' },
+    results: { 1: { userAnswer: 'B', correctAnswer: 'B', isCorrect: true } },
+    score: 100,
+    totalQuestions: 1,
+    correctCount: 1
+  });
+  await TestSubmission.create({
+    studentId: other._id,
+    testId: testDoc._id,
+    testType: 'listening',
+    answers: { 1: 'A' },
+    correctAnswers: { 1: 'A' },
+    results: { 1: { userAnswer: 'A', correctAnswer: 'A', isCorrect: true } },
+    score: 80,
+    totalQuestions: 1,
+    correctCount: 1
+  });
+
+  const token = generateToken(student._id, 'Student');
+  const res = await request(app)
+    .get('/api/submissions/mine')
+    .set('Authorization', `Bearer ${token}`);
+
+  assert.equal(res.status, 200);
+  assert.equal(res.body.submissions.length, 1);
+  assert.equal(res.body.submissions[0].bookTitle, 'Book18');
+  assert.equal(res.body.submissions[0].testName, 'Test 1');
+  assert.equal(res.body.submissions[0].testType, 'reading');
+  assert.equal(res.body.submissions[0].score, 100);
+
+  const teacher = await Teacher.create({ name: 'Mr T', username: 'teach', password: 'secret' });
+  const teacherToken = generateToken(teacher._id, 'Teacher');
+  const rejected = await request(app)
+    .get('/api/submissions/mine')
+    .set('Authorization', `Bearer ${teacherToken}`);
+  assert.equal(rejected.status, 401);
+
+  const missing = await request(app).get('/api/submissions/mine');
+  assert.equal(missing.status, 401);
 });
 
 test('GET /api/submissions/submission/:submissionId returns a single populated submission', async () => {
@@ -250,6 +319,43 @@ test('GET /api/submissions/submission/:submissionId returns a single populated s
 
   assert.equal(res.status, 200);
   assert.equal(res.body.testId.title, 'Test 1');
+});
+
+test('GET /api/submissions/submission/:submissionId rejects a student token for another student', async () => {
+  const testDoc = await Test.create({ title: 'Test 1', belongsTo: 'Book18', sources: [] });
+  const owner = await Student.create({ name: 'Ann', nickname: 'A', username: 'ann', password: 'secret' });
+  const other = await Student.create({ name: 'Ben', nickname: 'B', username: 'ben', password: 'secret' });
+  const submission = await TestSubmission.create({
+    studentId: owner._id,
+    testId: testDoc._id,
+    testType: 'reading',
+    answers: { 1: 'B' },
+    correctAnswers: { 1: 'B' },
+    results: { 1: { userAnswer: 'B', correctAnswer: 'B', isCorrect: true } },
+    score: 100,
+    totalQuestions: 1,
+    correctCount: 1
+  });
+
+  const otherToken = generateToken(other._id, 'Student');
+  const forbidden = await request(app)
+    .get(`/api/submissions/submission/${submission._id}`)
+    .set('Authorization', `Bearer ${otherToken}`);
+  assert.equal(forbidden.status, 403);
+
+  const ownToken = generateToken(owner._id, 'Student');
+  const own = await request(app)
+    .get(`/api/submissions/submission/${submission._id}`)
+    .set('Authorization', `Bearer ${ownToken}`);
+  assert.equal(own.status, 200);
+  assert.equal(own.body.testId.title, 'Test 1');
+
+  const teacher = await Teacher.create({ name: 'Mr T', username: 'teach', password: 'secret' });
+  const teacherToken = generateToken(teacher._id, 'Teacher');
+  const teacherRes = await request(app)
+    .get(`/api/submissions/submission/${submission._id}`)
+    .set('Authorization', `Bearer ${teacherToken}`);
+  assert.equal(teacherRes.status, 200);
 });
 
 test('GET /api/submissions/submission/:submissionId includes stored highlights', async () => {

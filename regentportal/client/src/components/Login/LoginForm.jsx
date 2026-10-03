@@ -30,6 +30,9 @@ const LoginForm = ({ onBack, userType }) => {
         console.log('✅ Login successful', data);
         console.log('🔍 User data from server:', data.user);
         console.log('🔍 User _id field:', data.user._id);
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+        }
         if (data.user.userType === 'Admin') {
           localStorage.setItem('user', JSON.stringify(data.user));
           localStorage.setItem('currentUserId', data.user._id); // Add user-specific identifier
