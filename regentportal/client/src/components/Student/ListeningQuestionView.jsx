@@ -10,6 +10,7 @@ import TFNG from '../Questions/TFNG';
 import { calculateIELTSBand, formatBandScore, getBandScoreDescription } from '../../utils/bandScoreCalculator';
 import { HighlightProvider, useHighlight } from '../../contexts/HighlightContext';
 import HighlightableArea from './HighlightableArea';
+import '../../styles/UserLayout/ListeningTest.css';
 import API_BASE from '../../utils/api';
 import useTestSessionExpiry from '../../hooks/useTestSessionExpiry';
 import {
@@ -73,7 +74,10 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
   const [audioIsPlaying, setAudioIsPlaying] = useState(false);
   const [audioCurrentTime, setAudioCurrentTime] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
+  const [audioSeekAnimating, setAudioSeekAnimating] = useState(false);
   const audioRef = useRef(null);
+  const audioSeekAnimatingRef = useRef(false);
+  const seekAnimationTimeoutRef = useRef(null);
   
   // Use external test results if provided (for teacher view)
   const finalTestResults = externalTestResults || testResults;
@@ -613,14 +617,53 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     setAudioIsPlaying(false);
   };
 
-  const handleAudioSeek = (e) => {
-    if (audioRef.current) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const percent = (e.clientX - rect.left) / rect.width;
-      const newTime = percent * audioDuration;
-      audioRef.current.currentTime = newTime;
-      setAudioCurrentTime(newTime);
+  const moveAudioTo = (targetTime) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const duration = Number.isFinite(audio.duration) ? audio.duration : audioDuration;
+    const clamped = Math.min(Math.max(targetTime, 0), duration || 0);
+
+    const apply = () => {
+      audio.currentTime = clamped;
+      setAudioCurrentTime(clamped);
+      if (seekAnimationTimeoutRef.current) {
+        clearTimeout(seekAnimationTimeoutRef.current);
+      }
+      seekAnimationTimeoutRef.current = setTimeout(() => {
+        audioSeekAnimatingRef.current = false;
+        setAudioSeekAnimating(false);
+      }, 280);
+    };
+
+    if (audioSeekAnimatingRef.current) {
+      apply();
+      return;
     }
+
+    audioSeekAnimatingRef.current = true;
+    setAudioSeekAnimating(true);
+    requestAnimationFrame(apply);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (seekAnimationTimeoutRef.current) {
+        clearTimeout(seekAnimationTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const handleAudioSeek = (e) => {
+    if (!audioRef.current || !audioDuration) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const percent = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
+    moveAudioTo(percent * audioDuration);
+  };
+
+  const handleAudioSkip = (seconds) => {
+    if (!audioRef.current) return;
+    moveAudioTo(audioRef.current.currentTime + seconds);
   };
 
   const formatTime = (time) => {
@@ -1134,6 +1177,68 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
 
     return (
       <div className="listening-question-view-container">
+        {selectedTest && selectedTest.audioSrc ? (
+          <div className="compact-audio-player">
+            <div className="audio-info">
+              <span className="audio-title">Listening Audio</span>
+              <span className="audio-time">{formatTime(audioCurrentTime)} / {formatTime(audioDuration)}</span>
+            </div>
+
+            <div className="audio-controls">
+              <div className="audio-transport">
+              <button
+                type="button"
+                className="audio-skip-btn"
+                onClick={() => handleAudioSkip(-15)}
+                aria-label="Rewind 15 seconds"
+                disabled={!audioDuration || audioCurrentTime <= 0}
+              >
+                −15
+              </button>
+              <button
+                type="button"
+                className={`play-pause-btn ${audioIsPlaying ? 'playing' : ''}`}
+                onClick={handleAudioPlayPause}
+                title={audioIsPlaying ? 'Pause' : 'Play'}
+              >
+                {audioIsPlaying ? (
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zm4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                  </svg>
+                )}
+              </button>
+              <button
+                type="button"
+                className="audio-skip-btn"
+                onClick={() => handleAudioSkip(15)}
+                aria-label="Forward 15 seconds"
+                disabled={!audioDuration || audioCurrentTime >= audioDuration}
+              >
+                +15
+              </button>
+              </div>
+
+              <div
+                className="audio-progress"
+                onClick={handleAudioSeek}
+                role="slider"
+                aria-label="Audio progress"
+                aria-valuemin={0}
+                aria-valuemax={audioDuration || 0}
+                aria-valuenow={audioCurrentTime}
+              >
+                <div
+                  className={`audio-progress-fill${audioSeekAnimating ? ' is-animating' : ''}`}
+                  style={{ width: `${audioDuration ? (audioCurrentTime / audioDuration) * 100 : 0}%` }}
+                ></div>
+              </div>
+            </div>
+          </div>
+        ) : null}
         <HighlightableArea
           regionId={`listening-questions-${currentPart}`}
           className="question-content"
@@ -1141,44 +1246,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
         >
           <div className="question-header">
             <div className="header-left">
-              <div className="header-top-row">
-                {selectedTest && selectedTest.audioSrc ? (
-                  <div className="compact-audio-player">
-                    <div className="audio-info">
-                      <span className="audio-title">Listening Audio</span>
-                      <span className="audio-time">{formatTime(audioCurrentTime)} / {formatTime(audioDuration)}</span>
-                    </div>
-                    
-                    <div className="audio-controls">
-                      <button 
-                        className={`play-pause-btn ${audioIsPlaying ? 'playing' : ''}`}
-                        onClick={handleAudioPlayPause}
-                        title={audioIsPlaying ? 'Pause' : 'Play'}
-                      >
-                        {audioIsPlaying ? (
-                          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zm4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
-                          </svg>
-                        ) : (
-                          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
-                          </svg>
-                        )}
-                      </button>
-                      
-                      <div className="progress-container">
-                        <div className="progress-bar" onClick={handleAudioSeek}>
-                          <div 
-                            className="progress-fill" 
-                            style={{ width: `${(audioCurrentTime / audioDuration) * 100}%` }}
-                          ></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ) : null}
-                <h3>Questions</h3>
-              </div>
+              <h3>Questions</h3>
             </div>
             <div className="part-toggle">
               <button 
