@@ -27,7 +27,61 @@ import {
   getTestResetAt,
 } from '../../utils/testSessionStorage';
 
-const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, onBackToStudent = null, testData, sharedPassage, onPassageChange }) => {
+const buildPracticeResults = (data, currentAnswers) => {
+  const correctAnswers = {};
+  Object.keys(data.results || {}).forEach((questionNumber) => {
+    const resultItem = data.results[questionNumber];
+    if (Array.isArray(resultItem.correctAnswer)) {
+      correctAnswers[questionNumber] = resultItem.correctAnswer.join(', ');
+    } else {
+      correctAnswers[questionNumber] = resultItem.correctAnswer;
+    }
+  });
+
+  return {
+    score: data.score,
+    totalQuestions: data.totalQuestions,
+    correctCount: data.correctCount,
+    answers: currentAnswers,
+    correctAnswers,
+    results: data.results,
+    submittedAt: new Date().toISOString(),
+  };
+};
+
+const normalizeListeningAnswers = (rawAnswers) => {
+  const normalized = { ...rawAnswers };
+  const keysToRemove = [];
+
+  Object.keys(rawAnswers).forEach((key) => {
+    if (typeof key === 'string' && key.includes('_')) {
+      const [baseQuestionNum, suffix] = key.split('_');
+      const suffixNum = Number(suffix);
+
+      if (!isNaN(suffixNum)) {
+        if (baseQuestionNum.includes('-')) {
+          const [startNum] = baseQuestionNum.split('-').map(Number);
+          const targetQuestionNum = startNum + suffixNum;
+
+          if (!isNaN(targetQuestionNum)) {
+            normalized[targetQuestionNum] = rawAnswers[key];
+            keysToRemove.push(key);
+          }
+        } else if (suffixNum === 0) {
+          normalized[baseQuestionNum] = rawAnswers[key];
+          keysToRemove.push(key);
+        } else {
+          keysToRemove.push(key);
+        }
+      }
+    }
+  });
+
+  keysToRemove.forEach((key) => delete normalized[key]);
+  return normalized;
+};
+
+const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, teacherPractice = false, onBackToStudent = null, testData, sharedPassage, onPassageChange }) => {
   console.log('🔍 ListeningQuestionView received user:', user);
   console.log('🔍 ListeningQuestionView received selectedTest:', selectedTest);
   const [questionData, setQuestionData] = useState(null);
@@ -37,9 +91,10 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
   // In teacher mode, use sharedPassage as the part number (parent-controlled)
   // In student mode, use internal currentPart state
   const [currentPart, setCurrentPart] = useState(isTeacherMode && sharedPassage ? sharedPassage : 1);
-  const [testStarted, setTestStarted] = useState(isTeacherMode);
+  const [testStarted, setTestStarted] = useState(isTeacherMode || teacherPractice);
   const [testSubmitted, setTestSubmitted] = useState(false);
   const [testResults, setTestResults] = useState(null);
+  const [marking, setMarking] = useState(false);
   
   // Race condition protection - same as QuestionView
   const abortControllerRef = useRef(null);
@@ -57,10 +112,10 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     setTestSubmitted(false);
     setTestResults(null);
     setAnswers({});
-    setTestStarted(false);
+    setTestStarted(teacherPractice);
     setCurrentPart(1);
     clearHighlights();
-  }, [clearHighlights]);
+  }, [clearHighlights, teacherPractice]);
 
   useTestSessionExpiry({
     enabled: !isTeacherMode,
@@ -102,7 +157,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     setAnswers({});
     setTestSubmitted(false);
     setTestResults(null);
-    setTestStarted(false);
+    setTestStarted(teacherPractice);
     setCurrentPart(1);
 
     const loadTestData = async () => {
@@ -114,6 +169,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
       const testType = selectedTest.type;
       const testStorageKey = `test-answers-${testId}-${testType}-${user._id}`;
 
+      if (!teacherPractice) {
       try {
         // First, try to fetch submission from backend (for marked tests)
         // Include testType in query to ensure we get the correct submission (Reading vs Listening)
@@ -231,6 +287,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
         console.error('❌ Error fetching submission from backend:', error);
         // Fall through to localStorage check
       }
+      }
 
       // Fallback to localStorage for in-progress tests
       console.log('🔍 Looking for in-progress answers in localStorage with key:', testStorageKey);
@@ -246,7 +303,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
             return;
           }
           
-          if (parsedAnswers._testSubmitted && parsedAnswers._testResults) {
+          if (!teacherPractice && parsedAnswers._testSubmitted && parsedAnswers._testResults) {
             if (
               isSubmissionExpired(parsedAnswers._testResults.submittedAt) ||
               isSessionExpired(parsedAnswers._timestamp)
@@ -259,9 +316,21 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
             console.log('⚠️ Marked test found in localStorage - should use backend instead');
             return;
           }
+
+          if (
+            teacherPractice &&
+            parsedAnswers._testSubmitted &&
+            parsedAnswers._testResults &&
+            isSubmissionExpired(parsedAnswers._testResults.submittedAt)
+          ) {
+            clearTestStorage(testStorageKey);
+            clearHighlights();
+            console.log('📝 Cleared expired teacher practice mark from localStorage');
+            return;
+          }
           
           // Remove the timestamp from the answers object before setting state
-          const { _currentPart, _testStarted } = parsedAnswers;
+          const { _currentPart, _testStarted, _testSubmitted, _testResults } = parsedAnswers;
           const restoredAnswers = stripSessionMeta(parsedAnswers);
           setAnswers(restoredAnswers);
           
@@ -271,8 +340,15 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
             console.log('📝 Restored current part from localStorage:', _currentPart);
           }
           
-          // Restore testStarted if it was saved AND there are actual answers
-          if (_testStarted && Object.keys(restoredAnswers).length > 0) {
+          // Restore testStarted if it was saved AND there are actual answers.
+          // Teacher practice stays open with no start overlay.
+          if (teacherPractice) {
+            setTestStarted(true);
+            if (_testSubmitted && _testResults) {
+              setTestSubmitted(true);
+              setTestResults(_testResults);
+            }
+          } else if (_testStarted && Object.keys(restoredAnswers).length > 0) {
             setTestStarted(true);
             console.log('📝 Restored testStarted from localStorage (in-progress test)');
           } else if (_testStarted && Object.keys(restoredAnswers).length === 0) {
@@ -292,7 +368,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     };
 
     loadTestData();
-  }, [selectedTest?.testId?._id, selectedTest?.type, user?._id, isTeacherMode, clearHighlights, replaceHighlights]);
+  }, [selectedTest?.testId?._id, selectedTest?.type, user?._id, isTeacherMode, teacherPractice, clearHighlights, replaceHighlights]);
 
   // Keep activePartRef in sync with sharedPassage (for teacher mode) or currentPart (for student mode)
   useEffect(() => {
@@ -333,11 +409,11 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
 
   // Reset to part 1 when overlay shows (test not started) - only for students
   useEffect(() => {
-    if (!isTeacherMode && !testStarted && currentPart !== 1) {
+    if (!isTeacherMode && !teacherPractice && !testStarted && currentPart !== 1) {
       console.log('🔄 Test not started - resetting to part 1');
       setCurrentPart(1);
     }
-  }, [testStarted, currentPart, isTeacherMode]);
+  }, [testStarted, currentPart, isTeacherMode, teacherPractice]);
 
   // Define fetchQuestionData function with race condition protection
   const fetchQuestionData = useCallback(async (partNumber = null) => {
@@ -483,14 +559,14 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
   // Additional safety: ensure part 1 when overlay should show - only for students
   useEffect(() => {
     // Show overlay when: not started (and not teacher mode)
-    const shouldShowOverlay = !testStarted && !isTeacherMode;
+    const shouldShowOverlay = !testStarted && !isTeacherMode && !teacherPractice;
     
     if (shouldShowOverlay && currentPart !== 1) {
       console.log('🔄 Overlay should show - forcing reset to part 1');
       setCurrentPart(1);
     }
     // In teacher mode, allow any part to be selected
-  }, [testStarted, currentPart, isTeacherMode]);
+  }, [testStarted, currentPart, isTeacherMode, teacherPractice]);
 
   // Add refresh confirmation warning
   useEffect(() => {
@@ -529,6 +605,10 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
   }, [currentPart, selectedTest, testStarted, testSubmitted, testResults, answers]);
 
   const handleAnswerChange = (questionNumberOrNewAnswers, value) => {
+    if (isTeacherMode || (teacherPractice && testSubmitted)) {
+      return;
+    }
+
     let newAnswers;
     
     // Check if this is the new signature (newAnswers object) or old signature (questionNumber, value)
@@ -723,9 +803,67 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     };
   };
 
+  const handleMark = async () => {
+    if (!teacherPractice || finalTestSubmitted || marking) {
+      return;
+    }
+
+    if (!selectedTest?.testId) {
+      return;
+    }
+
+    setMarking(true);
+
+    try {
+      const normalizedAnswers = normalizeListeningAnswers(answers);
+      const response = await fetch(`${API_BASE}/api/submit/grade`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          testId: selectedTest.testId._id,
+          testType: selectedTest.type,
+          answers: normalizedAnswers,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error(result.message || 'Failed to mark test');
+      }
+
+      const markedResults = buildPracticeResults(result.data, answers);
+      setTestResults(markedResults);
+      setTestSubmitted(true);
+
+      saveTestSession(
+        `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`,
+        {
+          ...answers,
+          _timestamp: Date.now(),
+          _currentPart: currentPart,
+          _testSubmitted: true,
+          _testStarted: true,
+          _testResults: markedResults,
+        }
+      );
+
+      alert(`Test submitted successfully!\nYour score: ${result.data.score}%`);
+    } catch (error) {
+      console.error('Error marking practice test:', error);
+      alert('Failed to mark test. Please try again.');
+    } finally {
+      setMarking(false);
+    }
+  };
+
   const handleSubmit = async () => {
-    // Validate user data before submission
-    if (!user || !user._id) {
+    if (!teacherPractice && (!user || !user._id)) {
       console.error('❌ No valid user data available for submission');
       alert('Error: User session not found. Please log in again.');
       return;
@@ -734,57 +872,15 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     const confirmed = window.confirm('Are you sure you want to submit the test? You cannot change your answers after submission.');
     if (!confirmed) return;
 
+    if (teacherPractice) {
+      await handleMark();
+      return;
+    }
+
     console.log('📝 Submitting test with answers:', answers);
     console.log('📝 User data:', user);
-    
-    // Normalize answer keys: convert "4_0", "4_1" style keys back to base question numbers
-    // This handles multiple inputs in a single cell
-    const normalizeAnswers = (answers) => {
-      const normalized = { ...answers };
-      const keysToRemove = [];
-      
-      // Find all keys with suffixes (e.g., "4_0", "4_1", "3-4_0", "3-4_1")
-      Object.keys(answers).forEach(key => {
-        if (typeof key === 'string' && key.includes('_')) {
-          const [baseQuestionNum, suffix] = key.split('_');
-          const suffixNum = Number(suffix);
-          
-          // Check if this is a valid suffix pattern (numeric suffix)
-          if (!isNaN(suffixNum)) {
-            // Check if base question number is a range (e.g., "3-4")
-            if (baseQuestionNum.includes('-')) {
-              // Range question: map each input to its corresponding question number
-              const [startNum, endNum] = baseQuestionNum.split('-').map(Number);
-              const targetQuestionNum = startNum + suffixNum;
-              
-              if (!isNaN(targetQuestionNum)) {
-                normalized[targetQuestionNum] = answers[key];
-                keysToRemove.push(key);
-              }
-            } else {
-              // Non-range question: use the first input's answer (suffix "_0")
-              // For cells with multiple inputs, typically only the first input is the actual answer
-              if (suffixNum === 0) {
-                // This is the first input - use it as the answer for the base question
-                normalized[baseQuestionNum] = answers[key];
-                keysToRemove.push(key);
-              } else {
-                // For subsequent inputs, remove them (they're typically just for display/formatting)
-                keysToRemove.push(key);
-              }
-            }
-          }
-        }
-      });
-      
-      // Remove the suffix keys
-      keysToRemove.forEach(key => delete normalized[key]);
-      
-      console.log('📝 Normalized answers (removed suffix keys):', normalized);
-      return normalized;
-    };
-    
-    const normalizedAnswers = normalizeAnswers(answers);
+
+    const normalizedAnswers = normalizeListeningAnswers(answers);
     
     try {
       const response = await fetch(`${API_BASE}/api/submit/submit`, {
@@ -877,7 +973,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     const confirmed = window.confirm('Are you sure you want to reset the test? This will clear all your answers and return to the start.');
     if (!confirmed) return;
     
-    setTestStarted(false);
+    setTestStarted(Boolean(teacherPractice));
     setTestSubmitted(false);
     setTestResults(null);
     setAnswers({});
@@ -1252,28 +1348,28 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
               <button 
                 className={`part-button ${currentPart === 1 ? 'active' : ''}`}
                 onClick={() => handlePartChange(1)}
-                disabled={!testStarted && !isTeacherMode}
+                disabled={!testStarted && !isTeacherMode && !teacherPractice}
               >
                 Part 1
               </button>
               <button 
                 className={`part-button ${currentPart === 2 ? 'active' : ''}`}
                 onClick={() => handlePartChange(2)}
-                disabled={!testStarted && !isTeacherMode}
+                disabled={!testStarted && !isTeacherMode && !teacherPractice}
               >
                 Part 2
               </button>
               <button 
                 className={`part-button ${currentPart === 3 ? 'active' : ''}`}
                 onClick={() => handlePartChange(3)}
-                disabled={!testStarted && !isTeacherMode}
+                disabled={!testStarted && !isTeacherMode && !teacherPractice}
               >
                 Part 3
               </button>
               <button 
                 className={`part-button ${currentPart === 4 ? 'active' : ''}`}
                 onClick={() => handlePartChange(4)}
-                disabled={!testStarted && !isTeacherMode}
+                disabled={!testStarted && !isTeacherMode && !teacherPractice}
               >
                 Part 4
               </button>
@@ -1282,7 +1378,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
           
           {renderQuestionComponent()}
           
-          {/* Submit button - Only show for students, not teachers */}
+          {/* Submit button - hidden while reviewing a student submission */}
           {currentPart === 4 && testStarted && !isTeacherMode && (
             <div className="submit-section">
               <button 
@@ -1307,7 +1403,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
           )}
           
           {/* Score Display - Only show on Part 4 after submission */}
-          {currentPart === 4 && finalTestSubmitted && finalTestResults && (
+          {finalTestSubmitted && finalTestResults && currentPart === 4 && (
             <div className="score-display">
               <div className="score-card">
                 <h3>Test Results</h3>
@@ -1345,7 +1441,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
         </HighlightableArea>
         
         {/* Start Test Overlay - Only show for students, not teachers */}
-        {!testStarted && !isTeacherMode && (
+        {!testStarted && !isTeacherMode && !teacherPractice && (
           <div className="test-overlay">
             <div className="overlay-content">
               <h2>Ready to Start?</h2>
