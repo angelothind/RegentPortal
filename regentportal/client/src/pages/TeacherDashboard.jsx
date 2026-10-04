@@ -4,6 +4,7 @@ import TeacherSidebar from '../components/Teacher/TeacherSidebar';
 import TeacherStudentTable from '../components/Teacher/TeacherStudentTable';
 import StudentDetails from '../components/Teacher/StudentDetails';
 import TestViewer from '../components/Student/TestViewer';
+import { clearResumeMarker } from '../utils/sessionExpiry';
 import '../styles/UserLayout/TeacherDashboard.css';
 import '../styles/UserLayout/StudentDashboard.css';
 
@@ -137,6 +138,7 @@ const TeacherDashboard = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('currentUserId');
     localStorage.removeItem('token');
+    clearResumeMarker();
 
     Object.keys(localStorage).forEach((key) => {
       if (key.startsWith('test-answers-')) {

@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../../styles/Login/RightSide.css';
 import SelectionBox from './SelectionBox';
 import LoginForm from './LoginForm'; // ✅ import here
 
 const RightSide = () => {
+  const location = useLocation();
+  const sessionExpired = Boolean(location.state?.sessionExpired);
   const [selectedRole, setSelectedRole] = useState(null);
 
   const handleSelect = (role) => {
@@ -17,6 +20,11 @@ const RightSide = () => {
   return (
     <div className="right-side">
       <div className="selection-boxes">
+        {sessionExpired && (
+          <p className="session-expired-message" role="status">
+            Session expired. Please log in again.
+          </p>
+        )}
         {!selectedRole ? (
           <>
             <h2 className="welcome-text">Welcome to Regent Portal</h2>

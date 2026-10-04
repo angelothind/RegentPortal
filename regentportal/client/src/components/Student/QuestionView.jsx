@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ChooseXWords from '../Questions/ChooseXWords';
 import ChooseFrom from '../Questions/ChooseFrom';
 import TFNG from '../Questions/TFNG';
@@ -28,6 +29,13 @@ import {
   markTestReset,
   getTestResetAt,
 } from '../../utils/testSessionStorage';
+import {
+  beginSessionExpiredRedirect,
+  clearOpenStudentTest,
+  clearResumeMarkerIfMatch,
+  confirmStudentTestStart,
+  setOpenStudentTest,
+} from '../../utils/sessionExpiry';
 
 const buildPracticeResults = (data, currentAnswers) => {
   const correctAnswers = {};
@@ -52,6 +60,7 @@ const buildPracticeResults = (data, currentAnswers) => {
 };
 
 const QuestionView = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, teacherPractice = false, onTestReset, sharedPassage, onPassageChange, testData, onExamTimerChange }) => {
+  const navigate = useNavigate();
   console.log('🚀 QuestionView component mounted with selectedTest:', selectedTest);
   console.log('🔍 QuestionView received user:', user);
   console.log('🔍 QuestionView received externalTestResults:', externalTestResults);
@@ -79,6 +88,25 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
     if (!selectedTest?.testId || !user?._id) return null;
     return `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user._id}`;
   }, [selectedTest?.testId?._id, selectedTest?.type, user?._id]);
+
+  useEffect(() => {
+    if (isTeacherMode || teacherPractice || !user?._id || !selectedTest?.testId?._id) {
+      return undefined;
+    }
+
+    const testId = selectedTest.testId._id;
+    const testType = selectedTest.type;
+    setOpenStudentTest({
+      userId: user._id,
+      testId,
+      testType,
+      audioTime: null,
+    });
+
+    return () => {
+      clearOpenStudentTest(testId, testType);
+    };
+  }, [isTeacherMode, teacherPractice, user?._id, selectedTest?.testId?._id, selectedTest?.type]);
 
   const handleSessionExpire = useCallback(() => {
     setTestSubmitted(false);
@@ -495,7 +523,15 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         // First, try to fetch submission from backend (for marked tests)
         // Include testType in query to ensure we get the correct submission (Reading vs Listening)
         console.log('🔄 Checking for submission in backend for test:', testId, 'type:', testType);
-        const submissionResponse = await fetch(`${API_BASE}/api/submissions/student/${user._id}/test/${testId}?testType=${testType}`);
+        const token = localStorage.getItem('token');
+        const submissionResponse = await fetch(`${API_BASE}/api/submissions/student/${user._id}/test/${testId}?testType=${testType}`, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        });
+
+        if (submissionResponse.status === 401) {
+          beginSessionExpiredRedirect(navigate);
+          return;
+        }
         
         if (submissionResponse.ok) {
           const submission = await submissionResponse.json();
@@ -911,6 +947,13 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
         _timerStartedAt: now,
         _timerDurationMs: READING_TIMER_MS,
       });
+      if (!teacherPractice && user?._id) {
+        confirmStudentTestStart({
+          userId: user._id,
+          testId: selectedTest.testId._id,
+          testType: selectedTest.type,
+        });
+      }
     }
   };
 
@@ -947,6 +990,9 @@ const QuestionView = ({ selectedTest, user, testResults: externalTestResults, te
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
       removeTestSession(storageKey);
       markTestReset(storageKey);
+      if (user?._id) {
+        clearResumeMarkerIfMatch(user._id, selectedTest.testId._id, selectedTest.type);
+      }
       console.log('🧹 Cleared localStorage for test reset:', storageKey);
     }
 
