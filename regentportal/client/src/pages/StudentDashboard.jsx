@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import StudentSidebar from '../components/Student/StudentSidebar';
 import StudentDetails from '../components/Teacher/StudentDetails';
 import TestViewer from '../components/Student/TestViewer';
+import { claimResumeSelection, clearResumeMarker } from '../utils/sessionExpiry';
 import '../styles/UserLayout/StudentDashboard.css';
 
 const StudentDashboard = () => {
@@ -16,8 +17,16 @@ const StudentDashboard = () => {
     const userData = navigate.state?.user;
     console.log('🔍 StudentDashboard received userData from navigate.state:', userData);
     
+    const openResumedTest = (parsedUser) => {
+      const selection = claimResumeSelection(parsedUser._id);
+      if (!selection) return;
+      setShowSubmissions(false);
+      setSelectedTest(selection);
+    };
+
     if (userData) {
       setUser(userData);
+      openResumedTest(userData);
     } else {
       // Fallback to localStorage if navigation state is not available
       const storedUser = localStorage.getItem('user');
@@ -46,6 +55,7 @@ const StudentDashboard = () => {
           }
           
           setUser(parsedUser);
+          openResumedTest(parsedUser);
         } catch (error) {
           console.error('❌ Error parsing user data from localStorage:', error);
         }
@@ -165,6 +175,7 @@ const StudentDashboard = () => {
       localStorage.removeItem('user');
       localStorage.removeItem('currentUserId');
       localStorage.removeItem('token');
+      clearResumeMarker();
       
       // Clear any test-related data that might be causing delays
       console.log('🧹 Clearing test data...');

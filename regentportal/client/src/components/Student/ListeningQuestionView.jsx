@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ChooseXWords from '../Questions/ChooseXWords';
 import MultipleChoice from '../Questions/MultipleChoice';
 import MultipleChoiceTwo from '../Questions/MultipleChoiceTwo';
@@ -26,6 +27,14 @@ import {
   markTestReset,
   getTestResetAt,
 } from '../../utils/testSessionStorage';
+import {
+  beginSessionExpiredRedirect,
+  clearOpenStudentTest,
+  clearResumeMarkerIfMatch,
+  confirmStudentTestStart,
+  setOpenStudentTest,
+  updateOpenAudioTime,
+} from '../../utils/sessionExpiry';
 
 const buildPracticeResults = (data, currentAnswers) => {
   const correctAnswers = {};
@@ -82,6 +91,7 @@ const normalizeListeningAnswers = (rawAnswers) => {
 };
 
 const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externalTestResults, testSubmitted: externalTestSubmitted, isTeacherMode = false, teacherPractice = false, onBackToStudent = null, testData, sharedPassage, onPassageChange }) => {
+  const navigate = useNavigate();
   console.log('🔍 ListeningQuestionView received user:', user);
   console.log('🔍 ListeningQuestionView received selectedTest:', selectedTest);
   const [questionData, setQuestionData] = useState(null);
@@ -108,6 +118,25 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     return `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user._id}`;
   }, [selectedTest?.testId?._id, selectedTest?.type, user?._id]);
 
+  useEffect(() => {
+    if (isTeacherMode || teacherPractice || !user?._id || !selectedTest?.testId?._id) {
+      return undefined;
+    }
+
+    const testId = selectedTest.testId._id;
+    const testType = selectedTest.type;
+    setOpenStudentTest({
+      userId: user._id,
+      testId,
+      testType,
+      audioTime: null,
+    });
+
+    return () => {
+      clearOpenStudentTest(testId, testType);
+    };
+  }, [isTeacherMode, teacherPractice, user?._id, selectedTest?.testId?._id, selectedTest?.type]);
+
   const handleSessionExpire = useCallback(() => {
     setTestSubmitted(false);
     setTestResults(null);
@@ -133,6 +162,35 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
   const audioRef = useRef(null);
   const audioSeekAnimatingRef = useRef(false);
   const seekAnimationTimeoutRef = useRef(null);
+  const savedAudioTimeRef = useRef(null);
+  const audioMetadataReadyRef = useRef(false);
+  const appliedSavedAudioRef = useRef(false);
+  const lastSavedAudioSecondRef = useRef(-1);
+  const seededAudioKeyRef = useRef(undefined);
+
+  // Seed the saved position during render, before the audio element can emit
+  // timeupdate(0) and overwrite the stored listening position.
+  if (seededAudioKeyRef.current !== storageKey) {
+    seededAudioKeyRef.current = storageKey;
+    appliedSavedAudioRef.current = false;
+    audioMetadataReadyRef.current = false;
+    savedAudioTimeRef.current = null;
+    lastSavedAudioSecondRef.current = -1;
+
+    if (storageKey && !isTeacherMode && !teacherPractice) {
+      const existing = loadTestSession(storageKey);
+      const savedTime = existing?._audioCurrentTime;
+      if (
+        existing &&
+        !isSessionExpired(existing._timestamp) &&
+        Number.isFinite(savedTime) &&
+        savedTime > 0
+      ) {
+        savedAudioTimeRef.current = savedTime;
+        lastSavedAudioSecondRef.current = Math.floor(savedTime);
+      }
+    }
+  }
   
   // Use external test results if provided (for teacher view)
   const finalTestResults = externalTestResults || testResults;
@@ -174,7 +232,15 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
         // First, try to fetch submission from backend (for marked tests)
         // Include testType in query to ensure we get the correct submission (Reading vs Listening)
         console.log('🔄 Checking for submission in backend for test:', testId, 'type:', testType);
-        const submissionResponse = await fetch(`${API_BASE}/api/submissions/student/${user._id}/test/${testId}?testType=${testType}`);
+        const token = localStorage.getItem('token');
+        const submissionResponse = await fetch(`${API_BASE}/api/submissions/student/${user._id}/test/${testId}?testType=${testType}`, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        });
+
+        if (submissionResponse.status === 401) {
+          beginSessionExpiredRedirect(navigate);
+          return;
+        }
         
         if (submissionResponse.ok) {
           const submission = await submissionResponse.json();
@@ -340,7 +406,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
             console.log('📝 Restored current part from localStorage:', _currentPart);
           }
           
-          // Restore testStarted if it was saved AND there are actual answers.
+          // Restore testStarted for the attempt the student confirmed.
           // Teacher practice stays open with no start overlay.
           if (teacherPractice) {
             setTestStarted(true);
@@ -348,14 +414,15 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
               setTestSubmitted(true);
               setTestResults(_testResults);
             }
-          } else if (_testStarted && Object.keys(restoredAnswers).length > 0) {
+          } else if (_testStarted) {
             setTestStarted(true);
             console.log('📝 Restored testStarted from localStorage (in-progress test)');
-          } else if (_testStarted && Object.keys(restoredAnswers).length === 0) {
-            // If test was started but no answers, reset to show overlay
-            setTestStarted(false);
-            setCurrentPart(1);
-            console.log('📝 Reset testStarted to false and currentPart to 1 (no answers, overlay should show)');
+          }
+
+          if (!teacherPractice && Number.isFinite(parsedAnswers._audioCurrentTime)) {
+            savedAudioTimeRef.current = parsedAnswers._audioCurrentTime;
+            lastSavedAudioSecondRef.current = Math.floor(parsedAnswers._audioCurrentTime);
+            applySavedAudioTime();
           }
           
           console.log('📝 Loaded in-progress test data from localStorage:', restoredAnswers);
@@ -650,22 +717,26 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
   const handleStartTest = () => {
     setTestStarted(true);
     console.log('🚀 Test started');
-    
-    // Save test state to localStorage (only if there are answers)
-    if (selectedTest && selectedTest.testId && Object.keys(answers).length > 0) {
-      const answersWithTimestamp = {
-        ...answers,
+
+    if (selectedTest && selectedTest.testId && !isTeacherMode) {
+      const startStorageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
+      saveTestSession(startStorageKey, {
+        ...(Object.keys(answers).length > 0 ? answers : {}),
         _timestamp: Date.now(),
         _currentPart: currentPart,
         _testSubmitted: testSubmitted,
         _testStarted: true,
-        _testResults: testResults
-      };
-      saveTestSession(
-        `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`,
-        answersWithTimestamp
-      );
-      console.log('📝 Test started state saved to localStorage (has answers)');
+        _testResults: testResults,
+      });
+      if (!teacherPractice && user?._id) {
+        confirmStudentTestStart({
+          userId: user._id,
+          testId: selectedTest.testId._id,
+          testType: selectedTest.type,
+          audioTime: audioRef.current?.currentTime ?? null,
+        });
+      }
+      console.log('📝 Test started state saved to localStorage');
     }
   };
 
@@ -681,15 +752,50 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     }
   };
 
+  const persistAudioTime = (time) => {
+    if (isTeacherMode || teacherPractice || !storageKey || !Number.isFinite(time)) return;
+    const saved = savedAudioTimeRef.current;
+    if (
+      Number.isFinite(saved) &&
+      saved > 0.5 &&
+      !appliedSavedAudioRef.current &&
+      time + 0.25 < saved
+    ) {
+      return;
+    }
+    updateOpenAudioTime(time);
+    const second = Math.floor(time);
+    if (second === lastSavedAudioSecondRef.current) return;
+    lastSavedAudioSecondRef.current = second;
+    saveTestSession(storageKey, { _audioCurrentTime: time });
+  };
+
+  const applySavedAudioTime = () => {
+    const audio = audioRef.current;
+    const saved = savedAudioTimeRef.current;
+    if (!audio || !audioMetadataReadyRef.current) return;
+    if (!Number.isFinite(saved) || saved <= 0) return;
+
+    const duration = Number.isFinite(audio.duration) ? audio.duration : saved;
+    const nextTime = Math.min(saved, duration);
+    audio.currentTime = nextTime;
+    appliedSavedAudioRef.current = true;
+    setAudioCurrentTime(nextTime);
+  };
+
   const handleAudioTimeUpdate = () => {
     if (audioRef.current) {
-      setAudioCurrentTime(audioRef.current.currentTime);
+      const time = audioRef.current.currentTime;
+      setAudioCurrentTime(time);
+      persistAudioTime(time);
     }
   };
 
   const handleAudioLoadedMetadata = () => {
     if (audioRef.current) {
       setAudioDuration(audioRef.current.duration);
+      audioMetadataReadyRef.current = true;
+      applySavedAudioTime();
     }
   };
 
@@ -707,6 +813,7 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
     const apply = () => {
       audio.currentTime = clamped;
       setAudioCurrentTime(clamped);
+      persistAudioTime(clamped);
       if (seekAnimationTimeoutRef.current) {
         clearTimeout(seekAnimationTimeoutRef.current);
       }
@@ -984,6 +1091,11 @@ const ListeningQuestionViewContent = ({ selectedTest, user, testResults: externa
       const storageKey = `test-answers-${selectedTest.testId._id}-${selectedTest.type}-${user?._id || 'anonymous'}`;
       removeTestSession(storageKey);
       markTestReset(storageKey);
+      savedAudioTimeRef.current = null;
+      lastSavedAudioSecondRef.current = -1;
+      if (user?._id) {
+        clearResumeMarkerIfMatch(user._id, selectedTest.testId._id, selectedTest.type);
+      }
       console.log('📝 Cleared saved test state from localStorage after reset');
     }
 

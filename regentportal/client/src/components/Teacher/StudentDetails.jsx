@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import TeacherTestAnalysis from './TeacherTestAnalysis';
 import StudentSubmissions from './StudentSubmissions';
 import '../../styles/Admin/StudentTable.css';
 import API_BASE from '../../utils/api';
 import { calculateIELTSBand, getBandScoreDescription, formatBandScore } from '../../utils/bandScoreCalculator';
+import { beginSessionExpiredRedirect } from '../../utils/sessionExpiry';
 
 const StudentDetails = ({ student, onBack, selfView = false }) => {
+  const navigate = useNavigate();
   const [testSubmissions, setTestSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTest, setSelectedTest] = useState(null);
@@ -30,6 +33,10 @@ const StudentDetails = ({ student, onBack, selfView = false }) => {
         ? `${API_BASE}/api/submissions/mine`
         : `${API_BASE}/api/teachers/submissions/student/${student._id}`;
       const response = await fetch(url, { headers });
+      if (response.status === 401) {
+        beginSessionExpiredRedirect(navigate);
+        return;
+      }
       const data = await response.json();
       setTestSubmissions(data.submissions || []);
       setLoading(false);

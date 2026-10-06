@@ -54,6 +54,7 @@ export const SESSION_META_KEYS = [
   '_testStarted',
   '_timerStartedAt',
   '_timerDurationMs',
+  '_audioCurrentTime',
   '_highlights',
 ];
 
